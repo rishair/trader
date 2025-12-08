@@ -61,4 +61,28 @@ For one-off utilities, create executable scripts:
 - Include error handling
 - Document what each tool does
 - Test before deploying
+- Register in `state/agent-engineering/capabilities.json` when done
 - Update state/learnings.json when you create something new
+
+## Post-Session Reflection
+
+Before ending, append to `state/shared/session-reflections.json`:
+
+```json
+{
+  "sessionId": "sess-YYYYMMDD-HHMMSS",
+  "agent": "tool-builder",
+  "timestamp": "ISO timestamp",
+  "responsibility": null,
+  "taskDescription": "What tool I built",
+  "completed": true,
+  "friction": ["What slowed me down - API limitations, unclear requirements, etc."],
+  "mistakes": ["Wrong approaches tried, bugs introduced, etc."],
+  "rootCauses": ["Why did friction/mistakes happen?"],
+  "improvementIdea": "idea-XXX if logged, else null",
+  "learningLogged": false,
+  "notes": null
+}
+```
+
+Be honest. The point is to surface patterns so tool-building improves.

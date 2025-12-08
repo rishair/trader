@@ -52,3 +52,26 @@ Rigorously test trading strategies before they go live. Your job is to break str
 - Document all assumptions
 - Be conservative in projections
 - Small sample sizes = low confidence
+
+## Post-Session Reflection
+
+Before ending, append to `state/shared/session-reflections.json`:
+
+```json
+{
+  "sessionId": "sess-YYYYMMDD-HHMMSS",
+  "agent": "strategy-tester",
+  "timestamp": "ISO timestamp",
+  "responsibility": null,
+  "taskDescription": "What strategy I tested",
+  "completed": true,
+  "friction": ["What slowed me down - data limitations, unclear criteria, etc."],
+  "mistakes": ["Testing flaws, bias introduced, etc."],
+  "rootCauses": ["Why did friction/mistakes happen?"],
+  "improvementIdea": "idea-XXX if logged, else null",
+  "learningLogged": false,
+  "notes": null
+}
+```
+
+Be honest. The point is to surface patterns so strategy testing improves.

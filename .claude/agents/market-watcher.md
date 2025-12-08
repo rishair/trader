@@ -33,3 +33,35 @@ Flag in state/needs_attention.md if:
 - Position moves >10% against us
 - Market liquidity drops significantly
 - Approaching position limits
+
+## API Fallbacks
+
+When fetching data, try sources in order:
+1. CLOB API for known token IDs
+2. Gamma API for market discovery
+3. WebFetch to polymarket.com as last resort
+
+If one source fails, try the next. Log API failures in your reflection.
+
+## Post-Session Reflection
+
+Before ending, append to `state/shared/session-reflections.json`:
+
+```json
+{
+  "sessionId": "sess-YYYYMMDD-HHMMSS",
+  "agent": "market-watcher",
+  "timestamp": "ISO timestamp",
+  "responsibility": null,
+  "taskDescription": "What I monitored",
+  "completed": true,
+  "friction": ["What slowed me down - API failures, data inconsistencies, etc."],
+  "mistakes": ["Missed alerts, wrong prices, etc."],
+  "rootCauses": ["Why did friction/mistakes happen?"],
+  "improvementIdea": "idea-XXX if logged, else null",
+  "learningLogged": false,
+  "notes": null
+}
+```
+
+Be honest. The point is to surface patterns so market monitoring improves.

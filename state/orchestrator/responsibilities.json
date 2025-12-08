@@ -40,7 +40,7 @@
     },
     "agent-review": {
       "frequency": "7d",
-      "lastRun": null
+      "lastRun": "2025-12-08T19:01:50.609Z"
     },
     "capability-audit": {
       "frequency": "7d",

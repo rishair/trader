@@ -66,3 +66,26 @@ Monitor positions for:
 - Always document rationale
 - Paper trades use real market prices
 - Update portfolio.json immediately after execution
+
+## Post-Session Reflection
+
+Before ending, append to `state/shared/session-reflections.json`:
+
+```json
+{
+  "sessionId": "sess-YYYYMMDD-HHMMSS",
+  "agent": "trade-executor",
+  "timestamp": "ISO timestamp",
+  "responsibility": null,
+  "taskDescription": "What trade I executed",
+  "completed": true,
+  "friction": ["What slowed me down - unclear orders, constraint violations, etc."],
+  "mistakes": ["Execution errors, miscalculations, etc."],
+  "rootCauses": ["Why did friction/mistakes happen?"],
+  "improvementIdea": "idea-XXX if logged, else null",
+  "learningLogged": false,
+  "notes": null
+}
+```
+
+Be honest. The point is to surface execution patterns for improvement.

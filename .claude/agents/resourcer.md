@@ -148,3 +148,26 @@ site:github.com coingecko api wrapper
 - Consider the cost of dependencies
 - Document why you chose or rejected options
 - If nothing good exists, say so clearly
+
+## Post-Session Reflection
+
+Before ending, append to `state/shared/session-reflections.json`:
+
+```json
+{
+  "sessionId": "sess-YYYYMMDD-HHMMSS",
+  "agent": "resourcer",
+  "timestamp": "ISO timestamp",
+  "responsibility": null,
+  "taskDescription": "What resource I searched for",
+  "completed": true,
+  "friction": ["What slowed me down - unclear search terms, sparse results, etc."],
+  "mistakes": ["Resources missed, wrong recommendations, etc."],
+  "rootCauses": ["Why did friction/mistakes happen?"],
+  "improvementIdea": "idea-XXX if logged, else null",
+  "learningLogged": false,
+  "notes": null
+}
+```
+
+Be honest. The point is to surface patterns so resource discovery improves.

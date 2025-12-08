@@ -67,3 +67,26 @@ After fixing, report:
 - Test your fix before declaring victory
 - If unsure, make the conservative change
 - Document everything for future reference
+
+## Post-Session Reflection
+
+Before ending, append to `state/shared/session-reflections.json`:
+
+```json
+{
+  "sessionId": "sess-YYYYMMDD-HHMMSS",
+  "agent": "self-improver",
+  "timestamp": "ISO timestamp",
+  "responsibility": null,
+  "taskDescription": "What I diagnosed and fixed",
+  "completed": true,
+  "friction": ["What slowed me down - unclear symptoms, complex dependencies, etc."],
+  "mistakes": ["Wrong diagnoses, ineffective fixes, etc."],
+  "rootCauses": ["Why did friction/mistakes happen?"],
+  "improvementIdea": "idea-XXX if logged, else null",
+  "learningLogged": false,
+  "notes": null
+}
+```
+
+Be honest. The point is to surface patterns so self-improvement improves.

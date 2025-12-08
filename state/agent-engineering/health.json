@@ -1,5 +1,5 @@
 {
-  "lastCheck": "2025-12-08T18:49:00Z",
+  "lastCheck": "2025-12-08T21:00:00Z",
   "status": "healthy",
   "services": {
     "telegram-handler": { "status": "running", "lastSeen": "2025-12-08T18:47:00Z", "pid": 25257 },
@@ -10,22 +10,29 @@
     "totalPending": 8,
     "overdueCount": 0,
     "nextDue": "2025-12-08T19:00:00Z",
-    "notes": "All tasks on schedule. Health check due in 11 min."
+    "notes": "All tasks on schedule."
   },
   "sessionReflectionPatterns": {
-    "reviewedSessions": 9,
+    "reviewedSessions": 13,
     "recurringFriction": [
       {
         "pattern": "Polymarket/Gamma API inconsistencies",
         "occurrences": 5,
         "examples": ["gamma-api endpoints returning empty results", "API response format inconsistency"],
         "improvementLogged": "imp-013"
+      },
+      {
+        "pattern": "Research-heavy, execution-light",
+        "occurrences": 2,
+        "examples": ["7 hypotheses but only 1 trade", "Multiple hypotheses blocked by missing infrastructure"],
+        "addressedBy": "Updated trade-research.md with execution bias and activation checklist"
       }
     ],
     "recurringMistakes": [],
     "rootCausesIdentified": [
       "API response format varies (clobTokenIds as JSON string vs array)",
-      "Polymarket pages may require specific URL patterns"
+      "Polymarket pages may require specific URL patterns",
+      "No clear workflow for promoting hypotheses to testing status"
     ]
   },
   "metrics": {
@@ -39,6 +46,17 @@
     "testableHypotheses": 4,
     "totalHypotheses": 7,
     "avgConviction": 0.38
+  },
+  "lastAgentReview": {
+    "timestamp": "2025-12-08T21:00:00Z",
+    "agentsReviewed": 10,
+    "promptsUpdated": 7,
+    "findings": [
+      "6 agents missing post-session reflection template - added to all",
+      "trade-research lacked execution bias - added activation checklist and execution-first mindset",
+      "market-watcher lacked API fallback guidance - added"
+    ],
+    "notes": "First agent-review execution. All agent prompts now consistent with reflection protocol. Trade research should show improved hypothesis activation velocity."
   },
   "lastBuildSprint": {
     "timestamp": "2025-12-09T02:00:00Z",

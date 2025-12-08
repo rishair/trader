@@ -212,6 +212,20 @@
       "improvementIdea": null,
       "learningLogged": true,
       "notes": "First learning-synthesis execution. Analyzed 5 learnings, 7 hypotheses, 1 strategy, 12 session reflections, 10+ improvements. Identified 4 major patterns: (1) Polymarket platform mechanics consolidation, (2) Research vs execution imbalance (7 hypotheses, 1 trade), (3) Infrastructure as blocker (API reliability is recurring friction), (4) Short-term noise vs long-term signal (24h insufficient for momentum). Identified 3 meta-insights: learning pipeline works well, learning format needs standardization, improvement velocity outpacing trading velocity. Key recommendations: execute hyp-007 arbitrage, let hyp-002 run 7+ more days, build imp-013 (API client), resist new infrastructure until trading velocity increases. No new improvement idea logged - imp-013 already covers the main recurring friction (API reliability)."
+    },
+    {
+      "sessionId": "sess-20251208-agent-review",
+      "agent": "agent-engineer",
+      "timestamp": "2025-12-08T21:00:00Z",
+      "responsibility": "agent-review",
+      "taskDescription": "Weekly agent review: read all agent prompts, review session logs, assess effectiveness, identify patterns of confusion/mistakes, update prompts",
+      "completed": true,
+      "friction": [],
+      "mistakes": [],
+      "rootCauses": [],
+      "improvementIdea": null,
+      "learningLogged": false,
+      "notes": "First agent-review execution. Reviewed all 10 agent prompts. Key findings: (1) 6 agents missing post-session reflection template - inconsistent feedback loop; (2) trade-research had no activation checklist for proposed hypotheses - hypotheses getting stuck; (3) market-watcher lacked API fallback guidance. Updated 7 agent prompts: tool-builder, resourcer, trade-executor, strategy-tester, self-improver, hypothesis-tester, market-watcher (added reflections); trade-research (added activation checklist + execution bias). All agents now have consistent reflection protocol. Trade research now has explicit bias toward execution over pure research."
     }
   ],
   "schema": {

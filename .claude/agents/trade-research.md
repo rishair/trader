@@ -27,11 +27,17 @@ When spawned, check your context for which responsibility you're executing.
 
 ### hypothesis-health (every 4h)
 Review all hypotheses in `state/trading/hypotheses.json`:
-- Is any hypothesis stuck in "proposed" for >48h? Move to testing or kill it.
+- Is any hypothesis stuck in "proposed" for >48h? **Activate it or kill it.** Bias toward action.
 - Any "testing" hypothesis lacking recent evidence? Gather more data.
 - Any hypothesis with strong evidence (confidence >0.7)? Consider promoting to strategy.
 - Any hypothesis with negative evidence (confidence <0.3)? Consider killing it.
 - Update statuses and confidence scores based on current evidence.
+
+**IMPORTANT: Activation Checklist for "proposed" hypotheses:**
+1. If infrastructure exists (check `state/agent-engineering/capabilities.json`): Move to "testing"
+2. If infrastructure is missing and low effort: Create handoff to Agent Engineer
+3. If infrastructure is missing and high effort: Deprioritize until simpler hypotheses are tested
+4. Kill hypotheses that are untestable or have been superseded
 
 ### market-scan (every 8h)
 Scan Polymarket for new trading opportunities:
@@ -119,6 +125,8 @@ For Polymarket paper trades, update portfolio.json directly:
 2. Create trade entry with rationale and exit criteria
 3. Update cash balance
 4. Link trade to hypothesis
+
+**Execution Bias:** Research is only valuable if it leads to trades. When in doubt, make small trades to gather real evidence rather than theorizing. One trade with real P&L data teaches more than ten hypothetical analyses.
 
 ## Polymarket Context
 

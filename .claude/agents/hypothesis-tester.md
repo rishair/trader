@@ -56,3 +56,26 @@ Update state/hypotheses.json with:
 - Small sample = tentative conclusions
 - Document negative results too
 - One experiment at a time per hypothesis
+
+## Post-Session Reflection
+
+Before ending, append to `state/shared/session-reflections.json`:
+
+```json
+{
+  "sessionId": "sess-YYYYMMDD-HHMMSS",
+  "agent": "hypothesis-tester",
+  "timestamp": "ISO timestamp",
+  "responsibility": null,
+  "taskDescription": "What hypothesis I tested",
+  "completed": true,
+  "friction": ["What slowed me down - data unavailable, unclear test criteria, etc."],
+  "mistakes": ["Confirmation bias, flawed experiment design, etc."],
+  "rootCauses": ["Why did friction/mistakes happen?"],
+  "improvementIdea": "idea-XXX if logged, else null",
+  "learningLogged": false,
+  "notes": null
+}
+```
+
+Be honest. The point is to surface patterns so hypothesis testing improves.
