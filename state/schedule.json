@@ -28,10 +28,10 @@
       }
     },
     {
-      "id": "monitor-002",
+      "id": "monitor-003",
       "type": "monitor",
       "description": "Check AAPL position price and evaluate exit criteria",
-      "scheduledFor": "2025-12-08T10:00:00Z",
+      "scheduledFor": "2025-12-09T08:00:00Z",
       "priority": "high",
       "context": {
         "tradeId": "trade-001",
@@ -96,6 +96,23 @@
     }
   ],
   "completedTasks": [
+    {
+      "id": "monitor-002",
+      "type": "monitor",
+      "description": "Check AAPL position price and evaluate exit criteria",
+      "scheduledFor": "2025-12-08T10:00:00Z",
+      "priority": "high",
+      "context": {
+        "tradeId": "trade-001",
+        "hypothesisId": "hyp-005",
+        "exitCriteria": {
+          "takeProfit": 0.20,
+          "stopLoss": 0.04
+        }
+      },
+      "completedAt": "2025-12-08T07:48:00Z",
+      "result": "Executed early. AAPL price at 8.7¢ (down from 9¢ entry). P&L: -$16.67 (-3.4%). No exit triggers hit (SL: 4¢, TP: 20¢). Thesis remains valid. Next check scheduled for Dec 9."
+    },
     {
       "id": "pipeline-health-001",
       "type": "pipeline",
