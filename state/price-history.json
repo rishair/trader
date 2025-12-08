@@ -48,5 +48,61 @@
         "price": 0.08499999999999999
       }
     }
+  },
+  {
+    "timestamp": "2025-12-08T15:23:38.233Z",
+    "prices": {
+      "64608332692655386624219169603174714750740291631647562666654835455208498486268": {
+        "market": "Largest Company end of 2025",
+        "outcome": "Apple",
+        "price": 0.086
+      }
+    }
+  },
+  {
+    "timestamp": "2025-12-08T15:25:00.000Z",
+    "market": "Time Person of the Year 2025",
+    "baseline_recording": "2025-12-08T12:00:00Z",
+    "description": "Momentum hypothesis tracking - comparing baseline prices from hypothesis-002 to current prices",
+    "prices": {
+      "AI_baseline": 0.39,
+      "AI_current": 0.385,
+      "AI_change_pct": -1.28,
+      "Jensen_Huang_baseline": 0.21,
+      "Jensen_Huang_current": 0.195,
+      "Jensen_Huang_change_pct": -7.14,
+      "Sam_Altman_baseline": 0.14,
+      "Sam_Altman_current": 0.125,
+      "Sam_Altman_change_pct": -10.71,
+      "Donald_Trump_baseline": 0.05,
+      "Donald_Trump_current": 0.05,
+      "Donald_Trump_change_pct": 0
+    },
+    "marketData": {
+      "AI": {
+        "marketId": 555826,
+        "price": 0.385,
+        "liquidity": 41371.6675,
+        "volume24hr": 181527.44
+      },
+      "Jensen_Huang": {
+        "marketId": 555836,
+        "price": 0.195,
+        "liquidity": 28335.3496,
+        "volume24hr": 98631.86
+      },
+      "Sam_Altman": {
+        "marketId": 555837,
+        "price": 0.125,
+        "liquidity": 33355.9375,
+        "volume24hr": 70876.80
+      },
+      "Donald_Trump": {
+        "marketId": 555821,
+        "price": 0.05,
+        "liquidity": 152920.10,
+        "volume24hr": 232145.22
+      }
+    }
   }
 ]

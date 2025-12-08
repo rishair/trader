@@ -57,28 +57,61 @@
           "observation": "Time Person of Year 2025: AI leads at 39%, Jensen Huang 21%, Sam Altman 14%. Market closing Dec 31 - good candidate for momentum tracking over next 23 days. Need to establish baseline prices today for comparison.",
           "supports": null,
           "confidenceImpact": 0
+        },
+        {
+          "date": "2025-12-08",
+          "observation": "Time Person of Year 2025 - First price check 3.3 hours after baseline: AI down 1.28% (0.39->0.385), Jensen Huang down 7.14% (0.21->0.195), Sam Altman down 10.71% (0.14->0.125), Trump flat (0.05->0.05). ALL candidates declining. Contradicts momentum hypothesis prediction that leader should gain relative to field. Instead market consolidating with broader compression of probability across all candidates.",
+          "supports": false,
+          "confidenceImpact": -0.05
         }
       ],
       "conclusion": null,
       "createdAt": "2025-12-07T00:00:00Z",
-      "updatedAt": "2025-12-08T12:00:00Z",
+      "updatedAt": "2025-12-08T15:25:00Z",
       "testStartedAt": "2025-12-08T12:00:00Z",
       "trackingMarkets": [
         {
           "market": "Largest Company end of 2025",
-          "baseline": {"NVDA": 0.90, "AAPL": 0.087, "GOOGL": 0.023},
+          "baseline": {
+            "NVDA": 0.9,
+            "AAPL": 0.087,
+            "GOOGL": 0.023
+          },
           "recordedAt": "2025-12-08T12:00:00Z",
           "closesAt": "2025-12-31"
         },
         {
           "market": "Time 2025 Person of the Year",
-          "baseline": {"AI": 0.39, "Jensen Huang": 0.21, "Sam Altman": 0.14, "Pope Leo XIV": 0.09, "Donald Trump": 0.05},
+          "baseline": {
+            "AI": 0.39,
+            "Jensen Huang": 0.21,
+            "Sam Altman": 0.14,
+            "Pope Leo XIV": 0.09,
+            "Donald Trump": 0.05
+          },
           "recordedAt": "2025-12-08T12:00:00Z",
-          "closesAt": "2025-12-31"
+          "closesAt": "2025-12-31",
+          "latestCheck": {
+            "timestamp": "2025-12-08T15:25:00Z",
+            "prices": {
+              "AI": 0.385,
+              "Jensen Huang": 0.195,
+              "Sam Altman": 0.125,
+              "Donald Trump": 0.05
+            },
+            "marketIds": {
+              "AI": 555826,
+              "Jensen Huang": 555836,
+              "Sam Altman": 555837,
+              "Donald Trump": 555821
+            }
+          }
         },
         {
           "market": "Fed rate cuts 2025 (8+)",
-          "baseline": {"YES": "unknown - API limitation"},
+          "baseline": {
+            "YES": "unknown - API limitation"
+          },
           "recordedAt": "2025-12-08T12:00:00Z",
           "closesAt": "2025-12-10",
           "notes": "Very short window (45h), will use for post-resolution analysis"
@@ -169,11 +202,35 @@
     }
   },
   "pipelineStats": {
-    "academic": { "generated": 0, "validated": 0, "invalidated": 0 },
-    "leaderboard": { "generated": 0, "validated": 0, "invalidated": 0 },
-    "platform": { "generated": 0, "validated": 0, "invalidated": 0 },
-    "observation": { "generated": 0, "validated": 0, "invalidated": 0 },
-    "user": { "generated": 0, "validated": 0, "invalidated": 0 },
-    "cross-market": { "generated": 0, "validated": 0, "invalidated": 0 }
+    "academic": {
+      "generated": 0,
+      "validated": 0,
+      "invalidated": 0
+    },
+    "leaderboard": {
+      "generated": 0,
+      "validated": 0,
+      "invalidated": 0
+    },
+    "platform": {
+      "generated": 0,
+      "validated": 0,
+      "invalidated": 0
+    },
+    "observation": {
+      "generated": 0,
+      "validated": 0,
+      "invalidated": 0
+    },
+    "user": {
+      "generated": 0,
+      "validated": 0,
+      "invalidated": 0
+    },
+    "cross-market": {
+      "generated": 0,
+      "validated": 0,
+      "invalidated": 0
+    }
   }
 }
