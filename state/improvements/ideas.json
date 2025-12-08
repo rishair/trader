@@ -1,18 +1,78 @@
 {
   "backlog": [
     {
+      "id": "imp-014",
+      "title": "Winning Bot Tracker - study successful arbitrage wallets",
+      "category": "capability",
+      "leverage": "high",
+      "effort": "medium",
+      "priority": 1,
+      "rationale": "Research says $40M extracted by arb bots, top 3 wallets made $4.2M from 10,200+ trades. Those wallets are on-chain. Instead of guessing what works, study what the pros actually do: which markets, what timing, what size, what patterns. Learn from proven success.",
+      "triageNotes": "HIGHEST PRIORITY. This tells us what's actually exploitable, not what theoretically should be.",
+      "status": "triaged",
+      "outcome": null,
+      "createdAt": "2025-12-08T22:30:00Z",
+      "triagedAt": "2025-12-08T22:30:00Z",
+      "completedAt": null
+    },
+    {
+      "id": "imp-015",
+      "title": "Reality Checker - validate opportunities with real bid/ask",
+      "category": "capability",
+      "leverage": "high",
+      "effort": "low",
+      "priority": 2,
+      "rationale": "Discovered that 2.25% 'arbitrage' in AI model markets vanished after checking actual bid/ask spreads. Mid prices are misleading. Build tool that takes related markets, fetches real ask prices, calculates actual profit after all costs. Would have saved 20 min on AI model analysis.",
+      "triageNotes": "Quick win. Prevents false excitement about opportunities that don't exist.",
+      "status": "triaged",
+      "outcome": null,
+      "createdAt": "2025-12-08T22:30:00Z",
+      "triagedAt": "2025-12-08T22:30:00Z",
+      "completedAt": null
+    },
+    {
+      "id": "imp-016",
+      "title": "Micro-Experiment Framework - test hypotheses with small stakes",
+      "category": "capability",
+      "leverage": "high",
+      "effort": "medium",
+      "priority": 3,
+      "rationale": "Instead of big bets, run tiny tests ($10-50). Measure what actually happens: fill rate, slippage, timing. Learn from real execution, not theory. Structured way to run experiments and log results.",
+      "triageNotes": "After bot tracker informs what to test, this is how we test it.",
+      "status": "triaged",
+      "outcome": null,
+      "createdAt": "2025-12-08T22:30:00Z",
+      "triagedAt": "2025-12-08T22:30:00Z",
+      "completedAt": null
+    },
+    {
+      "id": "imp-017",
+      "title": "Fix shadow detector to use real bid/ask instead of mid prices",
+      "category": "fix",
+      "leverage": "medium",
+      "effort": "low",
+      "priority": 4,
+      "rationale": "Shadow detector currently uses mid prices to detect arbitrage. But mid prices are misleading - actual execution costs more. Should fetch ask prices for YES and NO to calculate real profit. Quick fix.",
+      "triageNotes": "Low effort fix to make existing tool more accurate.",
+      "status": "triaged",
+      "outcome": null,
+      "createdAt": "2025-12-08T22:30:00Z",
+      "triagedAt": "2025-12-08T22:30:00Z",
+      "completedAt": null
+    },
+    {
       "id": "imp-013",
       "title": "Resilient API client with fallbacks",
       "category": "infrastructure",
       "leverage": "medium",
       "effort": "medium",
-      "priority": null,
+      "priority": 5,
       "rationale": "Session reflections show 5+ occurrences of 'Gamma API returning empty results' or 'API inconsistency'. Build a unified API client with: retry logic, automatic fallback from Gamma→CLOB→WebFetch, error logging for patterns. Would reduce friction across all pipelines.",
-      "triageNotes": null,
-      "status": "proposed",
+      "triageNotes": "Deprioritized - not blocking anything critical right now.",
+      "status": "triaged",
       "outcome": null,
       "createdAt": "2025-12-08T18:49:00Z",
-      "triagedAt": null,
+      "triagedAt": "2025-12-08T22:30:00Z",
       "completedAt": null
     },
     {
@@ -183,5 +243,5 @@
       "completedAt": "ISO date | null"
     }
   },
-  "notes": "Track system improvements separately from trading learnings. Next priority: imp-006 (backtest framework). Core trading loop now complete with hypothesis-tester (imp-011). imp-012 fixed pipeline scheduling reliability."
+  "notes": "CURRENT PRIORITY (2025-12-08): Shift from theorizing to learning from what actually works. Key insight: surface-level arbitrage analysis is misleading (AI model 2.25% gap vanished after bid/ask spreads). New approach: (1) Study winning bots to learn what's actually exploitable (imp-014), (2) Build reality checker to validate opportunities with real prices (imp-015), (3) Run micro-experiments with small stakes (imp-016). Shadow detector running but needs fix to use real bid/ask (imp-017). Deprioritized: hyp-007 related market arbitrage (harder than it looks), hyp-002 momentum (passive tracking only)."
 }

@@ -138,6 +138,17 @@
       "references": []
     },
     {
+      "id": "arbitrage-reality-check-2025-12-08",
+      "category": "market",
+      "title": "Surface-Level Arbitrage Analysis is Misleading: Mid Prices vs Actual Execution Costs",
+      "content": "Critical learning from analyzing AI Model December 31 related markets.\n\n**The Setup:**\nFound 12 markets for 'Will X have top AI model on December 31?' Mid prices summed to only 97.75%, suggesting a 2.25% arbitrage opportunity (buy all 12, guaranteed $1 payout, profit 2.3%).\n\n**The Reality:**\nWhen checking actual ASK prices (what you'd pay to buy):\n- Google: 79.5% mid → 80.0% ask (+0.5%)\n- OpenAI: 12.1% mid → 12.8% ask (+0.7%)\n- xAI: 4.05% mid → 4.2% ask (+0.15%)\n- etc.\n\nActual cost to buy all 12: ~99.7%, leaving only 0.3% profit.\n\n**Why This Happens:**\n- Mid price = (bid + ask) / 2\n- You BUY at ask, SELL at bid\n- Market makers set spreads to capture this gap\n- The 'arbitrage' IS the spread that market makers extract\n\n**Key Insight:**\nMarket makers have already priced in cross-market relationships. The apparent gap IS their profit margin. Any arbitrage detector using mid prices will show false positives.\n\n**Implications:**\n1. Shadow detector needs fix: Use actual ask prices, not mid prices (imp-017)\n2. Reality checker tool needed: Before getting excited about any opportunity, calculate actual execution costs (imp-015)\n3. Study winning bots: They've solved this - learn what opportunities they actually capture (imp-014)\n\n**Formula for Real Arbitrage:**\nReal Profit = Guaranteed Payout - Sum(Ask Prices) - Fees - Slippage\n\nIf this is negative, there's no arbitrage.",
+      "source": "Live research session 2025-12-08: Attempted to exploit AI model market discrepancy",
+      "actionable": true,
+      "appliedTo": ["hyp-007", "strat-002", "imp-014", "imp-015", "imp-017"],
+      "createdAt": "2025-12-08T22:45:00Z",
+      "references": []
+    },
+    {
       "id": "top-trader-patterns-2025-12-08",
       "category": "market",
       "title": "Top Polymarket Trader Patterns: Sports Focus, High Frequency, Concentrated Bets",
