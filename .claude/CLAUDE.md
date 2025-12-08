@@ -249,6 +249,7 @@ Guidelines:
 - Don't wait until end of session - commit as you go
 - Keep commits atomic and descriptive
 - Push to `origin main` after each commit
+- **Include GitHub link in Telegram**: When notifying via Telegram about a commit, include the link: `https://github.com/rishair/trader/commit/<hash>`
 
 ## Deploying Changes
 
