@@ -134,7 +134,66 @@ const PIPELINES: Record<string, string> = {
   'daily-briefing': 'tools/pipelines/daily-briefing.ts',
   'price-drift-detector': 'tools/pipelines/price-drift-detector.ts',
   'hypothesis-tester': 'tools/pipelines/hypothesis-tester.ts',
+  'price-tracker': 'tools/pipelines/price-tracker.ts',
 };
+
+// Recurring pipeline configuration - pipelines that should always have a future task
+interface RecurringPipeline {
+  name: string;
+  frequency: string;
+  description: string;
+  priority: 'low' | 'medium' | 'high' | 'critical';
+}
+
+const RECURRING_PIPELINES: RecurringPipeline[] = [
+  { name: 'closing-scanner', frequency: '6h', description: 'Closing-soon scanner: Find markets closing in 72h, check momentum, generate hypotheses', priority: 'high' },
+  { name: 'health-check', frequency: '12h', description: 'Health check: Analyze system state, propose actions for user approval', priority: 'high' },
+  { name: 'leaderboard-tracker', frequency: '24h', description: 'Leaderboard tracker: Track top traders, analyze positions, generate follow signals', priority: 'high' },
+  { name: 'daily-briefing', frequency: '24h', description: 'Daily briefing: Send CEO summary via Telegram, ask for priorities', priority: 'high' },
+  { name: 'price-drift-detector', frequency: '1h', description: 'Price drift detector: Monitor markets for sudden moves, generate follow signals', priority: 'high' },
+  { name: 'hypothesis-tester', frequency: '4h', description: 'Hypothesis tester: Monitor entry/exit conditions, execute trades, track results', priority: 'high' },
+  { name: 'price-tracker', frequency: '4h', description: 'Price tracker: Update portfolio prices, check exit triggers', priority: 'high' },
+];
+
+/**
+ * Ensure all recurring pipelines have at least one future task scheduled
+ */
+function ensurePipelinesScheduled(schedule: Schedule): boolean {
+  let changed = false;
+  const now = new Date();
+
+  for (const pipeline of RECURRING_PIPELINES) {
+    // Check if there's already a pending task for this pipeline
+    const existingTask = schedule.pendingTasks.find(
+      t => t.type === 'pipeline' && t.context?.pipeline === pipeline.name
+    );
+
+    if (!existingTask) {
+      // No pending task - schedule one
+      const frequencyMs = parseFrequency(pipeline.frequency);
+      const scheduledFor = new Date(now.getTime() + frequencyMs);
+
+      const newTask: ScheduledTask = {
+        id: `pipeline-${pipeline.name}-${Date.now()}`,
+        type: 'pipeline',
+        description: pipeline.description,
+        scheduledFor: scheduledFor.toISOString(),
+        priority: pipeline.priority,
+        context: {
+          pipeline: pipeline.name,
+          recurring: true,
+          frequency: pipeline.frequency,
+        }
+      };
+
+      schedule.pendingTasks.push(newTask);
+      log(`Scheduled missing pipeline: ${pipeline.name} for ${scheduledFor.toISOString()}`);
+      changed = true;
+    }
+  }
+
+  return changed;
+}
 
 async function executePipeline(pipelineName: string): Promise<{ success: boolean; output: string }> {
   const scriptPath = PIPELINES[pipelineName];
@@ -739,6 +798,12 @@ async function runDaemon(): Promise<void> {
 
     // Priority 3: Check for scheduled tasks (legacy support)
     const schedule = loadSchedule();
+
+    // Ensure all recurring pipelines are scheduled
+    if (ensurePipelinesScheduled(schedule)) {
+      saveSchedule(schedule);
+    }
+
     const task = getNextTask(schedule);
 
     if (task) {

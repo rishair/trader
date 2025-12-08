@@ -1,6 +1,135 @@
 {
   "discovered": [
     {
+      "id": "reworkd",
+      "name": "Reworkd",
+      "url": "https://www.reworkd.ai/",
+      "type": "api",
+      "category": "scraping",
+      "status": "discovered",
+      "evaluation": {
+        "quality": "high",
+        "pros": [
+          "YC-backed ($4M+, Paul Graham invested)",
+          "Build scraper once, runs automatically",
+          "Self-healing - adapts to site changes",
+          "No code needed",
+          "Generates actual code, not LLM predictions"
+        ],
+        "cons": [
+          "Pricing unknown - need to check",
+          "May be overkill for simple scrapers"
+        ]
+      },
+      "recommendation": "EVALUATE",
+      "reason": "Perfect for 'build once, run forever' scraping. Could solve leaderboard scraper problem.",
+      "discoveredAt": "2025-12-08T19:00:00Z",
+      "installedAt": null
+    },
+    {
+      "id": "parallel-ai",
+      "name": "Parallel AI",
+      "url": "https://parallel.ai/",
+      "type": "api",
+      "category": "research",
+      "status": "discovered",
+      "evaluation": {
+        "quality": "high",
+        "pros": [
+          "20,000 free requests",
+          "Task API for deep research with structured outputs",
+          "Search API for ranked web results",
+          "$0.005-$2.40 per request",
+          "SOC 2 compliant"
+        ],
+        "cons": [
+          "Pay-per-request, not build-once",
+          "May be overkill for simple scraping"
+        ]
+      },
+      "recommendation": "REFERENCE",
+      "reason": "Good for research tasks, less ideal for repeated scraping. Keep for strategy research.",
+      "discoveredAt": "2025-12-08T19:00:00Z",
+      "installedAt": null
+    },
+    {
+      "id": "scrapfly",
+      "name": "Scrapfly",
+      "url": "https://scrapfly.io/",
+      "type": "api",
+      "category": "scraping",
+      "status": "discovered",
+      "evaluation": {
+        "quality": "medium",
+        "pros": [
+          "Anti-bot bypass",
+          "JS rendering",
+          "Twitter/X scraping guide",
+          "$20-100/month typical",
+          "Python/TypeScript SDKs"
+        ],
+        "cons": [
+          "Infrastructure focused, not AI-assisted",
+          "Still need to write selectors manually"
+        ]
+      },
+      "recommendation": "REFERENCE",
+      "reason": "Good proxy/rendering infrastructure if we need to scrape protected sites like Twitter.",
+      "discoveredAt": "2025-12-08T19:00:00Z",
+      "installedAt": null
+    },
+    {
+      "id": "browser-use",
+      "name": "Browser Use",
+      "url": "https://github.com/browser-use/browser-use",
+      "type": "github",
+      "category": "scraping",
+      "status": "discovered",
+      "evaluation": {
+        "quality": "high",
+        "pros": [
+          "Open source (MIT)",
+          "60k+ GitHub stars",
+          "Works with any LLM",
+          "Can self-host for free"
+        ],
+        "cons": [
+          "Cloud version is $300/month minimum",
+          "Requires Python 3.11+",
+          "LLM cost per scrape"
+        ]
+      },
+      "recommendation": "REFERENCE",
+      "reason": "Open source option if we want to self-host. Cloud too expensive.",
+      "discoveredAt": "2025-12-08T19:00:00Z",
+      "installedAt": null
+    },
+    {
+      "id": "stagehand",
+      "name": "Stagehand",
+      "url": "https://github.com/browserbase/stagehand",
+      "type": "github",
+      "category": "scraping",
+      "status": "discovered",
+      "evaluation": {
+        "quality": "high",
+        "pros": [
+          "TypeScript (fits our stack)",
+          "Extends Playwright",
+          "3 simple AI methods: act, extract, observe",
+          "Open source"
+        ],
+        "cons": [
+          "Still requires LLM per scrape",
+          "Less mature than browser-use"
+        ]
+      },
+      "recommendation": "EVALUATE",
+      "reason": "TypeScript alternative to browser-use. Could be good for our stack.",
+      "discoveredAt": "2025-12-08T19:00:00Z",
+      "installedAt": null
+    },
+    {
       "id": "polymarket-official-resources",
       "name": "Polymarket Official Resources",
       "url": null,

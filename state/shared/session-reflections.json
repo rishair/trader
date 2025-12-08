@@ -142,6 +142,26 @@
       "improvementIdea": null,
       "learningLogged": false,
       "notes": "hyp-002 (momentum) is actively collecting data but needs 1-2 weeks for meaningful evidence. hyp-004 stuck in proposed - needs imp-009 built. hyp-005 position slightly down but within parameters. Engine state still 'starved' - only 2 testable hypotheses."
+    },
+    {
+      "sessionId": "sess-20251209-020000",
+      "agent": "agent-engineer",
+      "timestamp": "2025-12-09T02:00:00Z",
+      "responsibility": "build-sprint",
+      "taskDescription": "Review improvement backlog, implement highest-priority item, fix pipeline scheduling reliability",
+      "completed": true,
+      "friction": [
+        "Backlog was nearly empty - only imp-006 (backtest framework) remained and it was deferred as high effort",
+        "Had to identify new improvement from session reflection patterns instead of backlog"
+      ],
+      "mistakes": [],
+      "rootCauses": [
+        "System maturing quickly - most critical improvements already done",
+        "Need more hypothesis testing time before backtest framework becomes valuable"
+      ],
+      "improvementIdea": "imp-012",
+      "learningLogged": false,
+      "notes": "Identified from session reflections that 'closing-scanner infrastructure not yet built/scheduled' and 'Price tracker pipeline needed to be run manually'. Root cause: pipelines could fall off schedule if rescheduling failed. Built imp-012: RECURRING_PIPELINES config + ensurePipelinesScheduled() function in daemon.ts. Now daemon verifies all 7 recurring pipelines have pending tasks on every tick. Also added price-tracker to recurring list. This is a resilience improvement - system self-heals if scheduling breaks."
     }
   ],
   "schema": {
