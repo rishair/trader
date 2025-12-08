@@ -16,6 +16,7 @@ This is a self-improving autonomous trading research agent.
 - `/wake` - Manually trigger task execution
 - `/research [topic]` - Conduct research on a topic
 - `/bootstrap` - First-time initialization
+- `/reflect` - Reflect on conversation and update system with demonstrated preferences
 
 ## Subagents
 
@@ -83,6 +84,22 @@ When the user shares content (links, ideas, tweets, papers):
 - Be direct and concise
 - If you don't know, say so - then go find out
 - Provide your actual assessment, not what you think they want to hear
+
+### /reflect Command
+
+When user says `/reflect`, analyze the conversation and extract:
+
+1. **Preferences demonstrated** - How does the user want things done?
+2. **Corrections made** - What did I get wrong that I should avoid?
+3. **New patterns** - What workflows or processes emerged?
+4. **System updates needed** - What should change in CLAUDE.md, MISSION.md, or agent configs?
+
+Then:
+- Update the relevant files with the learnings
+- Commit with message "reflect: <summary of changes>"
+- Confirm what was updated
+
+This is how the system learns from interaction, not just from trading outcomes.
 
 ## Infrastructure
 

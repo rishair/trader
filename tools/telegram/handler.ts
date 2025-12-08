@@ -8,11 +8,149 @@ const STATE_DIR = path.join(__dirname, '../../state');
 const INBOX_FILE = path.join(STATE_DIR, 'inbox.json');
 const APPROVALS_FILE = path.join(STATE_DIR, 'pending_approvals.json');
 const STATUS_FILE = path.join(STATE_DIR, 'status.md');
+const ERRORS_FILE = path.join(STATE_DIR, 'errors.json');
 const PROJECT_ROOT = path.join(__dirname, '../..');
 const LOG_DIR = path.join(STATE_DIR, 'logs');
 
 // Track if a Claude session is currently running
 let claudeSessionActive = false;
+
+// ============ Error Tracking & Self-Healing ============
+
+interface TrackedError {
+  id: string;
+  timestamp: string;
+  context: string;
+  error: string;
+  stack?: string;
+  input?: string;
+  resolved: boolean;
+  resolution?: string;
+  autoHealed?: boolean;
+}
+
+interface ErrorLog {
+  errors: TrackedError[];
+  stats: {
+    total: number;
+    resolved: number;
+    autoHealed: number;
+    lastError?: string;
+  };
+}
+
+function loadErrors(): ErrorLog {
+  try {
+    return JSON.parse(fs.readFileSync(ERRORS_FILE, 'utf-8'));
+  } catch {
+    return { errors: [], stats: { total: 0, resolved: 0, autoHealed: 0 } };
+  }
+}
+
+function saveErrors(log: ErrorLog): void {
+  fs.writeFileSync(ERRORS_FILE, JSON.stringify(log, null, 2));
+}
+
+function trackError(context: string, error: Error | string, input?: string): string {
+  const log = loadErrors();
+  const id = `err-${Date.now()}`;
+  const errorStr = error instanceof Error ? error.message : error;
+  const stack = error instanceof Error ? error.stack : undefined;
+
+  log.errors.push({
+    id,
+    timestamp: new Date().toISOString(),
+    context,
+    error: errorStr,
+    stack,
+    input,
+    resolved: false,
+  });
+
+  log.stats.total++;
+  log.stats.lastError = new Date().toISOString();
+
+  // Keep only last 100 errors
+  if (log.errors.length > 100) {
+    log.errors = log.errors.slice(-100);
+  }
+
+  saveErrors(log);
+  console.error(`[ERROR ${id}] ${context}: ${errorStr}`);
+  return id;
+}
+
+function resolveError(id: string, resolution: string, autoHealed = false): void {
+  const log = loadErrors();
+  const err = log.errors.find(e => e.id === id);
+  if (err) {
+    err.resolved = true;
+    err.resolution = resolution;
+    err.autoHealed = autoHealed;
+    log.stats.resolved++;
+    if (autoHealed) log.stats.autoHealed++;
+    saveErrors(log);
+  }
+}
+
+// Known error patterns and their fixes
+const SELF_HEAL_PATTERNS: Array<{
+  pattern: RegExp;
+  context: string;
+  fix: () => Promise<string>;
+}> = [
+  {
+    pattern: /ENOENT.*inbox\.json/i,
+    context: 'Missing inbox file',
+    fix: async () => {
+      const defaultInbox: Inbox = { items: [], schema: {}, notes: '' };
+      fs.writeFileSync(INBOX_FILE, JSON.stringify(defaultInbox, null, 2));
+      return 'Created default inbox.json';
+    },
+  },
+  {
+    pattern: /ENOENT.*pending_approvals\.json/i,
+    context: 'Missing approvals file',
+    fix: async () => {
+      const defaultApprovals: Approvals = { approvals: [], schema: {}, notes: '' };
+      fs.writeFileSync(APPROVALS_FILE, JSON.stringify(defaultApprovals, null, 2));
+      return 'Created default pending_approvals.json';
+    },
+  },
+  {
+    pattern: /ENOENT.*status\.md/i,
+    context: 'Missing status file',
+    fix: async () => {
+      fs.writeFileSync(STATUS_FILE, '# Status\n\nNo status available yet.');
+      return 'Created default status.md';
+    },
+  },
+  {
+    pattern: /SyntaxError.*JSON/i,
+    context: 'Corrupted JSON file',
+    fix: async () => {
+      // This is trickier - we'd need to know which file
+      return 'JSON parse error detected - manual intervention may be needed';
+    },
+  },
+];
+
+async function attemptSelfHeal(error: Error | string): Promise<{ healed: boolean; action: string }> {
+  const errorStr = error instanceof Error ? error.message : error;
+
+  for (const pattern of SELF_HEAL_PATTERNS) {
+    if (pattern.pattern.test(errorStr)) {
+      try {
+        const result = await pattern.fix();
+        return { healed: true, action: result };
+      } catch (fixError) {
+        return { healed: false, action: `Self-heal failed: ${fixError}` };
+      }
+    }
+  }
+
+  return { healed: false, action: 'No automatic fix available' };
+}
 
 // ============ Inbox Management ============
 
@@ -269,6 +407,7 @@ async function handleMessage(text: string, chatId: string): Promise<void> {
 *Info:*
 /status - Current status
 /pending - Show pending approvals
+/errors - Recent errors
 /help - This help
 
 *Approvals:*
@@ -280,6 +419,7 @@ async function handleMessage(text: string, chatId: string): Promise<void> {
 /wake - Run next scheduled task
 /process - Process inbox items
 /claude <prompt> - Run custom prompt
+/heal - AI-analyze and fix errors
 
 *Content:*
 Just send me links, ideas, news - I'll add to inbox.`,
@@ -414,6 +554,52 @@ Read MISSION.md for context.`,
     return;
   }
 
+  if (lower === '/errors') {
+    const log = loadErrors();
+    const recent = log.errors.slice(-5).reverse();
+
+    if (recent.length === 0) {
+      await sendMessage('✅ No errors recorded.', chatId);
+      return;
+    }
+
+    let msg = `*Recent Errors (${log.stats.total} total, ${log.stats.autoHealed} auto-healed):*\n\n`;
+    for (const err of recent) {
+      const status = err.resolved ? (err.autoHealed ? '⚡' : '✅') : '❌';
+      msg += `${status} \`${err.id}\`\n`;
+      msg += `${err.context}: ${err.error.slice(0, 100)}\n`;
+      msg += `${err.timestamp}\n`;
+      if (err.resolution) msg += `Fix: ${err.resolution}\n`;
+      msg += '\n';
+    }
+    await sendMessage(msg, chatId);
+    return;
+  }
+
+  if (lower === '/heal') {
+    // Trigger Claude to analyze and fix errors
+    const log = loadErrors();
+    const unresolved = log.errors.filter(e => !e.resolved).slice(-5);
+
+    if (unresolved.length === 0) {
+      await sendMessage('✅ No unresolved errors to heal.', chatId);
+      return;
+    }
+
+    const errorSummary = unresolved.map(e => `- ${e.context}: ${e.error}`).join('\n');
+
+    await spawnClaudeSession(
+      `You are the trader agent. Analyze these recent errors and fix them if possible:
+
+${errorSummary}
+
+Check the relevant files, understand what went wrong, and apply fixes. Update state/errors.json to mark resolved errors. Be concise.`,
+      chatId,
+      'heal-errors'
+    );
+    return;
+  }
+
   // ===== Content (not a command) =====
 
   const { type, title } = detectContentType(trimmed);
@@ -434,9 +620,32 @@ export async function startHandler(): Promise<void> {
     console.log(`[${new Date().toISOString()}] ${msg.from}: ${msg.text}`);
     try {
       await handleMessage(msg.text, msg.chatId);
-    } catch (error) {
-      console.error('Error handling message:', error);
-      await sendMessage('❌ Error processing message. Check logs.', msg.chatId);
+    } catch (error: any) {
+      // Track the error
+      const errorId = trackError('handleMessage', error, msg.text);
+
+      // Attempt self-healing
+      const healResult = await attemptSelfHeal(error);
+
+      if (healResult.healed) {
+        resolveError(errorId, healResult.action, true);
+        await sendMessage(`⚡ Auto-healed: ${healResult.action}\nRetrying...`, msg.chatId);
+
+        // Retry the message
+        try {
+          await handleMessage(msg.text, msg.chatId);
+          return;
+        } catch (retryError: any) {
+          trackError('handleMessage-retry', retryError, msg.text);
+        }
+      }
+
+      // Send detailed error to user
+      const errorMsg = error instanceof Error ? error.message : String(error);
+      await sendMessage(
+        `❌ Error: ${errorMsg.slice(0, 200)}\n\nID: ${errorId}\nUse /errors to see recent errors.`,
+        msg.chatId
+      );
     }
   });
 }
