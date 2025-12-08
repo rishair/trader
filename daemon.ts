@@ -347,7 +347,6 @@ async function executeTask(task: ScheduledTask): Promise<void> {
     const claude = spawn('claude', [
       '-p', prompt,
       '--output-format', 'text',
-      '--dangerously-skip-permissions',
       '--permission-mode', 'bypassPermissions'
     ], {
       cwd: path.join(__dirname),
@@ -525,7 +524,6 @@ switch (command) {
     const queryPrompt = process.argv.slice(3).join(' ') || 'What is your current status?';
     spawn('claude', [
       '-p', `You are the trader agent. Read state/status.md and answer this query: ${queryPrompt}`,
-      '--dangerously-skip-permissions',
       '--permission-mode', 'bypassPermissions'
     ], {
       cwd: __dirname,

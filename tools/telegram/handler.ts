@@ -346,7 +346,6 @@ async function spawnClaudeSession(prompt: string, chatId: string, sessionName: s
     const claude = spawn('claude', [
       '-p', prompt,
       '--output-format', 'text',
-      '--dangerously-skip-permissions',
       '--permission-mode', 'bypassPermissions'
     ], {
       cwd: PROJECT_ROOT,
