@@ -69,11 +69,17 @@
           "observation": "Time POY 2025 - 6h check: Prices reverted to baseline (AI 39%, Jensen 21%, Sam 14%, Trump 5%). Earlier dip was noise, not signal. Market showing mean-reversion, not momentum. Insufficient data to validate or invalidate - need more observation over days, not hours.",
           "supports": null,
           "confidenceImpact": 0
+        },
+        {
+          "date": "2025-12-08",
+          "observation": "Market scan check: Time POY prices stable at baseline (AI 39%, Jensen 21%, Sam 13%, Pope 8%, Trump 5%). Largest Company: NVDA 91% (+1), AAPL 7.8% (-1.2). Slight momentum toward leader NVDA, slight away from challenger AAPL. Consistent with weak momentum hypothesis but data still too noisy for conviction.",
+          "supports": null,
+          "confidenceImpact": 0
         }
       ],
       "conclusion": null,
       "createdAt": "2025-12-07T00:00:00Z",
-      "updatedAt": "2025-12-08T18:30:00Z",
+      "updatedAt": "2025-12-08T22:15:00Z",
       "testStartedAt": "2025-12-08T12:00:00Z",
       "trackingMarkets": [
         {
@@ -169,12 +175,52 @@
       "source": "user-shared-content"
     },
     {
+      "id": "hyp-006",
+      "statement": "High volume in low-probability sports outcomes indicates informed betting or arbitrage opportunities from other platforms",
+      "rationale": "Carolina Panthers has $50M volume at only 1% probability for Super Bowl 2026. This is anomalous - volume usually correlates with probability. Possible explanations: (1) large arbitrage plays from sports books, (2) informed bettors accumulating, (3) pure speculation. If #1 or #2, following volume could be profitable.",
+      "testMethod": "1. Track volume/probability ratios across all Super Bowl outcomes. 2. Identify outliers where volume >> probability suggests. 3. Compare Polymarket odds to Vegas/offshore books. 4. Monitor if high-volume low-prob teams see probability increases over time.",
+      "status": "proposed",
+      "confidence": 0.35,
+      "evidence": [
+        {
+          "date": "2025-12-08",
+          "observation": "Initial scan: Panthers $50M volume at 1%, Bengals $37M at <1%, Cowboys $13.5M at <1%. All have volume vastly exceeding probability-adjusted expectations. Need to compare to Vegas lines and monitor for price movement.",
+          "supports": null,
+          "confidenceImpact": 0
+        }
+      ],
+      "conclusion": null,
+      "createdAt": "2025-12-08T22:00:00Z",
+      "updatedAt": "2025-12-08T22:00:00Z",
+      "source": "market-scan"
+    },
+    {
+      "id": "hyp-007",
+      "statement": "Related markets on Polymarket exhibit exploitable price discrepancies due to fragmented liquidity",
+      "rationale": "Time POY 'Human' market shows 58.5% YES, implying 41.5% non-human. But the only non-human candidate (AI) in the main market is at 39%. This 2.5% gap may be exploitable. Similar patterns may exist in other related market pairs.",
+      "testMethod": "1. Identify related market pairs (Human/Non-human vs main market, conference vs team totals, etc.). 2. Calculate implied probabilities from each. 3. Look for gaps >2% after fees. 4. Paper trade arbitrage positions. 5. Track if gaps close over time.",
+      "status": "proposed",
+      "confidence": 0.45,
+      "evidence": [
+        {
+          "date": "2025-12-08",
+          "observation": "Time POY markets: AI = 39% in main market. 'Human' market = 58.5% (implies non-human 41.5%). Gap of 2.5%. However, need to account for trading fees and slippage. With 0.5-1% fees each side, net arbitrage may be <1%. Small but potentially positive.",
+          "supports": null,
+          "confidenceImpact": 0
+        }
+      ],
+      "conclusion": null,
+      "createdAt": "2025-12-08T22:00:00Z",
+      "updatedAt": "2025-12-08T22:00:00Z",
+      "source": "market-scan"
+    },
+    {
       "id": "hyp-005",
       "statement": "Multi-outcome markets with close competitors misprice volatility, underweighting the probability of reversals",
       "rationale": "In the 'Largest Company end of 2025' market, NVDA is priced at 89% and AAPL at 9%, despite AAPL market cap being only 5-7% behind NVDA. Market may be extrapolating recent momentum rather than pricing in realistic volatility scenarios.",
       "testMethod": "Track multi-outcome markets where gap between leading outcomes is <10%. Compare market pricing to volatility-adjusted fair value. Execute trades where mispricing is detected.",
       "status": "testing",
-      "confidence": 0.45,
+      "confidence": 0.40,
       "evidence": [
         {
           "date": "2025-12-07",
@@ -187,11 +233,17 @@
           "observation": "AAPL position update: price dropped from 9¢ to 8.45¢ (-6.1%). Unrealized P&L: -$30.55. Still above stop-loss (4¢). Market moving against us slightly but within expected volatility. 23 days remaining until resolution.",
           "supports": null,
           "confidenceImpact": -0.05
+        },
+        {
+          "date": "2025-12-08",
+          "observation": "Market scan update: AAPL now at 7.8¢ (down from 9¢ entry, -13.3%). NVDA at 91% (up from 90%). Market continues trending toward incumbent (NVDA) despite close underlying fundamentals. Unrealized P&L: -$66.66. Position still above 4¢ stop-loss but hypothesis looking weaker. May need longer timeframe or stronger catalyst for reversal.",
+          "supports": false,
+          "confidenceImpact": -0.05
         }
       ],
       "conclusion": null,
       "createdAt": "2025-12-07T12:00:00Z",
-      "updatedAt": "2025-12-08T18:30:00Z",
+      "updatedAt": "2025-12-08T22:15:00Z",
       "linkedTrade": "trade-001"
     }
   ],

@@ -1,19 +1,21 @@
 {
-  "lastEvaluated": "2025-12-08T18:06:46.653Z",
+  "lastEvaluated": "2025-12-08T22:15:00.000Z",
   "hypothesisHealth": {
-    "total": 5,
+    "total": 7,
     "byStatus": {
-      "proposed": 1,
+      "proposed": 3,
       "testing": 3,
       "validated": 0,
       "invalidated": 1
     },
-    "avgConviction": 0.39,
-    "testableNow": 2,
+    "avgConviction": 0.38,
+    "testableNow": 4,
     "blockedByCapability": 2,
     "testableIds": [
       "hyp-002",
-      "hyp-005"
+      "hyp-005",
+      "hyp-006",
+      "hyp-007"
     ]
   },
   "blockedHypotheses": [
@@ -33,18 +35,18 @@
     }
   ],
   "currentPriority": {
-    "action": "continue-testing",
-    "target": "hyp-002",
-    "reason": "Momentum hypothesis actively tracking Time POY and Largest Company markets. Need daily price checks over next 1-2 weeks for meaningful data."
+    "action": "test-new-hypotheses",
+    "target": "hyp-006,hyp-007",
+    "reason": "Two new hypotheses from market-scan: sports volume anomaly and related-market arbitrage. Both can be tested without new infrastructure. hyp-002 and hyp-005 continuing to collect data."
   },
-  "engineState": "starved",
+  "engineState": "healthy",
   "engineStates": {
     "starved": "Too few testable hypotheses (<3) - need to generate or unblock",
     "healthy": "3-10 testable hypotheses with good conviction spread",
     "saturated": "Too many untested hypotheses (>10) - focus on testing not generating"
   },
   "metrics": {
-    "hypothesesGeneratedThisWeek": 0,
+    "hypothesesGeneratedThisWeek": 2,
     "hypothesesTestedThisWeek": 2,
     "hypothesesValidatedThisWeek": 0,
     "hypothesesInvalidatedThisWeek": 1,
@@ -56,8 +58,8 @@
   "followSignalsGenerated": 0,
   "lastHealthCheck": "2025-12-08T18:30:00.000Z",
   "daemon": {
-    "version": "63d65d3",
-    "startedAt": "2025-12-08T18:06:45.613Z",
-    "pid": 19912
+    "version": "0ec2208",
+    "startedAt": "2025-12-08T18:09:32.800Z",
+    "pid": 20180
   }
 }
