@@ -1,0 +1,93 @@
+{
+  "timestamp": "2025-12-08T18:30:00Z",
+  "data_source": "Polymarket Web Interface",
+  "markets": [
+    {
+      "market_name": "Largest Company end of 2025",
+      "market_url": "https://polymarket.com/event/largest-company-end-of-2025",
+      "closes": "2025-12-31",
+      "description": "Which company will have the largest market capitalization at the end of 2025?",
+      "total_volume": "$51M",
+      "outcomes": [
+        {
+          "outcome": "NVIDIA",
+          "yes_price": 0.91,
+          "no_price": 0.10,
+          "implied_probability": 0.91,
+          "implied_probability_pct": 91.0,
+          "status": "LEADING - Strong consensus"
+        },
+        {
+          "outcome": "Apple",
+          "yes_price": 0.075,
+          "no_price": 0.926,
+          "implied_probability": 0.074,
+          "implied_probability_pct": 7.4,
+          "status": "DISTANT SECOND"
+        },
+        {
+          "outcome": "Alphabet (Google)",
+          "yes_price": 0.015,
+          "no_price": 0.987,
+          "implied_probability": 0.014,
+          "implied_probability_pct": 1.4,
+          "status": "TAIL"
+        }
+      ]
+    },
+    {
+      "market_name": "Time 2025 Person of the Year",
+      "market_url": "https://polymarket.com/event/time-2025-person-of-the-year",
+      "closes": "2025-12-31",
+      "description": "Who will be named Time Magazine's 2025 Person of the Year?",
+      "total_volume": "$24M",
+      "outcomes": [
+        {
+          "outcome": "Artificial Intelligence",
+          "yes_price": 0.40,
+          "no_price": 0.60,
+          "implied_probability": 0.40,
+          "implied_probability_pct": 40.0,
+          "status": "LEADING - Strong consensus"
+        },
+        {
+          "outcome": "Jensen Huang",
+          "yes_price": 0.21,
+          "no_price": 0.80,
+          "implied_probability": 0.21,
+          "implied_probability_pct": 21.0,
+          "status": "SECOND - CEO of NVIDIA"
+        },
+        {
+          "outcome": "Sam Altman",
+          "yes_price": 0.13,
+          "no_price": 0.88,
+          "implied_probability": 0.13,
+          "implied_probability_pct": 13.0,
+          "status": "THIRD - CEO of OpenAI"
+        },
+        {
+          "outcome": "Donald Trump",
+          "yes_price": 0.051,
+          "no_price": 0.950,
+          "implied_probability": 0.051,
+          "implied_probability_pct": 5.1,
+          "status": "TAIL - Political figure"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "largest_company": {
+      "clear_favorite": "NVIDIA",
+      "favorite_probability": "91%",
+      "key_insight": "Market shows near-consensus that NVIDIA will be largest company by year-end. Reflects strong conviction in AI/chip sector dominance."
+    },
+    "time_person": {
+      "clear_favorite": "Artificial Intelligence",
+      "favorite_probability": "40%",
+      "key_insight": "AI remains the dominant narrative for 2025. Combined AI-adjacent outcomes (AI + Jensen Huang + Sam Altman) total ~74%, showing concentrated narrative around AI/tech leadership."
+    }
+  },
+  "notes": "Prices current as of December 8, 2025. Both markets close December 31, 2025 (23 days remaining). Data fetched from Polymarket web interface."
+}
