@@ -188,7 +188,10 @@ This will:
 ## Operational Learnings
 
 ### Process Management
-- **Never manually start processes** - Always use `npm run deploy` or `systemctl restart`. Starting processes manually while systemd services exist causes duplicates.
+- **Use `npm run deploy`** - Works from anywhere:
+  - On local machine: SSHs to server and deploys
+  - On server (trader): Pulls latest and restarts services locally
+- **Never manually start processes** - Starting processes manually while systemd services exist causes duplicates
 - **Check what's running first** - Before killing/starting anything: `ps aux | grep <process>` and `systemctl status <service>`
 
 ### Claude CLI Session Flags
