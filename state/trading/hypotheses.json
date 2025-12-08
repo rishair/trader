@@ -498,6 +498,120 @@
         "signalStrength": "extreme",
         "detectedAt": "2025-12-08T22:13:01.151Z"
       }
+    },
+    {
+      "id": "hyp-drift-1765235704569",
+      "statement": "Follow informed money: \"will-openai-have-the-top-ai-model-on-december-31\" drift signal suggests YES continuation",
+      "rationale": "Price moved 28.3% in 62 minutes (extreme signal). Volume $115k. Hypothesis: someone knows something, follow the move.",
+      "source": "platform",
+      "sourcePipeline": "price-drift-detector",
+      "testMethod": "Buy YES at current price (~16¢), target 30¢ or hold.",
+      "entryRules": "Entry: 16¢, Signal strength: extreme, Volume: $115k",
+      "exitRules": "Target: 30¢, Stop: 10¢",
+      "expectedWinRate": 0.55,
+      "expectedPayoff": 1.4,
+      "minSampleSize": 10,
+      "status": "proposed",
+      "confidence": 0.5,
+      "evidence": [
+        {
+          "type": "signal",
+          "description": "Drift detected: 28.3% UP in 62min",
+          "impact": "strong_for",
+          "addedAt": "2025-12-08T23:15:04.569Z"
+        }
+      ],
+      "conclusion": null,
+      "createdAt": "2025-12-08T23:15:04.569Z",
+      "updatedAt": "2025-12-08T23:15:04.569Z",
+      "linkedMarket": {
+        "slug": "will-openai-have-the-top-ai-model-on-december-31",
+        "question": "Will OpenAI have the top AI model on December 31?",
+        "tokenId": "29370433468126418379827896143797575739436853610287532509760876690489490660887"
+      },
+      "driftData": {
+        "previousPrice": 0.122,
+        "currentPrice": 0.1565,
+        "priceChangePct": 0.2827868852459017,
+        "signalStrength": "extreme",
+        "detectedAt": "2025-12-08T23:15:03.011Z"
+      }
+    },
+    {
+      "id": "hyp-drift-1765235704570",
+      "statement": "Follow informed money: \"will-microsoft-be-the-largest-company-in-the-world-by-market-cap-on-december-31-2025\" drift signal suggests NO continuation",
+      "rationale": "Price moved -20.0% in 62 minutes (extreme signal). Volume $75k. Hypothesis: someone knows something, follow the move.",
+      "source": "platform",
+      "sourcePipeline": "price-drift-detector",
+      "testMethod": "Buy NO at current price (~0¢), target 5¢ or hold.",
+      "entryRules": "Entry: 0¢, Signal strength: extreme, Volume: $75k",
+      "exitRules": "Target: 5¢, Stop: 2¢",
+      "expectedWinRate": 0.55,
+      "expectedPayoff": 1.4,
+      "minSampleSize": 10,
+      "status": "proposed",
+      "confidence": 0.5,
+      "evidence": [
+        {
+          "type": "signal",
+          "description": "Drift detected: -20.0% DOWN in 62min",
+          "impact": "strong_for",
+          "addedAt": "2025-12-08T23:15:04.570Z"
+        }
+      ],
+      "conclusion": null,
+      "createdAt": "2025-12-08T23:15:04.570Z",
+      "updatedAt": "2025-12-08T23:15:04.570Z",
+      "linkedMarket": {
+        "slug": "will-microsoft-be-the-largest-company-in-the-world-by-market-cap-on-december-31-2025",
+        "question": "Will Microsoft be the largest company in the world by market cap on December 31?",
+        "tokenId": "51657657151055530627321198005838882818455292318658915621742481565942363716363"
+      },
+      "driftData": {
+        "previousPrice": 0.0025,
+        "currentPrice": 0.002,
+        "priceChangePct": -0.2,
+        "signalStrength": "extreme",
+        "detectedAt": "2025-12-08T23:15:00.330Z"
+      }
+    },
+    {
+      "id": "hyp-drift-1765235704571",
+      "statement": "Follow informed money: \"will-anthropic-have-the-top-ai-model-on-december-31\" drift signal suggests NO continuation",
+      "rationale": "Price moved -18.7% in 62 minutes (extreme signal). Volume $75k. Hypothesis: someone knows something, follow the move.",
+      "source": "platform",
+      "sourcePipeline": "price-drift-detector",
+      "testMethod": "Buy NO at current price (~1¢), target 5¢ or hold.",
+      "entryRules": "Entry: 1¢, Signal strength: extreme, Volume: $75k",
+      "exitRules": "Target: 5¢, Stop: 3¢",
+      "expectedWinRate": 0.55,
+      "expectedPayoff": 1.4,
+      "minSampleSize": 10,
+      "status": "proposed",
+      "confidence": 0.5,
+      "evidence": [
+        {
+          "type": "signal",
+          "description": "Drift detected: -18.7% DOWN in 62min",
+          "impact": "strong_for",
+          "addedAt": "2025-12-08T23:15:04.571Z"
+        }
+      ],
+      "conclusion": null,
+      "createdAt": "2025-12-08T23:15:04.571Z",
+      "updatedAt": "2025-12-08T23:15:04.571Z",
+      "linkedMarket": {
+        "slug": "will-anthropic-have-the-top-ai-model-on-december-31",
+        "question": "Will Anthropic have the top AI model on December 31?",
+        "tokenId": "36969025040005932681817118833100769474314136025602369280317661994966807870564"
+      },
+      "driftData": {
+        "previousPrice": 0.008,
+        "currentPrice": 0.006500000000000001,
+        "priceChangePct": -0.18749999999999994,
+        "signalStrength": "extreme",
+        "detectedAt": "2025-12-08T23:15:03.198Z"
+      }
     }
   ],
   "schema": {

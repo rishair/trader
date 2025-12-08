@@ -1,15 +1,15 @@
 {
-  "lastRun": "2025-12-08T22:12:57.759Z",
+  "lastRun": "2025-12-08T23:14:59.005Z",
   "snapshots": [
     {
       "marketId": "516716",
       "slug": "khamenei-out-as-supreme-leader-of-iran-in-2025",
       "question": "Khamenei out as Supreme Leader of Iran in 2025?",
       "tokenId": "75505728818237076147318796536066812362152358606307154083407489467059230821371",
-      "price": 0.0165,
+      "price": 0.016,
       "volume24h": 41317.347688,
-      "liquidity": "85239.37143",
-      "timestamp": "2025-12-08T22:12:58.343Z"
+      "liquidity": "87405.79165",
+      "timestamp": "2025-12-08T23:14:59.589Z"
     },
     {
       "marketId": "516719",
@@ -18,18 +18,18 @@
       "tokenId": "15974786252393396629980467963784550802583781222733347534844974829144359265969",
       "price": 0.045,
       "volume24h": 351601.6308260002,
-      "liquidity": "795607.2444",
-      "timestamp": "2025-12-08T22:12:58.460Z"
+      "liquidity": "852331.0639",
+      "timestamp": "2025-12-08T23:14:59.719Z"
     },
     {
       "marketId": "516720",
       "slug": "putin-out-as-president-of-russia-in-2025",
       "question": "Putin out as President of Russia in 2025?",
       "tokenId": "17194352395514663527290362639703875985320281242609142069125752934895379462929",
-      "price": 0.011,
+      "price": 0.010499999999999999,
       "volume24h": 36235.515372,
-      "liquidity": "39993.39209",
-      "timestamp": "2025-12-08T22:12:58.559Z"
+      "liquidity": "40125.59287",
+      "timestamp": "2025-12-08T23:14:59.821Z"
     },
     {
       "marketId": "516725",
@@ -38,8 +38,8 @@
       "tokenId": "11661882248425579028730127122226588074844109517532906275870117904036267401870",
       "price": 0.055,
       "volume24h": 41090.813801,
-      "liquidity": "90565.8063",
-      "timestamp": "2025-12-08T22:12:58.661Z"
+      "liquidity": "81476.1862",
+      "timestamp": "2025-12-08T23:14:59.919Z"
     },
     {
       "marketId": "516726",
@@ -48,8 +48,8 @@
       "tokenId": "17601770442239563289082275181138749951422899442850916335476881677007065139739",
       "price": 0.935,
       "volume24h": 72918.23562000002,
-      "liquidity": "77050.5804",
-      "timestamp": "2025-12-08T22:12:58.764Z"
+      "liquidity": "70869.0411",
+      "timestamp": "2025-12-08T23:15:00.021Z"
     },
     {
       "marketId": "516729",
@@ -58,8 +58,8 @@
       "tokenId": "61673387045681238454585997121170806826401631642653090831500827557099057497566",
       "price": 0.0005,
       "volume24h": 1387967.72,
-      "liquidity": "206172.65389",
-      "timestamp": "2025-12-08T22:12:58.869Z"
+      "liquidity": "207463.69076",
+      "timestamp": "2025-12-08T23:15:00.116Z"
     },
     {
       "marketId": "516818",
@@ -68,28 +68,28 @@
       "tokenId": "94850533403292240972948844256810904078895883844462287088135166537739765648754",
       "price": 0.915,
       "volume24h": 142789.62308499994,
-      "liquidity": "78648.3792",
-      "timestamp": "2025-12-08T22:12:58.976Z"
+      "liquidity": "84387.3717",
+      "timestamp": "2025-12-08T23:15:00.208Z"
     },
     {
       "marketId": "516820",
       "slug": "will-microsoft-be-the-largest-company-in-the-world-by-market-cap-on-december-31-2025",
       "question": "Will Microsoft be the largest company in the world by market cap on December 31?",
       "tokenId": "51657657151055530627321198005838882818455292318658915621742481565942363716363",
-      "price": 0.0025,
+      "price": 0.002,
       "volume24h": 74707.303542,
-      "liquidity": "199766.54306",
-      "timestamp": "2025-12-08T22:12:59.076Z"
+      "liquidity": "199070.62186",
+      "timestamp": "2025-12-08T23:15:00.330Z"
     },
     {
       "marketId": "516822",
       "slug": "will-alphabet-be-the-largest-company-in-the-world-by-market-cap-on-december-31",
       "question": "Will Alphabet be the largest company in the world by market cap on December 31?",
       "tokenId": "63284454060282294254937404992798326595384274761940104982495030320283116592205",
-      "price": 0.012,
+      "price": 0.013000000000000001,
       "volume24h": 44279.011971,
-      "liquidity": "88505.96975",
-      "timestamp": "2025-12-08T22:12:59.182Z"
+      "liquidity": "89312.63296",
+      "timestamp": "2025-12-08T23:15:00.424Z"
     },
     {
       "marketId": "516824",
@@ -98,8 +98,8 @@
       "tokenId": "20754954427427178281469581263846329008146070520504999815539832461608878525555",
       "price": 0.0005,
       "volume24h": 56130,
-      "liquidity": "481877.50101",
-      "timestamp": "2025-12-08T22:12:59.281Z"
+      "liquidity": "480923.255",
+      "timestamp": "2025-12-08T23:15:00.528Z"
     },
     {
       "marketId": "516861",
@@ -108,8 +108,8 @@
       "tokenId": "112540911653160777059655478391259433595972605218365763034134019729862917878641",
       "price": 0.002,
       "volume24h": 207064.96187199876,
-      "liquidity": "349504.55581",
-      "timestamp": "2025-12-08T22:12:59.380Z"
+      "liquidity": "332813.27534",
+      "timestamp": "2025-12-08T23:15:00.696Z"
     },
     {
       "marketId": "516862",
@@ -118,8 +118,8 @@
       "tokenId": "15600657178409553723631854347165934450743544837722869853285023214749561849304",
       "price": 0.0035,
       "volume24h": 135248.13094900004,
-      "liquidity": "287224.60481",
-      "timestamp": "2025-12-08T22:12:59.479Z"
+      "liquidity": "286636.31638",
+      "timestamp": "2025-12-08T23:15:00.805Z"
     },
     {
       "marketId": "516863",
@@ -128,8 +128,8 @@
       "tokenId": "85949163243245471221790979452091560100141884930227668573477517865165344048388",
       "price": 0.0035,
       "volume24h": 142231.878765,
-      "liquidity": "355582.05251",
-      "timestamp": "2025-12-08T22:12:59.575Z"
+      "liquidity": "355575.6435",
+      "timestamp": "2025-12-08T23:15:00.898Z"
     },
     {
       "marketId": "516864",
@@ -138,18 +138,18 @@
       "tokenId": "87484108660213248881541352117231933897620313251765619093583161767567942237143",
       "price": 0.0075,
       "volume24h": 319245.893885,
-      "liquidity": "185579.93219",
-      "timestamp": "2025-12-08T22:12:59.673Z"
+      "liquidity": "188080.91529",
+      "timestamp": "2025-12-08T23:15:01.012Z"
     },
     {
       "marketId": "516865",
       "slug": "will-bitcoin-reach-130000-by-december-31-2025-911-832",
       "question": "Will Bitcoin reach $130,000 by December 31, 2025?",
       "tokenId": "70455106433105725093003807079135685186309776081399075740142938507518314484366",
-      "price": 0.0165,
+      "price": 0.016,
       "volume24h": 309235.169186,
-      "liquidity": "179796.45391",
-      "timestamp": "2025-12-08T22:12:59.797Z"
+      "liquidity": "173134.72781",
+      "timestamp": "2025-12-08T23:15:01.108Z"
     },
     {
       "marketId": "516871",
@@ -158,8 +158,8 @@
       "tokenId": "95047670164958340277111777643825971965059782358468932324606496632183052684085",
       "price": 0.07500000000000001,
       "volume24h": 78798.505092,
-      "liquidity": "163240.9838",
-      "timestamp": "2025-12-08T22:12:59.902Z"
+      "liquidity": "172928.5602",
+      "timestamp": "2025-12-08T23:15:01.220Z"
     },
     {
       "marketId": "516872",
@@ -168,8 +168,8 @@
       "tokenId": "19172660598358578032571481657371270203404516640166684953652435968273007603461",
       "price": 0.0115,
       "volume24h": 67506.299846,
-      "liquidity": "198732.04525",
-      "timestamp": "2025-12-08T22:13:00.016Z"
+      "liquidity": "198822.25358",
+      "timestamp": "2025-12-08T23:15:01.320Z"
     },
     {
       "marketId": "516874",
@@ -178,8 +178,8 @@
       "tokenId": "18892243695879775649132895952659643324540464857988525878273043687363786020355",
       "price": 0.005,
       "volume24h": 55063.588313000015,
-      "liquidity": "129664.42704",
-      "timestamp": "2025-12-08T22:13:00.118Z"
+      "liquidity": "133774.27627",
+      "timestamp": "2025-12-08T23:15:01.425Z"
     },
     {
       "marketId": "516875",
@@ -188,28 +188,28 @@
       "tokenId": "74506979693843962080154121859467197249348465510614170753380333192495557936975",
       "price": 0.005,
       "volume24h": 101315.98084700009,
-      "liquidity": "130673.04424",
-      "timestamp": "2025-12-08T22:13:00.215Z"
+      "liquidity": "130652.73385",
+      "timestamp": "2025-12-08T23:15:01.537Z"
     },
     {
       "marketId": "516876",
       "slug": "will-ethereum-hit-7000-by-december-31-733-852",
       "question": "Will Ethereum hit $7,000 by December 31?",
       "tokenId": "66776654258002694324853229694339306737497274534009979978324520345248856607706",
-      "price": 0.006500000000000001,
+      "price": 0.007,
       "volume24h": 212813.28550599996,
-      "liquidity": "173123.81302",
-      "timestamp": "2025-12-08T22:13:00.341Z"
+      "liquidity": "174134.33671",
+      "timestamp": "2025-12-08T23:15:01.643Z"
     },
     {
       "marketId": "516877",
       "slug": "will-ethereum-hit-6000-by-december-31-843-315",
       "question": "Will Ethereum hit $6,000 by December 31?",
       "tokenId": "81425397446351426621727450375895254607015946433493851514616485979278175609514",
-      "price": 0.0095,
+      "price": 0.011,
       "volume24h": 128275.46454900005,
-      "liquidity": "236296.52354",
-      "timestamp": "2025-12-08T22:13:00.459Z"
+      "liquidity": "234449.60984",
+      "timestamp": "2025-12-08T23:15:01.755Z"
     },
     {
       "marketId": "516878",
@@ -218,18 +218,18 @@
       "tokenId": "96638575418189284731461006608299472691495172793493062289677934142140726427384",
       "price": 0.0185,
       "volume24h": 291602.3674909995,
-      "liquidity": "283283.44795",
-      "timestamp": "2025-12-08T22:13:00.561Z"
+      "liquidity": "280747.26718",
+      "timestamp": "2025-12-08T23:15:01.850Z"
     },
     {
       "marketId": "516925",
       "slug": "will-the-us-confirm-that-aliens-exist-in-2025",
       "question": "Will the US confirm that aliens exist in 2025?",
       "tokenId": "27489607967254830440928740057210075156058938975022466608385700336406661385026",
-      "price": 0.027000000000000003,
+      "price": 0.025,
       "volume24h": 198718.39617999998,
-      "liquidity": "75403.55031",
-      "timestamp": "2025-12-08T22:13:00.669Z"
+      "liquidity": "77176.11683",
+      "timestamp": "2025-12-08T23:15:01.953Z"
     },
     {
       "marketId": "516926",
@@ -238,8 +238,8 @@
       "tokenId": "93592949212798121127213117304912625505836768562433217537850469496310204567695",
       "price": 0.020999999999999998,
       "volume24h": 93333.16343200006,
-      "liquidity": "76561.9678",
-      "timestamp": "2025-12-08T22:13:00.774Z"
+      "liquidity": "76309.81978",
+      "timestamp": "2025-12-08T23:15:02.050Z"
     },
     {
       "marketId": "516927",
@@ -248,8 +248,8 @@
       "tokenId": "66204185532864199574384406941577195085446103029962077842365412910416109897360",
       "price": 0.0015,
       "volume24h": 40241.82412,
-      "liquidity": "40786.16528",
-      "timestamp": "2025-12-08T22:13:00.872Z"
+      "liquidity": "40524.5746",
+      "timestamp": "2025-12-08T23:15:02.144Z"
     },
     {
       "marketId": "516930",
@@ -258,8 +258,8 @@
       "tokenId": "21232593340271475643172245433790960840308637808125263056222954587338309282025",
       "price": 0.0015,
       "volume24h": 12910.372000000001,
-      "liquidity": "139284.54163",
-      "timestamp": "2025-12-08T22:13:01.049Z"
+      "liquidity": "139284.49903",
+      "timestamp": "2025-12-08T23:15:02.237Z"
     },
     {
       "marketId": "516931",
@@ -268,8 +268,8 @@
       "tokenId": "101081296560212033074205347057065245530779184810576378510101554885350813891877",
       "price": 0.0005,
       "volume24h": 16012.239249,
-      "liquidity": "114549.01336",
-      "timestamp": "2025-12-08T22:13:01.151Z"
+      "liquidity": "114548.49494",
+      "timestamp": "2025-12-08T23:15:02.334Z"
     },
     {
       "marketId": "516934",
@@ -278,8 +278,8 @@
       "tokenId": "21723604204196327281996148396298820652913902449143569639752897608981857229286",
       "price": 0.004,
       "volume24h": 14908.170367,
-      "liquidity": "95097.09693",
-      "timestamp": "2025-12-08T22:13:01.266Z"
+      "liquidity": "95096.0732",
+      "timestamp": "2025-12-08T23:15:02.427Z"
     },
     {
       "marketId": "516935",
@@ -288,8 +288,8 @@
       "tokenId": "97579473323266133487764893548542552161490448526418028272734208413262454616719",
       "price": 0.9884999999999999,
       "volume24h": 29185.587870999985,
-      "liquidity": "106360.49353",
-      "timestamp": "2025-12-08T22:13:01.364Z"
+      "liquidity": "106362.09366",
+      "timestamp": "2025-12-08T23:15:02.530Z"
     },
     {
       "marketId": "516937",
@@ -298,68 +298,68 @@
       "tokenId": "83894672511259544049673946661753374355328822374216474995072428966535091173758",
       "price": 0.0135,
       "volume24h": 27094.847299000005,
-      "liquidity": "58278.19075",
-      "timestamp": "2025-12-08T22:13:01.469Z"
+      "liquidity": "58221.89788",
+      "timestamp": "2025-12-08T23:15:02.625Z"
     },
     {
       "marketId": "516947",
       "slug": "maduro-out-in-2025-411",
       "question": "Maduro out in 2025?",
       "tokenId": "45343480653694577807177505914664405669209636932459044719445554137639656106379",
-      "price": 0.07500000000000001,
+      "price": 0.08499999999999999,
       "volume24h": 271249.4265140004,
-      "liquidity": "375296.7763",
-      "timestamp": "2025-12-08T22:13:01.564Z"
+      "liquidity": "342453.5378",
+      "timestamp": "2025-12-08T23:15:02.720Z"
     },
     {
       "marketId": "516950",
       "slug": "kraken-ipo-in-2025",
       "question": "Kraken IPO in 2025?",
       "tokenId": "106229668102716149832209250222340847662201251266419359322746795373714233470739",
-      "price": 0.0045000000000000005,
+      "price": 0.004,
       "volume24h": 13584.282594000004,
-      "liquidity": "25784.2733",
-      "timestamp": "2025-12-08T22:13:01.661Z"
+      "liquidity": "26046.61807",
+      "timestamp": "2025-12-08T23:15:02.816Z"
     },
     {
       "marketId": "516960",
       "slug": "which-company-has-best-ai-model-end-of-2025",
       "question": "Will Google have the top AI model on December 31?",
       "tokenId": "95439201103958291841222373625424698303339849105476314992984252617398188905150",
-      "price": 0.795,
+      "price": 0.785,
       "volume24h": 97066.56432299998,
-      "liquidity": "48549.4099",
-      "timestamp": "2025-12-08T22:13:01.761Z"
+      "liquidity": "47915.3398",
+      "timestamp": "2025-12-08T23:15:02.911Z"
     },
     {
       "marketId": "516961",
       "slug": "will-openai-have-the-top-ai-model-on-december-31",
       "question": "Will OpenAI have the top AI model on December 31?",
       "tokenId": "29370433468126418379827896143797575739436853610287532509760876690489490660887",
-      "price": 0.122,
+      "price": 0.1565,
       "volume24h": 114768.62057799996,
-      "liquidity": "30105.73945",
-      "timestamp": "2025-12-08T22:13:01.860Z"
+      "liquidity": "28830.16864",
+      "timestamp": "2025-12-08T23:15:03.011Z"
     },
     {
       "marketId": "516962",
       "slug": "will-xai-have-the-top-ai-model-on-december-31",
       "question": "Will xAI have the top AI model on December 31?",
       "tokenId": "102999968845900441563984227184244976654134769519899727417416638269272028235268",
-      "price": 0.040999999999999995,
+      "price": 0.042499999999999996,
       "volume24h": 84514.81149200001,
-      "liquidity": "40223.22263",
-      "timestamp": "2025-12-08T22:13:01.970Z"
+      "liquidity": "40322.02566",
+      "timestamp": "2025-12-08T23:15:03.103Z"
     },
     {
       "marketId": "516963",
       "slug": "will-anthropic-have-the-top-ai-model-on-december-31",
       "question": "Will Anthropic have the top AI model on December 31?",
       "tokenId": "36969025040005932681817118833100769474314136025602369280317661994966807870564",
-      "price": 0.008,
+      "price": 0.006500000000000001,
       "volume24h": 75210.99173499999,
-      "liquidity": "176977.30914",
-      "timestamp": "2025-12-08T22:13:02.070Z"
+      "liquidity": "176946.21243",
+      "timestamp": "2025-12-08T23:15:03.198Z"
     },
     {
       "marketId": "516964",
@@ -368,8 +368,8 @@
       "tokenId": "104471191007760957789994563546881648186869785130556413398226932885924537455636",
       "price": 0.0015,
       "volume24h": 40595.50568199998,
-      "liquidity": "290836.89551",
-      "timestamp": "2025-12-08T22:13:02.168Z"
+      "liquidity": "290832.713",
+      "timestamp": "2025-12-08T23:15:03.290Z"
     },
     {
       "marketId": "516965",
@@ -378,8 +378,8 @@
       "tokenId": "67952170237118161113823978955884644334240779330929575423311924287450926538956",
       "price": 0.0025,
       "volume24h": 51682.65533099998,
-      "liquidity": "78837.62871",
-      "timestamp": "2025-12-08T22:13:02.266Z"
+      "liquidity": "80474.54279",
+      "timestamp": "2025-12-08T23:15:03.389Z"
     },
     {
       "marketId": "516967",
@@ -388,8 +388,8 @@
       "tokenId": "8719418414326709897439966959310868099766860487466920674004552892514480301444",
       "price": 0.0015,
       "volume24h": 155060.43103100004,
-      "liquidity": "231012.41362",
-      "timestamp": "2025-12-08T22:13:02.363Z"
+      "liquidity": "230375.33387",
+      "timestamp": "2025-12-08T23:15:03.483Z"
     },
     {
       "marketId": "516968",
@@ -398,8 +398,8 @@
       "tokenId": "29342854370575341379074031096244981056550993525825593301590524247018316727590",
       "price": 0.0005,
       "volume24h": 633181.3,
-      "liquidity": "114505.34232",
-      "timestamp": "2025-12-08T22:13:02.463Z"
+      "liquidity": "113796.00403",
+      "timestamp": "2025-12-08T23:15:03.580Z"
     },
     {
       "marketId": "516969",
@@ -408,8 +408,8 @@
       "tokenId": "94483763215904102737715534811483835997414013687836952960666923130702965537191",
       "price": 0.0005,
       "volume24h": 323661.3,
-      "liquidity": "143354.48887",
-      "timestamp": "2025-12-08T22:13:02.563Z"
+      "liquidity": "141759.04077",
+      "timestamp": "2025-12-08T23:15:03.676Z"
     },
     {
       "marketId": "516970",
@@ -418,8 +418,8 @@
       "tokenId": "74935923164071817798002840081376532164044780378050701373087139158661506419792",
       "price": 0.0035,
       "volume24h": 174923.88455000002,
-      "liquidity": "115625.07902",
-      "timestamp": "2025-12-08T22:13:02.666Z"
+      "liquidity": "113516.32978",
+      "timestamp": "2025-12-08T23:15:03.771Z"
     },
     {
       "marketId": "516971",
@@ -428,8 +428,8 @@
       "tokenId": "59256827013308582977039266985187462607658460901638049707670565688943758576451",
       "price": 0.0015,
       "volume24h": 48787.24,
-      "liquidity": "80539.26553",
-      "timestamp": "2025-12-08T22:13:02.766Z"
+      "liquidity": "78547.59292",
+      "timestamp": "2025-12-08T23:15:03.864Z"
     },
     {
       "marketId": "516972",
@@ -438,18 +438,18 @@
       "tokenId": "99046967530935195759951329009063458639985706942702094115167357674478195840320",
       "price": 0.0015,
       "volume24h": 24518.100049000004,
-      "liquidity": "238556.8076",
-      "timestamp": "2025-12-08T22:13:02.890Z"
+      "liquidity": "239896.0297",
+      "timestamp": "2025-12-08T23:15:03.962Z"
     },
     {
       "marketId": "517011",
       "slug": "will-avatar-3-be-the-top-grossing-movie-of-2025",
       "question": "Will Avatar 3 be the top grossing movie of 2025?",
       "tokenId": "46031991343302022758885232715327973278894914473014946268947234642842781512787",
-      "price": 0.035500000000000004,
+      "price": 0.034,
       "volume24h": 97849.24868800002,
-      "liquidity": "238270.07816",
-      "timestamp": "2025-12-08T22:13:02.991Z"
+      "liquidity": "233599.79201",
+      "timestamp": "2025-12-08T23:15:04.062Z"
     },
     {
       "marketId": "517012",
@@ -458,8 +458,8 @@
       "tokenId": "107516807630292044096997874487388103106064958463700149740608855411786327728317",
       "price": 0.0015,
       "volume24h": 80252.61793600001,
-      "liquidity": "157196.05938",
-      "timestamp": "2025-12-08T22:13:03.092Z"
+      "liquidity": "181711.54671",
+      "timestamp": "2025-12-08T23:15:04.163Z"
     },
     {
       "marketId": "517013",
@@ -468,8 +468,8 @@
       "tokenId": "105082902118227548826249086653013297053246139018561657722591473048372450842215",
       "price": 0.0015,
       "volume24h": 309640.0289999999,
-      "liquidity": "1165282.55414",
-      "timestamp": "2025-12-08T22:13:03.191Z"
+      "liquidity": "1164229.45361",
+      "timestamp": "2025-12-08T23:15:04.260Z"
     },
     {
       "marketId": "517015",
@@ -478,18 +478,18 @@
       "tokenId": "4597169797317084862349120825009191286596299748214987624297297321423753269997",
       "price": 0.0015,
       "volume24h": 297719.6269999999,
-      "liquidity": "1161298.42967",
-      "timestamp": "2025-12-08T22:13:03.287Z"
+      "liquidity": "1160080.11205",
+      "timestamp": "2025-12-08T23:15:04.381Z"
     },
     {
       "marketId": "517017",
       "slug": "will-zootopia-2-be-the-top-grossing-movie-of-2025",
       "question": "Will Zootopia 2 be the top grossing movie of 2025?",
       "tokenId": "49225255785153140271978028633331398187057596497890648373700315193116553934019",
-      "price": 0.006500000000000001,
+      "price": 0.006,
       "volume24h": 99999.03849700002,
-      "liquidity": "93420.97575",
-      "timestamp": "2025-12-08T22:13:03.386Z"
+      "liquidity": "81121.59014",
+      "timestamp": "2025-12-08T23:15:04.473Z"
     },
     {
       "marketId": "517018",
@@ -498,11 +498,171 @@
       "tokenId": "35831181492141694980692915198174791166488782428631847611464512939858296812162",
       "price": 0.0015,
       "volume24h": 178664.27900000004,
-      "liquidity": "1175354.48009",
-      "timestamp": "2025-12-08T22:13:03.487Z"
+      "liquidity": "1175334.13586",
+      "timestamp": "2025-12-08T23:15:04.567Z"
     }
   ],
   "recentDrifts": [
+    {
+      "marketId": "516961",
+      "slug": "will-openai-have-the-top-ai-model-on-december-31",
+      "question": "Will OpenAI have the top AI model on December 31?",
+      "tokenId": "29370433468126418379827896143797575739436853610287532509760876690489490660887",
+      "previousPrice": 0.122,
+      "currentPrice": 0.1565,
+      "priceChange": 0.0345,
+      "priceChangePct": 0.2827868852459017,
+      "direction": "UP",
+      "volume24h": 114768.62057799996,
+      "liquidity": "28830.16864",
+      "timeSinceLastSnapshot": 62.01918333333333,
+      "timestamp": "2025-12-08T23:15:03.011Z",
+      "signalStrength": "extreme"
+    },
+    {
+      "marketId": "516820",
+      "slug": "will-microsoft-be-the-largest-company-in-the-world-by-market-cap-on-december-31-2025",
+      "question": "Will Microsoft be the largest company in the world by market cap on December 31?",
+      "tokenId": "51657657151055530627321198005838882818455292318658915621742481565942363716363",
+      "previousPrice": 0.0025,
+      "currentPrice": 0.002,
+      "priceChange": -0.0005,
+      "priceChangePct": -0.2,
+      "direction": "DOWN",
+      "volume24h": 74707.303542,
+      "liquidity": "199070.62186",
+      "timeSinceLastSnapshot": 62.0209,
+      "timestamp": "2025-12-08T23:15:00.330Z",
+      "signalStrength": "extreme"
+    },
+    {
+      "marketId": "516963",
+      "slug": "will-anthropic-have-the-top-ai-model-on-december-31",
+      "question": "Will Anthropic have the top AI model on December 31?",
+      "tokenId": "36969025040005932681817118833100769474314136025602369280317661994966807870564",
+      "previousPrice": 0.008,
+      "currentPrice": 0.006500000000000001,
+      "priceChange": -0.0014999999999999996,
+      "priceChangePct": -0.18749999999999994,
+      "direction": "DOWN",
+      "volume24h": 75210.99173499999,
+      "liquidity": "176946.21243",
+      "timeSinceLastSnapshot": 62.0188,
+      "timestamp": "2025-12-08T23:15:03.198Z",
+      "signalStrength": "extreme"
+    },
+    {
+      "marketId": "516877",
+      "slug": "will-ethereum-hit-6000-by-december-31-843-315",
+      "question": "Will Ethereum hit $6,000 by December 31?",
+      "tokenId": "81425397446351426621727450375895254607015946433493851514616485979278175609514",
+      "previousPrice": 0.0095,
+      "currentPrice": 0.011,
+      "priceChange": 0.0014999999999999996,
+      "priceChangePct": 0.15789473684210523,
+      "direction": "UP",
+      "volume24h": 128275.46454900005,
+      "liquidity": "234449.60984",
+      "timeSinceLastSnapshot": 62.0216,
+      "timestamp": "2025-12-08T23:15:01.755Z",
+      "signalStrength": "extreme"
+    },
+    {
+      "marketId": "516947",
+      "slug": "maduro-out-in-2025-411",
+      "question": "Maduro out in 2025?",
+      "tokenId": "45343480653694577807177505914664405669209636932459044719445554137639656106379",
+      "previousPrice": 0.07500000000000001,
+      "currentPrice": 0.08499999999999999,
+      "priceChange": 0.009999999999999981,
+      "priceChangePct": 0.13333333333333305,
+      "direction": "UP",
+      "volume24h": 271249.4265140004,
+      "liquidity": "342453.5378",
+      "timeSinceLastSnapshot": 62.01926666666667,
+      "timestamp": "2025-12-08T23:15:02.720Z",
+      "signalStrength": "strong"
+    },
+    {
+      "marketId": "516950",
+      "slug": "kraken-ipo-in-2025",
+      "question": "Kraken IPO in 2025?",
+      "tokenId": "106229668102716149832209250222340847662201251266419359322746795373714233470739",
+      "previousPrice": 0.0045000000000000005,
+      "currentPrice": 0.004,
+      "priceChange": -0.0005000000000000004,
+      "priceChangePct": -0.1111111111111112,
+      "direction": "DOWN",
+      "volume24h": 13584.282594000004,
+      "liquidity": "26046.61807",
+      "timeSinceLastSnapshot": 62.01925,
+      "timestamp": "2025-12-08T23:15:02.816Z",
+      "signalStrength": "strong"
+    },
+    {
+      "marketId": "516822",
+      "slug": "will-alphabet-be-the-largest-company-in-the-world-by-market-cap-on-december-31",
+      "question": "Will Alphabet be the largest company in the world by market cap on December 31?",
+      "tokenId": "63284454060282294254937404992798326595384274761940104982495030320283116592205",
+      "previousPrice": 0.012,
+      "currentPrice": 0.013000000000000001,
+      "priceChange": 0.0010000000000000009,
+      "priceChangePct": 0.08333333333333341,
+      "direction": "UP",
+      "volume24h": 44279.011971,
+      "liquidity": "89312.63296",
+      "timeSinceLastSnapshot": 62.0207,
+      "timestamp": "2025-12-08T23:15:00.424Z",
+      "signalStrength": "moderate"
+    },
+    {
+      "marketId": "517017",
+      "slug": "will-zootopia-2-be-the-top-grossing-movie-of-2025",
+      "question": "Will Zootopia 2 be the top grossing movie of 2025?",
+      "tokenId": "49225255785153140271978028633331398187057596497890648373700315193116553934019",
+      "previousPrice": 0.006500000000000001,
+      "currentPrice": 0.006,
+      "priceChange": -0.0005000000000000004,
+      "priceChangePct": -0.07692307692307698,
+      "direction": "DOWN",
+      "volume24h": 99999.03849700002,
+      "liquidity": "81121.59014",
+      "timeSinceLastSnapshot": 62.018116666666664,
+      "timestamp": "2025-12-08T23:15:04.473Z",
+      "signalStrength": "moderate"
+    },
+    {
+      "marketId": "516876",
+      "slug": "will-ethereum-hit-7000-by-december-31-733-852",
+      "question": "Will Ethereum hit $7,000 by December 31?",
+      "tokenId": "66776654258002694324853229694339306737497274534009979978324520345248856607706",
+      "previousPrice": 0.006500000000000001,
+      "currentPrice": 0.007,
+      "priceChange": 0.0004999999999999996,
+      "priceChangePct": 0.07692307692307686,
+      "direction": "UP",
+      "volume24h": 212813.28550599996,
+      "liquidity": "174134.33671",
+      "timeSinceLastSnapshot": 62.0217,
+      "timestamp": "2025-12-08T23:15:01.643Z",
+      "signalStrength": "moderate"
+    },
+    {
+      "marketId": "516925",
+      "slug": "will-the-us-confirm-that-aliens-exist-in-2025",
+      "question": "Will the US confirm that aliens exist in 2025?",
+      "tokenId": "27489607967254830440928740057210075156058938975022466608385700336406661385026",
+      "previousPrice": 0.027000000000000003,
+      "currentPrice": 0.025,
+      "priceChange": -0.0020000000000000018,
+      "priceChangePct": -0.07407407407407413,
+      "direction": "DOWN",
+      "volume24h": 198718.39617999998,
+      "liquidity": "77176.11683",
+      "timeSinceLastSnapshot": 62.0214,
+      "timestamp": "2025-12-08T23:15:01.953Z",
+      "signalStrength": "moderate"
+    },
     {
       "marketId": "516927",
       "slug": "will-gold-close-under-2500-at-the-end-of-2025",
@@ -777,6 +937,9 @@
     }
   ],
   "generatedHypotheses": [
+    "hyp-drift-1765235704569",
+    "hyp-drift-1765235704570",
+    "hyp-drift-1765235704571",
     "hyp-drift-1765231983489",
     "hyp-drift-1765231983489",
     "hyp-drift-1765231983489"

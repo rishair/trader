@@ -106,15 +106,15 @@
       }
     },
     {
-      "id": "pipeline-price-drift-detector-1765232035725",
+      "id": "pipeline-price-tracker-1765235691208",
       "type": "pipeline",
-      "description": "Price drift detector: Monitor markets for sudden moves, generate follow signals",
-      "scheduledFor": "2025-12-08T23:13:55.725Z",
+      "description": "Price tracker: Update portfolio prices, check exit triggers",
+      "scheduledFor": "2025-12-09T03:14:51.208Z",
       "priority": "high",
       "context": {
-        "pipeline": "price-drift-detector",
+        "pipeline": "price-tracker",
         "recurring": true,
-        "frequency": "1h"
+        "frequency": "4h"
       }
     }
   ],
@@ -276,6 +276,19 @@
         "frequency": "4h"
       },
       "completedAt": "2025-12-08T23:14:05.668Z"
+    },
+    {
+      "id": "pipeline-price-drift-detector-1765232035725",
+      "type": "pipeline",
+      "description": "Price drift detector: Monitor markets for sudden moves, generate follow signals",
+      "scheduledFor": "2025-12-08T23:13:55.725Z",
+      "priority": "high",
+      "context": {
+        "pipeline": "price-drift-detector",
+        "recurring": true,
+        "frequency": "1h"
+      },
+      "completedAt": "2025-12-08T23:15:07.205Z"
     }
   ],
   "schema": {
