@@ -10,6 +10,7 @@
     "query": "ts-node daemon.ts query",
     "telegram": "ts-node tools/telegram/handler.ts",
     "telegram:send": "ts-node tools/telegram/bot.ts send",
+    "prices": "ts-node tools/pipelines/price-tracker.ts",
     "deploy": "bash scripts/deploy.sh"
   },
   "keywords": [],

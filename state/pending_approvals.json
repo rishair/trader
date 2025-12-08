@@ -1,23 +1,6 @@
 {
   "approvals": [
     {
-      "id": "en",
-      "type": "improvement",
-      "title": "Build imp-003: Price tracking for open positions",
-      "description": "Engine is starved (only 2 testable hypotheses). Building imp-003 would unblock hyp-002. Effort: medium",
-      "proposedAt": "2025-12-08T06:16:56.534Z",
-      "status": "approved",
-      "context": {
-        "improvementId": "imp-003",
-        "action": "build",
-        "unblocks": "hyp-002",
-        "effort": "medium",
-        "leverage": "high"
-      },
-      "decidedAt": "2025-12-08T06:31:46.384Z",
-      "decisionNote": null
-    },
-    {
       "id": "fy",
       "type": "improvement",
       "title": "Build imp-009: Leaderboard tracker pipeline",

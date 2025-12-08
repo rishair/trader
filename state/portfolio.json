@@ -17,12 +17,13 @@
       "strategyId": "hypothesis-001",
       "entryDate": "2025-12-07T00:00:00Z",
       "exitCriteria": {
-        "takeProfit": 0.20,
+        "takeProfit": 0.2,
         "stopLoss": 0.04,
         "timeLimit": "2025-12-31T23:59:59Z",
         "notes": "Exit if AAPL probability >20% (take profit) or <4% (stop loss), or at market resolution"
       },
-      "rationale": "AAPL ($4.1-4.2T) only 5-7% behind NVDA ($4.44T). Market prices AAPL at 9% vs estimated 15-20% true probability. With 24 days to resolution, volatility could close gap. Testing hypothesis that multi-outcome markets misprice volatility in close races."
+      "rationale": "AAPL ($4.1-4.2T) only 5-7% behind NVDA ($4.44T). Market prices AAPL at 9% vs estimated 15-20% true probability. With 24 days to resolution, volatility could close gap. Testing hypothesis that multi-outcome markets misprice volatility in close races.",
+      "tokenId": "64608332692655386624219169603174714750740291631647562666654835455208498486268"
     }
   ],
   "tradeHistory": [
@@ -44,7 +45,7 @@
     }
   ],
   "createdAt": "2024-12-07T00:00:00Z",
-  "lastUpdated": "2025-12-07T00:00:00Z",
+  "lastUpdated": "2025-12-08T07:20:46.389Z",
   "metrics": {
     "totalReturn": 0,
     "totalReturnPct": 0,

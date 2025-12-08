@@ -36,19 +36,7 @@
       "createdAt": "2025-12-08T00:00:00Z",
       "completedAt": null
     },
-    {
-      "id": "imp-003",
-      "title": "Price tracking for open positions",
-      "category": "capability",
-      "leverage": "high",
-      "effort": "medium",
-      "rationale": "Can't evaluate P&L without current prices. market-watcher agent needs to update portfolio.json with live prices from Polymarket MCP.",
-      "status": "backlog",
-      "outcome": null,
-      "createdAt": "2025-12-07T00:00:00Z",
-      "completedAt": null
-    },
-    {
+        {
       "id": "imp-004",
       "title": "Leaderboard scraper for top trader analysis",
       "category": "capability",
@@ -134,6 +122,18 @@
       "outcome": "Built tools/pipelines/closing-scanner.ts that: (1) fetches markets via Gamma API, (2) filters to closing in 72h, (3) checks momentum signals, (4) auto-generates hypotheses for strong signals, (5) updates engine-status.json. Daemon now handles pipeline tasks directly (no Claude spawn), auto-reschedules recurring pipelines. Added engine health check to daemon tick. Note: price history not yet available - needs imp-003.",
       "createdAt": "2025-12-08T00:00:00Z",
       "completedAt": "2025-12-08T06:00:00Z"
+    },
+    {
+      "id": "imp-003",
+      "title": "Price tracking for open positions",
+      "category": "capability",
+      "leverage": "high",
+      "effort": "medium",
+      "rationale": "Can't evaluate P&L without current prices. market-watcher agent needs to update portfolio.json with live prices from Polymarket MCP.",
+      "status": "completed",
+      "outcome": "Built tools/pipelines/price-tracker.ts that: (1) fetches prices from CLOB API for known tokens, (2) updates portfolio.json with current prices and P&L, (3) saves price history snapshots, (4) checks exit triggers (TP/SL). Added npm run prices script. AAPL position confirmed at 9¢, same as entry - P&L flat.",
+      "createdAt": "2025-12-07T00:00:00Z",
+      "completedAt": "2025-12-08T07:20:00Z"
     }
   ],
   "schema": {
@@ -150,5 +150,5 @@
       "completedAt": "ISO date | null"
     }
   },
-  "notes": "Track system improvements separately from trading learnings. Prioritize high-leverage, low-effort items. Next priority: imp-003 (price tracking) to close the feedback loop."
+  "notes": "Track system improvements separately from trading learnings. Prioritize high-leverage, low-effort items. Next priority: imp-009 (leaderboard tracker) to enable hyp-004 testing."
 }
