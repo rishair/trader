@@ -15,6 +15,18 @@ import {
   Handoff
 } from './lib/handoffs';
 import { sendCommitNotification } from './tools/telegram/bot';
+import {
+  getStrategicDecision,
+  detectPriorities,
+  getExecutionMetrics,
+  Priority
+} from './lib/orchestrator';
+import {
+  buildTradeResearchContext,
+  buildAgentEngineerContext,
+  prepareQuickStatusContext
+} from './lib/context';
+import { exitPosition, loadPortfolio } from './lib/trading';
 
 dotenv.config();
 
@@ -245,6 +257,7 @@ async function executePipeline(pipelineName: string): Promise<{ success: boolean
 
 /**
  * Spawn an agent for a responsibility
+ * Now uses focused context from lib/context.ts instead of full state files
  */
 async function executeResponsibility(resp: DueResponsibility): Promise<void> {
   log(`Executing responsibility: ${resp.role}/${resp.name}`);
@@ -252,22 +265,38 @@ async function executeResponsibility(resp: DueResponsibility): Promise<void> {
 
   const sessionLogFile = path.join(LOG_DIR, `responsibility-${resp.role}-${resp.name}-${Date.now()}.log`);
 
-  const prompt = `You are the ${resp.role === 'trade-research' ? 'Trade Research Engineer' : 'Agent Engineer'}.
+  // Get focused context for this specific responsibility
+  const focusedContext = resp.role === 'trade-research'
+    ? buildTradeResearchContext(resp.name)
+    : buildAgentEngineerContext(resp.name);
 
-## Current Responsibility: ${resp.name}
+  const agentName = resp.role === 'trade-research'
+    ? 'Trade Research Engineer'
+    : 'Agent Engineer';
 
-You are being spawned to execute your "${resp.name}" responsibility.
-Read your agent definition at .claude/agents/${resp.role}.md for full instructions on this responsibility.
+  const prompt = `You are the ${agentName}.
 
-## Key Instructions
-1. Execute the ${resp.name} responsibility as defined in your agent prompt
-2. Update your owned state files with any changes
-3. Log improvement ideas if you notice any friction
-4. Be concise and action-oriented
+## Responsibility: ${resp.name}
 
-## Context
+${focusedContext}
+
+## Available Libraries
+
+\`\`\`typescript
+// Trading (handles validation, approval, state updates)
+import { executePaperTrade, exitPosition, getPortfolioSummary } from './lib/trading';
+
+// Hypotheses (handles state machine, transitions, evidence)
+import { transitionHypothesis, addEvidence, blockHypothesis, createHypothesis } from './lib/hypothesis';
+\`\`\`
+
+## Guidelines
+- Focus on the task above - don't read full state files unless necessary
+- Use the libraries - they handle validation and state updates
+- Be action-oriented - make decisions, don't just observe
+- Be concise - this is one responsibility, not a full session
+
 Last run: ${resp.lastRun || 'never'}
-Frequency: ${resp.frequency}
 `;
 
   return new Promise((resolve, reject) => {
@@ -387,6 +416,123 @@ The result of this handoff will be recorded for ${handoff.from} to see.
 
     claude.on('error', (error: Error) => {
       log(`Error spawning claude for handoff: ${error.message}`);
+      reject(error);
+    });
+  });
+}
+
+/**
+ * Execute a code-only priority (no model needed)
+ * These are deterministic actions that code can handle
+ */
+async function executeCodePriority(priority: Priority): Promise<void> {
+  log(`Executing code priority: ${priority.action}`);
+
+  switch (priority.action) {
+    case 'execute-stop-loss': {
+      const { positionId, currentPrice } = priority.context;
+      log(`Executing stop loss for ${positionId} at ${currentPrice}`);
+      await exitPosition(positionId, currentPrice, 'Stop loss triggered');
+      await sendTelegramAlert(
+        `🛑 *Stop Loss Executed*\nPosition: ${positionId}\nPrice: ${(currentPrice * 100).toFixed(1)}¢`
+      );
+      break;
+    }
+
+    case 'execute-take-profit': {
+      const { positionId, currentPrice } = priority.context;
+      log(`Executing take profit for ${positionId} at ${currentPrice}`);
+      await exitPosition(positionId, currentPrice, 'Take profit triggered');
+      await sendTelegramAlert(
+        `🎯 *Take Profit Executed*\nPosition: ${positionId}\nPrice: ${(currentPrice * 100).toFixed(1)}¢`
+      );
+      break;
+    }
+
+    default:
+      log(`Unknown code priority action: ${priority.action}`);
+  }
+}
+
+/**
+ * Execute a focused agent with minimal, task-specific context
+ * Instead of loading full state files, we give the model exactly what it needs
+ */
+async function executeFocusedAgent(priority: Priority): Promise<void> {
+  log(`Executing focused agent: ${priority.action} for ${priority.agentRole}`);
+  await sendTelegramAlert(
+    `🎯 *Focused Task*\n${priority.action}\nUrgency: ${priority.urgency}`
+  );
+
+  const sessionLogFile = path.join(LOG_DIR, `focused-${priority.action}-${Date.now()}.log`);
+
+  // Build minimal prompt with focused context
+  const agentName = priority.agentRole === 'trade-research'
+    ? 'Trade Research Engineer'
+    : 'Agent Engineer';
+
+  const prompt = `You are the ${agentName}.
+
+## Urgent Task: ${priority.action}
+
+${priority.focusedPrompt}
+
+## Available Libraries
+
+\`\`\`typescript
+// Trading (handles validation, approval, state)
+import { executePaperTrade, exitPosition, getPortfolioSummary } from './lib/trading';
+
+// Hypotheses (handles state machine, transitions)
+import { transitionHypothesis, addEvidence, blockHypothesis } from './lib/hypothesis';
+\`\`\`
+
+## Instructions
+1. Focus ONLY on the task above
+2. Make a decision and execute it
+3. Be concise - this is a focused intervention, not a full session
+`;
+
+  return new Promise((resolve, reject) => {
+    const claude = spawn('claude', [
+      '-p', prompt,
+      '--output-format', 'text',
+      '--dangerously-skip-permissions'
+    ], {
+      cwd: __dirname,
+      stdio: ['ignore', 'pipe', 'pipe'],
+      env: { ...process.env }
+    });
+
+    let output = '';
+
+    claude.stdout?.on('data', (data: Buffer) => {
+      const text = data.toString();
+      output += text;
+      process.stdout.write(text);
+    });
+
+    claude.stderr?.on('data', (data: Buffer) => {
+      const text = data.toString();
+      output += text;
+      process.stderr.write(text);
+    });
+
+    claude.on('close', async (code: number) => {
+      fs.writeFileSync(sessionLogFile, output);
+      log(`Focused agent ${priority.action} completed with code ${code}`);
+
+      if (code === 0) {
+        await sendTelegramAlert(`✅ *Focused task completed*\n${priority.action}`);
+        resolve();
+      } else {
+        await sendTelegramAlert(`❌ *Focused task failed*\n${priority.action}`);
+        reject(new Error(`Focused agent failed with code ${code}`));
+      }
+    });
+
+    claude.on('error', (error: Error) => {
+      log(`Error spawning focused agent: ${error.message}`);
       reject(error);
     });
   });
@@ -776,7 +922,46 @@ async function runDaemon(): Promise<void> {
     // Update engine status on every tick
     updateEngineStatus();
 
-    // Priority 1: Check for due responsibilities
+    // =========================================================================
+    // PRIORITY 0: Strategic Orchestrator - Event-driven priorities
+    // =========================================================================
+    // Check for high-urgency situations that should override scheduled work
+    const strategicDecision = getStrategicDecision();
+
+    if (strategicDecision.shouldOverride && strategicDecision.priority) {
+      const priority = strategicDecision.priority;
+      log(`Strategic override: ${priority.action} (urgency: ${priority.urgency})`);
+
+      // Handle code-executable priorities (no model needed)
+      if (!priority.spawnsAgent) {
+        try {
+          await executeCodePriority(priority);
+          gitPush();
+          return;
+        } catch (error) {
+          log(`Code priority failed: ${error}`);
+          gitPush();
+          return;
+        }
+      }
+
+      // Handle model-required priorities with focused context
+      if (priority.spawnsAgent && priority.focusedPrompt) {
+        try {
+          await executeFocusedAgent(priority);
+          gitPush();
+          return;
+        } catch (error) {
+          log(`Focused agent failed: ${error}`);
+          gitPush();
+          return;
+        }
+      }
+    }
+
+    // =========================================================================
+    // PRIORITY 1: Check for due responsibilities
+    // =========================================================================
     const dueResponsibility = getNextDueResponsibility();
     if (dueResponsibility) {
       try {
@@ -790,7 +975,9 @@ async function runDaemon(): Promise<void> {
       }
     }
 
-    // Priority 2: Check for pending handoffs
+    // =========================================================================
+    // PRIORITY 2: Check for pending handoffs
+    // =========================================================================
     const pendingHandoff = getNextPendingHandoff();
     if (pendingHandoff) {
       try {
@@ -804,7 +991,9 @@ async function runDaemon(): Promise<void> {
       }
     }
 
-    // Priority 3: Check for scheduled tasks (legacy support)
+    // =========================================================================
+    // PRIORITY 3: Check for scheduled tasks (pipelines)
+    // =========================================================================
     const schedule = loadSchedule();
 
     // Ensure all recurring pipelines are scheduled
@@ -824,6 +1013,12 @@ async function runDaemon(): Promise<void> {
         log(`Task ${task.id} failed: ${error}`);
         await gitPush();
       }
+    }
+
+    // Log status if nothing to do
+    if (!task) {
+      const metrics = getExecutionMetrics();
+      log(`Tick complete. Velocity: ${metrics.velocityScore}, Trades (7d): ${metrics.tradesLast7Days}`);
     }
   };
 

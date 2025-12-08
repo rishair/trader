@@ -2,9 +2,34 @@
 
 A self-improving autonomous trading system focused on Polymarket prediction markets.
 
-## Architecture: Two-Role System
+## Architecture: Code vs Intelligence Split
 
-The system has two agent roles that coordinate through responsibilities and handoffs:
+**Key Principle:** Code handles rules, validation, and state transitions. Models handle judgment and decisions.
+
+| Layer | What It Does | Examples |
+|-------|--------------|----------|
+| **Libraries (`lib/`)** | Validation, state machines, enforcement | Position limits, approval tiers, hypothesis transitions |
+| **Orchestrator** | Strategic prioritization, event detection | Override scheduled work for urgent portfolio risks |
+| **Context (`lib/context.ts`)** | Prepare focused, minimal context | Models get exactly what they need, not full state files |
+| **Agent Prompts** | Identity and judgment guidelines | Short prompts focused on decision-making |
+
+## Core Libraries
+
+```typescript
+// Trading - handles validation, approval tiers, state updates
+import { executePaperTrade, exitPosition, getPortfolioSummary } from './lib/trading';
+
+// Hypotheses - handles state machine, transitions, evidence
+import { transitionHypothesis, addEvidence, blockHypothesis, createHypothesis } from './lib/hypothesis';
+
+// Orchestrator - strategic prioritization
+import { getStrategicDecision, detectPriorities, getExecutionMetrics } from './lib/orchestrator';
+
+// Context - focused context preparation
+import { buildTradeResearchContext, prepareCEOBriefingContext } from './lib/context';
+```
+
+## Two Agent Roles
 
 | Role | Focus | Powers |
 |------|-------|--------|
@@ -15,9 +40,10 @@ The system has two agent roles that coordinate through responsibilities and hand
 
 - `MISSION.md` - The agent's constitution and operating principles
 - `state/` - All persistent state (organized by ownership)
-- `daemon.ts` - Orchestrator: schedules responsibilities, processes handoffs
+- `lib/` - Core libraries (trading, hypothesis, orchestrator, context)
+- `daemon.ts` - Orchestrator: schedules, event triggers, agent spawning
 - `tools/` - Agent-created tools, pipelines, and MCP servers
-- `.claude/agents/` - Agent prompt definitions
+- `.claude/agents/` - Agent prompt definitions (kept minimal)
 
 ## Commands
 
@@ -135,9 +161,13 @@ You report to them. This means:
 - End with: "What should I focus on?"
 - Wait for direction or "continue" before proceeding with big changes
 
-**Approval Gates**
+**Approval Tiers (Trades)**
+- **Auto-execute**: Trades ≤ $50 - just do it
+- **Notify**: Trades $50-200 - execute and notify, no wait
+- **Require approval**: Trades > $200 - send request, wait for response
+
+**Approval Gates (Infrastructure)**
 Get explicit approval before:
-- Opening new positions
 - Infrastructure changes (tools, daemon, agents)
 - Promoting hypotheses to active strategies
 - Anything novel or experimental
