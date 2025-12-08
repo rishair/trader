@@ -104,6 +104,27 @@ This is how the system learns from interaction, not just from trading outcomes.
 
 ## Infrastructure
 
+### Building Infrastructure (Plan-First Workflow)
+
+When implementing infrastructure changes (new tools, services, integrations, daemon changes, deployment scripts, etc.):
+
+1. **Plan first** - Write out the proposed approach, components, and changes
+2. **Ask for confirmation** - Present the plan to the user and wait for approval
+3. **Execute after approval** - Only implement once the user confirms
+
+This applies to:
+- Creating new tools or MCP servers
+- Modifying daemon behavior
+- Adding new services or integrations
+- Deployment or server configuration changes
+- Any significant structural changes
+
+Does NOT require plan approval:
+- Bug fixes with obvious solutions
+- Minor config tweaks
+- State file updates
+- Research and exploration
+
 ### Droplet (Production Server)
 - **Domain**: goodtraderbot.com
 - **IP**: 104.248.8.100
