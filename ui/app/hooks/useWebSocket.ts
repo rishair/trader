@@ -1,8 +1,19 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 
+export interface ToolCall {
+  id: string;
+  name: string;
+  input?: Record<string, unknown>;
+  result?: string;
+  status: "running" | "complete";
+}
+
 interface UseWebSocketOptions {
   conversationId: string;
   onChunk: (content: string) => void;
+  onToolUse: (tool: ToolCall) => void;
+  onToolResult: (toolId: string, result: string) => void;
+  onSystem: (message: string, meta?: { costUsd?: number; durationMs?: number }) => void;
   onComplete: (messageId?: string) => void;
   onError: (error: string) => void;
 }
@@ -10,6 +21,9 @@ interface UseWebSocketOptions {
 export function useWebSocket({
   conversationId,
   onChunk,
+  onToolUse,
+  onToolResult,
+  onSystem,
   onComplete,
   onError,
 }: UseWebSocketOptions) {
@@ -42,7 +56,21 @@ export function useWebSocket({
             }
             break;
           case "tool_use":
-            onChunk(`\n🔧 Using tool: ${data.toolName}\n`);
+            onToolUse({
+              id: data.toolId || `tool-${Date.now()}`,
+              name: data.toolName,
+              input: data.toolInput,
+              status: "running",
+            });
+            break;
+          case "tool_result":
+            onToolResult(data.toolId, data.content || "");
+            break;
+          case "system":
+            onSystem(data.content || "", {
+              costUsd: data.costUsd,
+              durationMs: data.durationMs,
+            });
             break;
           case "complete":
             onComplete(data.messageId);
@@ -67,7 +95,7 @@ export function useWebSocket({
     };
 
     wsRef.current = ws;
-  }, [conversationId, onChunk, onComplete, onError]);
+  }, [conversationId, onChunk, onToolUse, onToolResult, onSystem, onComplete, onError]);
 
   useEffect(() => {
     connect();

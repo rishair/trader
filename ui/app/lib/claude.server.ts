@@ -4,7 +4,6 @@ import {
   addMessage,
   markConversationStarted,
   updateConversationTitle,
-  getConversation,
 } from "./db.server.js";
 
 const PROJECT_ROOT = path.resolve(process.cwd(), "..");
@@ -13,10 +12,15 @@ const PROJECT_ROOT = path.resolve(process.cwd(), "..");
 const activeProcesses = new Map<string, ChildProcess>();
 
 export interface StreamEvent {
-  type: "chunk" | "complete" | "error" | "tool_use";
+  type: "chunk" | "complete" | "error" | "tool_use" | "tool_result" | "system";
   content?: string;
   toolName?: string;
+  toolId?: string;
+  toolInput?: Record<string, unknown>;
   messageId?: string;
+  sessionId?: string;
+  costUsd?: number;
+  durationMs?: number;
 }
 
 type EventCallback = (event: StreamEvent) => void;
@@ -52,7 +56,6 @@ export async function sendMessageToClaude(
 
   // Output format for streaming
   claudeArgs.push("--output-format", "stream-json");
-  claudeArgs.push("--verbose");
 
   // Skip permissions for automation
   claudeArgs.push("--dangerously-skip-permissions");
@@ -66,7 +69,9 @@ export async function sendMessageToClaude(
 
     activeProcesses.set(conversationId, claude);
 
-    let fullResponse = "";
+    // Track tool calls to build complete response
+    const toolCalls: Array<{ name: string; input: Record<string, unknown>; result?: string }> = [];
+    let textContent = "";
     let buffer = "";
 
     claude.stdout?.on("data", (data: Buffer) => {
@@ -78,17 +83,17 @@ export async function sendMessageToClaude(
         if (!line.trim()) continue;
         try {
           const event = JSON.parse(line);
-          const parsed = parseClaudeEvent(event);
-          if (parsed) {
+          const events = parseClaudeEvent(event, toolCalls);
+          for (const parsed of events) {
             if (parsed.type === "chunk" && parsed.content) {
-              fullResponse += parsed.content;
+              textContent += parsed.content;
             }
             onEvent(parsed);
           }
         } catch {
-          // Non-JSON output
+          // Non-JSON output - likely a plain text response
           if (line && !line.startsWith("{")) {
-            fullResponse += line + "\n";
+            textContent += line + "\n";
             onEvent({ type: "chunk", content: line + "\n" });
           }
         }
@@ -98,7 +103,7 @@ export async function sendMessageToClaude(
     claude.stderr?.on("data", (data: Buffer) => {
       const text = data.toString();
       // Filter out noise
-      if (!text.includes("dotenv") && !text.includes("Warning")) {
+      if (!text.includes("dotenv") && !text.includes("Warning") && !text.includes("ExperimentalWarning")) {
         console.error(`[Claude stderr] ${text}`);
       }
     });
@@ -110,17 +115,22 @@ export async function sendMessageToClaude(
       if (buffer.trim()) {
         try {
           const event = JSON.parse(buffer);
-          const parsed = parseClaudeEvent(event);
-          if (parsed) {
+          const events = parseClaudeEvent(event, toolCalls);
+          for (const parsed of events) {
             if (parsed.type === "chunk" && parsed.content) {
-              fullResponse += parsed.content;
+              textContent += parsed.content;
             }
             onEvent(parsed);
           }
         } catch {
-          fullResponse += buffer;
+          if (buffer && !buffer.startsWith("{")) {
+            textContent += buffer;
+          }
         }
       }
+
+      // Build full response including tool calls
+      const fullResponse = buildFullResponse(textContent, toolCalls);
 
       // Save assistant message to DB
       if (fullResponse.trim()) {
@@ -147,30 +157,119 @@ export async function sendMessageToClaude(
   });
 }
 
-function parseClaudeEvent(event: any): StreamEvent | null {
+function parseClaudeEvent(
+  event: any,
+  toolCalls: Array<{ name: string; input: Record<string, unknown>; result?: string }>
+): StreamEvent[] {
+  const events: StreamEvent[] = [];
+
+  // Handle system init event
+  if (event.type === "system" && event.subtype === "init") {
+    events.push({
+      type: "system",
+      sessionId: event.session_id,
+      content: `Session started (model: ${event.model || "unknown"})`,
+    });
+    return events;
+  }
+
   // Handle assistant message content
   if (event.type === "assistant" && event.message?.content) {
     for (const block of event.message.content) {
       if (block.type === "text" && block.text) {
-        return { type: "chunk", content: block.text };
+        events.push({ type: "chunk", content: block.text });
       }
       if (block.type === "tool_use") {
-        return { type: "tool_use", toolName: block.name };
+        // Track this tool call
+        toolCalls.push({
+          name: block.name,
+          input: block.input || {},
+        });
+        events.push({
+          type: "tool_use",
+          toolName: block.name,
+          toolId: block.id,
+          toolInput: block.input,
+        });
       }
+    }
+    return events;
+  }
+
+  // Handle tool result (user message with tool_result)
+  if (event.type === "user" && event.message?.content) {
+    for (const block of event.message.content) {
+      if (block.type === "tool_result") {
+        // Find the matching tool call and add the result
+        const lastToolWithoutResult = toolCalls.find(t => !t.result);
+        if (lastToolWithoutResult) {
+          lastToolWithoutResult.result = typeof block.content === 'string'
+            ? block.content
+            : JSON.stringify(block.content);
+        }
+
+        // Truncate long results for display
+        const displayContent = typeof block.content === 'string'
+          ? block.content
+          : JSON.stringify(block.content);
+        const truncated = displayContent.length > 500
+          ? displayContent.slice(0, 500) + "..."
+          : displayContent;
+
+        events.push({
+          type: "tool_result",
+          toolId: block.tool_use_id,
+          content: truncated,
+        });
+      }
+    }
+    return events;
+  }
+
+  // Handle final result event
+  if (event.type === "result") {
+    events.push({
+      type: "system",
+      content: `Completed (${event.subtype || "success"})`,
+      costUsd: event.cost_usd,
+      durationMs: event.duration_ms,
+    });
+    return events;
+  }
+
+  return events;
+}
+
+function buildFullResponse(
+  textContent: string,
+  toolCalls: Array<{ name: string; input: Record<string, unknown>; result?: string }>
+): string {
+  // If there are no tool calls, just return the text content
+  if (toolCalls.length === 0) {
+    return textContent;
+  }
+
+  // Build a response that includes tool call information
+  let response = textContent;
+
+  // Add tool call summary if there were any
+  if (toolCalls.length > 0) {
+    const toolSummary = toolCalls
+      .map((t, i) => {
+        const inputPreview = JSON.stringify(t.input).slice(0, 100);
+        const resultPreview = t.result ? t.result.slice(0, 200) : "no result";
+        return `${i + 1}. **${t.name}**: ${inputPreview}${inputPreview.length >= 100 ? "..." : ""}\n   → ${resultPreview}${(t.result?.length || 0) > 200 ? "..." : ""}`;
+      })
+      .join("\n");
+
+    if (response) {
+      response += "\n\n---\n**Tool calls:**\n" + toolSummary;
+    } else {
+      response = "**Tool calls:**\n" + toolSummary;
     }
   }
 
-  // Handle content block deltas (streaming)
-  if (event.type === "content_block_delta" && event.delta?.text) {
-    return { type: "chunk", content: event.delta.text };
-  }
-
-  // Handle result
-  if (event.type === "result" && event.result) {
-    return { type: "chunk", content: event.result };
-  }
-
-  return null;
+  return response;
 }
 
 export function cancelStream(conversationId: string): void {
