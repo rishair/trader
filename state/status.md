@@ -1,18 +1,20 @@
 # Agent Status
 
-**Last Updated:** 2025-12-08 (Market monitoring session)
-**Phase:** Active Trading - First Position Under Monitor
+**Last Updated:** 2025-12-08 15:30 UTC (Momentum hypothesis scan)
+**Phase:** Active Trading - Hypothesis Testing
 
 ## Current Focus
 
-Monitoring AAPL/NVDA market on Polymarket. Testing hypothesis that multi-outcome markets misprice volatility in close races.
+Testing two hypotheses simultaneously:
+1. **hyp-005** (volatility mispricing): Active AAPL position tracking
+2. **hyp-002** (momentum): Scanning markets closing soon, building baseline dataset
 
 ## Portfolio Status
 
 - **Cash:** $9,500.05
 - **Positions:** 1 active
-- **Total Value:** $9,983.33
-- **P&L:** -$16.67 (-0.17%)
+- **Total Value:** $9,983.40
+- **P&L:** -$16.65 (-0.17%)
 
 ## Active Position Status
 
@@ -67,14 +69,31 @@ Monitoring AAPL/NVDA market on Polymarket. Testing hypothesis that multi-outcome
 | ID | Hypothesis | Status | Confidence | Linked Trade |
 |----|----|--------|------------|--------------|
 | hyp-001 | Tail-risk markets overpriced | invalidated | 25% | None |
-| hyp-002 | Momentum in closing markets | proposed | 35% | None |
+| hyp-002 | Momentum in closing markets | **testing** | 35% | Tracking 3 markets |
 | hyp-003 | Liquidity rewards edge | proposed | 50% | None |
 | hyp-004 | Copy top traders | proposed | 40% | None |
 | hyp-005 | Multi-outcome volatility mispricing | testing | 50% | trade-001 |
 
+### hyp-002 Tracking Markets (baseline recorded 2025-12-08)
+
+| Market | Leader | % | Closes | Days Left |
+|--------|--------|---|--------|-----------|
+| Largest Company EOY | NVDA | 90% | Dec 31 | 23 |
+| Time Person of Year | AI | 39% | Dec 31 | 23 |
+| Fed 8+ Rate Cuts | - | TBD | Dec 10 | 2 |
+
 ## Recent Activity
 
-- **2025-12-08 (Current Session - Market Monitoring):**
+- **2025-12-08 15:30 UTC (Current Session - Momentum Scan):**
+  - Scanned Polymarket for markets closing within 7 days
+  - Found 8 Fed rate markets (all close Dec 10) - not ideal for momentum due to 45h window
+  - Established baseline prices for hyp-002 momentum tracking:
+    - Largest Company EOY: NVDA 90%, AAPL 8.7%
+    - Time POTY: AI 39%, Jensen Huang 21%
+  - Updated AAPL position: now 8.7¢ (was 8.5¢), P&L: -$16.65
+  - Moved hyp-002 from "proposed" to "testing" with tracking markets defined
+
+- **2025-12-08 (Earlier Session - Market Monitoring):**
   - Fetched current prices via CLOB API
   - AAPL: 8.7¢ (down 3.4% from entry)
   - NVDA: 88.5¢ (baseline)

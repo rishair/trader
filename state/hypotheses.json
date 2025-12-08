@@ -37,12 +37,53 @@
       "statement": "Markets approaching resolution (closing within 7 days) exhibit price momentum that continues until resolution",
       "rationale": "As information crystallizes near resolution, early movers may create momentum. Late traders pile in, pushing prices further in the direction of the likely outcome.",
       "testMethod": "Track price movements in final 7 days before resolution. Look for continuation patterns. Paper trade momentum strategy on closing-soon markets.",
-      "status": "proposed",
+      "status": "testing",
       "confidence": 0.35,
-      "evidence": [],
+      "evidence": [
+        {
+          "date": "2025-12-08",
+          "observation": "Scan of closing-soon markets: Found 8 Fed rate decision markets (Dec 10) - 97% volume concentrated in '8+ cuts' market ($1.38M/day). Markets at extreme prices (near-binary outcomes), making momentum less observable. Need markets in 40-60% range for proper momentum testing.",
+          "supports": null,
+          "confidenceImpact": 0
+        },
+        {
+          "date": "2025-12-08",
+          "observation": "Largest Company EOY 2025: NVDA 90% (up from 89%), AAPL 8.7% (down from 9%). Slight movement toward winner (NVDA) and away from challenger (AAPL). Could support momentum hypothesis but sample size n=1 and movement <1% is within noise.",
+          "supports": null,
+          "confidenceImpact": 0
+        },
+        {
+          "date": "2025-12-08",
+          "observation": "Time Person of Year 2025: AI leads at 39%, Jensen Huang 21%, Sam Altman 14%. Market closing Dec 31 - good candidate for momentum tracking over next 23 days. Need to establish baseline prices today for comparison.",
+          "supports": null,
+          "confidenceImpact": 0
+        }
+      ],
       "conclusion": null,
       "createdAt": "2025-12-07T00:00:00Z",
-      "updatedAt": "2025-12-07T00:00:00Z"
+      "updatedAt": "2025-12-08T12:00:00Z",
+      "testStartedAt": "2025-12-08T12:00:00Z",
+      "trackingMarkets": [
+        {
+          "market": "Largest Company end of 2025",
+          "baseline": {"NVDA": 0.90, "AAPL": 0.087, "GOOGL": 0.023},
+          "recordedAt": "2025-12-08T12:00:00Z",
+          "closesAt": "2025-12-31"
+        },
+        {
+          "market": "Time 2025 Person of the Year",
+          "baseline": {"AI": 0.39, "Jensen Huang": 0.21, "Sam Altman": 0.14, "Pope Leo XIV": 0.09, "Donald Trump": 0.05},
+          "recordedAt": "2025-12-08T12:00:00Z",
+          "closesAt": "2025-12-31"
+        },
+        {
+          "market": "Fed rate cuts 2025 (8+)",
+          "baseline": {"YES": "unknown - API limitation"},
+          "recordedAt": "2025-12-08T12:00:00Z",
+          "closesAt": "2025-12-10",
+          "notes": "Very short window (45h), will use for post-resolution analysis"
+        }
+      ]
     },
     {
       "id": "hyp-003",

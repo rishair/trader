@@ -69,13 +69,15 @@
       }
     },
     {
-      "id": "monitor-001",
+      "id": "monitor-004",
       "type": "monitor",
-      "description": "Scan for markets closing within 7 days - track price movements for momentum hypothesis",
-      "scheduledFor": "2025-12-08T12:00:00Z",
+      "description": "Update momentum tracking markets (hyp-002) - compare current prices to baseline",
+      "scheduledFor": "2025-12-10T14:00:00Z",
       "priority": "medium",
       "context": {
-        "hypothesisId": "hyp-002"
+        "hypothesisId": "hyp-002",
+        "action": "Compare prices to baseline established Dec 8",
+        "trackingMarkets": ["Largest Company EOY", "Time Person of Year", "Fed 8+ Rate Cuts (resolved by then)"]
       }
     },
     {
@@ -108,6 +110,18 @@
     }
   ],
   "completedTasks": [
+    {
+      "id": "monitor-001",
+      "type": "monitor",
+      "description": "Scan for markets closing within 7 days - track price movements for momentum hypothesis",
+      "scheduledFor": "2025-12-08T12:00:00Z",
+      "priority": "medium",
+      "context": {
+        "hypothesisId": "hyp-002"
+      },
+      "completedAt": "2025-12-08T15:30:00Z",
+      "result": "Found 8 Fed rate markets closing Dec 10 (45h) - too short for momentum. Established baseline prices for 3 tracking markets (Largest Company EOY, Time POTY, Fed 8+ cuts). Updated hyp-002 to testing status. Will compare prices on Dec 10."
+    },
     {
       "id": "monitor-002",
       "type": "monitor",
