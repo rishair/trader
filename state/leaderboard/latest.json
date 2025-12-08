@@ -1,0 +1,410 @@
+{
+  "runAt": "2025-12-08T07:46:01.616Z",
+  "window": "all-time",
+  "topByProfit": [
+    {
+      "proxyWallet": "0x56687bf447db6ffa42ffe2204a05edaa20f55839",
+      "name": "Theo4",
+      "pseudonym": "Theo4",
+      "profit": 22053933.752321757,
+      "profitRank": 1,
+      "bio": "",
+      "profileImage": ""
+    },
+    {
+      "proxyWallet": "0x1f2dd6d473f3e824cd2f8a89d9c69fb96f6ad0cf",
+      "name": "Fredi9999",
+      "pseudonym": "Fredi9999",
+      "profit": 16620027.60000315,
+      "profitRank": 2,
+      "bio": "",
+      "profileImage": ""
+    },
+    {
+      "proxyWallet": "0x78b9ac44a6d7d7a076c14e0ad518b301b63c6b76",
+      "name": "Len9311238",
+      "pseudonym": "Len9311238",
+      "profit": 8709972.98807,
+      "profitRank": 3,
+      "bio": "",
+      "profileImage": ""
+    },
+    {
+      "proxyWallet": "0xd235973291b2b75ff4070e9c0b01728c520b0f29",
+      "name": "zxgngl",
+      "pseudonym": "zxgngl",
+      "profit": 7807265.5892408835,
+      "profitRank": 4,
+      "bio": "",
+      "profileImage": ""
+    },
+    {
+      "proxyWallet": "0x863134d00841b2e200492805a01e1e2f5defaa53",
+      "name": "RepTrump",
+      "pseudonym": "RepTrump",
+      "profit": 7532409.671579,
+      "profitRank": 5,
+      "bio": "",
+      "profileImage": ""
+    },
+    {
+      "proxyWallet": "0x8119010a6e589062aa03583bb3f39ca632d9f887",
+      "name": "PrincessCaro",
+      "pseudonym": "PrincessCaro",
+      "profit": 6083643.099591745,
+      "profitRank": 6,
+      "bio": "",
+      "profileImage": ""
+    },
+    {
+      "proxyWallet": "0xe9ad918c7678cd38b12603a762e638a5d1ee7091",
+      "name": "walletmobile",
+      "pseudonym": "walletmobile",
+      "profit": 5942685.453396838,
+      "profitRank": 7,
+      "bio": "",
+      "profileImage": ""
+    },
+    {
+      "proxyWallet": "0x885783760858e1bd5dd09a3c3f916cfa251ac270",
+      "name": "BetTom42",
+      "pseudonym": "BetTom42",
+      "profit": 5642135.735356,
+      "profitRank": 8,
+      "bio": "",
+      "profileImage": ""
+    },
+    {
+      "proxyWallet": "0x23786fdad0073692157c6d7dc81f281843a35fcb",
+      "name": "mikatrade77",
+      "pseudonym": "mikatrade77",
+      "profit": 5147998.544603,
+      "profitRank": 9,
+      "bio": "",
+      "profileImage": ""
+    },
+    {
+      "proxyWallet": "0xd0c042c08f755ff940249f62745e82d356345565",
+      "name": "alexmulti",
+      "pseudonym": "alexmulti",
+      "profit": 4804855.613376,
+      "profitRank": 10,
+      "bio": "",
+      "profileImage": ""
+    },
+    {
+      "proxyWallet": "0x94a428cfa4f84b264e01f70d93d02bc96cb36356",
+      "name": "GCottrell93",
+      "pseudonym": "GCottrell93",
+      "profit": 4288184.880528921,
+      "profitRank": 11,
+      "bio": "",
+      "profileImage": ""
+    },
+    {
+      "proxyWallet": "0x16f91db2592924cfed6e03b7e5cb5bb1e32299e3",
+      "name": "Jenzigo",
+      "pseudonym": "Jenzigo",
+      "profit": 4049827.0941029997,
+      "profitRank": 12,
+      "bio": "",
+      "profileImage": ""
+    },
+    {
+      "proxyWallet": "0x17db3fcd93ba12d38382a0cade24b200185c5f6d",
+      "name": "fengdubiying",
+      "pseudonym": "fengdubiying",
+      "profit": 3202287.9135450437,
+      "profitRank": 13,
+      "bio": "",
+      "profileImage": ""
+    },
+    {
+      "proxyWallet": "0x033a07b3de5947eab4306676ad74eb546da30d50",
+      "name": "RandomGenius",
+      "pseudonym": "RandomGenius",
+      "profit": 3115550.407118868,
+      "profitRank": 14,
+      "bio": "",
+      "profileImage": ""
+    },
+    {
+      "proxyWallet": "0xed2239a9150c3920000d0094d28fa51c7db03dd0",
+      "name": "Michie",
+      "pseudonym": "Michie",
+      "profit": 3095007.670859059,
+      "profitRank": 15,
+      "bio": "",
+      "profileImage": ""
+    },
+    {
+      "proxyWallet": "0x14964aefa2cd7caff7878b3820a690a03c5aa429",
+      "name": "gmpm",
+      "pseudonym": "gmpm",
+      "profit": 2980858.86905054,
+      "profitRank": 16,
+      "bio": "",
+      "profileImage": ""
+    },
+    {
+      "proxyWallet": "0xdbade4c82fb72780a0db9a38f821d8671aba9c95",
+      "name": "SwissMiss",
+      "pseudonym": "SwissMiss",
+      "profit": 2789651.1253235596,
+      "profitRank": 17,
+      "bio": "",
+      "profileImage": "https://polymarket-upload.s3.us-east-2.amazonaws.com/swissmiss_8da75aa4-05e7-444a-b87a-da4d38d2bb08_1741939822531.jpg"
+    },
+    {
+      "proxyWallet": "0x6a72f61820b26b1fe4d956e17b6dc2a1ea3033ee",
+      "name": "kch123",
+      "pseudonym": "kch123",
+      "profit": 2717362.1934567583,
+      "profitRank": 18,
+      "bio": "",
+      "profileImage": ""
+    },
+    {
+      "proxyWallet": "0x343d4466dc323b850e5249394894c7381d91456e",
+      "name": "tazcot",
+      "pseudonym": "tazcot",
+      "profit": 2604547.667341,
+      "profitRank": 19,
+      "bio": "",
+      "profileImage": ""
+    },
+    {
+      "proxyWallet": "0xd38b71f3e8ed1af71983e5c309eac3dfa9b35029",
+      "name": "primm",
+      "pseudonym": "primm",
+      "profit": 2577292.9671175526,
+      "profitRank": 20,
+      "bio": "",
+      "profileImage": ""
+    }
+  ],
+  "topByVolume": [
+    {
+      "proxyWallet": "0x9d84ce0306f8551e02efef1680475fc0f1dc1344",
+      "name": "ImJustKen",
+      "pseudonym": "ImJustKen",
+      "profit": 0,
+      "profitRank": 0,
+      "volume": 422332059.1568405,
+      "volumeRank": 1,
+      "bio": "",
+      "profileImage": "https://polymarket-upload.s3.us-east-2.amazonaws.com/profile-image-82662-8ddbc8e8-0500-44b7-bb13-c0b32a40a45d.jpg"
+    },
+    {
+      "proxyWallet": "0x2d27e4d20f3b8a2ee3bc861d9b83752f338676d8",
+      "name": "interstellaar",
+      "pseudonym": "interstellaar",
+      "profit": 0,
+      "profitRank": 0,
+      "volume": 397982579.9766357,
+      "volumeRank": 2,
+      "bio": "",
+      "profileImage": ""
+    },
+    {
+      "proxyWallet": "0x9f47f1fcb1701bf9eaf31236ad39875e5d60af93",
+      "name": "TheGuru",
+      "pseudonym": "TheGuru",
+      "profit": 0,
+      "profitRank": 0,
+      "volume": 397496287.9566586,
+      "volumeRank": 3,
+      "bio": "",
+      "profileImage": "https://polymarket-upload.s3.us-east-2.amazonaws.com/view_ancient_greek_bust_figure_23_2151616992_e46bd428-7fec-4b3b-95b1-210f906105d8_1725465460772.jpg"
+    },
+    {
+      "proxyWallet": "0xd218e474776403a330142299f7796e8ba32eb5c9",
+      "name": "cigarettes",
+      "pseudonym": "cigarettes",
+      "profit": 0,
+      "profitRank": 0,
+      "volume": 387674389.61836183,
+      "volumeRank": 4,
+      "bio": "",
+      "profileImage": ""
+    },
+    {
+      "proxyWallet": "0xa61ef8773ec2e821962306ca87d4b57e39ff0abd",
+      "name": "risk-manager",
+      "pseudonym": "risk-manager",
+      "profit": 0,
+      "profitRank": 0,
+      "volume": 377392901.04948074,
+      "volumeRank": 5,
+      "bio": "",
+      "profileImage": "https://polymarket-upload.s3.us-east-2.amazonaws.com/profile-image-910447-e4276f18-6c7b-4e99-8a46-2177423035a0.PNG"
+    },
+    {
+      "proxyWallet": "0x24c8cf69a0e0a17eee21f69d29752bfa32e823e1",
+      "name": "debased",
+      "pseudonym": "debased",
+      "profit": 0,
+      "profitRank": 0,
+      "volume": 336498629.9795916,
+      "volumeRank": 6,
+      "bio": "",
+      "profileImage": "https://polymarket-upload.s3.us-east-2.amazonaws.com/trump_farmer_b64c6dcd-13e2-4dda-b1c2-0fb46389fb22_1743074825403.png"
+    },
+    {
+      "proxyWallet": "0x5bffcf561bcae83af680ad600cb99f1184d6ffbe",
+      "name": "YatSen",
+      "pseudonym": "YatSen",
+      "profit": 0,
+      "profitRank": 0,
+      "volume": 316839309.6851555,
+      "volumeRank": 7,
+      "bio": "",
+      "profileImage": "https://polymarket-upload.s3.us-east-2.amazonaws.com/profile-image-547319-56f15c24-45ba-4517-9c74-b6d47dc061cb.jpeg"
+    },
+    {
+      "proxyWallet": "0x9c667a1d1c1337c6dca9d93241d386e4ed346b66",
+      "name": "InfiniteCrypt0",
+      "pseudonym": "InfiniteCrypt0",
+      "profit": 0,
+      "profitRank": 0,
+      "volume": 310143727.9529188,
+      "volumeRank": 8,
+      "bio": "",
+      "profileImage": "https://polymarket-upload.s3.us-east-2.amazonaws.com/infinity_symbol_limitless_logo_design_template_vector_13924f96-6905-4638-9316-c88999d36a2f_1742326096240.jpg"
+    },
+    {
+      "proxyWallet": "0xb41ac4e8907de5460e2dac0a98df8d1530d33a25",
+      "name": "GMIB",
+      "pseudonym": "GMIB",
+      "profit": 0,
+      "profitRank": 0,
+      "volume": 259428444.00691643,
+      "volumeRank": 9,
+      "bio": "",
+      "profileImage": ""
+    },
+    {
+      "proxyWallet": "0x55b4af6a1cff148a307cad8ad098206a028e80ea",
+      "name": "StarryPath",
+      "pseudonym": "StarryPath",
+      "profit": 0,
+      "profitRank": 0,
+      "volume": 237379304.09572917,
+      "volumeRank": 10,
+      "bio": "",
+      "profileImage": ""
+    },
+    {
+      "proxyWallet": "0x07e78f5f58f8fa839f298cfe3fefd258883aa343",
+      "name": "Spon",
+      "pseudonym": "Spon",
+      "profit": 0,
+      "profitRank": 0,
+      "volume": 234694551.38090312,
+      "volumeRank": 11,
+      "bio": "",
+      "profileImage": ""
+    },
+    {
+      "proxyWallet": "0x4ce73141dbfce41e65db3723e31059a730f0abad",
+      "name": "qrpenc",
+      "pseudonym": "qrpenc",
+      "profit": 0,
+      "profitRank": 0,
+      "volume": 225756230.84142143,
+      "volumeRank": 12,
+      "bio": "",
+      "profileImage": "https://polymarket-upload.s3.us-east-2.amazonaws.com/profile_picture_8f4c1c8a-e267-4b86-ae1c-1a04b7edec09_1727918817361.png"
+    },
+    {
+      "proxyWallet": "0xfbfd14dd4bb607373119de95f1d4b21c3b6c0029",
+      "name": "x.compolymarketbet",
+      "pseudonym": "x.compolymarketbet",
+      "profit": 0,
+      "profitRank": 0,
+      "volume": 211615035.03656933,
+      "volumeRank": 13,
+      "bio": "",
+      "profileImage": "https://polymarket-upload.s3.us-east-2.amazonaws.com/LGBTQ_Connecting_1200x630_1_06d780af-4f21-46e0-99c6-eaf04e30e2fe_1729545451519.png"
+    },
+    {
+      "proxyWallet": "0xd42f6a1634a3707e27cbae14ca966068e5d1047d",
+      "name": "Apsalar",
+      "pseudonym": "Apsalar",
+      "profit": 0,
+      "profitRank": 0,
+      "volume": 204474770.95455998,
+      "volumeRank": 14,
+      "bio": "",
+      "profileImage": "https://polymarket-upload.s3.us-east-2.amazonaws.com/apsalar_173062_1718292946166.webp"
+    },
+    {
+      "proxyWallet": "0x59ee6c6a56d7b00223f0c30f8002c4df762b684d",
+      "name": "undertaker",
+      "pseudonym": "undertaker",
+      "profit": 0,
+      "profitRank": 0,
+      "volume": 197598890.58012694,
+      "volumeRank": 15,
+      "bio": "",
+      "profileImage": ""
+    },
+    {
+      "proxyWallet": "0xf8ba34bf0e95d952d05b578bfbc0833f9242a286",
+      "name": "kingfisher",
+      "pseudonym": "kingfisher",
+      "profit": 0,
+      "profitRank": 0,
+      "volume": 185297744.55911535,
+      "volumeRank": 16,
+      "bio": "",
+      "profileImage": ""
+    },
+    {
+      "proxyWallet": "0xa1d75a199ef084ee3ec9ae60dc986b439fe6e17e",
+      "name": "TimeQuestion",
+      "pseudonym": "TimeQuestion",
+      "profit": 0,
+      "profitRank": 0,
+      "volume": 177915601.3107623,
+      "volumeRank": 17,
+      "bio": "",
+      "profileImage": "https://polymarket-upload.s3.us-east-2.amazonaws.com/test_63bb3a31-1c40-48bc-8852-8271d96f27bf_1728370604605.jpg"
+    },
+    {
+      "proxyWallet": "0x63d43bbb87f85af03b8f2f9e2fad7b54334fa2f1",
+      "name": "wokerjoesleeper",
+      "pseudonym": "wokerjoesleeper",
+      "profit": 0,
+      "profitRank": 0,
+      "volume": 174371240.6196008,
+      "volumeRank": 18,
+      "bio": "",
+      "profileImage": ""
+    },
+    {
+      "proxyWallet": "0x6480542954b70a674a74bd1a6015dec362dc8dc5",
+      "name": "tripping",
+      "pseudonym": "tripping",
+      "profit": 0,
+      "profitRank": 0,
+      "volume": 173127596.2307122,
+      "volumeRank": 19,
+      "bio": "",
+      "profileImage": "https://polymarket-upload.s3.us-east-2.amazonaws.com/profile-image-2136195-6a15a210-77e7-4450-bf86-06670c61864d.jpeg"
+    },
+    {
+      "proxyWallet": "0x3cf3e8d5427aed066a7a5926980600f6c3cf87b3",
+      "name": "50Whence",
+      "pseudonym": "50Whence",
+      "profit": 0,
+      "profitRank": 0,
+      "volume": 172891375.17332137,
+      "volumeRank": 20,
+      "bio": "",
+      "profileImage": "https://polymarket-upload.s3.us-east-2.amazonaws.com/50Pence_fdf95e07-b30d-48af-af3a-19df35d66c05_1741996492104.jpg"
+    }
+  ],
+  "newEntries": [],
+  "droppedOut": []
+}

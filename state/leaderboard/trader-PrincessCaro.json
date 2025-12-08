@@ -1,0 +1,30 @@
+[
+  {
+    "trader": {
+      "proxyWallet": "0x8119010a6e589062aa03583bb3f39ca632d9f887",
+      "name": "PrincessCaro",
+      "pseudonym": "PrincessCaro",
+      "profit": 6083643.099591745,
+      "profitRank": 6,
+      "bio": "",
+      "profileImage": ""
+    },
+    "positions": [
+      {
+        "asset": "52646153159016006621189163812433115969858888637703551736022048114666679879653",
+        "conditionId": "0xcd1b6b71a1964f15e2c14809594cbfa0d576270e8ef94c8c24913121097e09e5",
+        "title": "Will Donald Trump win the popular vote in the 2024 Presidential Election?",
+        "slug": "will-donald-trump-win-the-popular-vote-in-the-2024-presidential-election",
+        "outcome": "No",
+        "size": 0.022399,
+        "avgPrice": 0.745,
+        "currentValue": 0,
+        "curPrice": 0,
+        "cashPnl": -0.016687255,
+        "percentPnl": -100,
+        "endDate": "2024-11-05"
+      }
+    ],
+    "snapshotAt": "2025-12-08T07:39:14.059Z"
+  }
+]

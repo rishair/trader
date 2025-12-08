@@ -111,6 +111,7 @@ function saveSchedule(schedule: Schedule): void {
 const PIPELINES: Record<string, string> = {
   'closing-scanner': 'tools/pipelines/closing-scanner.ts',
   'health-check': 'tools/pipelines/health-check.ts',
+  'leaderboard-tracker': 'tools/pipelines/leaderboard-tracker.ts',
 };
 
 async function executePipeline(pipelineName: string): Promise<{ success: boolean; output: string }> {

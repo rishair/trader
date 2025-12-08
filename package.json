@@ -11,6 +11,7 @@
     "telegram": "ts-node tools/telegram/handler.ts",
     "telegram:send": "ts-node tools/telegram/bot.ts send",
     "prices": "ts-node tools/pipelines/price-tracker.ts",
+    "leaderboard": "ts-node tools/pipelines/leaderboard-tracker.ts",
     "deploy": "bash scripts/deploy.sh"
   },
   "keywords": [],
