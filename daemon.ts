@@ -3,13 +3,27 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as dotenv from 'dotenv';
 import axios from 'axios';
+import {
+  getNextDueResponsibility,
+  markResponsibilityComplete,
+  DueResponsibility
+} from './lib/responsibilities';
+import {
+  getNextPendingHandoff,
+  startHandoff,
+  completeHandoff,
+  Handoff
+} from './lib/handoffs';
 
 dotenv.config();
 
 const STATE_DIR = path.join(__dirname, 'state');
 const CHAT_ID_FILE = path.join(STATE_DIR, 'telegram_chat_id.txt');
-const ENGINE_STATUS_FILE = path.join(STATE_DIR, 'engine-status.json');
-const HYPOTHESES_FILE = path.join(STATE_DIR, 'hypotheses.json');
+const ENGINE_STATUS_FILE = path.join(STATE_DIR, 'trading/engine-status.json');
+const HYPOTHESES_FILE = path.join(STATE_DIR, 'trading/hypotheses.json');
+
+// Agent types
+type AgentRole = 'trade-research' | 'agent-engineer';
 
 function getTelegramChatId(): string | null {
   try {
@@ -34,7 +48,7 @@ async function sendTelegramAlert(message: string): Promise<void> {
     log(`Failed to send Telegram alert: ${error.message}`);
   }
 }
-const SCHEDULE_FILE = path.join(STATE_DIR, 'schedule.json');
+const SCHEDULE_FILE = path.join(STATE_DIR, 'orchestrator/schedule.json');
 const LOG_DIR = path.join(STATE_DIR, 'logs');
 
 interface ScheduledTask {
@@ -112,6 +126,7 @@ const PIPELINES: Record<string, string> = {
   'closing-scanner': 'tools/pipelines/closing-scanner.ts',
   'health-check': 'tools/pipelines/health-check.ts',
   'leaderboard-tracker': 'tools/pipelines/leaderboard-tracker.ts',
+  'daily-briefing': 'tools/pipelines/daily-briefing.ts',
 };
 
 async function executePipeline(pipelineName: string): Promise<{ success: boolean; output: string }> {
@@ -150,6 +165,155 @@ async function executePipeline(pipelineName: string): Promise<{ success: boolean
 
     proc.on('error', (error: Error) => {
       resolve({ success: false, output: error.message });
+    });
+  });
+}
+
+/**
+ * Spawn an agent for a responsibility
+ */
+async function executeResponsibility(resp: DueResponsibility): Promise<void> {
+  log(`Executing responsibility: ${resp.role}/${resp.name}`);
+  await sendTelegramAlert(`🔄 *${resp.role}*\nRunning: ${resp.name}`);
+
+  const sessionLogFile = path.join(LOG_DIR, `responsibility-${resp.role}-${resp.name}-${Date.now()}.log`);
+
+  const prompt = `You are the ${resp.role === 'trade-research' ? 'Trade Research Engineer' : 'Agent Engineer'}.
+
+## Current Responsibility: ${resp.name}
+
+You are being spawned to execute your "${resp.name}" responsibility.
+Read your agent definition at .claude/agents/${resp.role}.md for full instructions on this responsibility.
+
+## Key Instructions
+1. Execute the ${resp.name} responsibility as defined in your agent prompt
+2. Update your owned state files with any changes
+3. Log improvement ideas if you notice any friction
+4. Be concise and action-oriented
+
+## Context
+Last run: ${resp.lastRun || 'never'}
+Frequency: ${resp.frequency}
+`;
+
+  return new Promise((resolve, reject) => {
+    const claude = spawn('claude', [
+      '-p', prompt,
+      '--output-format', 'text',
+      '--dangerously-skip-permissions'
+    ], {
+      cwd: __dirname,
+      stdio: ['ignore', 'pipe', 'pipe'],
+      env: { ...process.env }
+    });
+
+    let output = '';
+
+    claude.stdout?.on('data', (data: Buffer) => {
+      const text = data.toString();
+      output += text;
+      process.stdout.write(text);
+    });
+
+    claude.stderr?.on('data', (data: Buffer) => {
+      const text = data.toString();
+      output += text;
+      process.stderr.write(text);
+    });
+
+    claude.on('close', async (code: number) => {
+      fs.writeFileSync(sessionLogFile, output);
+      log(`Responsibility ${resp.role}/${resp.name} completed with code ${code}`);
+
+      if (code === 0) {
+        markResponsibilityComplete(resp.role, resp.name);
+        await sendTelegramAlert(`✅ *${resp.role}*\nCompleted: ${resp.name}`);
+        resolve();
+      } else {
+        await sendTelegramAlert(`❌ *${resp.role}*\nFailed: ${resp.name}`);
+        reject(new Error(`Responsibility failed with code ${code}`));
+      }
+    });
+
+    claude.on('error', (error: Error) => {
+      log(`Error spawning claude for responsibility: ${error.message}`);
+      reject(error);
+    });
+  });
+}
+
+/**
+ * Spawn an agent for a handoff
+ */
+async function executeHandoff(handoff: Handoff): Promise<void> {
+  log(`Executing handoff: ${handoff.id} (${handoff.type}) for ${handoff.to}`);
+  await sendTelegramAlert(`📤 *Handoff*\n${handoff.from} → ${handoff.to}\nType: ${handoff.type}`);
+
+  startHandoff(handoff.id);
+  const sessionLogFile = path.join(LOG_DIR, `handoff-${handoff.id}-${Date.now()}.log`);
+
+  const prompt = `You are the ${handoff.to === 'trade-research' ? 'Trade Research Engineer' : 'Agent Engineer'}.
+
+## Handoff Request
+
+You have a handoff request from ${handoff.from}:
+
+Type: ${handoff.type}
+Priority: ${handoff.priority}
+Context: ${JSON.stringify(handoff.context, null, 2)}
+
+## Instructions
+1. Read your agent definition at .claude/agents/${handoff.to}.md
+2. Complete the handoff request
+3. Update state files as needed
+4. Return a clear result
+
+The result of this handoff will be recorded for ${handoff.from} to see.
+`;
+
+  return new Promise((resolve, reject) => {
+    const claude = spawn('claude', [
+      '-p', prompt,
+      '--output-format', 'text',
+      '--dangerously-skip-permissions'
+    ], {
+      cwd: __dirname,
+      stdio: ['ignore', 'pipe', 'pipe'],
+      env: { ...process.env }
+    });
+
+    let output = '';
+
+    claude.stdout?.on('data', (data: Buffer) => {
+      const text = data.toString();
+      output += text;
+      process.stdout.write(text);
+    });
+
+    claude.stderr?.on('data', (data: Buffer) => {
+      const text = data.toString();
+      output += text;
+      process.stderr.write(text);
+    });
+
+    claude.on('close', async (code: number) => {
+      fs.writeFileSync(sessionLogFile, output);
+      log(`Handoff ${handoff.id} completed with code ${code}`);
+
+      if (code === 0) {
+        completeHandoff(handoff.id, { success: true, output: output.slice(-500) });
+        await sendTelegramAlert(`✅ *Handoff completed*\n${handoff.id}`);
+        resolve();
+      } else {
+        completeHandoff(handoff.id, { success: false, error: `Exit code ${code}` });
+        await sendTelegramAlert(`❌ *Handoff failed*\n${handoff.id}`);
+        reject(new Error(`Handoff failed with code ${code}`));
+      }
+    });
+
+    claude.on('error', (error: Error) => {
+      log(`Error spawning claude for handoff: ${error.message}`);
+      reject(error);
     });
   });
 }
@@ -504,7 +668,7 @@ function markTaskComplete(schedule: Schedule, taskId: string): void {
 
 async function runDaemon(): Promise<void> {
   log('Daemon starting...');
-  await sendTelegramAlert('🤖 *Trader daemon started*\nMonitoring for scheduled tasks...');
+  await sendTelegramAlert('🤖 *Multi-agent daemon started*\nTrade Research + Agent Engineer');
 
   // Ensure log directory exists
   if (!fs.existsSync(LOG_DIR)) {
@@ -520,6 +684,35 @@ async function runDaemon(): Promise<void> {
     // Update engine status on every tick
     updateEngineStatus();
 
+    // Priority 1: Check for due responsibilities
+    const dueResponsibility = getNextDueResponsibility();
+    if (dueResponsibility) {
+      try {
+        await executeResponsibility(dueResponsibility);
+        gitPush();
+        return; // One execution per tick
+      } catch (error) {
+        log(`Responsibility failed: ${error}`);
+        gitPush();
+        return;
+      }
+    }
+
+    // Priority 2: Check for pending handoffs
+    const pendingHandoff = getNextPendingHandoff();
+    if (pendingHandoff) {
+      try {
+        await executeHandoff(pendingHandoff);
+        gitPush();
+        return; // One execution per tick
+      } catch (error) {
+        log(`Handoff failed: ${error}`);
+        gitPush();
+        return;
+      }
+    }
+
+    // Priority 3: Check for scheduled tasks (legacy support)
     const schedule = loadSchedule();
     const task = getNextTask(schedule);
 
@@ -528,14 +721,10 @@ async function runDaemon(): Promise<void> {
         await executeTask(task);
         markTaskComplete(schedule, task.id);
         saveSchedule(schedule);
-
-        // Push state changes after task completion
         gitPush();
       } catch (error) {
         log(`Task ${task.id} failed: ${error}`);
-        // Still try to push any partial state changes
         gitPush();
-        // Don't mark as complete, will retry next tick
       }
     }
   };
@@ -546,7 +735,7 @@ async function runDaemon(): Promise<void> {
   // Continue checking
   setInterval(tick, checkInterval);
 
-  log('Daemon running. Press Ctrl+C to stop.');
+  log('Daemon running (5 min interval). Press Ctrl+C to stop.');
 }
 
 // CLI commands

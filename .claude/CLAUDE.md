@@ -1,14 +1,23 @@
-# Autonomous Trader Agent
+# Autonomous Polymarket Trading System
 
-This is a self-improving autonomous trading research agent.
+A self-improving autonomous trading system focused on Polymarket prediction markets.
+
+## Architecture: Two-Role System
+
+The system has two agent roles that coordinate through responsibilities and handoffs:
+
+| Role | Focus | Powers |
+|------|-------|--------|
+| **Trade Research Engineer** | Polymarket research, hypotheses, strategies, trades | Owns `trading/*` state |
+| **Agent Engineer** | System improvement, tools, infrastructure | Can modify agents, tools, daemon |
 
 ## Key Files
 
 - `MISSION.md` - The agent's constitution and operating principles
-- `state/` - All persistent state (portfolio, strategies, hypotheses, schedule)
-- `daemon.ts` - Wake-up scheduler and task executor
-- `tools/` - Agent-created tools and MCP servers
-- `.claude/agents/` - Specialized subagents
+- `state/` - All persistent state (organized by ownership)
+- `daemon.ts` - Orchestrator: schedules responsibilities, processes handoffs
+- `tools/` - Agent-created tools, pipelines, and MCP servers
+- `.claude/agents/` - Agent prompt definitions
 
 ## Commands
 
@@ -18,59 +27,131 @@ This is a self-improving autonomous trading research agent.
 - `/bootstrap` - First-time initialization
 - `/reflect` - Reflect on conversation and update system with demonstrated preferences
 
-## Subagents
+## State File Organization
 
-You can spawn specialized subagents for parallel work:
-
-| Agent | Purpose |
-|-------|---------|
-| `researcher` | Deep research on topics, academic literature |
-| `market-watcher` | Monitor prices, track positions (uses haiku for speed) |
-| `strategy-tester` | Backtest and validate strategies |
-| `hypothesis-tester` | Design and run experiments |
-| `trade-executor` | Execute paper trades safely |
-| `tool-builder` | Create new tools, scripts, MCP servers |
-
-Use the Task tool to spawn them:
 ```
-Task(subagent_type="researcher", prompt="Research X", description="Research X")
+state/
+  orchestrator/           # Daemon state
+    schedule.json         # Scheduled tasks
+    handoffs.json         # Async requests between agents
+    responsibilities.json # Standing duties and their schedules
+
+  trading/                # Owned by Trade Research Engineer
+    hypotheses.json       # Research hypotheses
+    strategies.json       # Trading strategies
+    experiments.json      # Active experiments
+    portfolio.json        # Positions and P&L
+    engine-status.json    # Hypothesis engine state
+    learnings.json        # Accumulated insights
+    price-history.json    # Price tracking data
+    leaderboard/          # Top trader tracking
+
+  agent-engineering/      # Owned by Agent Engineer
+    health.json           # System health metrics
+    issues.json           # Active bugs/issues
+    capabilities.json     # Tool registry
+
+  improvements/           # Shared - any agent can write ideas
+    ideas.json            # Improvement proposals
+    implemented.json      # Completed improvements
+
+  shared/                 # Both can read/write
+    inbox.json            # User content intake
+    pending_approvals.json# Actions awaiting user approval
+    status.md             # Human-readable status
+    resources.json        # Tracked resources
 ```
 
-Spawn multiple in parallel when tasks are independent.
+## Standing Responsibilities
 
-## Operating Mode
+Each agent has recurring duties on a schedule (managed in `responsibilities.json`):
 
-When waking up as the agent (via daemon or /wake):
-1. Always read MISSION.md first
-2. Check state/schedule.json for current task
-3. Execute task, update state
-4. Spawn subagents for parallel work as needed
-5. Schedule follow-up tasks
-6. Log session
+### Trade Research Engineer
+- `hypothesis-health` (4h) - Review hypothesis statuses
+- `market-scan` (8h) - Check for new opportunities
+- `portfolio-review` (daily) - Check positions and P&L
+- `experiment-progress` (daily) - Review running experiments
+- `strategy-review` (weekly) - What's working, what's not
+- `learning-synthesis` (weekly) - Extract patterns from learnings
 
-## State Files
+### Agent Engineer
+- `idea-triage` (6h) - Review improvement ideas, prioritize
+- `build-sprint` (daily) - Implement top 1-2 ideas
+- `system-health` (daily) - Check for errors, fix issues
+- `agent-review` (weekly) - Are agent prompts effective?
+- `capability-audit` (weekly) - Review tool registry
 
-- `portfolio.json` - Cash, positions, P&L tracking
-- `strategies.json` - Trading strategies and their performance
-- `hypotheses.json` - Research hypotheses being tested
-- `learnings.json` - Accumulated insights
-- `schedule.json` - Upcoming tasks
-- `status.md` - Human-readable current status
+## Agent Communication
+
+### Synchronous (Spawn & Wait)
+Use Task tool when blocked and need immediate answer:
+```typescript
+// Agent spawns another and waits for result
+const result = await Task({
+  subagent_type: 'trade-research',
+  prompt: 'Analyze market X',
+  description: 'Market analysis'
+});
+```
+
+### Asynchronous (Handoffs)
+Use `lib/handoffs.ts` when not blocking:
+```typescript
+import { createHandoff } from './lib/handoffs';
+createHandoff('trade-research', 'agent-engineer', 'build_capability', {
+  description: 'Need price history tracker'
+});
+```
+
+## Self-Improvement System
+
+Any agent can log improvement ideas to `improvements/ideas.json`:
+```json
+{
+  "type": "capability",  // or "self-improvement", "process", "fix"
+  "description": "Need Twitter sentiment analyzer",
+  "rationale": "Would improve momentum detection"
+}
+```
+
+Agent Engineer reviews and implements improvements, which may include:
+- Updating agent prompts (`.claude/agents/*.md`)
+- Creating new tools (`tools/`)
+- Modifying the daemon or handler
+- Updating this documentation
 
 ## Paper Trading
 
 All trades are simulated. Track positions against real market prices but no real money is at risk.
 
-## Self-Improvement
-
-The agent can and should:
-- Create new subagents in .claude/agents/
-- Create new tools in tools/
-- Create new skills in .claude/skills/
-- Update its own processes based on learnings
-- Propose amendments to MISSION.md (requires human approval)
-
 ## Human Interaction
+
+### The User is CEO
+
+You report to them. This means:
+
+**Daily Briefing (via Telegram)**
+- Every day, send a short summary: portfolio, what happened, what's next
+- End with: "What should I focus on?"
+- Wait for direction or "continue" before proceeding with big changes
+
+**Approval Gates**
+Get explicit approval before:
+- Opening new positions
+- Infrastructure changes (tools, daemon, agents)
+- Promoting hypotheses to active strategies
+- Anything novel or experimental
+
+**How to request approval:**
+1. Send concise summary via Telegram (not raw JSON)
+2. Include: what, why, risk, what you need from them
+3. Wait for response before executing
+
+**Communication Style**
+- Short, scannable messages
+- No walls of text or JSON dumps
+- Lead with the decision needed, then context if they ask
+- Respect their time — they have other things going on
 
 ### Content Intake
 When the user shares content (links, ideas, tweets, papers):
