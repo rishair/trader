@@ -223,6 +223,21 @@ export async function pollMessages(callback: (msg: IncomingMessage) => void): Pr
   }
 }
 
+/**
+ * Send a commit notification with GitHub link automatically included.
+ * Use this function instead of sendMessage() when notifying about git commits.
+ * This ensures the GitHub link is always included.
+ */
+export async function sendCommitNotification(
+  commitHash: string,
+  message: string,
+  chatId?: string
+): Promise<number | null> {
+  const githubUrl = `https://github.com/rishair/trader/commit/${commitHash}`;
+  const formattedMessage = `${escapeMarkdown(message)}\n\n${fmt.link('View commit', githubUrl)}`;
+  return sendMessage(formattedMessage, chatId);
+}
+
 // CLI interface
 if (require.main === module) {
   const command = process.argv[2];

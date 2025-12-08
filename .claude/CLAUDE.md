@@ -249,7 +249,13 @@ Guidelines:
 - Don't wait until end of session - commit as you go
 - Keep commits atomic and descriptive
 - Push to `origin main` after each commit
-- **Include GitHub link in Telegram**: When notifying via Telegram about a commit, include the link: `https://github.com/rishair/trader/commit/<hash>`
+- **Include GitHub link in Telegram**: Use `sendCommitNotification()` from `tools/telegram/bot.ts` instead of `sendMessage()` when notifying about commits. This function automatically includes the GitHub link.
+
+```typescript
+import { sendCommitNotification } from './tools/telegram/bot';
+await sendCommitNotification('abc123', 'Added new feature X');
+// Sends: "Added new feature X" with "View commit" link to GitHub
+```
 
 ## Deploying Changes
 
