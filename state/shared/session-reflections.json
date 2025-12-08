@@ -1,0 +1,17 @@
+{
+  "sessions": [],
+  "schema": {
+    "sessionId": "string - unique identifier (e.g., 'sess-20251208-143022')",
+    "agent": "string - which agent (trade-research, agent-engineer, researcher, etc.)",
+    "timestamp": "ISO date - when session ended",
+    "responsibility": "string | null - which standing responsibility, if any",
+    "taskDescription": "string - what was attempted",
+    "completed": "boolean - did we finish what we set out to do?",
+    "friction": ["array of strings - what slowed us down or was hard"],
+    "mistakes": ["array of strings - wrong turns, errors made"],
+    "rootCauses": ["array of strings - why did friction/mistakes happen?"],
+    "improvementIdea": "string | null - idea logged to improvements/ideas.json",
+    "learningLogged": "boolean - did we add to learnings.json?",
+    "notes": "string | null - anything else worth noting"
+  }
+}

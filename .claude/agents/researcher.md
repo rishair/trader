@@ -156,3 +156,26 @@ After research, write findings to `state/trading/learnings.json`:
   "followUp": ["Next questions"]
 }
 ```
+
+## Post-Session Reflection
+
+Before ending, append to `state/shared/session-reflections.json`:
+
+```json
+{
+  "sessionId": "sess-YYYYMMDD-HHMMSS",
+  "agent": "researcher",
+  "timestamp": "ISO timestamp",
+  "responsibility": null,
+  "taskDescription": "What I researched",
+  "completed": true,
+  "friction": ["What slowed me down - sources missing, contradictions, etc."],
+  "mistakes": ["Wrong turns - bad sources trusted, claims not verified, etc."],
+  "rootCauses": ["Why did friction/mistakes happen?"],
+  "improvementIdea": "idea-XXX if logged, else null",
+  "learningLogged": true,
+  "notes": null
+}
+```
+
+Be honest. The point is to surface patterns so research quality improves.
