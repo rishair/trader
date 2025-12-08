@@ -285,6 +285,93 @@ async function executeTask(task: ScheduledTask): Promise<void> {
 
   const sessionLogFile = path.join(LOG_DIR, `session-${task.id}-${Date.now()}.log`);
 
+  // Handle autonomous wake tasks - spawn Claude with general autonomous prompt
+  if (task.type === 'autonomous') {
+    log(`Executing autonomous wake task: ${task.id}`);
+
+    const autonomousPrompt = `You are waking up for autonomous operation.
+
+## Your Mission
+Read MISSION.md for your full operating instructions.
+
+## Current Task
+ID: ${task.id}
+Description: ${task.description}
+
+## Instructions
+1. Read state/status.md, state/hypotheses.json, state/portfolio.json
+2. Identify the highest-priority actionable task
+3. Execute that task - advance a hypothesis, make a trade, fix something
+4. Update state files with results
+5. Log your session summary to state/logs/
+6. Update state/status.md with current status
+
+## Key Principle
+Every session must produce OUTPUT - a trade, a hypothesis advanced, or infrastructure fixed.
+Don't just observe - ACT.
+`;
+
+    return new Promise((resolve, reject) => {
+      const claude = spawn('claude', [
+        '-p', autonomousPrompt,
+        '--output-format', 'text',
+        '--dangerously-skip-permissions'
+      ], {
+        cwd: path.join(__dirname),
+        stdio: ['ignore', 'pipe', 'pipe'],
+        env: { ...process.env }
+      });
+
+      let output = '';
+
+      claude.stdout?.on('data', (data: Buffer) => {
+        const text = data.toString();
+        output += text;
+        process.stdout.write(text);
+      });
+
+      claude.stderr?.on('data', (data: Buffer) => {
+        const text = data.toString();
+        output += text;
+        process.stderr.write(text);
+      });
+
+      claude.on('close', async (code: number) => {
+        fs.writeFileSync(sessionLogFile, output);
+        log(`Autonomous task ${task.id} completed with code ${code}`);
+
+        // Reschedule next autonomous wake
+        if (task.context?.recurring && task.context?.frequency) {
+          const schedule = loadSchedule();
+          const frequencyMs = parseFrequency(task.context.frequency as string);
+          const nextRun = new Date(Date.now() + frequencyMs);
+
+          const newTask: ScheduledTask = {
+            ...task,
+            id: `autonomous-wake-${Date.now()}`,
+            scheduledFor: nextRun.toISOString()
+          };
+          schedule.pendingTasks.push(newTask);
+          saveSchedule(schedule);
+          log(`Scheduled next autonomous wake for ${nextRun.toISOString()}`);
+        }
+
+        if (code === 0) {
+          await sendTelegramAlert(`✅ *Autonomous wake completed*\n\`${task.id}\``);
+          resolve();
+        } else {
+          await sendTelegramAlert(`❌ *Autonomous wake failed*\n\`${task.id}\`\nExit code: ${code}`);
+          reject(new Error(`Claude exited with code ${code}`));
+        }
+      });
+
+      claude.on('error', (error: Error) => {
+        log(`Error spawning claude for autonomous task: ${error.message}`);
+        reject(error);
+      });
+    });
+  }
+
   // Handle pipeline tasks directly without spawning Claude
   if (task.type === 'pipeline' && task.context?.pipeline) {
     const pipelineName = task.context.pipeline as string;
