@@ -1,5 +1,5 @@
 {
-  "lastEvaluated": "2025-12-08T18:30:00.000Z",
+  "lastEvaluated": "2025-12-08T18:06:46.653Z",
   "hypothesisHealth": {
     "total": 5,
     "byStatus": {
@@ -50,20 +50,14 @@
     "hypothesesInvalidatedThisWeek": 1,
     "capabilitiesBuiltThisWeek": 0
   },
-  "needsAttention": [
-    {
-      "hypothesisId": "hyp-004",
-      "issue": "Stuck in proposed >24h",
-      "recommendation": "Build imp-009 (leaderboard tracker) to unblock, or kill hypothesis"
-    }
-  ],
+  "needsAttention": [],
   "lastLeaderboardScan": "2025-12-08T07:46:03.605Z",
   "topTraderCount": 5,
   "followSignalsGenerated": 0,
   "lastHealthCheck": "2025-12-08T18:30:00.000Z",
   "daemon": {
-    "version": "e92384c",
-    "startedAt": "2025-12-08T18:00:42.531Z",
-    "pid": 19288
+    "version": "63d65d3",
+    "startedAt": "2025-12-08T18:06:45.613Z",
+    "pid": 19912
   }
 }

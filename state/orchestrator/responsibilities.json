@@ -28,7 +28,7 @@
   "agent-engineer": {
     "idea-triage": {
       "frequency": "6h",
-      "lastRun": null
+      "lastRun": "2025-12-08T18:08:47.445Z"
     },
     "build-sprint": {
       "frequency": "24h",
