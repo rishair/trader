@@ -1,10 +1,50 @@
 {
-  "cash": 10000,
+  "cash": 9500.05,
   "startingCapital": 10000,
-  "positions": [],
-  "tradeHistory": [],
+  "positions": [
+    {
+      "id": "trade-001",
+      "market": "Largest Company end of 2025",
+      "marketSlug": "largest-company-end-of-2025",
+      "platform": "Polymarket",
+      "direction": "YES",
+      "outcome": "Apple",
+      "entryPrice": 0.09,
+      "shares": 5555,
+      "cost": 499.95,
+      "currentPrice": 0.09,
+      "unrealizedPnL": 0,
+      "strategyId": "hypothesis-001",
+      "entryDate": "2025-12-07T00:00:00Z",
+      "exitCriteria": {
+        "takeProfit": 0.20,
+        "stopLoss": 0.04,
+        "timeLimit": "2025-12-31T23:59:59Z",
+        "notes": "Exit if AAPL probability >20% (take profit) or <4% (stop loss), or at market resolution"
+      },
+      "rationale": "AAPL ($4.1-4.2T) only 5-7% behind NVDA ($4.44T). Market prices AAPL at 9% vs estimated 15-20% true probability. With 24 days to resolution, volatility could close gap. Testing hypothesis that multi-outcome markets misprice volatility in close races."
+    }
+  ],
+  "tradeHistory": [
+    {
+      "id": "trade-001",
+      "type": "ENTRY",
+      "timestamp": "2025-12-07T00:00:00Z",
+      "market": "Largest Company end of 2025",
+      "marketSlug": "largest-company-end-of-2025",
+      "platform": "Polymarket",
+      "direction": "YES",
+      "outcome": "Apple",
+      "price": 0.09,
+      "shares": 5555,
+      "cost": 499.95,
+      "cashAfter": 9500.05,
+      "strategyId": "hypothesis-001",
+      "rationale": "AAPL ($4.1-4.2T) only 5-7% behind NVDA ($4.44T). Market prices AAPL at 9% vs estimated 15-20% true probability. With 24 days to resolution, volatility could close gap. Testing hypothesis that multi-outcome markets misprice volatility in close races."
+    }
+  ],
   "createdAt": "2024-12-07T00:00:00Z",
-  "lastUpdated": "2024-12-07T00:00:00Z",
+  "lastUpdated": "2025-12-07T00:00:00Z",
   "metrics": {
     "totalReturn": 0,
     "totalReturnPct": 0,

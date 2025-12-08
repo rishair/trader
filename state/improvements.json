@@ -1,0 +1,105 @@
+{
+  "backlog": [
+    {
+      "id": "imp-001",
+      "title": "Telegram bot receives content and routes to inbox",
+      "category": "capability",
+      "leverage": "high",
+      "effort": "medium",
+      "rationale": "Currently content intake only works when user is in Claude Code session. Telegram integration lets user send links/ideas anytime, agent processes on next wake-up. Unlocks async content curation.",
+      "status": "backlog",
+      "outcome": null,
+      "createdAt": "2025-12-07T00:00:00Z",
+      "completedAt": null
+    },
+    {
+      "id": "imp-002",
+      "title": "Daemon pulls git before executing, pushes after",
+      "category": "infrastructure",
+      "leverage": "high",
+      "effort": "low",
+      "rationale": "Ensures state consistency between local dev and droplet. Without this, state can diverge and cause conflicts.",
+      "status": "backlog",
+      "outcome": null,
+      "createdAt": "2025-12-07T00:00:00Z",
+      "completedAt": null
+    },
+    {
+      "id": "imp-003",
+      "title": "Price tracking for open positions",
+      "category": "capability",
+      "leverage": "high",
+      "effort": "medium",
+      "rationale": "Can't evaluate P&L without current prices. market-watcher agent needs to update portfolio.json with live prices from Polymarket MCP.",
+      "status": "backlog",
+      "outcome": null,
+      "createdAt": "2025-12-07T00:00:00Z",
+      "completedAt": null
+    },
+    {
+      "id": "imp-004",
+      "title": "Leaderboard scraper for top trader analysis",
+      "category": "capability",
+      "leverage": "medium",
+      "effort": "medium",
+      "rationale": "Hypothesis hyp-004 requires analyzing top traders. Need tool to fetch and parse leaderboard data. Could reveal edge patterns.",
+      "status": "backlog",
+      "outcome": null,
+      "createdAt": "2025-12-07T00:00:00Z",
+      "completedAt": null
+    },
+    {
+      "id": "imp-005",
+      "title": "Telegram alerts for position changes and key events",
+      "category": "capability",
+      "leverage": "medium",
+      "effort": "low",
+      "rationale": "Keep user informed of agent activity. Alert on: trades executed, hypotheses validated/invalidated, escalation triggers hit.",
+      "status": "backlog",
+      "outcome": null,
+      "createdAt": "2025-12-07T00:00:00Z",
+      "completedAt": null
+    },
+    {
+      "id": "imp-006",
+      "title": "Backtest framework for strategy validation",
+      "category": "capability",
+      "leverage": "medium",
+      "effort": "high",
+      "rationale": "Currently can only forward-test. Historical data + backtest would accelerate hypothesis validation. Check if Polymarket provides historical data first.",
+      "status": "backlog",
+      "outcome": null,
+      "createdAt": "2025-12-07T00:00:00Z",
+      "completedAt": null
+    },
+    {
+      "id": "imp-007",
+      "title": "Audit and improve subagent prompts",
+      "category": "agent",
+      "leverage": "medium",
+      "effort": "medium",
+      "rationale": "8 subagents exist but quality unknown. Review each, test with real tasks, improve underperformers. Better agents = better autonomous operation.",
+      "status": "backlog",
+      "outcome": null,
+      "createdAt": "2025-12-07T00:00:00Z",
+      "completedAt": null
+    }
+  ],
+  "in_progress": [],
+  "completed": [],
+  "schema": {
+    "improvement": {
+      "id": "string",
+      "title": "string - what to improve",
+      "category": "infrastructure | capability | process | agent | tool",
+      "leverage": "high | medium | low",
+      "effort": "high | medium | low",
+      "rationale": "string - why this matters",
+      "status": "backlog | in_progress | completed | abandoned",
+      "outcome": "string - what changed, was it worth it",
+      "createdAt": "ISO date",
+      "completedAt": "ISO date | null"
+    }
+  },
+  "notes": "Track system improvements separately from trading learnings. Prioritize high-leverage, low-effort items. imp-002 is highest priority (high leverage, low effort)."
+}

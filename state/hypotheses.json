@@ -5,12 +5,31 @@
       "statement": "Tail-risk markets (probability <5%) are systematically overpriced due to fear/uncertainty premium",
       "rationale": "Markets like nuclear detonation (1.5%), recession (1.5%), USDT depeg (0.45%) may reflect fear rather than rational probability. If base rates are even lower, there's edge in selling these contracts.",
       "testMethod": "Compare implied probabilities to historical base rates and expert forecasts. Track P&L on small NO positions in tail-risk markets.",
-      "status": "proposed",
-      "confidence": 0.4,
-      "evidence": [],
+      "status": "testing",
+      "confidence": 0.25,
+      "evidence": [
+        {
+          "date": "2025-12-07",
+          "observation": "Nuclear detonation market: Polymarket 1.55% vs expert estimates ~1-2% annual. No clear mispricing detected.",
+          "supports": false,
+          "confidenceImpact": -0.1
+        },
+        {
+          "date": "2025-12-07",
+          "observation": "US Recession 2025 market: Polymarket 2.5% is reasonable given only 24 days left in year and no recession declared. Earlier in year market showed 40-66% when experts forecast 33-60%.",
+          "supports": false,
+          "confidenceImpact": -0.05
+        },
+        {
+          "date": "2025-12-07",
+          "observation": "USDT depeg market: 0.45% seems appropriately low given USDT's historical stability through crises.",
+          "supports": false,
+          "confidenceImpact": 0
+        }
+      ],
       "conclusion": null,
       "createdAt": "2025-12-07T00:00:00Z",
-      "updatedAt": "2025-12-07T00:00:00Z"
+      "updatedAt": "2025-12-07T12:00:00Z"
     },
     {
       "id": "hyp-002",
@@ -48,6 +67,26 @@
       "createdAt": "2025-12-07T00:00:00Z",
       "updatedAt": "2025-12-07T00:00:00Z",
       "source": "user-shared-content"
+    },
+    {
+      "id": "hyp-005",
+      "statement": "Multi-outcome markets with close competitors misprice volatility, underweighting the probability of reversals",
+      "rationale": "In the 'Largest Company end of 2025' market, NVDA is priced at 89% and AAPL at 9%, despite AAPL market cap being only 5-7% behind NVDA. Market may be extrapolating recent momentum rather than pricing in realistic volatility scenarios.",
+      "testMethod": "Track multi-outcome markets where gap between leading outcomes is <10%. Compare market pricing to volatility-adjusted fair value. Execute trades where mispricing is detected.",
+      "status": "testing",
+      "confidence": 0.5,
+      "evidence": [
+        {
+          "date": "2025-12-07",
+          "observation": "AAPL vs NVDA gap is ~5-7% ($200-300B) but market prices AAPL at only 9%. With 24 days of market volatility, a 5-7% swing is plausible. Opened position: 5,555 AAPL YES @ $0.09.",
+          "supports": true,
+          "confidenceImpact": 0
+        }
+      ],
+      "conclusion": null,
+      "createdAt": "2025-12-07T12:00:00Z",
+      "updatedAt": "2025-12-07T12:00:00Z",
+      "linkedTrade": "trade-001"
     }
   ],
   "schema": {

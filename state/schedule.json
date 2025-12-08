@@ -1,21 +1,25 @@
 {
   "pendingTasks": [
     {
-      "id": "research-002",
-      "type": "research",
-      "description": "Deep dive on tail-risk pricing - compare Polymarket implied probabilities to base rates",
-      "scheduledFor": "2025-12-07T12:00:00Z",
+      "id": "monitor-002",
+      "type": "monitor",
+      "description": "Check AAPL position price and evaluate exit criteria",
+      "scheduledFor": "2025-12-08T10:00:00Z",
       "priority": "high",
       "context": {
-        "hypothesisId": "hyp-001",
-        "markets": ["nuclear-weapon-detonation-in-2025", "us-recession-in-2025", "usdt-depeg-in-2025"]
+        "tradeId": "trade-001",
+        "hypothesisId": "hyp-005",
+        "exitCriteria": {
+          "takeProfit": 0.20,
+          "stopLoss": 0.04
+        }
       }
     },
     {
       "id": "monitor-001",
       "type": "monitor",
       "description": "Scan for markets closing within 7 days - track price movements for momentum hypothesis",
-      "scheduledFor": "2025-12-07T14:00:00Z",
+      "scheduledFor": "2025-12-08T12:00:00Z",
       "priority": "medium",
       "context": {
         "hypothesisId": "hyp-002"
@@ -25,7 +29,7 @@
       "id": "research-003",
       "type": "research",
       "description": "Analyze liquidity rewards program - calculate reward rates vs spreads",
-      "scheduledFor": "2025-12-08T10:00:00Z",
+      "scheduledFor": "2025-12-09T10:00:00Z",
       "priority": "medium",
       "context": {
         "hypothesisId": "hyp-003"
@@ -34,12 +38,19 @@
     {
       "id": "review-001",
       "type": "review",
-      "description": "Weekly review - assess hypothesis progress, update learnings, plan next week",
+      "description": "Weekly retrospective - system improvements, trading performance, highest-leverage next steps",
       "scheduledFor": "2025-12-14T10:00:00Z",
       "priority": "high",
       "context": {
         "recurring": true,
-        "frequency": "weekly"
+        "frequency": "weekly",
+        "checklist": [
+          "What broke this week? What got fixed?",
+          "What improvements were completed? Were they worth it?",
+          "What's the highest-leverage improvement for next week?",
+          "Are strategies improving or stagnating?",
+          "Update state/status.md with honest assessment"
+        ]
       }
     }
   ],
@@ -56,6 +67,19 @@
       },
       "completedAt": "2025-12-07T00:00:00Z",
       "result": "Completed bootstrap. MCP working (search queries find current markets). Identified 3 initial hypotheses around tail-risk pricing, momentum near resolution, and liquidity rewards."
+    },
+    {
+      "id": "research-002",
+      "type": "research",
+      "description": "Deep dive on tail-risk pricing - compare Polymarket implied probabilities to base rates",
+      "scheduledFor": "2025-12-07T12:00:00Z",
+      "priority": "high",
+      "context": {
+        "hypothesisId": "hyp-001",
+        "markets": ["nuclear-weapon-detonation-in-2025", "us-recession-in-2025", "usdt-depeg-in-2025"]
+      },
+      "completedAt": "2025-12-07T14:00:00Z",
+      "result": "Analyzed 3 tail-risk markets. Finding: Markets appear reasonably efficient, no clear mispricing detected. Reduced hyp-001 confidence from 40% to 25%. Pivoted to find alternative opportunity. Discovered potential mispricing in 'Largest Company EOY 2025' market. Created hyp-005 (volatility mispricing). Opened first trade: 5,555 AAPL YES @ $0.09."
     }
   ],
   "schema": {
