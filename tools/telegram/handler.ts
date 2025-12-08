@@ -506,7 +506,7 @@ async function spawnClaudeSession(
           // Extract text content from assistant messages
           if (event.type === 'assistant' && event.message?.content) {
             for (const block of event.message.content) {
-              if (block.type === 'text') {
+              if (block.type === 'text' && block.text) {
                 output = block.text;
                 updateMessage();
               } else if (block.type === 'tool_use') {
@@ -522,15 +522,17 @@ async function spawnClaudeSession(
             updateMessage();
           }
 
-          // Handle result messages
+          // Handle result messages - this is the final output
           if (event.type === 'result' && event.result) {
             output = event.result;
             updateMessage();
           }
         } catch {
-          // Not JSON, treat as raw text
-          output += line + '\n';
-          updateMessage();
+          // Not JSON, might be plain text output
+          if (line && !line.startsWith('{')) {
+            output += line + '\n';
+            updateMessage();
+          }
         }
       }
     });
@@ -943,7 +945,7 @@ Read MISSION.md for context.`,
     const hash = parts[1];
 
     if (!hash) {
-      await sendMessage('Usage: /rollback <commit-hash>\n\nUse /git to see recent commits.', chatId);
+      await sendMessage('Usage: /rollback <commit-hash>\n\nUse /version to see recent commits.', chatId);
       return;
     }
 
