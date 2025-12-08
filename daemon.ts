@@ -344,9 +344,14 @@ async function executeTask(task: ScheduledTask): Promise<void> {
   const prompt = buildPrompt(task);
 
   return new Promise((resolve, reject) => {
-    const claude = spawn('claude', ['-p', prompt, '--output-format', 'text', '--dangerously-skip-permissions'], {
+    const claude = spawn('claude', [
+      '-p', prompt,
+      '--output-format', 'text',
+      '--dangerously-skip-permissions',
+      '--permission-mode', 'bypassPermissions'
+    ], {
       cwd: path.join(__dirname),
-      stdio: ['pipe', 'pipe', 'pipe'],
+      stdio: ['ignore', 'pipe', 'pipe'],  // ignore stdin to prevent hanging
       env: { ...process.env }
     });
 
@@ -518,7 +523,11 @@ switch (command) {
   case 'query':
     // Interactive query mode - spawn claude with context
     const queryPrompt = process.argv.slice(3).join(' ') || 'What is your current status?';
-    spawn('claude', ['-p', `You are the trader agent. Read state/status.md and answer this query: ${queryPrompt}`], {
+    spawn('claude', [
+      '-p', `You are the trader agent. Read state/status.md and answer this query: ${queryPrompt}`,
+      '--dangerously-skip-permissions',
+      '--permission-mode', 'bypassPermissions'
+    ], {
       cwd: __dirname,
       stdio: 'inherit'
     });

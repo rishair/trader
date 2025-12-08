@@ -346,10 +346,11 @@ async function spawnClaudeSession(prompt: string, chatId: string, sessionName: s
     const claude = spawn('claude', [
       '-p', prompt,
       '--output-format', 'text',
-      '--dangerously-skip-permissions'
+      '--dangerously-skip-permissions',
+      '--permission-mode', 'bypassPermissions'
     ], {
       cwd: PROJECT_ROOT,
-      stdio: ['pipe', 'pipe', 'pipe'],
+      stdio: ['ignore', 'pipe', 'pipe'],  // ignore stdin to prevent hanging
       env: { ...process.env }
     });
 
