@@ -436,6 +436,7 @@ async function handleMessage(text: string, chatId: string): Promise<void> {
 /approve <id> - Approve a strategy
 /reject <id> [reason] - Reject a strategy
 /approve all - Approve all pending
+/execute <id> - Re-run an approved item
 
 *Actions:*
 /wake - Run next scheduled task
@@ -508,6 +509,45 @@ Just send me links, ideas, news - I'll add to inbox.`,
     } else {
       await sendMessage(`❌ Not found or already decided: ${target}`, chatId);
     }
+    return;
+  }
+
+  if (lower.startsWith('/execute')) {
+    const parts = trimmed.split(/\s+/);
+    const target = parts[1];
+
+    if (!target) {
+      await sendMessage('Usage: /execute <id>', chatId);
+      return;
+    }
+
+    // Find the approved item
+    const approvals = loadApprovals();
+    const item = approvals.approvals.find(a => a.id === target);
+
+    if (!item) {
+      await sendMessage(`❌ Not found: ${target}`, chatId);
+      return;
+    }
+
+    if (item.status !== 'approved') {
+      await sendMessage(`❌ Item ${target} is ${item.status}, not approved.`, chatId);
+      return;
+    }
+
+    await spawnClaudeSession(
+      `You are the trader agent. Execute this approved item from state/pending_approvals.json:
+
+ID: ${item.id}
+Type: ${item.type}
+Title: ${item.title}
+Description: ${item.description}
+Context: ${JSON.stringify(item.context, null, 2)}
+
+Read MISSION.md for context. Execute the task, update state files, and report results.`,
+      chatId,
+      'execute-approved'
+    );
     return;
   }
 
