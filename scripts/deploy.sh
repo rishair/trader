@@ -42,18 +42,12 @@ echo "🔨 Building TypeScript..."
 npx tsc --noEmit 2>/dev/null || echo "Type check completed (warnings ok)"
 
 echo "🔄 Restarting services..."
-systemctl restart trader-daemon 2>/dev/null || echo "No trader-daemon service"
-systemctl restart trader-telegram 2>/dev/null || echo "No trader-telegram service"
-
-# If using pm2 instead:
-pm2 restart trader-daemon 2>/dev/null || true
-pm2 restart trader-telegram 2>/dev/null || true
+systemctl restart telegram-handler 2>/dev/null || echo "No telegram-handler service"
 
 echo "✅ Deploy complete!"
 echo ""
 echo "Service status:"
-systemctl is-active trader-daemon 2>/dev/null || pm2 status trader-daemon 2>/dev/null || echo "daemon: unknown"
-systemctl is-active trader-telegram 2>/dev/null || pm2 status trader-telegram 2>/dev/null || echo "telegram: unknown"
+systemctl is-active telegram-handler 2>/dev/null || echo "telegram-handler: not running"
 ENDSSH
 
 echo ""
