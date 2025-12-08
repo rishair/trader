@@ -1,18 +1,6 @@
 {
   "pendingTasks": [
     {
-      "id": "autonomous-wake-001",
-      "type": "autonomous",
-      "description": "Autonomous wake: Check state, advance hypotheses, execute highest-priority action",
-      "scheduledFor": "2025-12-08T13:00:00Z",
-      "priority": "medium",
-      "context": {
-        "recurring": true,
-        "frequency": "1h",
-        "purpose": "Regular autonomous operation - review state, advance work, take action"
-      }
-    },
-    {
       "id": "pipeline-leaderboard-001",
       "type": "pipeline",
       "description": "Leaderboard tracker: Track top traders, analyze positions, generate follow signals",
@@ -170,6 +158,19 @@
         "hypothesisId": "hyp-002"
       },
       "completedAt": "2025-12-08T15:19:56.311Z"
+    },
+    {
+      "id": "autonomous-wake-001",
+      "type": "autonomous",
+      "description": "Autonomous wake: Check state, advance hypotheses, execute highest-priority action",
+      "scheduledFor": "2025-12-08T13:00:00Z",
+      "priority": "medium",
+      "context": {
+        "recurring": true,
+        "frequency": "1h",
+        "purpose": "Regular autonomous operation - review state, advance work, take action"
+      },
+      "completedAt": "2025-12-08T15:29:02.581Z"
     }
   ],
   "schema": {
