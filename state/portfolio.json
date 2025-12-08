@@ -12,8 +12,8 @@
       "entryPrice": 0.09,
       "shares": 5555,
       "cost": 499.95,
-      "currentPrice": 0.09,
-      "unrealizedPnL": 0,
+      "currentPrice": 0.087,
+      "unrealizedPnL": -16.665000000000013,
       "strategyId": "hypothesis-001",
       "entryDate": "2025-12-07T00:00:00Z",
       "exitCriteria": {
@@ -45,12 +45,12 @@
     }
   ],
   "createdAt": "2024-12-07T00:00:00Z",
-  "lastUpdated": "2025-12-08T07:20:46.389Z",
+  "lastUpdated": "2025-12-08T07:48:59.278Z",
   "metrics": {
-    "totalReturn": 0,
-    "totalReturnPct": 0,
+    "totalReturn": -16.665000000000873,
+    "totalReturnPct": -0.16665000000000874,
     "realizedPnL": 0,
-    "unrealizedPnL": 0,
+    "unrealizedPnL": -16.665000000000013,
     "winCount": 0,
     "lossCount": 0,
     "winRate": 0
