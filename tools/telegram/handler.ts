@@ -914,7 +914,23 @@ Read MISSION.md for context.`,
         `git log --pretty=format:"%h %s" -${limitedCount}`,
         { cwd: PROJECT_ROOT, encoding: 'utf-8' }
       );
-      await sendMessage(`*Running:* \`${currentHash}\`\n\n*Last ${limitedCount} commits:*\n\`\`\`\n${log}\`\`\`\n\nUse \`/rollback <hash>\` to revert.`, chatId);
+
+      // Get daemon version from engine-status.json
+      let daemonInfo = '';
+      try {
+        const engineStatus = JSON.parse(fs.readFileSync(path.join(STATE_DIR, 'trading/engine-status.json'), 'utf-8'));
+        if (engineStatus.daemon) {
+          const daemonAge = Math.round((Date.now() - new Date(engineStatus.daemon.startedAt).getTime()) / 1000 / 60);
+          daemonInfo = `\n*Daemon:* \`${engineStatus.daemon.version}\` (up ${daemonAge}m)`;
+          if (engineStatus.daemon.version !== currentHash) {
+            daemonInfo += ` ⚠️ restart needed`;
+          }
+        }
+      } catch {
+        daemonInfo = '\n*Daemon:* unknown';
+      }
+
+      await sendMessage(`*Telegram:* \`${currentHash}\`${daemonInfo}\n\n*Last ${limitedCount} commits:*\n\`\`\`\n${log}\`\`\`\n\nUse \`/rollback <hash>\` to revert.`, chatId);
     } catch (e: any) {
       await sendMessage(`❌ Git error: ${e.message}`, chatId);
     }

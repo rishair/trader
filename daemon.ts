@@ -17,7 +17,12 @@ import {
 
 dotenv.config();
 
+// Capture version at startup (won't change until restart)
+const DAEMON_VERSION = execSync('git rev-parse --short HEAD', { cwd: __dirname, encoding: 'utf-8' }).trim();
+const DAEMON_START_TIME = new Date().toISOString();
+
 const STATE_DIR = path.join(__dirname, 'state');
+const ENGINE_STATUS_FILE_PATH = path.join(STATE_DIR, 'engine-status.json');
 const CHAT_ID_FILE = path.join(STATE_DIR, 'telegram_chat_id.txt');
 const ENGINE_STATUS_FILE = path.join(STATE_DIR, 'trading/engine-status.json');
 const HYPOTHESES_FILE = path.join(STATE_DIR, 'trading/hypotheses.json');
@@ -400,6 +405,21 @@ function updateEngineStatus(): void {
   }
 }
 
+function updateDaemonStatus(): void {
+  try {
+    const engineStatus = JSON.parse(fs.readFileSync(ENGINE_STATUS_FILE, 'utf-8'));
+    engineStatus.daemon = {
+      version: DAEMON_VERSION,
+      startedAt: DAEMON_START_TIME,
+      pid: process.pid,
+    };
+    fs.writeFileSync(ENGINE_STATUS_FILE, JSON.stringify(engineStatus, null, 2));
+    log(`Daemon status written: version=${DAEMON_VERSION}, pid=${process.pid}`);
+  } catch (error: any) {
+    log(`Failed to update daemon status: ${error.message}`);
+  }
+}
+
 function getNextTask(schedule: Schedule): ScheduledTask | null {
   const now = new Date();
 
@@ -667,8 +687,11 @@ function markTaskComplete(schedule: Schedule, taskId: string): void {
 }
 
 async function runDaemon(): Promise<void> {
-  log('Daemon starting...');
-  await sendTelegramAlert('🤖 *Multi-agent daemon started*\nTrade Research + Agent Engineer');
+  log(`Daemon starting... (version: ${DAEMON_VERSION})`);
+  await sendTelegramAlert(`🤖 *Daemon started*\nVersion: \`${DAEMON_VERSION}\``);
+
+  // Write daemon status to engine-status.json
+  updateDaemonStatus();
 
   // Ensure log directory exists
   if (!fs.existsSync(LOG_DIR)) {
