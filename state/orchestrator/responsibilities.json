@@ -36,7 +36,7 @@
     },
     "system-health": {
       "frequency": "24h",
-      "lastRun": null
+      "lastRun": "2025-12-08T18:50:22.122Z"
     },
     "agent-review": {
       "frequency": "7d",

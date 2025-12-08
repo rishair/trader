@@ -1,15 +1,44 @@
 {
-  "lastCheck": "2025-12-09T02:00:00Z",
+  "lastCheck": "2025-12-08T18:49:00Z",
   "status": "healthy",
   "services": {
-    "telegram-handler": { "status": "unknown", "lastSeen": null },
-    "daemon": { "status": "unknown", "lastSeen": null }
+    "telegram-handler": { "status": "running", "lastSeen": "2025-12-08T18:47:00Z", "pid": 25257 },
+    "daemon": { "status": "running", "lastSeen": "2025-12-08T18:48:00Z", "pid": 25293, "restartCount": 11 }
   },
   "recentErrors": [],
+  "scheduledTasksStatus": {
+    "totalPending": 8,
+    "overdueCount": 0,
+    "nextDue": "2025-12-08T19:00:00Z",
+    "notes": "All tasks on schedule. Health check due in 11 min."
+  },
+  "sessionReflectionPatterns": {
+    "reviewedSessions": 9,
+    "recurringFriction": [
+      {
+        "pattern": "Polymarket/Gamma API inconsistencies",
+        "occurrences": 5,
+        "examples": ["gamma-api endpoints returning empty results", "API response format inconsistency"],
+        "improvementLogged": "imp-013"
+      }
+    ],
+    "recurringMistakes": [],
+    "rootCausesIdentified": [
+      "API response format varies (clobTokenIds as JSON string vs array)",
+      "Polymarket pages may require specific URL patterns"
+    ]
+  },
   "metrics": {
-    "responsibilitiesCompleted24h": 4,
+    "responsibilitiesCompleted24h": 5,
     "handoffsCompleted24h": 0,
-    "ideasImplemented24h": 4
+    "ideasImplemented24h": 4,
+    "ideasProposed": 1
+  },
+  "engineState": {
+    "status": "healthy",
+    "testableHypotheses": 4,
+    "totalHypotheses": 7,
+    "avgConviction": 0.38
   },
   "lastBuildSprint": {
     "timestamp": "2025-12-09T02:00:00Z",

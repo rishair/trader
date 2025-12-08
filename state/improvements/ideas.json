@@ -1,6 +1,21 @@
 {
   "backlog": [
     {
+      "id": "imp-013",
+      "title": "Resilient API client with fallbacks",
+      "category": "infrastructure",
+      "leverage": "medium",
+      "effort": "medium",
+      "priority": null,
+      "rationale": "Session reflections show 5+ occurrences of 'Gamma API returning empty results' or 'API inconsistency'. Build a unified API client with: retry logic, automatic fallback from Gamma→CLOB→WebFetch, error logging for patterns. Would reduce friction across all pipelines.",
+      "triageNotes": null,
+      "status": "proposed",
+      "outcome": null,
+      "createdAt": "2025-12-08T18:49:00Z",
+      "triagedAt": null,
+      "completedAt": null
+    },
+    {
       "id": "imp-006",
       "title": "Backtest framework for strategy validation",
       "category": "capability",
