@@ -3,7 +3,7 @@ import * as path from 'path';
 import * as crypto from 'crypto';
 import { execSync } from 'child_process';
 import { spawn } from 'child_process';
-import { sendMessage, editMessage, pollMessages } from './bot';
+import { sendMessage, editMessage, pollMessages, escapeMarkdown } from './bot';
 
 const STATE_DIR = path.join(__dirname, '../../state');
 const INBOX_FILE = path.join(STATE_DIR, 'inbox.json');
@@ -450,7 +450,7 @@ async function spawnClaudeSession(
   claudeSessionActive = true;
 
   // Send initial message and capture message_id for streaming updates
-  const messageId = await sendMessage(`🚀 *${options.sessionName}*\n\n_Starting..._`, options.chatId);
+  const messageId = await sendMessage(`🚀 *${escapeMarkdown(options.sessionName)}*\n\n_Starting\\.\\.\\._`, options.chatId);
 
   const sessionLogFile = path.join(LOG_DIR, `telegram-${options.sessionName}-${Date.now()}.log`);
 
@@ -520,8 +520,10 @@ async function spawnClaudeSession(
       // Show tools being used
       const toolsInfo = toolsUsed.length > 0 ? `\n🔧 _${toolsUsed.slice(-3).join(' → ')}_\n` : '';
 
-      const header = final ? `${status} *${options.sessionName}* - Done` : `${status} *${options.sessionName}* - Running...`;
-      await editMessage(messageId, `${header}${toolsInfo}\n${displayOutput || '_waiting for output..._'}`, options.chatId);
+      const header = final ? `${status} *${escapeMarkdown(options.sessionName)}* \\- Done` : `${status} *${escapeMarkdown(options.sessionName)}* \\- Running\\.\\.\\.`;
+      const safeOutput = escapeMarkdown(displayOutput || 'waiting for output...');
+      const safeToolsInfo = toolsUsed.length > 0 ? `\n🔧 _${escapeMarkdown(toolsUsed.slice(-3).join(' → '))}_\n` : '';
+      await editMessage(messageId, `${header}${safeToolsInfo}\n${safeOutput}`, options.chatId);
     };
 
     claude.stdout?.on('data', (data: Buffer) => {
@@ -591,17 +593,18 @@ async function spawnClaudeSession(
         const fullMessage = output.trim();
         if (fullMessage.length > MAX_MSG_LEN - 100) {
           // Split into chunks and send as new messages
+          const escapedFull = escapeMarkdown(fullMessage);
           const chunks: string[] = [];
-          let remaining = fullMessage;
+          let remaining = escapedFull;
           while (remaining.length > 0) {
             chunks.push(remaining.slice(0, MAX_MSG_LEN));
             remaining = remaining.slice(MAX_MSG_LEN);
           }
 
           // Send full output as separate messages
-          await sendMessage(`📄 *Full output (${chunks.length} parts):*`, options.chatId);
+          await sendMessage(`📄 *Full output \\(${chunks.length} parts\\):*`, options.chatId);
           for (let i = 0; i < chunks.length; i++) {
-            await sendMessage(`(${i + 1}/${chunks.length})\n${chunks[i]}`, options.chatId);
+            await sendMessage(`\\(${i + 1}/${chunks.length}\\)\n${chunks[i]}`, options.chatId);
           }
         }
       } else {
@@ -611,7 +614,7 @@ async function spawnClaudeSession(
 
         if (isSessionNotFound && options.persistent && options.sessionId && !options.isFirstMessage) {
           // Reset session and retry with --session-id instead of --resume
-          await editMessage(messageId!, `🔄 *${options.sessionName}* - Session expired, restarting...`, options.chatId);
+          await editMessage(messageId!, `🔄 *${escapeMarkdown(options.sessionName)}* \\- Session expired, restarting\\.\\.\\.`, options.chatId);
 
           // Reset the session state to force creation of new session
           const session = loadSession();
@@ -630,7 +633,7 @@ async function spawnClaudeSession(
 
         if (isSessionAlreadyInUse && options.persistent && options.sessionId) {
           // Generate a completely new session ID and retry
-          await editMessage(messageId!, `🔄 *${options.sessionName}* - Session conflict, creating fresh session...`, options.chatId);
+          await editMessage(messageId!, `🔄 *${escapeMarkdown(options.sessionName)}* \\- Session conflict, creating fresh session\\.\\.\\.`, options.chatId);
 
           // Create a brand new session with a fresh UUID
           const newSession = createNewSession();
@@ -640,7 +643,7 @@ async function spawnClaudeSession(
           return;
         }
 
-        await editMessage(messageId!, `❌ *${options.sessionName}* - Failed (code ${code})\n\n${output.slice(-500) || 'No output'}`, options.chatId);
+        await editMessage(messageId!, `❌ *${escapeMarkdown(options.sessionName)}* \\- Failed \\(code ${code}\\)\n\n${escapeMarkdown(output.slice(-500) || 'No output')}`, options.chatId);
       }
       resolve(output);
     });
@@ -648,7 +651,7 @@ async function spawnClaudeSession(
     claude.on('error', async (error: Error) => {
       claudeSessionActive = false;
       if (messageId) {
-        await editMessage(messageId, `❌ *${options.sessionName}* - Error: ${error.message}`, options.chatId);
+        await editMessage(messageId, `❌ *${escapeMarkdown(options.sessionName)}* \\- Error: ${escapeMarkdown(error.message)}`, options.chatId);
       }
       resolve('');
     });
