@@ -1,18 +1,6 @@
 {
   "backlog": [
-    {
-      "id": "imp-001",
-      "title": "Telegram bot receives content and routes to inbox",
-      "category": "capability",
-      "leverage": "high",
-      "effort": "medium",
-      "rationale": "Currently content intake only works when user is in Claude Code session. Telegram integration lets user send links/ideas anytime, agent processes on next wake-up. Unlocks async content curation.",
-      "status": "backlog",
-      "outcome": null,
-      "createdAt": "2025-12-07T00:00:00Z",
-      "completedAt": null
-    },
-        {
+            {
       "id": "imp-003",
       "title": "Price tracking for open positions",
       "category": "capability",
@@ -86,6 +74,18 @@
       "outcome": "Added gitPull() before task execution and gitPush() after. Both daemon tick loop and manual trigger command now sync with origin. Handles failures gracefully.",
       "createdAt": "2025-12-07T00:00:00Z",
       "completedAt": "2025-12-07T23:30:00Z"
+    },
+    {
+      "id": "imp-001",
+      "title": "Telegram bot receives content and routes to inbox + strategy approval flow",
+      "category": "capability",
+      "leverage": "high",
+      "effort": "medium",
+      "rationale": "Enables async communication. User sends content anytime, agent processes. User approves/rejects strategies via Telegram.",
+      "status": "completed",
+      "outcome": "Rewrote handler.ts with: (1) proper inbox.json integration, (2) pending_approvals.json for strategy approval workflow, (3) /pending, /approve, /reject commands, (4) /process to evaluate inbox items, (5) git sync on every action. User flow: send content → /process → agent proposes strategies → /approve or /reject → agent executes.",
+      "createdAt": "2025-12-07T00:00:00Z",
+      "completedAt": "2025-12-08T00:00:00Z"
     }
   ],
   "schema": {
@@ -102,5 +102,5 @@
       "completedAt": "ISO date | null"
     }
   },
-  "notes": "Track system improvements separately from trading learnings. Prioritize high-leverage, low-effort items. Next priority: imp-001 or imp-005 (both unlock async communication)."
+  "notes": "Track system improvements separately from trading learnings. Prioritize high-leverage, low-effort items. Next priority: imp-003 (price tracking) to close the feedback loop."
 }

@@ -1,0 +1,17 @@
+{
+  "approvals": [],
+  "schema": {
+    "approval": {
+      "id": "string - unique identifier",
+      "type": "strategy | trade | tool | other",
+      "title": "string - short description",
+      "description": "string - full details",
+      "proposedAt": "ISO date",
+      "status": "pending | approved | rejected | expired",
+      "context": "object - relevant data (market, hypothesis, etc)",
+      "decidedAt": "ISO date | null",
+      "decisionNote": "string | null"
+    }
+  },
+  "notes": "Strategies and trades proposed by agent, awaiting user approval via Telegram."
+}

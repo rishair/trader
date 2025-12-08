@@ -1,10 +1,12 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import { execSync } from 'child_process';
 import { spawn } from 'child_process';
 import { sendMessage, pollMessages } from './bot';
 
 const STATE_DIR = path.join(__dirname, '../../state');
 const INBOX_FILE = path.join(STATE_DIR, 'inbox.json');
+const APPROVALS_FILE = path.join(STATE_DIR, 'pending_approvals.json');
 const STATUS_FILE = path.join(STATE_DIR, 'status.md');
 const PROJECT_ROOT = path.join(__dirname, '../..');
 const LOG_DIR = path.join(STATE_DIR, 'logs');
@@ -12,40 +14,141 @@ const LOG_DIR = path.join(STATE_DIR, 'logs');
 // Track if a Claude session is currently running
 let claudeSessionActive = false;
 
+// ============ Inbox Management ============
+
 interface InboxItem {
   id: string;
-  timestamp: string;
-  source: 'telegram' | 'manual';
-  content: string;
-  type: 'link' | 'idea' | 'command' | 'feedback';
-  processed: boolean;
-  notes?: string;
+  type: string;
+  source: string;
+  receivedAt: string;
+  status: string;
+  title: string;
+  content: any;
+  evaluation?: any;
+  actions?: any[];
 }
 
-function loadInbox(): InboxItem[] {
+interface Inbox {
+  items: InboxItem[];
+  schema: any;
+  notes: string;
+}
+
+function loadInbox(): Inbox {
   try {
     return JSON.parse(fs.readFileSync(INBOX_FILE, 'utf-8'));
   } catch {
-    return [];
+    return { items: [], schema: {}, notes: '' };
   }
 }
 
-function saveInbox(inbox: InboxItem[]): void {
+function saveInbox(inbox: Inbox): void {
   fs.writeFileSync(INBOX_FILE, JSON.stringify(inbox, null, 2));
 }
 
-function addToInbox(content: string, type: InboxItem['type']): void {
+function addToInbox(content: string, type: string, title: string): string {
   const inbox = loadInbox();
-  inbox.push({
-    id: `inbox_${Date.now()}`,
-    timestamp: new Date().toISOString(),
-    source: 'telegram',
-    content,
+  const id = `inbox-${Date.now()}`;
+
+  inbox.items.push({
+    id,
     type,
-    processed: false,
+    source: 'telegram',
+    receivedAt: new Date().toISOString(),
+    status: 'pending',
+    title,
+    content: { raw: content },
   });
+
   saveInbox(inbox);
+  return id;
 }
+
+// ============ Approvals Management ============
+
+interface Approval {
+  id: string;
+  type: string;
+  title: string;
+  description: string;
+  proposedAt: string;
+  status: string;
+  context: any;
+  decidedAt: string | null;
+  decisionNote: string | null;
+}
+
+interface Approvals {
+  approvals: Approval[];
+  schema: any;
+  notes: string;
+}
+
+function loadApprovals(): Approvals {
+  try {
+    return JSON.parse(fs.readFileSync(APPROVALS_FILE, 'utf-8'));
+  } catch {
+    return { approvals: [], schema: {}, notes: '' };
+  }
+}
+
+function saveApprovals(approvals: Approvals): void {
+  fs.writeFileSync(APPROVALS_FILE, JSON.stringify(approvals, null, 2));
+}
+
+function getPendingApprovals(): Approval[] {
+  const approvals = loadApprovals();
+  return approvals.approvals.filter(a => a.status === 'pending');
+}
+
+function approveItem(id: string, note?: string): boolean {
+  const approvals = loadApprovals();
+  const item = approvals.approvals.find(a => a.id === id);
+  if (!item || item.status !== 'pending') return false;
+
+  item.status = 'approved';
+  item.decidedAt = new Date().toISOString();
+  item.decisionNote = note || null;
+  saveApprovals(approvals);
+  return true;
+}
+
+function rejectItem(id: string, note?: string): boolean {
+  const approvals = loadApprovals();
+  const item = approvals.approvals.find(a => a.id === id);
+  if (!item || item.status !== 'pending') return false;
+
+  item.status = 'rejected';
+  item.decidedAt = new Date().toISOString();
+  item.decisionNote = note || null;
+  saveApprovals(approvals);
+  return true;
+}
+
+// ============ Git Sync ============
+
+function gitPull(): void {
+  try {
+    execSync('git pull origin main', { cwd: PROJECT_ROOT, stdio: 'pipe' });
+  } catch (e) {
+    console.error('Git pull failed:', e);
+  }
+}
+
+function gitPush(message: string): void {
+  try {
+    const status = execSync('git status --porcelain', { cwd: PROJECT_ROOT, encoding: 'utf-8' });
+    if (status.trim()) {
+      execSync('git add -A', { cwd: PROJECT_ROOT, stdio: 'pipe' });
+      execSync(`git commit -m "${message}"`, { cwd: PROJECT_ROOT, stdio: 'pipe' });
+      execSync('git push origin main', { cwd: PROJECT_ROOT, stdio: 'pipe' });
+    }
+  } catch (e) {
+    console.error('Git push failed:', e);
+  }
+}
+
+// ============ Status ============
 
 function getStatus(): string {
   try {
@@ -55,24 +158,48 @@ function getStatus(): string {
   }
 }
 
-function detectContentType(text: string): InboxItem['type'] {
-  if (text.match(/^https?:\/\//)) return 'link';
-  if (text.startsWith('/')) return 'command';
-  return 'idea';
+// ============ Content Detection ============
+
+function detectContentType(text: string): { type: string; title: string } {
+  const lower = text.toLowerCase();
+
+  // URLs
+  if (text.match(/^https?:\/\//)) {
+    if (text.includes('twitter.com') || text.includes('x.com')) {
+      return { type: 'reference', title: 'Twitter link' };
+    }
+    if (text.includes('polymarket.com')) {
+      return { type: 'reference', title: 'Polymarket link' };
+    }
+    return { type: 'reference', title: 'Link' };
+  }
+
+  // Ideas/hypotheses
+  if (lower.includes('hypothesis') || lower.includes('strategy') || lower.includes('idea')) {
+    return { type: 'hypothesis', title: 'Strategy idea' };
+  }
+
+  // News
+  if (lower.includes('news') || lower.includes('announced') || lower.includes('breaking')) {
+    return { type: 'news', title: 'News item' };
+  }
+
+  return { type: 'other', title: 'Content' };
 }
 
-async function spawnClaudeSession(prompt: string, chatId: string, sessionName: string): Promise<void> {
+// ============ Claude Sessions ============
+
+async function spawnClaudeSession(prompt: string, chatId: string, sessionName: string): Promise<string> {
   if (claudeSessionActive) {
-    await sendMessage('⚠️ A Claude session is already running. Please wait for it to complete.', chatId);
-    return;
+    await sendMessage('⚠️ A Claude session is already running. Please wait.', chatId);
+    return '';
   }
 
   claudeSessionActive = true;
-  await sendMessage(`🚀 Starting Claude session: ${sessionName}`, chatId);
+  await sendMessage(`🚀 Starting: ${sessionName}`, chatId);
 
   const sessionLogFile = path.join(LOG_DIR, `telegram-${sessionName}-${Date.now()}.log`);
 
-  // Ensure log directory exists
   if (!fs.existsSync(LOG_DIR)) {
     fs.mkdirSync(LOG_DIR, { recursive: true });
   }
@@ -99,33 +226,37 @@ async function spawnClaudeSession(prompt: string, chatId: string, sessionName: s
       fs.writeFileSync(sessionLogFile, output);
 
       if (code === 0) {
-        // Send a summary (last 500 chars if output is long)
-        const summary = output.length > 500
-          ? '...' + output.slice(-500)
+        const summary = output.length > 1000
+          ? '...' + output.slice(-1000)
           : output;
-        await sendMessage(`✅ Session complete.\n\n\`\`\`\n${summary}\n\`\`\``, chatId);
+        await sendMessage(`✅ Done.\n\n${summary}`, chatId);
       } else {
-        await sendMessage(`❌ Session failed with code ${code}. Check logs.`, chatId);
+        await sendMessage(`❌ Failed (code ${code}). Check logs.`, chatId);
       }
-      resolve();
+      resolve(output);
     });
 
     claude.on('error', async (error: Error) => {
       claudeSessionActive = false;
-      await sendMessage(`❌ Failed to start Claude: ${error.message}`, chatId);
-      resolve();
+      await sendMessage(`❌ Error: ${error.message}`, chatId);
+      resolve('');
     });
   });
 }
+
+// ============ Message Handler ============
 
 async function handleMessage(text: string, chatId: string): Promise<void> {
   const trimmed = text.trim();
   const lower = trimmed.toLowerCase();
 
-  // Handle commands
+  // Always sync before handling
+  gitPull();
+
+  // ===== Commands =====
+
   if (lower === '/status' || lower === 'status') {
     const status = getStatus();
-    // Truncate if too long for Telegram (4096 char limit)
     const truncated = status.length > 4000 ? status.slice(0, 4000) + '\n...(truncated)' : status;
     await sendMessage(truncated, chatId);
     return;
@@ -133,93 +264,179 @@ async function handleMessage(text: string, chatId: string): Promise<void> {
 
   if (lower === '/help' || lower === 'help') {
     await sendMessage(
-      `*Trader Bot Commands*
+`*Trader Bot Commands*
 
-/status - Get current status
-/wake - Execute next scheduled task
-/claude <prompt> - Run Claude with a custom prompt
-/help - Show this help
+*Info:*
+/status - Current status
+/pending - Show pending approvals
+/help - This help
 
-*Send me:*
-- Links to research
-- Ideas or hypotheses
-- Feedback on trades
+*Approvals:*
+/approve <id> - Approve a strategy
+/reject <id> [reason] - Reject a strategy
+/approve all - Approve all pending
 
-I'll add them to my inbox and process them.`,
+*Actions:*
+/wake - Run next scheduled task
+/process - Process inbox items
+/claude <prompt> - Run custom prompt
+
+*Content:*
+Just send me links, ideas, news - I'll add to inbox.`,
       chatId
     );
     return;
   }
 
-  // /wake - trigger next scheduled task
-  if (lower === '/wake') {
-    const wakePrompt = `You are waking up to execute scheduled tasks.
-
-## Your Mission
-Read MISSION.md for your full operating instructions.
-
-## Instructions
-1. Check state/schedule.json for pending tasks
-2. Execute the highest priority due task
-3. Update state files with any changes
-4. Log your session summary
-5. Update state/status.md with current status
-6. Schedule any follow-up tasks
-
-Remember: You are autonomous. Make decisions, take actions, create tools if needed.`;
-
-    await spawnClaudeSession(wakePrompt, chatId, 'wake');
-    return;
-  }
-
-  // /claude <prompt> - run Claude with custom prompt
-  if (lower.startsWith('/claude')) {
-    const userPrompt = trimmed.slice(7).trim();
-    if (!userPrompt) {
-      await sendMessage('Usage: /claude <your prompt here>', chatId);
+  if (lower === '/pending') {
+    const pending = getPendingApprovals();
+    if (pending.length === 0) {
+      await sendMessage('No pending approvals.', chatId);
       return;
     }
 
-    const claudePrompt = `You are the autonomous trader agent. Read MISSION.md for context.
+    let msg = `*Pending Approvals (${pending.length}):*\n\n`;
+    for (const p of pending) {
+      msg += `*${p.id}*\n`;
+      msg += `Type: ${p.type}\n`;
+      msg += `${p.title}\n`;
+      msg += `${p.description.slice(0, 200)}${p.description.length > 200 ? '...' : ''}\n\n`;
+    }
+    msg += `Reply: /approve <id> or /reject <id> [reason]`;
+    await sendMessage(msg, chatId);
+    return;
+  }
 
-User request via Telegram: ${userPrompt}
+  if (lower.startsWith('/approve')) {
+    const parts = trimmed.split(/\s+/);
+    const target = parts[1];
 
-Execute this request, update relevant state files, and provide a summary of what you did.`;
+    if (!target) {
+      await sendMessage('Usage: /approve <id> or /approve all', chatId);
+      return;
+    }
 
-    await spawnClaudeSession(claudePrompt, chatId, 'claude');
+    if (target.toLowerCase() === 'all') {
+      const pending = getPendingApprovals();
+      for (const p of pending) {
+        approveItem(p.id, 'Batch approved');
+      }
+      gitPush('Batch approve all pending');
+      await sendMessage(`✅ Approved ${pending.length} items.`, chatId);
+
+      // Trigger processing of approved items
+      await spawnClaudeSession(
+        `You are the trader agent. Check state/pending_approvals.json for newly approved items and execute them. Read MISSION.md for context. Update state and log results.`,
+        chatId,
+        'execute-approved'
+      );
+      return;
+    }
+
+    if (approveItem(target)) {
+      gitPush(`Approved: ${target}`);
+      await sendMessage(`✅ Approved: ${target}`, chatId);
+
+      // Trigger execution
+      await spawnClaudeSession(
+        `You are the trader agent. The item ${target} in state/pending_approvals.json was just approved. Execute it. Read MISSION.md for context.`,
+        chatId,
+        'execute-approved'
+      );
+    } else {
+      await sendMessage(`❌ Not found or already decided: ${target}`, chatId);
+    }
+    return;
+  }
+
+  if (lower.startsWith('/reject')) {
+    const parts = trimmed.split(/\s+/);
+    const target = parts[1];
+    const reason = parts.slice(2).join(' ') || undefined;
+
+    if (!target) {
+      await sendMessage('Usage: /reject <id> [reason]', chatId);
+      return;
+    }
+
+    if (rejectItem(target, reason)) {
+      gitPush(`Rejected: ${target}`);
+      await sendMessage(`❌ Rejected: ${target}${reason ? ` (${reason})` : ''}`, chatId);
+    } else {
+      await sendMessage(`Not found or already decided: ${target}`, chatId);
+    }
+    return;
+  }
+
+  if (lower === '/wake') {
+    await spawnClaudeSession(
+      `You are waking up to execute scheduled tasks. Read MISSION.md first. Check state/schedule.json for pending tasks. Execute the highest priority due task. Update state files. Log session.`,
+      chatId,
+      'wake'
+    );
+    gitPush('Wake task executed');
+    return;
+  }
+
+  if (lower === '/process') {
+    await spawnClaudeSession(
+      `You are the trader agent. Process pending items in state/inbox.json. For each:
+1. Evaluate relevance, actionability, urgency
+2. Route to appropriate state file (hypotheses.json, resources.json, etc)
+3. If it suggests a strategy/trade, create an entry in state/pending_approvals.json for user approval
+4. Mark inbox items as processed
+Read MISSION.md for context.`,
+      chatId,
+      'process-inbox'
+    );
+    gitPush('Inbox processed');
+    return;
+  }
+
+  if (lower.startsWith('/claude')) {
+    const userPrompt = trimmed.slice(7).trim();
+    if (!userPrompt) {
+      await sendMessage('Usage: /claude <your prompt>', chatId);
+      return;
+    }
+
+    await spawnClaudeSession(
+      `You are the trader agent. Read MISSION.md for context.\n\nUser request: ${userPrompt}\n\nExecute and summarize.`,
+      chatId,
+      'custom'
+    );
+    gitPush('Custom Claude session');
     return;
   }
 
   if (lower === '/ping' || lower === 'ping') {
-    await sendMessage('pong', chatId);
+    await sendMessage('pong 🏓', chatId);
     return;
   }
 
-  // For everything else, add to inbox
-  const contentType = detectContentType(trimmed);
-  addToInbox(trimmed, contentType);
+  // ===== Content (not a command) =====
 
-  const confirmations: Record<InboxItem['type'], string> = {
-    link: `Added link to inbox. I'll review it.`,
-    idea: `Got it. Added to inbox for processing.`,
-    command: `Unknown command. Added to inbox.`,
-    feedback: `Thanks for the feedback. Noted.`,
-  };
+  const { type, title } = detectContentType(trimmed);
+  const id = addToInbox(trimmed, type, title);
+  gitPush(`Inbox: ${title}`);
 
-  await sendMessage(confirmations[contentType], chatId);
+  await sendMessage(`📥 Added to inbox (${type})\nID: ${id}\n\nI'll process it on next /process or wake.`, chatId);
 }
 
-// Main polling loop
+// ============ Main ============
+
 export async function startHandler(): Promise<void> {
   console.log('Telegram handler starting...');
+  console.log('Syncing with git...');
+  gitPull();
 
   await pollMessages(async (msg) => {
-    console.log(`Received: ${msg.text}`);
+    console.log(`[${new Date().toISOString()}] ${msg.from}: ${msg.text}`);
     try {
       await handleMessage(msg.text, msg.chatId);
     } catch (error) {
       console.error('Error handling message:', error);
-      await sendMessage('Error processing your message. Check logs.', msg.chatId);
+      await sendMessage('❌ Error processing message. Check logs.', msg.chatId);
     }
   });
 }
