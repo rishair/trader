@@ -617,7 +617,7 @@ Just message me - I'll respond in our ongoing conversation.
 /pending - Show pending approvals
 /errors - Recent errors
 /ps - Running processes
-/git [n] - Show last n commits (default 3)
+/version [n] - Show version and last n commits
 /help - This help
 
 *Approvals:*
@@ -902,18 +902,19 @@ Read MISSION.md for context.`,
     return;
   }
 
-  // /git - Show recent git history with descriptions
-  if (lower.startsWith('/git')) {
+  // /version - Show current version and recent commits
+  if (lower.startsWith('/version')) {
     const parts = trimmed.split(/\s+/);
     const count = parseInt(parts[1]) || 3;
     const limitedCount = Math.min(count, 20); // Cap at 20
 
     try {
+      const currentHash = execSync('git rev-parse --short HEAD', { cwd: PROJECT_ROOT, encoding: 'utf-8' }).trim();
       const log = execSync(
         `git log --pretty=format:"%h %s" -${limitedCount}`,
         { cwd: PROJECT_ROOT, encoding: 'utf-8' }
       );
-      await sendMessage(`*Last ${limitedCount} commits:*\n\`\`\`\n${log}\`\`\`\n\nUse \`/rollback <hash>\` to revert.`, chatId);
+      await sendMessage(`*Running:* \`${currentHash}\`\n\n*Last ${limitedCount} commits:*\n\`\`\`\n${log}\`\`\`\n\nUse \`/rollback <hash>\` to revert.`, chatId);
     } catch (e: any) {
       await sendMessage(`❌ Git error: ${e.message}`, chatId);
     }
