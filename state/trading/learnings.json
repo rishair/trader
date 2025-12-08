@@ -161,6 +161,20 @@
         "https://polymarket.com/leaderboard/overall/weekly/profit",
         "https://data-api.polymarket.com/trades"
       ]
+    },
+    {
+      "id": "first-loss-aapl-volatility-2025-12-08",
+      "category": "strategy",
+      "title": "First Loss: Volatility Mispricing Hypothesis Failed - Markets Price Momentum, Not Just Fundamentals",
+      "content": "**Trade Details:**\n- Position: AAPL YES @ 9¢ (5,555 shares, $500 cost)\n- Exit: 6.6¢ (after price dropped 27% from entry)\n- Loss: -$133.30 (-26.7%)\n- Duration: ~2 days\n\n**Original Thesis (hyp-005):**\nMulti-outcome markets with close competitors misprice volatility. AAPL market cap was only 5-7% behind NVDA, but Polymarket priced AAPL at 9% vs NVDA at 89%. Hypothesis: markets underweight the probability of reversals.\n\n**Why It Failed:**\n\n1. **Momentum matters more than current state**: Market cap closeness (AAPL ~5-7% behind) doesn't translate to probability closeness. NVDA had momentum, narrative (AI leader), and no catalyst for reversal. Markets correctly price these factors.\n\n2. **Gap widened, not narrowed**: Over 2 days, NVDA went from 90% → 92% while AAPL dropped from 9% → 6.5%. The market cap gap actually expanded (NVDA ~$4.5T vs AAPL ~$4.1T = 8-10% gap).\n\n3. **No catalyst**: Betting against a trend requires a specific reason for reversal. 'Volatility could close the gap' is hope, not edge. Without a catalyst (earnings surprise, product announcement, regulatory news), momentum continues.\n\n4. **Markets approaching resolution become MORE efficient**: As the Dec 31 deadline approaches, prices converge toward the likely outcome. Less time = less uncertainty = tighter spreads around the expected winner.\n\n**Key Learnings:**\n\n1. **Close fundamentals ≠ Close probabilities**: Momentum, narrative, and catalysts matter as much as current state.\n\n2. **Don't bet against momentum without edge**: Need specific information advantage or upcoming catalyst to justify contrarian bet.\n\n3. **Exit before stop-loss when thesis invalidates**: Price dropped 27% but was still 65% above 4¢ stop-loss. Exited early because thesis failed, not because of mechanical stop.\n\n4. **Paper trading teaches real lessons**: Even with fake money, the loss highlights a systematic error in reasoning.\n\n**What Would Have Worked Instead:**\n- Bet WITH momentum (NVDA YES at 90-92¢)\n- Wait for specific AAPL catalyst before entering\n- Use options-like structure (smaller position, more leverage on specific event)\n\n**Impact on Future Trading:**\n- Invalidated hyp-005 (volatility mispricing in close races)\n- Added skepticism to contrarian bets without catalysts\n- Reinforced: Markets are more efficient than they appear",
+      "source": "Post-mortem analysis of trade-001 exit 2025-12-08",
+      "actionable": true,
+      "appliedTo": ["hyp-005", "trade-001"],
+      "createdAt": "2025-12-08T23:48:00Z",
+      "references": [
+        "https://9to5mac.com/2025/11/25/apple-overtake-nvidia-market-cap/",
+        "https://polymarket.com/event/largest-company-end-of-2025"
+      ]
     }
   ],
   "schema": {

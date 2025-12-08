@@ -253,8 +253,8 @@
       "statement": "Multi-outcome markets with close competitors misprice volatility, underweighting the probability of reversals",
       "rationale": "In the 'Largest Company end of 2025' market, NVDA is priced at 89% and AAPL at 9%, despite AAPL market cap being only 5-7% behind NVDA. Market may be extrapolating recent momentum rather than pricing in realistic volatility scenarios.",
       "testMethod": "Track multi-outcome markets where gap between leading outcomes is <10%. Compare market pricing to volatility-adjusted fair value. Execute trades where mispricing is detected.",
-      "status": "testing",
-      "confidence": 0.35,
+      "status": "invalidated",
+      "confidence": 0.15,
       "evidence": [
         {
           "date": "2025-12-07",
@@ -285,9 +285,16 @@
           "observation": "Experiment progress check: AAPL at 7.4¢ (down from 9¢ entry, -17.8%). NVDA stable at 91%. Unrealized P&L: -$88.88. Position still 85% above 4¢ stop-loss. Price has stabilized in the 7.4-7.5¢ range over past 24h after initial decline. No exit triggers met. 22 days to resolution. Watching for any macro catalyst (earnings, market cap news) that could trigger reversal.",
           "supports": null,
           "confidenceImpact": 0
+        },
+        {
+          "date": "2025-12-08",
+          "observation": "Position closed at 6.6¢ (-26.7% from entry). AAPL dropped to 6.5% while NVDA rose to 92%. Market cap gap widened to ~8-10% (NVDA ~$4.5T vs AAPL ~$4.1T). Market correctly pricing in momentum continuation, not mean reversion. Realized loss: -$133.30.",
+          "supports": false,
+          "confidenceImpact": -0.15
         }
       ],
-      "conclusion": null,
+      "conclusion": "Invalidated. The hypothesis that multi-outcome markets underweight volatility was wrong in this case. The market correctly identified NVDA's momentum advantage. Key learnings: (1) Close market cap doesn't guarantee close probabilities - momentum matters, (2) Markets approaching resolution may become MORE efficient at pricing the likely winner, not less, (3) Fundamentals alone don't create trading edge - need information advantage or timing edge. Loss: -$133.30 (-26.7%).",
+      "testEndedAt": "2025-12-08T06:00:00Z",
       "createdAt": "2025-12-07T12:00:00Z",
       "updatedAt": "2025-12-09T01:30:00Z",
       "linkedTrade": "trade-001"

@@ -1,15 +1,15 @@
 {
-  "lastEvaluated": "2025-12-08T23:15:06.755Z",
+  "lastEvaluated": "2025-12-08T23:47:41.612Z",
   "hypothesisHealth": {
-    "total": 14,
+    "total": 17,
     "byStatus": {
-      "proposed": 7,
+      "proposed": 10,
       "testing": 5,
       "validated": 1,
       "invalidated": 1
     },
     "avgConviction": 0.44,
-    "testableNow": 11,
+    "testableNow": 14,
     "blockedByCapability": 1,
     "testableIds": [
       "hyp-002",
@@ -22,7 +22,10 @@
       "hyp-011",
       "hyp-drift-1765231983489",
       "hyp-drift-1765231983489",
-      "hyp-drift-1765231983489"
+      "hyp-drift-1765231983489",
+      "hyp-drift-1765235704569",
+      "hyp-drift-1765235704570",
+      "hyp-drift-1765235704571"
     ]
   },
   "blockedHypotheses": [
