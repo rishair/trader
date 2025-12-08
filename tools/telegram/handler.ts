@@ -350,7 +350,7 @@ async function spawnClaudeSession(prompt: string, chatId: string, sessionName: s
   return new Promise((resolve) => {
     const claude = spawn('claude', [
       '-p', prompt,
-      '--output-format', 'text'
+      '--output-format', 'stream-json'
     ], {
       cwd: PROJECT_ROOT,
       stdio: ['ignore', 'pipe', 'pipe'],
@@ -360,6 +360,7 @@ async function spawnClaudeSession(prompt: string, chatId: string, sessionName: s
     let output = '';
     let lastUpdateTime = 0;
     let updatePending = false;
+    let toolsUsed: string[] = [];
 
     // Function to update the Telegram message with current output
     const updateMessage = async (final = false) => {
@@ -385,22 +386,63 @@ async function spawnClaudeSession(prompt: string, chatId: string, sessionName: s
 
       // Truncate for display (show last part if too long)
       let displayOutput = trimmedOutput;
-      if (displayOutput.length > MAX_MSG_LEN - 100) {
-        displayOutput = '...' + displayOutput.slice(-(MAX_MSG_LEN - 100));
+      if (displayOutput.length > MAX_MSG_LEN - 200) {
+        displayOutput = '...' + displayOutput.slice(-(MAX_MSG_LEN - 200));
       }
 
+      // Show tools being used
+      const toolsInfo = toolsUsed.length > 0 ? `\n🔧 _${toolsUsed.slice(-3).join(' → ')}_\n` : '';
+
       const header = final ? `${status} *${sessionName}* - Done` : `${status} *${sessionName}* - Running...`;
-      await editMessage(messageId, `${header}\n\n${displayOutput || '_waiting for output..._'}`, chatId);
+      await editMessage(messageId, `${header}${toolsInfo}\n${displayOutput || '_waiting for output..._'}`, chatId);
     };
 
     claude.stdout?.on('data', (data: Buffer) => {
-      output += data.toString();
-      updateMessage();
+      const lines = data.toString().split('\n').filter(l => l.trim());
+
+      for (const line of lines) {
+        try {
+          const event = JSON.parse(line);
+
+          // Extract text content from assistant messages
+          if (event.type === 'assistant' && event.message?.content) {
+            for (const block of event.message.content) {
+              if (block.type === 'text') {
+                output = block.text;
+                updateMessage();
+              } else if (block.type === 'tool_use') {
+                toolsUsed.push(block.name);
+                updateMessage();
+              }
+            }
+          }
+
+          // Handle content block deltas for streaming text
+          if (event.type === 'content_block_delta' && event.delta?.text) {
+            output += event.delta.text;
+            updateMessage();
+          }
+
+          // Handle result messages
+          if (event.type === 'result' && event.result) {
+            output = event.result;
+            updateMessage();
+          }
+        } catch {
+          // Not JSON, treat as raw text
+          output += line + '\n';
+          updateMessage();
+        }
+      }
     });
 
     claude.stderr?.on('data', (data: Buffer) => {
-      output += data.toString();
-      updateMessage();
+      // stderr might have progress info
+      const text = data.toString();
+      if (!text.includes('dotenv')) { // filter out dotenv noise
+        output += text;
+        updateMessage();
+      }
     });
 
     claude.on('close', async (code: number) => {
