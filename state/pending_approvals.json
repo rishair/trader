@@ -6,7 +6,7 @@
       "title": "Build imp-003: Price tracking for open positions",
       "description": "Engine is starved (only 2 testable hypotheses). Building imp-003 would unblock hyp-002. Effort: medium",
       "proposedAt": "2025-12-08T06:16:56.534Z",
-      "status": "pending",
+      "status": "approved",
       "context": {
         "improvementId": "imp-003",
         "action": "build",
@@ -14,7 +14,7 @@
         "effort": "medium",
         "leverage": "high"
       },
-      "decidedAt": null,
+      "decidedAt": "2025-12-08T06:31:46.384Z",
       "decisionNote": null
     },
     {
