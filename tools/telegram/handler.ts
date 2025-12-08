@@ -351,7 +351,8 @@ async function spawnClaudeSession(prompt: string, chatId: string, sessionName: s
     const claude = spawn('claude', [
       '-p', prompt,
       '--output-format', 'stream-json',
-      '--verbose'
+      '--verbose',
+      '--dangerously-skip-permissions'
     ], {
       cwd: PROJECT_ROOT,
       stdio: ['ignore', 'pipe', 'pipe'],

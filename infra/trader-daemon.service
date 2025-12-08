@@ -1,5 +1,5 @@
 [Unit]
-Description=Trader Telegram Handler
+Description=Trader Daemon
 After=network.target
 
 [Service]
@@ -7,9 +7,9 @@ Type=simple
 User=trader
 Group=trader
 WorkingDirectory=/opt/trader
-ExecStart=/usr/bin/npx ts-node tools/telegram/handler.ts
+ExecStart=/usr/bin/npx ts-node daemon.ts start
 Restart=always
-RestartSec=10
+RestartSec=30
 Environment=NODE_ENV=production
 Environment=HOME=/home/trader
 Environment=PATH=/home/trader/.local/bin:/usr/local/bin:/usr/bin:/bin
@@ -18,8 +18,8 @@ Environment=PATH=/home/trader/.local/bin:/usr/local/bin:/usr/bin:/bin
 EnvironmentFile=/opt/trader/.env
 
 # Logging
-StandardOutput=append:/opt/trader/state/logs/telegram-handler.log
-StandardError=append:/opt/trader/state/logs/telegram-handler.log
+StandardOutput=append:/opt/trader/state/logs/daemon.log
+StandardError=append:/opt/trader/state/logs/daemon.log
 
 [Install]
 WantedBy=multi-user.target

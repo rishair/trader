@@ -35,19 +35,29 @@ echo "📥 Pulling latest changes..."
 git fetch origin
 git reset --hard origin/main
 
-echo "📦 Installing dependencies..."
-npm install --silent
+# Ensure trader user owns everything
+chown -R trader:trader /opt/trader
+
+echo "📦 Installing dependencies (as trader)..."
+su - trader -c 'cd /opt/trader && npm install --silent'
 
 echo "🔨 Building TypeScript..."
-npx tsc --noEmit 2>/dev/null || echo "Type check completed (warnings ok)"
+su - trader -c 'cd /opt/trader && npx tsc --noEmit 2>/dev/null' || echo "Type check completed (warnings ok)"
+
+echo "📋 Installing systemd services..."
+cp /opt/trader/infra/telegram-handler.service /etc/systemd/system/
+cp /opt/trader/infra/trader-daemon.service /etc/systemd/system/
+systemctl daemon-reload
 
 echo "🔄 Restarting services..."
-systemctl restart telegram-handler 2>/dev/null || echo "No telegram-handler service"
+systemctl restart telegram-handler 2>/dev/null || echo "telegram-handler: starting fresh"
+systemctl enable telegram-handler 2>/dev/null || true
 
 echo "✅ Deploy complete!"
 echo ""
 echo "Service status:"
 systemctl is-active telegram-handler 2>/dev/null || echo "telegram-handler: not running"
+systemctl is-active trader-daemon 2>/dev/null || echo "trader-daemon: not running (start with /start)"
 ENDSSH
 
 echo ""
