@@ -75,11 +75,17 @@
           "observation": "Market scan check: Time POY prices stable at baseline (AI 39%, Jensen 21%, Sam 13%, Pope 8%, Trump 5%). Largest Company: NVDA 91% (+1), AAPL 7.8% (-1.2). Slight momentum toward leader NVDA, slight away from challenger AAPL. Consistent with weak momentum hypothesis but data still too noisy for conviction.",
           "supports": null,
           "confidenceImpact": 0
+        },
+        {
+          "date": "2025-12-09",
+          "observation": "Experiment progress (24h check): Time POY prices still near baseline - AI 39% (flat), Jensen 21% (flat), Sam Altman 13% (-1pp from 14%), Trump 5.1% (+0.1). Largest Company: NVDA 91% (flat), AAPL 7.4% (-0.1pp). After ~24h of tracking, markets show stability rather than momentum. Sam Altman's 1pp decline is the only notable movement - could be noise or early sign of momentum away from mid-tier candidates. Need to continue tracking for multi-day patterns.",
+          "supports": null,
+          "confidenceImpact": 0
         }
       ],
       "conclusion": null,
       "createdAt": "2025-12-07T00:00:00Z",
-      "updatedAt": "2025-12-08T22:15:00Z",
+      "updatedAt": "2025-12-09T01:30:00Z",
       "testStartedAt": "2025-12-08T12:00:00Z",
       "trackingMarkets": [
         {
@@ -104,11 +110,12 @@
           "recordedAt": "2025-12-08T12:00:00Z",
           "closesAt": "2025-12-31",
           "latestCheck": {
-            "timestamp": "2025-12-08T18:30:00Z",
+            "timestamp": "2025-12-09T01:30:00Z",
             "prices": {
               "AI": 0.39,
               "Jensen Huang": 0.21,
-              "Sam Altman": 0.14,
+              "Sam Altman": 0.13,
+              "Pope Leo XIV": 0.08,
               "Donald Trump": 0.051
             },
             "marketIds": {
@@ -245,11 +252,17 @@
           "observation": "Portfolio review: AAPL at 7.5¢ (down from 9¢ entry, -16.7%). NVDA stable at 91%. Unrealized P&L: -$83.32. Position still 46% above 4¢ stop-loss. No exit criteria met. Hypothesis continues to face headwinds - market appears to be pricing in momentum rather than volatility potential. 23 days to resolution.",
           "supports": false,
           "confidenceImpact": -0.05
+        },
+        {
+          "date": "2025-12-09",
+          "observation": "Experiment progress check: AAPL at 7.4¢ (down from 9¢ entry, -17.8%). NVDA stable at 91%. Unrealized P&L: -$88.88. Position still 85% above 4¢ stop-loss. Price has stabilized in the 7.4-7.5¢ range over past 24h after initial decline. No exit triggers met. 22 days to resolution. Watching for any macro catalyst (earnings, market cap news) that could trigger reversal.",
+          "supports": null,
+          "confidenceImpact": 0
         }
       ],
       "conclusion": null,
       "createdAt": "2025-12-07T12:00:00Z",
-      "updatedAt": "2025-12-08T23:45:00Z",
+      "updatedAt": "2025-12-09T01:30:00Z",
       "linkedTrade": "trade-001"
     }
   ],

@@ -103,6 +103,17 @@
         "https://arxiv.org/abs/2310.19007",
         "https://www.langchain.com/stateofaiagents"
       ]
+    },
+    {
+      "id": "momentum-hypothesis-early-observations-2025-12",
+      "category": "market",
+      "title": "Markets Show Mean-Reversion, Not Momentum, in First 24h of Tracking",
+      "content": "After ~24 hours of tracking prices on two markets (Time POY 2025 and Largest Company 2025) for the momentum hypothesis (hyp-002), observations suggest mean-reversion rather than momentum:\n\n1. **Intraday noise**: Initial 3-hour check showed all Time POY candidates declining 1-10%. This looked like momentum away from leader. But 3 hours later, prices reverted to baseline.\n\n2. **24-hour stability**: After full 24h, Time POY prices nearly identical to baseline (AI 39%, Jensen 21%, Sam Altman down 1pp from 14% to 13%, Trump +0.1pp). No clear momentum pattern.\n\n3. **AAPL position**: Largest Company market shows AAPL slowly declining (9% → 7.4% over 2 days) while NVDA stable at 91%. This could be momentum toward incumbent OR simply efficient price discovery.\n\n**Key insight**: Short-term price movements (hours) appear to be noise/mean-reversion. Need multi-day or multi-week tracking to detect true momentum. 24h is insufficient sample for momentum hypothesis testing.\n\n**Implications**: Don't trade on intraday momentum signals. Hypothesis testing requires patience - minimum 7-14 days of observation before drawing conclusions.",
+      "source": "experiment-progress review 2025-12-09: Analysis of momentum hypothesis tracking data",
+      "actionable": true,
+      "appliedTo": ["hyp-002"],
+      "createdAt": "2025-12-09T01:30:00Z",
+      "references": []
     }
   ],
   "schema": {

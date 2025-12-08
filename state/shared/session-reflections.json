@@ -1,6 +1,26 @@
 {
   "sessions": [
     {
+      "sessionId": "sess-20251209-013000",
+      "agent": "trade-research",
+      "timestamp": "2025-12-09T01:30:00Z",
+      "responsibility": "experiment-progress",
+      "taskDescription": "Review running experiments, gather new data/observations, update experiment status and findings, complete experiments with enough data, apply learnings to hypotheses",
+      "completed": true,
+      "friction": [
+        "experiments.json is empty - testing hypotheses serve as de facto experiments but lack formal experiment tracking",
+        "Gamma API returning empty results for slug-based queries - had to use polymarket.com direct WebFetch"
+      ],
+      "mistakes": [],
+      "rootCauses": [
+        "Experiment tracking infrastructure not built - hypotheses in 'testing' status serve double duty",
+        "Polymarket API may require specific query patterns or have inconsistent behavior"
+      ],
+      "improvementIdea": null,
+      "learningLogged": true,
+      "notes": "Updated 3 testing hypotheses with fresh data: hyp-002 (momentum) shows mean-reversion not momentum after 24h - need longer timeframe; hyp-003 (MM rewards) still needs infrastructure; hyp-005 (volatility) position at 7.4¢ (down 17.8% from 9¢ entry), unrealized P&L -$88.88, still above 4¢ stop-loss. Added learning about intraday noise vs true momentum patterns. Key insight: 24h is insufficient for momentum hypothesis testing - need 7-14 days minimum."
+    },
+    {
       "sessionId": "sess-20251208-234500",
       "agent": "trade-research",
       "timestamp": "2025-12-08T23:45:00Z",
