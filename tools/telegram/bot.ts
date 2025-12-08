@@ -23,22 +23,47 @@ function saveChatId(chatId: string): void {
   fs.writeFileSync(CHAT_ID_FILE, chatId);
 }
 
-export async function sendMessage(text: string, chatId?: string): Promise<boolean> {
+export async function sendMessage(text: string, chatId?: string): Promise<number | null> {
   const targetChatId = chatId || getChatId();
   if (!targetChatId) {
     console.error('No chat ID available. User needs to message the bot first.');
+    return null;
+  }
+
+  try {
+    const response = await axios.post(`${TELEGRAM_API}/sendMessage`, {
+      chat_id: targetChatId,
+      text,
+      parse_mode: 'Markdown',
+    });
+    return response.data.result?.message_id || null;
+  } catch (error: any) {
+    console.error('Failed to send Telegram message:', error.response?.data || error.message);
+    return null;
+  }
+}
+
+export async function editMessage(messageId: number, text: string, chatId?: string): Promise<boolean> {
+  const targetChatId = chatId || getChatId();
+  if (!targetChatId) {
+    console.error('No chat ID available.');
     return false;
   }
 
   try {
-    await axios.post(`${TELEGRAM_API}/sendMessage`, {
+    await axios.post(`${TELEGRAM_API}/editMessageText`, {
       chat_id: targetChatId,
+      message_id: messageId,
       text,
       parse_mode: 'Markdown',
     });
     return true;
   } catch (error: any) {
-    console.error('Failed to send Telegram message:', error.response?.data || error.message);
+    // Telegram returns error if message content is identical - ignore it
+    if (error.response?.data?.description?.includes('message is not modified')) {
+      return true;
+    }
+    console.error('Failed to edit Telegram message:', error.response?.data || error.message);
     return false;
   }
 }

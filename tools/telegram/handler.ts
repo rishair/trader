@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { execSync } from 'child_process';
 import { spawn } from 'child_process';
-import { sendMessage, pollMessages } from './bot';
+import { sendMessage, editMessage, pollMessages } from './bot';
 
 const STATE_DIR = path.join(__dirname, '../../state');
 const INBOX_FILE = path.join(STATE_DIR, 'inbox.json');
@@ -327,6 +327,9 @@ function detectContentType(text: string): { type: string; title: string } {
 
 // ============ Claude Sessions ============
 
+const MAX_MSG_LEN = 4000; // Telegram limit is 4096, leave room for formatting
+const STREAM_UPDATE_INTERVAL = 1500; // Update message every 1.5 seconds
+
 async function spawnClaudeSession(prompt: string, chatId: string, sessionName: string): Promise<string> {
   if (claudeSessionActive) {
     await sendMessage('⚠️ A Claude session is already running. Please wait.', chatId);
@@ -334,7 +337,9 @@ async function spawnClaudeSession(prompt: string, chatId: string, sessionName: s
   }
 
   claudeSessionActive = true;
-  await sendMessage(`🚀 Starting: ${sessionName}`, chatId);
+
+  // Send initial message and capture message_id for streaming updates
+  const messageId = await sendMessage(`🚀 *${sessionName}*\n\n_Starting..._`, chatId);
 
   const sessionLogFile = path.join(LOG_DIR, `telegram-${sessionName}-${Date.now()}.log`);
 
@@ -348,18 +353,54 @@ async function spawnClaudeSession(prompt: string, chatId: string, sessionName: s
       '--output-format', 'text'
     ], {
       cwd: PROJECT_ROOT,
-      stdio: ['ignore', 'pipe', 'pipe'],  // ignore stdin to prevent hanging
+      stdio: ['ignore', 'pipe', 'pipe'],
       env: { ...process.env }
     });
 
     let output = '';
+    let lastUpdateTime = 0;
+    let updatePending = false;
+
+    // Function to update the Telegram message with current output
+    const updateMessage = async (final = false) => {
+      if (!messageId) return;
+
+      const now = Date.now();
+      if (!final && now - lastUpdateTime < STREAM_UPDATE_INTERVAL) {
+        // Schedule an update if one isn't pending
+        if (!updatePending) {
+          updatePending = true;
+          setTimeout(() => {
+            updatePending = false;
+            updateMessage();
+          }, STREAM_UPDATE_INTERVAL);
+        }
+        return;
+      }
+
+      lastUpdateTime = now;
+
+      const status = final ? '✅' : '⏳';
+      const trimmedOutput = output.trim();
+
+      // Truncate for display (show last part if too long)
+      let displayOutput = trimmedOutput;
+      if (displayOutput.length > MAX_MSG_LEN - 100) {
+        displayOutput = '...' + displayOutput.slice(-(MAX_MSG_LEN - 100));
+      }
+
+      const header = final ? `${status} *${sessionName}* - Done` : `${status} *${sessionName}* - Running...`;
+      await editMessage(messageId, `${header}\n\n${displayOutput || '_waiting for output..._'}`, chatId);
+    };
 
     claude.stdout?.on('data', (data: Buffer) => {
       output += data.toString();
+      updateMessage();
     });
 
     claude.stderr?.on('data', (data: Buffer) => {
       output += data.toString();
+      updateMessage();
     });
 
     claude.on('close', async (code: number) => {
@@ -367,14 +408,13 @@ async function spawnClaudeSession(prompt: string, chatId: string, sessionName: s
       fs.writeFileSync(sessionLogFile, output);
 
       if (code === 0) {
-        // Telegram limit is 4096 chars - split into multiple messages if needed
-        const MAX_MSG_LEN = 4000; // Leave room for formatting
-        const fullMessage = output.trim();
+        // Final update to the streaming message
+        await updateMessage(true);
 
-        if (fullMessage.length <= MAX_MSG_LEN) {
-          await sendMessage(`✅ Done.\n\n${fullMessage}`, chatId);
-        } else {
-          // Split into chunks
+        // If output is longer than what we showed, send additional messages with full content
+        const fullMessage = output.trim();
+        if (fullMessage.length > MAX_MSG_LEN - 100) {
+          // Split into chunks and send as new messages
           const chunks: string[] = [];
           let remaining = fullMessage;
           while (remaining.length > 0) {
@@ -382,23 +422,23 @@ async function spawnClaudeSession(prompt: string, chatId: string, sessionName: s
             remaining = remaining.slice(MAX_MSG_LEN);
           }
 
-          // Send first chunk with header
-          await sendMessage(`✅ Done (${chunks.length} parts):\n\n${chunks[0]}`, chatId);
-
-          // Send remaining chunks
-          for (let i = 1; i < chunks.length; i++) {
+          // Send full output as separate messages
+          await sendMessage(`📄 *Full output (${chunks.length} parts):*`, chatId);
+          for (let i = 0; i < chunks.length; i++) {
             await sendMessage(`(${i + 1}/${chunks.length})\n${chunks[i]}`, chatId);
           }
         }
       } else {
-        await sendMessage(`❌ Failed (code ${code}). Check logs.`, chatId);
+        await editMessage(messageId!, `❌ *${sessionName}* - Failed (code ${code})\n\n${output.slice(-500) || 'No output'}`, chatId);
       }
       resolve(output);
     });
 
     claude.on('error', async (error: Error) => {
       claudeSessionActive = false;
-      await sendMessage(`❌ Error: ${error.message}`, chatId);
+      if (messageId) {
+        await editMessage(messageId, `❌ *${sessionName}* - Error: ${error.message}`, chatId);
+      }
       resolve('');
     });
   });
