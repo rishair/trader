@@ -625,6 +625,21 @@ async function spawnClaudeSession(
           return;
         }
 
+        // Check if session ID is already in use (collision or stale state)
+        const isSessionAlreadyInUse = output.includes('already in use');
+
+        if (isSessionAlreadyInUse && options.persistent && options.sessionId) {
+          // Generate a completely new session ID and retry
+          await editMessage(messageId!, `🔄 *${options.sessionName}* - Session conflict, creating fresh session...`, options.chatId);
+
+          // Create a brand new session with a fresh UUID
+          const newSession = createNewSession();
+
+          // Return special marker to trigger retry with new session
+          resolve('SESSION_CONFLICT');
+          return;
+        }
+
         await editMessage(messageId!, `❌ *${options.sessionName}* - Failed (code ${code})\n\n${output.slice(-500) || 'No output'}`, options.chatId);
       }
       resolve(output);
@@ -1142,6 +1157,21 @@ Check the relevant files, understand what went wrong, and apply fixes. Update st
       sessionName: 'chat',
       persistent: true,
       sessionId: session.sessionId,
+      isFirstMessage: true,
+    });
+  }
+
+  // If session ID was already in use (conflict), retry with the new session that was created
+  if (result === 'SESSION_CONFLICT') {
+    const newSession = getOrCreateSession(); // This will load the freshly created session
+    const newPrompt = `You are the trader agent. Read MISSION.md for context.\n\nUser message: ${trimmed}`;
+    await sendMessage(`🆕 Created new session: \`${newSession.sessionId.slice(0, 8)}...\``, chatId);
+    await spawnClaudeSession({
+      prompt: newPrompt,
+      chatId,
+      sessionName: 'chat',
+      persistent: true,
+      sessionId: newSession.sessionId,
       isFirstMessage: true,
     });
   }
