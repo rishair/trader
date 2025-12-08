@@ -1,8 +1,37 @@
 import { spawn, ChildProcess } from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
+import * as dotenv from 'dotenv';
+import axios from 'axios';
+
+dotenv.config();
 
 const STATE_DIR = path.join(__dirname, 'state');
+const CHAT_ID_FILE = path.join(STATE_DIR, 'telegram_chat_id.txt');
+
+function getTelegramChatId(): string | null {
+  try {
+    return fs.readFileSync(CHAT_ID_FILE, 'utf-8').trim();
+  } catch {
+    return null;
+  }
+}
+
+async function sendTelegramAlert(message: string): Promise<void> {
+  const token = process.env.TELEGRAM_BOT_TOKEN;
+  const chatId = getTelegramChatId();
+  if (!token || !chatId) return;
+
+  try {
+    await axios.post(`https://api.telegram.org/bot${token}/sendMessage`, {
+      chat_id: chatId,
+      text: message,
+      parse_mode: 'Markdown',
+    });
+  } catch (error: any) {
+    log(`Failed to send Telegram alert: ${error.message}`);
+  }
+}
 const SCHEDULE_FILE = path.join(STATE_DIR, 'schedule.json');
 const LOG_DIR = path.join(STATE_DIR, 'logs');
 
@@ -88,6 +117,7 @@ Remember: You are autonomous. Make decisions, take actions, create tools if need
 
 async function executeTask(task: ScheduledTask): Promise<void> {
   log(`Executing task: ${task.id} - ${task.description}`);
+  await sendTelegramAlert(`🚀 *Starting task*\n\`${task.id}\`\n${task.description}`);
 
   const prompt = buildPrompt(task);
   const sessionLogFile = path.join(LOG_DIR, `session-${task.id}-${Date.now()}.log`);
@@ -113,13 +143,15 @@ async function executeTask(task: ScheduledTask): Promise<void> {
       process.stderr.write(text);
     });
 
-    claude.on('close', (code: number) => {
+    claude.on('close', async (code: number) => {
       fs.writeFileSync(sessionLogFile, output);
       log(`Task ${task.id} completed with code ${code}`);
 
       if (code === 0) {
+        await sendTelegramAlert(`✅ *Task completed*\n\`${task.id}\``);
         resolve();
       } else {
+        await sendTelegramAlert(`❌ *Task failed*\n\`${task.id}\`\nExit code: ${code}`);
         reject(new Error(`Claude exited with code ${code}`));
       }
     });
@@ -144,6 +176,7 @@ function markTaskComplete(schedule: Schedule, taskId: string): void {
 
 async function runDaemon(): Promise<void> {
   log('Daemon starting...');
+  await sendTelegramAlert('🤖 *Trader daemon started*\nMonitoring for scheduled tasks...');
 
   // Ensure log directory exists
   if (!fs.existsSync(LOG_DIR)) {
