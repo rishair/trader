@@ -84,6 +84,33 @@ When the user shares content (links, ideas, tweets, papers):
 - If you don't know, say so - then go find out
 - Provide your actual assessment, not what you think they want to hear
 
+## Infrastructure
+
+### Droplet (Production Server)
+- **IP**: 129.212.135.110
+- **OS**: Ubuntu 24.04 LTS
+- **Path**: `/opt/trader`
+- **Access**: SSH with deploy key (root@129.212.135.110)
+
+The daemon runs on this droplet. All state files are synced via git.
+
+### Telegram Bot
+- **Bot**: @trader_monkey_bot
+- **Chat ID**: 7816267110 (stored in `state/telegram_chat_id.txt`)
+- **Token**: In `.env` as `TELEGRAM_BOT_TOKEN`
+
+Use Telegram to:
+- Send alerts to the user
+- Receive links, ideas, and commands
+- Respond to `/status` requests
+
+Code: `tools/telegram/bot.ts` and `tools/telegram/handler.ts`
+
+```typescript
+import { sendMessage } from './tools/telegram/bot';
+await sendMessage("Alert: something happened");
+```
+
 ## Git Workflow
 
 **Commit and push at reasonable intervals** - after completing a logical unit of work (new feature, content intake, state updates, infrastructure changes).
