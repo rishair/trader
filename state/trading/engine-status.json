@@ -1,5 +1,5 @@
 {
-  "lastEvaluated": "2025-12-08T22:15:00.000Z",
+  "lastEvaluated": "2025-12-08T22:12:03.752Z",
   "hypothesisHealth": {
     "total": 11,
     "byStatus": {
@@ -14,9 +14,9 @@
     "testableIds": [
       "hyp-002",
       "hyp-004",
-      "hyp-005",
       "hyp-006",
       "hyp-007",
+      "hyp-005",
       "hyp-008",
       "hyp-010",
       "hyp-011"
@@ -33,7 +33,11 @@
   ],
   "currentPriority": {
     "action": "continue-testing",
-    "targets": ["hyp-007", "hyp-002", "hyp-005"],
+    "targets": [
+      "hyp-007",
+      "hyp-002",
+      "hyp-005"
+    ],
     "reason": "hyp-007 (related market arbitrage) just moved to testing - has clear Time POY test case. hyp-002 and hyp-005 need continued data collection. hyp-009 validated and graduated to strat-002."
   },
   "engineState": "healthy",
@@ -66,8 +70,8 @@
   "followSignalsGenerated": 0,
   "lastHealthCheck": "2025-12-08T22:15:00.000Z",
   "daemon": {
-    "version": "330723a",
-    "startedAt": "2025-12-08T19:08:09.784Z",
-    "pid": 27222
+    "version": "4378464",
+    "startedAt": "2025-12-08T22:11:54.028Z",
+    "pid": 41352
   }
 }
