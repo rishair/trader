@@ -384,6 +384,120 @@
       "updatedAt": "2025-12-08T20:00:00Z",
       "source": "leaderboard",
       "parentHypothesis": "hyp-004"
+    },
+    {
+      "id": "hyp-drift-1765231983489",
+      "statement": "Follow informed money: \"will-gold-close-under-2500-at-the-end-of-2025\" drift signal suggests YES continuation",
+      "rationale": "Price moved 200.0% in 217 minutes (extreme signal). Volume $40k. Hypothesis: someone knows something, follow the move.",
+      "source": "platform",
+      "sourcePipeline": "price-drift-detector",
+      "testMethod": "Buy YES at current price (~0¢), target 95¢ or hold.",
+      "entryRules": "Entry: 0¢, Signal strength: extreme, Volume: $40k",
+      "exitRules": "Target: 95¢, Stop: 5¢",
+      "expectedWinRate": 0.55,
+      "expectedPayoff": 1.4,
+      "minSampleSize": 10,
+      "status": "proposed",
+      "confidence": 0.5,
+      "evidence": [
+        {
+          "type": "signal",
+          "description": "Drift detected: 200.0% UP in 217min",
+          "impact": "strong_for",
+          "addedAt": "2025-12-08T22:13:03.489Z"
+        }
+      ],
+      "conclusion": null,
+      "createdAt": "2025-12-08T22:13:03.489Z",
+      "updatedAt": "2025-12-08T22:13:03.489Z",
+      "linkedMarket": {
+        "slug": "will-gold-close-under-2500-at-the-end-of-2025",
+        "question": "Will Gold close under $2,500 at the end of 2025?",
+        "tokenId": "66204185532864199574384406941577195085446103029962077842365412910416109897360"
+      },
+      "driftData": {
+        "previousPrice": 0.0005,
+        "currentPrice": 0.0015,
+        "priceChangePct": 2,
+        "signalStrength": "extreme",
+        "detectedAt": "2025-12-08T22:13:00.872Z"
+      }
+    },
+    {
+      "id": "hyp-drift-1765231983489",
+      "statement": "Follow informed money: \"will-tencent-have-the-top-ai-model-on-december-31\" drift signal suggests YES continuation",
+      "rationale": "Price moved 200.0% in 217 minutes (extreme signal). Volume $49k. Hypothesis: someone knows something, follow the move.",
+      "source": "platform",
+      "sourcePipeline": "price-drift-detector",
+      "testMethod": "Buy YES at current price (~0¢), target 95¢ or hold.",
+      "entryRules": "Entry: 0¢, Signal strength: extreme, Volume: $49k",
+      "exitRules": "Target: 95¢, Stop: 5¢",
+      "expectedWinRate": 0.55,
+      "expectedPayoff": 1.4,
+      "minSampleSize": 10,
+      "status": "proposed",
+      "confidence": 0.5,
+      "evidence": [
+        {
+          "type": "signal",
+          "description": "Drift detected: 200.0% UP in 217min",
+          "impact": "strong_for",
+          "addedAt": "2025-12-08T22:13:03.489Z"
+        }
+      ],
+      "conclusion": null,
+      "createdAt": "2025-12-08T22:13:03.489Z",
+      "updatedAt": "2025-12-08T22:13:03.489Z",
+      "linkedMarket": {
+        "slug": "will-tencent-have-the-top-ai-model-on-december-31",
+        "question": "Will Tencent have the top AI model on December 31?",
+        "tokenId": "59256827013308582977039266985187462607658460901638049707670565688943758576451"
+      },
+      "driftData": {
+        "previousPrice": 0.0005,
+        "currentPrice": 0.0015,
+        "priceChangePct": 2,
+        "signalStrength": "extreme",
+        "detectedAt": "2025-12-08T22:13:02.766Z"
+      }
+    },
+    {
+      "id": "hyp-drift-1765231983489",
+      "statement": "Follow informed money: \"will-gold-close-at-2800-2900-at-the-end-of-2025\" drift signal suggests NO continuation",
+      "rationale": "Price moved -50.0% in 217 minutes (extreme signal). Volume $16k. Hypothesis: someone knows something, follow the move.",
+      "source": "platform",
+      "sourcePipeline": "price-drift-detector",
+      "testMethod": "Buy NO at current price (~0¢), target 5¢ or hold.",
+      "entryRules": "Entry: 0¢, Signal strength: extreme, Volume: $16k",
+      "exitRules": "Target: 5¢, Stop: 2¢",
+      "expectedWinRate": 0.55,
+      "expectedPayoff": 1.4,
+      "minSampleSize": 10,
+      "status": "proposed",
+      "confidence": 0.5,
+      "evidence": [
+        {
+          "type": "signal",
+          "description": "Drift detected: -50.0% DOWN in 217min",
+          "impact": "strong_for",
+          "addedAt": "2025-12-08T22:13:03.489Z"
+        }
+      ],
+      "conclusion": null,
+      "createdAt": "2025-12-08T22:13:03.489Z",
+      "updatedAt": "2025-12-08T22:13:03.489Z",
+      "linkedMarket": {
+        "slug": "will-gold-close-at-2800-2900-at-the-end-of-2025",
+        "question": "Will Gold close at $2,800-2,900 at the end of 2025?",
+        "tokenId": "101081296560212033074205347057065245530779184810576378510101554885350813891877"
+      },
+      "driftData": {
+        "previousPrice": 0.001,
+        "currentPrice": 0.0005,
+        "priceChangePct": -0.5,
+        "signalStrength": "extreme",
+        "detectedAt": "2025-12-08T22:13:01.151Z"
+      }
     }
   ],
   "schema": {

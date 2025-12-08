@@ -70,20 +70,6 @@
       }
     },
     {
-      "id": "pipeline-drift-001",
-      "type": "pipeline",
-      "description": "Price drift detector: Monitor markets for sudden moves, generate follow signals",
-      "scheduledFor": "2025-12-08T22:00:00Z",
-      "priority": "high",
-      "context": {
-        "pipeline": "price-drift-detector",
-        "recurring": true,
-        "frequency": "1h",
-        "feedsTo": "hypotheses.json",
-        "source": "platform"
-      }
-    },
-    {
       "id": "pipeline-closing-scanner-1765220837291",
       "type": "pipeline",
       "description": "Closing-soon scanner: Find markets closing in 72h, check momentum, generate hypotheses",
@@ -117,6 +103,18 @@
         "pipeline": "health-check",
         "recurring": true,
         "frequency": "12h"
+      }
+    },
+    {
+      "id": "pipeline-hypothesis-tester-1765231970011",
+      "type": "pipeline",
+      "description": "Hypothesis tester: Monitor entry/exit conditions, execute trades, track results",
+      "scheduledFor": "2025-12-09T02:12:50.011Z",
+      "priority": "high",
+      "context": {
+        "pipeline": "hypothesis-tester",
+        "recurring": true,
+        "frequency": "4h"
       }
     }
   ],
@@ -250,6 +248,21 @@
         "source": "hypotheses"
       },
       "completedAt": "2025-12-08T22:12:04.424Z"
+    },
+    {
+      "id": "pipeline-drift-001",
+      "type": "pipeline",
+      "description": "Price drift detector: Monitor markets for sudden moves, generate follow signals",
+      "scheduledFor": "2025-12-08T22:00:00Z",
+      "priority": "high",
+      "context": {
+        "pipeline": "price-drift-detector",
+        "recurring": true,
+        "frequency": "1h",
+        "feedsTo": "hypotheses.json",
+        "source": "platform"
+      },
+      "completedAt": "2025-12-08T22:13:10.370Z"
     }
   ],
   "schema": {

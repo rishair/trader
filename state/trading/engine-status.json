@@ -1,5 +1,5 @@
 {
-  "lastEvaluated": "2025-12-08T22:12:03.752Z",
+  "lastEvaluated": "2025-12-08T22:13:09.821Z",
   "hypothesisHealth": {
     "total": 11,
     "byStatus": {
@@ -47,12 +47,12 @@
     "saturated": "Too many untested hypotheses (>10) - focus on testing not generating"
   },
   "metrics": {
-    "hypothesesGeneratedThisWeek": 2,
+    "hypothesesGeneratedThisWeek": 5,
     "hypothesesTestedThisWeek": 3,
     "hypothesesValidatedThisWeek": 1,
     "hypothesesInvalidatedThisWeek": 1,
     "capabilitiesBuiltThisWeek": 0,
-    "driftSignalsToday": 0
+    "driftSignalsToday": 17
   },
   "needsAttention": [],
   "recentActions": [
@@ -70,8 +70,8 @@
   "followSignalsGenerated": 0,
   "lastHealthCheck": "2025-12-08T22:15:00.000Z",
   "daemon": {
-    "version": "4378464",
-    "startedAt": "2025-12-08T22:11:54.028Z",
-    "pid": 41352
+    "version": "8e4f9bf",
+    "startedAt": "2025-12-08T22:12:48.980Z",
+    "pid": 41489
   }
 }
