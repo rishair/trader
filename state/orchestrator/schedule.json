@@ -41,19 +41,6 @@
       }
     },
     {
-      "id": "pipeline-health-002",
-      "type": "pipeline",
-      "description": "Health check: Analyze system state, propose actions for user approval",
-      "scheduledFor": "2025-12-08T19:00:00Z",
-      "priority": "high",
-      "context": {
-        "pipeline": "health-check",
-        "recurring": true,
-        "frequency": "12h",
-        "feedsTo": "pending_approvals.json"
-      }
-    },
-    {
       "id": "monitor-003",
       "type": "monitor",
       "description": "Check AAPL position price and evaluate exit criteria",
@@ -108,6 +95,30 @@
         "frequency": "1h",
         "feedsTo": "hypotheses.json",
         "source": "platform"
+      }
+    },
+    {
+      "id": "pipeline-closing-scanner-1765220837291",
+      "type": "pipeline",
+      "description": "Closing-soon scanner: Find markets closing in 72h, check momentum, generate hypotheses",
+      "scheduledFor": "2025-12-09T01:07:17.291Z",
+      "priority": "high",
+      "context": {
+        "pipeline": "closing-scanner",
+        "recurring": true,
+        "frequency": "6h"
+      }
+    },
+    {
+      "id": "pipeline-price-tracker-1765220837291",
+      "type": "pipeline",
+      "description": "Price tracker: Update portfolio prices, check exit triggers",
+      "scheduledFor": "2025-12-08T23:07:17.291Z",
+      "priority": "high",
+      "context": {
+        "pipeline": "price-tracker",
+        "recurring": true,
+        "frequency": "4h"
       }
     }
   ],
@@ -212,6 +223,20 @@
         "source": "platform"
       },
       "completedAt": "2025-12-08T15:59:12.390Z"
+    },
+    {
+      "id": "pipeline-health-002",
+      "type": "pipeline",
+      "description": "Health check: Analyze system state, propose actions for user approval",
+      "scheduledFor": "2025-12-08T19:00:00Z",
+      "priority": "high",
+      "context": {
+        "pipeline": "health-check",
+        "recurring": true,
+        "frequency": "12h",
+        "feedsTo": "pending_approvals.json"
+      },
+      "completedAt": "2025-12-08T19:07:24.578Z"
     }
   ],
   "schema": {
