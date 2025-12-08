@@ -1,18 +1,6 @@
 {
   "backlog": [
     {
-      "id": "imp-008",
-      "title": "Closing-soon scanner pipeline",
-      "category": "capability",
-      "leverage": "high",
-      "effort": "low",
-      "rationale": "First autonomous pipeline. Every 6h scan markets closing in 72h, check momentum, auto-generate hypotheses. Enables hyp-002 testing at scale.",
-      "status": "backlog",
-      "outcome": null,
-      "createdAt": "2025-12-08T00:00:00Z",
-      "completedAt": null
-    },
-    {
       "id": "imp-009",
       "title": "Leaderboard tracker pipeline",
       "category": "capability",
@@ -134,6 +122,18 @@
       "outcome": "Rewrote handler.ts with: (1) proper inbox.json integration, (2) pending_approvals.json for strategy approval workflow, (3) /pending, /approve, /reject commands, (4) /process to evaluate inbox items, (5) git sync on every action. User flow: send content → /process → agent proposes strategies → /approve or /reject → agent executes.",
       "createdAt": "2025-12-07T00:00:00Z",
       "completedAt": "2025-12-08T00:00:00Z"
+    },
+    {
+      "id": "imp-008",
+      "title": "Closing-soon scanner pipeline",
+      "category": "capability",
+      "leverage": "high",
+      "effort": "low",
+      "rationale": "First autonomous pipeline. Every 6h scan markets closing in 72h, check momentum, auto-generate hypotheses. Enables hyp-002 testing at scale.",
+      "status": "completed",
+      "outcome": "Built tools/pipelines/closing-scanner.ts that: (1) fetches markets via Gamma API, (2) filters to closing in 72h, (3) checks momentum signals, (4) auto-generates hypotheses for strong signals, (5) updates engine-status.json. Daemon now handles pipeline tasks directly (no Claude spawn), auto-reschedules recurring pipelines. Added engine health check to daemon tick. Note: price history not yet available - needs imp-003.",
+      "createdAt": "2025-12-08T00:00:00Z",
+      "completedAt": "2025-12-08T06:00:00Z"
     }
   ],
   "schema": {

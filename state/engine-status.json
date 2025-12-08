@@ -1,0 +1,47 @@
+{
+  "lastEvaluated": "2025-12-08T06:00:11.611Z",
+  "hypothesisHealth": {
+    "total": 5,
+    "byStatus": {
+      "proposed": 3,
+      "testing": 2,
+      "validated": 0,
+      "invalidated": 0
+    },
+    "avgConviction": 0.4,
+    "testableNow": 2,
+    "blockedByCapability": 3
+  },
+  "blockedHypotheses": [
+    {
+      "hypothesisId": "hyp-003",
+      "title": "Liquidity rewards",
+      "blockedBy": "rewards-data-research",
+      "improvementId": null
+    },
+    {
+      "hypothesisId": "hyp-004",
+      "title": "Copy top traders",
+      "blockedBy": "leaderboard-scraper",
+      "improvementId": "imp-009"
+    }
+  ],
+  "currentPriority": {
+    "action": "test-hypothesis",
+    "target": "hyp-002",
+    "reason": "Closing-scanner pipeline now built. Can start testing momentum hypothesis on closing-soon markets."
+  },
+  "engineState": "starved",
+  "engineStates": {
+    "starved": "Too few testable hypotheses (<3) - need to generate or unblock",
+    "healthy": "3-10 testable hypotheses with good conviction spread",
+    "saturated": "Too many untested hypotheses (>10) - focus on testing not generating"
+  },
+  "metrics": {
+    "hypothesesGeneratedThisWeek": 0,
+    "hypothesesTestedThisWeek": 0,
+    "hypothesesValidatedThisWeek": 0,
+    "hypothesesInvalidatedThisWeek": 0,
+    "capabilitiesBuiltThisWeek": 0
+  }
+}

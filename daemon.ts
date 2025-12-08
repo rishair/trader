@@ -8,6 +8,8 @@ dotenv.config();
 
 const STATE_DIR = path.join(__dirname, 'state');
 const CHAT_ID_FILE = path.join(STATE_DIR, 'telegram_chat_id.txt');
+const ENGINE_STATUS_FILE = path.join(STATE_DIR, 'engine-status.json');
+const HYPOTHESES_FILE = path.join(STATE_DIR, 'hypotheses.json');
 
 function getTelegramChatId(): string | null {
   try {
@@ -105,6 +107,90 @@ function saveSchedule(schedule: Schedule): void {
   fs.writeFileSync(SCHEDULE_FILE, JSON.stringify(schedule, null, 2));
 }
 
+// Pipeline registry - maps pipeline names to their scripts
+const PIPELINES: Record<string, string> = {
+  'closing-scanner': 'tools/pipelines/closing-scanner.ts',
+};
+
+async function executePipeline(pipelineName: string): Promise<{ success: boolean; output: string }> {
+  const scriptPath = PIPELINES[pipelineName];
+  if (!scriptPath) {
+    return { success: false, output: `Unknown pipeline: ${pipelineName}` };
+  }
+
+  return new Promise((resolve) => {
+    const fullPath = path.join(__dirname, scriptPath);
+    log(`Running pipeline: ${pipelineName} (${fullPath})`);
+
+    const proc = spawn('npx', ['ts-node', fullPath], {
+      cwd: __dirname,
+      stdio: ['pipe', 'pipe', 'pipe'],
+      env: { ...process.env }
+    });
+
+    let stdout = '';
+    let stderr = '';
+
+    proc.stdout?.on('data', (data: Buffer) => {
+      stdout += data.toString();
+    });
+
+    proc.stderr?.on('data', (data: Buffer) => {
+      stderr += data.toString();
+    });
+
+    proc.on('close', (code: number) => {
+      resolve({
+        success: code === 0,
+        output: stdout || stderr
+      });
+    });
+
+    proc.on('error', (error: Error) => {
+      resolve({ success: false, output: error.message });
+    });
+  });
+}
+
+function updateEngineStatus(): void {
+  try {
+    const hypotheses = JSON.parse(fs.readFileSync(HYPOTHESES_FILE, 'utf-8'));
+    const engineStatus = JSON.parse(fs.readFileSync(ENGINE_STATUS_FILE, 'utf-8'));
+
+    // Recalculate hypothesis health
+    const hypList = hypotheses.hypotheses || [];
+    engineStatus.hypothesisHealth.total = hypList.length;
+    engineStatus.hypothesisHealth.byStatus = {
+      proposed: hypList.filter((h: any) => h.status === 'proposed').length,
+      testing: hypList.filter((h: any) => h.status === 'testing').length,
+      validated: hypList.filter((h: any) => h.status === 'validated').length,
+      invalidated: hypList.filter((h: any) => h.status === 'invalidated').length
+    };
+
+    // Calculate testable hypotheses (proposed or testing, not blocked)
+    const blockedIds = engineStatus.blockedHypotheses.map((b: any) => b.hypothesisId);
+    engineStatus.hypothesisHealth.testableNow = hypList.filter(
+      (h: any) => ['proposed', 'testing'].includes(h.status) && !blockedIds.includes(h.id)
+    ).length;
+
+    // Determine engine state
+    const testable = engineStatus.hypothesisHealth.testableNow;
+    if (testable < 3) {
+      engineStatus.engineState = 'starved';
+    } else if (testable > 10) {
+      engineStatus.engineState = 'saturated';
+    } else {
+      engineStatus.engineState = 'healthy';
+    }
+
+    engineStatus.lastEvaluated = new Date().toISOString();
+    fs.writeFileSync(ENGINE_STATUS_FILE, JSON.stringify(engineStatus, null, 2));
+    log(`Engine status updated: ${engineStatus.engineState} (${testable} testable hypotheses)`);
+  } catch (error: any) {
+    log(`Failed to update engine status: ${error.message}`);
+  }
+}
+
 function getNextTask(schedule: Schedule): ScheduledTask | null {
   const now = new Date();
 
@@ -152,11 +238,56 @@ async function executeTask(task: ScheduledTask): Promise<void> {
   log(`Executing task: ${task.id} - ${task.description}`);
   await sendTelegramAlert(`🚀 *Starting task*\n\`${task.id}\`\n${task.description}`);
 
-  const prompt = buildPrompt(task);
   const sessionLogFile = path.join(LOG_DIR, `session-${task.id}-${Date.now()}.log`);
 
+  // Handle pipeline tasks directly without spawning Claude
+  if (task.type === 'pipeline' && task.context?.pipeline) {
+    const pipelineName = task.context.pipeline as string;
+    log(`Executing pipeline: ${pipelineName}`);
+
+    const result = await executePipeline(pipelineName);
+    fs.writeFileSync(sessionLogFile, result.output);
+
+    if (result.success) {
+      log(`Pipeline ${pipelineName} completed successfully`);
+
+      // Parse output to get summary
+      try {
+        const pipelineOutput = JSON.parse(result.output);
+        const summary = `Scanned ${pipelineOutput.marketsScanned} markets, found ${pipelineOutput.candidatesFound} candidates, generated ${pipelineOutput.hypothesesGenerated?.length || 0} hypotheses`;
+        await sendTelegramAlert(`✅ *Pipeline completed*\n\`${task.id}\`\n${summary}`);
+      } catch {
+        await sendTelegramAlert(`✅ *Pipeline completed*\n\`${task.id}\``);
+      }
+
+      // Reschedule if recurring
+      if (task.context?.recurring && task.context?.frequency) {
+        const schedule = loadSchedule();
+        const frequencyMs = parseFrequency(task.context.frequency as string);
+        const nextRun = new Date(Date.now() + frequencyMs);
+
+        const newTask: ScheduledTask = {
+          ...task,
+          id: `${task.id.split('-').slice(0, -1).join('-')}-${Date.now()}`,
+          scheduledFor: nextRun.toISOString()
+        };
+        schedule.pendingTasks.push(newTask);
+        saveSchedule(schedule);
+        log(`Rescheduled pipeline for ${nextRun.toISOString()}`);
+      }
+
+      return;
+    } else {
+      await sendTelegramAlert(`❌ *Pipeline failed*\n\`${task.id}\`\n${result.output.slice(0, 200)}`);
+      throw new Error(`Pipeline ${pipelineName} failed: ${result.output}`);
+    }
+  }
+
+  // For non-pipeline tasks, spawn Claude
+  const prompt = buildPrompt(task);
+
   return new Promise((resolve, reject) => {
-    const claude = spawn('claude', ['-p', prompt, '--output-format', 'text'], {
+    const claude = spawn('claude', ['-p', prompt, '--output-format', 'text', '--dangerously-skip-permissions'], {
       cwd: path.join(__dirname),
       stdio: ['pipe', 'pipe', 'pipe'],
       env: { ...process.env }
@@ -196,6 +327,21 @@ async function executeTask(task: ScheduledTask): Promise<void> {
   });
 }
 
+function parseFrequency(freq: string): number {
+  const match = freq.match(/^(\d+)(h|m|d)$/);
+  if (!match) return 6 * 60 * 60 * 1000; // Default 6 hours
+
+  const value = parseInt(match[1]);
+  const unit = match[2];
+
+  switch (unit) {
+    case 'm': return value * 60 * 1000;
+    case 'h': return value * 60 * 60 * 1000;
+    case 'd': return value * 24 * 60 * 60 * 1000;
+    default: return 6 * 60 * 60 * 1000;
+  }
+}
+
 function markTaskComplete(schedule: Schedule, taskId: string): void {
   const taskIndex = schedule.pendingTasks.findIndex(t => t.id === taskId);
   if (taskIndex !== -1) {
@@ -221,6 +367,9 @@ async function runDaemon(): Promise<void> {
   const tick = async () => {
     // Pull latest state before checking for tasks
     gitPull();
+
+    // Update engine status on every tick
+    updateEngineStatus();
 
     const schedule = loadSchedule();
     const task = getNextTask(schedule);
