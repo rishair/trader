@@ -1,0 +1,29 @@
+{
+  "pendingTasks": [
+    {
+      "id": "bootstrap-001",
+      "type": "research",
+      "description": "Initial research: Understand Polymarket mechanics and identify first research directions",
+      "scheduledFor": "2024-12-07T00:00:00Z",
+      "priority": "high",
+      "context": {
+        "isFirstRun": true,
+        "focus": "exploration"
+      }
+    }
+  ],
+  "completedTasks": [],
+  "schema": {
+    "task": {
+      "id": "string - unique identifier",
+      "type": "research | trade | monitor | maintenance | review",
+      "description": "string - what to do",
+      "scheduledFor": "ISO date - when to execute",
+      "priority": "low | medium | high | critical",
+      "context": "object - any data needed for the task",
+      "dependsOn": ["string - task IDs that must complete first"],
+      "createdAt": "ISO date",
+      "completedAt": "ISO date | null"
+    }
+  }
+}

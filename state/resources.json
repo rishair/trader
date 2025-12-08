@@ -1,0 +1,30 @@
+{
+  "discovered": [],
+  "installed": [],
+  "rejected": [],
+  "schema": {
+    "resource": {
+      "id": "string",
+      "name": "string",
+      "url": "string",
+      "type": "npm | github | mcp | api | other",
+      "category": "polymarket | data | analysis | trading | utility",
+      "status": "discovered | evaluating | installed | rejected",
+      "evaluation": {
+        "stars": "number",
+        "lastUpdate": "ISO date",
+        "license": "string",
+        "quality": "high | medium | low",
+        "pros": ["string"],
+        "cons": ["string"]
+      },
+      "recommendation": "USE | FORK | REFERENCE | SKIP",
+      "reason": "string - why this decision",
+      "installCommand": "string | null",
+      "integrationNotes": "string | null",
+      "discoveredAt": "ISO date",
+      "installedAt": "ISO date | null"
+    }
+  },
+  "notes": "Use resourcer agent to populate this. Track what we find so we don't re-search."
+}

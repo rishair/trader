@@ -1,0 +1,15 @@
+{
+  "insights": [],
+  "schema": {
+    "insight": {
+      "id": "string - unique identifier",
+      "category": "strategy | market | methodology | tooling | meta",
+      "title": "string - brief description",
+      "content": "string - detailed learning",
+      "source": "string - what led to this insight",
+      "actionable": "boolean - can this be acted on",
+      "appliedTo": ["string - strategy or process IDs where this is used"],
+      "createdAt": "ISO date"
+    }
+  }
+}

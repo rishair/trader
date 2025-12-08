@@ -1,0 +1,24 @@
+{
+  "hypotheses": [],
+  "schema": {
+    "hypothesis": {
+      "id": "string - unique identifier",
+      "statement": "string - clear, testable hypothesis",
+      "rationale": "string - why this might be true",
+      "testMethod": "string - how to validate/invalidate",
+      "status": "proposed | testing | validated | invalidated | inconclusive",
+      "confidence": "number 0-1 - prior belief",
+      "evidence": [
+        {
+          "date": "ISO date",
+          "observation": "string",
+          "supports": "boolean",
+          "confidenceImpact": "number - how much this changed confidence"
+        }
+      ],
+      "conclusion": "string - final assessment if status is terminal",
+      "createdAt": "ISO date",
+      "updatedAt": "ISO date"
+    }
+  }
+}

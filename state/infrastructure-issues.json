@@ -1,0 +1,27 @@
+{
+  "issues": [],
+  "schema": {
+    "issue": {
+      "id": "string - unique identifier",
+      "component": "subagent | tool | mcp | skill | script",
+      "name": "string - which component",
+      "problem": "string - what went wrong",
+      "diagnosis": "string - why it happened",
+      "fix": "string - what was changed",
+      "fixedAt": "ISO date",
+      "verifiedWorking": "boolean"
+    }
+  },
+  "improvements": [],
+  "improvementSchema": {
+    "improvement": {
+      "id": "string",
+      "component": "string",
+      "name": "string",
+      "before": "string - how it worked before",
+      "after": "string - how it works now",
+      "reason": "string - why the change",
+      "implementedAt": "ISO date"
+    }
+  }
+}

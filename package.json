@@ -1,0 +1,29 @@
+{
+  "name": "trader",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "daemon": "ts-node daemon.ts start",
+    "status": "ts-node daemon.ts status",
+    "trigger": "ts-node daemon.ts trigger",
+    "query": "ts-node daemon.ts query"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "@types/ws": "^8.18.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "axios": "^1.13.2",
+    "decimal.js": "^10.6.0",
+    "dotenv": "^17.2.3",
+    "ethers": "^6.16.0",
+    "ws": "^8.18.3"
+  }
+}
