@@ -1,4 +1,4 @@
-import { spawn, ChildProcess } from 'child_process';
+import { spawn, ChildProcess, execSync } from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as dotenv from 'dotenv';
@@ -56,6 +56,39 @@ function log(message: string): void {
 
   const logFile = path.join(LOG_DIR, `daemon-${new Date().toISOString().split('T')[0]}.log`);
   fs.appendFileSync(logFile, logMessage + '\n');
+}
+
+function gitPull(): boolean {
+  try {
+    log('Pulling latest from origin...');
+    execSync('git pull origin main', { cwd: __dirname, stdio: 'pipe' });
+    log('Git pull successful');
+    return true;
+  } catch (error: any) {
+    log(`Git pull failed: ${error.message}`);
+    return false;
+  }
+}
+
+function gitPush(): boolean {
+  try {
+    log('Checking for changes to push...');
+    const status = execSync('git status --porcelain', { cwd: __dirname, encoding: 'utf-8' });
+
+    if (status.trim()) {
+      log('Changes detected, committing and pushing...');
+      execSync('git add -A', { cwd: __dirname, stdio: 'pipe' });
+      execSync('git commit -m "Auto-commit: daemon task execution"', { cwd: __dirname, stdio: 'pipe' });
+      execSync('git push origin main', { cwd: __dirname, stdio: 'pipe' });
+      log('Git push successful');
+    } else {
+      log('No changes to push');
+    }
+    return true;
+  } catch (error: any) {
+    log(`Git push failed: ${error.message}`);
+    return false;
+  }
 }
 
 function loadSchedule(): Schedule {
@@ -186,6 +219,9 @@ async function runDaemon(): Promise<void> {
   const checkInterval = 60 * 1000; // Check every minute
 
   const tick = async () => {
+    // Pull latest state before checking for tasks
+    gitPull();
+
     const schedule = loadSchedule();
     const task = getNextTask(schedule);
 
@@ -194,8 +230,13 @@ async function runDaemon(): Promise<void> {
         await executeTask(task);
         markTaskComplete(schedule, task.id);
         saveSchedule(schedule);
+
+        // Push state changes after task completion
+        gitPush();
       } catch (error) {
         log(`Task ${task.id} failed: ${error}`);
+        // Still try to push any partial state changes
+        gitPush();
         // Don't mark as complete, will retry next tick
       }
     }
@@ -232,6 +273,7 @@ switch (command) {
 
   case 'trigger':
     // Manually trigger next task
+    gitPull(); // Pull latest before executing
     const sched = loadSchedule();
     const nextTask = getNextTask(sched);
     if (nextTask) {
@@ -239,9 +281,13 @@ switch (command) {
         .then(() => {
           markTaskComplete(sched, nextTask.id);
           saveSchedule(sched);
+          gitPush(); // Push changes after completion
           console.log('Task completed');
         })
-        .catch(console.error);
+        .catch((err) => {
+          console.error(err);
+          gitPush(); // Still push any partial changes
+        });
     } else {
       // Trigger first pending task regardless of schedule
       if (sched.pendingTasks.length > 0) {
@@ -250,9 +296,13 @@ switch (command) {
           .then(() => {
             markTaskComplete(sched, task.id);
             saveSchedule(sched);
+            gitPush(); // Push changes after completion
             console.log('Task completed');
           })
-          .catch(console.error);
+          .catch((err) => {
+            console.error(err);
+            gitPush(); // Still push any partial changes
+          });
       } else {
         console.log('No pending tasks');
       }

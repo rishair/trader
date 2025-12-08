@@ -12,19 +12,7 @@
       "createdAt": "2025-12-07T00:00:00Z",
       "completedAt": null
     },
-    {
-      "id": "imp-002",
-      "title": "Daemon pulls git before executing, pushes after",
-      "category": "infrastructure",
-      "leverage": "high",
-      "effort": "low",
-      "rationale": "Ensures state consistency between local dev and droplet. Without this, state can diverge and cause conflicts.",
-      "status": "backlog",
-      "outcome": null,
-      "createdAt": "2025-12-07T00:00:00Z",
-      "completedAt": null
-    },
-    {
+        {
       "id": "imp-003",
       "title": "Price tracking for open positions",
       "category": "capability",
@@ -86,7 +74,20 @@
     }
   ],
   "in_progress": [],
-  "completed": [],
+  "completed": [
+    {
+      "id": "imp-002",
+      "title": "Daemon pulls git before executing, pushes after",
+      "category": "infrastructure",
+      "leverage": "high",
+      "effort": "low",
+      "rationale": "Ensures state consistency between local dev and droplet. Without this, state can diverge and cause conflicts.",
+      "status": "completed",
+      "outcome": "Added gitPull() before task execution and gitPush() after. Both daemon tick loop and manual trigger command now sync with origin. Handles failures gracefully.",
+      "createdAt": "2025-12-07T00:00:00Z",
+      "completedAt": "2025-12-07T23:30:00Z"
+    }
+  ],
   "schema": {
     "improvement": {
       "id": "string",
@@ -101,5 +102,5 @@
       "completedAt": "ISO date | null"
     }
   },
-  "notes": "Track system improvements separately from trading learnings. Prioritize high-leverage, low-effort items. imp-002 is highest priority (high leverage, low effort)."
+  "notes": "Track system improvements separately from trading learnings. Prioritize high-leverage, low-effort items. Next priority: imp-001 or imp-005 (both unlock async communication)."
 }
