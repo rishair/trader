@@ -43,20 +43,6 @@
       }
     },
     {
-      "id": "pipeline-closing-001",
-      "type": "pipeline",
-      "description": "Closing-soon scanner: Find markets closing in 72h, check momentum, generate hypotheses",
-      "scheduledFor": "2025-12-08T14:00:00Z",
-      "priority": "high",
-      "context": {
-        "pipeline": "closing-scanner",
-        "recurring": true,
-        "frequency": "6h",
-        "feedsTo": "hypotheses.json",
-        "source": "platform"
-      }
-    },
-    {
       "id": "research-003",
       "type": "research",
       "description": "Analyze liquidity rewards program - calculate reward rates vs spreads",
@@ -171,6 +157,21 @@
         "purpose": "Regular autonomous operation - review state, advance work, take action"
       },
       "completedAt": "2025-12-08T15:29:02.581Z"
+    },
+    {
+      "id": "pipeline-closing-001",
+      "type": "pipeline",
+      "description": "Closing-soon scanner: Find markets closing in 72h, check momentum, generate hypotheses",
+      "scheduledFor": "2025-12-08T14:00:00Z",
+      "priority": "high",
+      "context": {
+        "pipeline": "closing-scanner",
+        "recurring": true,
+        "frequency": "6h",
+        "feedsTo": "hypotheses.json",
+        "source": "platform"
+      },
+      "completedAt": "2025-12-08T15:59:12.390Z"
     }
   ],
   "schema": {
