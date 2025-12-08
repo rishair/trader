@@ -527,6 +527,8 @@ async function handleMessage(text: string, chatId: string): Promise<void> {
 /process - Process inbox items
 /claude <prompt> - Run custom prompt
 /heal - AI-analyze and fix errors
+/start - Start the daemon
+/stop - Stop the daemon
 
 *Content:*
 Just send me links, ideas, news - I'll add to inbox.`,
@@ -721,6 +723,27 @@ Read MISSION.md for context.`,
     return;
   }
 
+  if (lower === '/start') {
+    try {
+      execSync('systemctl start trader-daemon', { encoding: 'utf-8' });
+      const status = execSync('systemctl is-active trader-daemon', { encoding: 'utf-8' }).trim();
+      await sendMessage(`✅ Daemon started (${status})`, chatId);
+    } catch (e: any) {
+      await sendMessage(`❌ Failed to start daemon: ${e.message}`, chatId);
+    }
+    return;
+  }
+
+  if (lower === '/stop') {
+    try {
+      execSync('systemctl stop trader-daemon', { encoding: 'utf-8' });
+      await sendMessage(`✅ Daemon stopped`, chatId);
+    } catch (e: any) {
+      await sendMessage(`❌ Failed to stop daemon: ${e.message}`, chatId);
+    }
+    return;
+  }
+
   if (lower === '/ps') {
     // Check running processes
     try {
@@ -730,10 +753,18 @@ Read MISSION.md for context.`,
       const claudeCount = psOutput.includes('No claude') ? 0 : psOutput.trim().split('\n').length;
       const handlerCount = parseInt(nodeOutput.trim()) || 0;
 
+      let daemonStatus = 'unknown';
+      try {
+        daemonStatus = execSync('systemctl is-active trader-daemon', { encoding: 'utf-8' }).trim();
+      } catch {
+        daemonStatus = 'inactive';
+      }
+
       let msg = `*Process Status*\n\n`;
       msg += `🤖 Claude sessions: ${claudeCount}\n`;
       msg += `📡 Handler instances: ${handlerCount}\n`;
       msg += `⏳ Session active: ${claudeSessionActive ? 'Yes' : 'No'}\n`;
+      msg += `👹 Daemon: ${daemonStatus}\n`;
 
       if (claudeCount > 0) {
         msg += `\n\`\`\`\n${psOutput.slice(0, 500)}\n\`\`\``;
