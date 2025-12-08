@@ -3,7 +3,7 @@ import * as path from 'path';
 import * as crypto from 'crypto';
 import { execSync } from 'child_process';
 import { spawn } from 'child_process';
-import { sendMessage, editMessage, pollMessages, escapeMarkdown } from './bot';
+import { sendMessage, editMessage, pollMessages, escapeMarkdown, sendCommitNotification } from './bot';
 
 const STATE_DIR = path.join(__dirname, '../../state');
 const INBOX_FILE = path.join(STATE_DIR, 'inbox.json');
@@ -352,13 +352,20 @@ function gitPull(): void {
   }
 }
 
-function gitPush(message: string): void {
+async function gitPush(message: string): Promise<void> {
   try {
     const status = execSync('git status --porcelain', { cwd: PROJECT_ROOT, encoding: 'utf-8' });
     if (status.trim()) {
       execSync('git add -A', { cwd: PROJECT_ROOT, stdio: 'pipe' });
       execSync(`git commit -m "${message}"`, { cwd: PROJECT_ROOT, stdio: 'pipe' });
+
+      // Get the commit hash for notification
+      const commitHash = execSync('git rev-parse --short HEAD', { cwd: PROJECT_ROOT, encoding: 'utf-8' }).trim();
+
       execSync('git push origin main', { cwd: PROJECT_ROOT, stdio: 'pipe' });
+
+      // Notify with GitHub link
+      await sendCommitNotification(commitHash, message);
     }
   } catch (e) {
     console.error('Git push failed:', e);
@@ -746,7 +753,7 @@ Just message me - I'll respond in our ongoing conversation.
       for (const p of pending) {
         approveItem(p.id, 'Batch approved');
       }
-      gitPush('Batch approve all pending');
+      await gitPush('Batch approve all pending');
       await sendMessage(`✅ Approved ${pending.length} items.`, chatId);
 
       // Trigger processing of approved items
@@ -759,7 +766,7 @@ Just message me - I'll respond in our ongoing conversation.
     }
 
     if (approveItem(target)) {
-      gitPush(`Approved: ${target}`);
+      await gitPush(`Approved: ${target}`);
       await sendMessage(`✅ Approved: ${target}`, chatId);
 
       // Trigger execution
@@ -824,7 +831,7 @@ Read MISSION.md for context. Execute the task, update state files, and report re
     }
 
     if (rejectItem(target, reason)) {
-      gitPush(`Rejected: ${target}`);
+      await gitPush(`Rejected: ${target}`);
       await sendMessage(`❌ Rejected: ${target}${reason ? ` (${reason})` : ''}`, chatId);
     } else {
       await sendMessage(`Not found or already decided: ${target}`, chatId);
@@ -838,7 +845,7 @@ Read MISSION.md for context. Execute the task, update state files, and report re
       chatId,
       'wake'
     );
-    gitPush('Wake task executed');
+    await gitPush('Wake task executed');
     return;
   }
 
@@ -856,7 +863,7 @@ Read MISSION.md for context.`,
       chatId,
       'process-inbox'
     );
-    gitPush('Inbox processed');
+    await gitPush('Inbox processed');
 
     // Check for new pending approvals and notify
     gitPull(); // Get latest state after Claude session
@@ -913,7 +920,7 @@ Read MISSION.md for context.`,
     }
     const { type, title } = detectContentType(content);
     const id = addToInbox(content, type, title);
-    gitPush(`Inbox: ${title}`);
+    await gitPush(`Inbox: ${title}`);
     await sendMessage(`📥 Added to inbox (${type})\nID: ${id}`, chatId);
     return;
   }

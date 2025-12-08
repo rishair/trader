@@ -14,6 +14,7 @@ import {
   completeHandoff,
   Handoff
 } from './lib/handoffs';
+import { sendCommitNotification } from './tools/telegram/bot';
 
 dotenv.config();
 
@@ -91,7 +92,7 @@ function gitPull(): boolean {
   }
 }
 
-function gitPush(): boolean {
+async function gitPush(): Promise<boolean> {
   try {
     log('Checking for changes to push...');
     const status = execSync('git status --porcelain', { cwd: __dirname, encoding: 'utf-8' });
@@ -100,8 +101,15 @@ function gitPush(): boolean {
       log('Changes detected, committing and pushing...');
       execSync('git add -A', { cwd: __dirname, stdio: 'pipe' });
       execSync('git commit -m "Auto-commit: daemon task execution"', { cwd: __dirname, stdio: 'pipe' });
+
+      // Get the commit hash for notification
+      const commitHash = execSync('git rev-parse --short HEAD', { cwd: __dirname, encoding: 'utf-8' }).trim();
+
       execSync('git push origin main', { cwd: __dirname, stdio: 'pipe' });
       log('Git push successful');
+
+      // Notify with GitHub link
+      await sendCommitNotification(commitHash, 'Auto-commit: daemon task execution');
     } else {
       log('No changes to push');
     }
@@ -773,11 +781,11 @@ async function runDaemon(): Promise<void> {
     if (dueResponsibility) {
       try {
         await executeResponsibility(dueResponsibility);
-        gitPush();
+        await gitPush();
         return; // One execution per tick
       } catch (error) {
         log(`Responsibility failed: ${error}`);
-        gitPush();
+        await gitPush();
         return;
       }
     }
@@ -787,11 +795,11 @@ async function runDaemon(): Promise<void> {
     if (pendingHandoff) {
       try {
         await executeHandoff(pendingHandoff);
-        gitPush();
+        await gitPush();
         return; // One execution per tick
       } catch (error) {
         log(`Handoff failed: ${error}`);
-        gitPush();
+        await gitPush();
         return;
       }
     }
@@ -811,10 +819,10 @@ async function runDaemon(): Promise<void> {
         await executeTask(task);
         markTaskComplete(schedule, task.id);
         saveSchedule(schedule);
-        gitPush();
+        await gitPush();
       } catch (error) {
         log(`Task ${task.id} failed: ${error}`);
-        gitPush();
+        await gitPush();
       }
     }
   };
@@ -855,30 +863,30 @@ switch (command) {
     const nextTask = getNextTask(sched);
     if (nextTask) {
       executeTask(nextTask)
-        .then(() => {
+        .then(async () => {
           markTaskComplete(sched, nextTask.id);
           saveSchedule(sched);
-          gitPush(); // Push changes after completion
+          await gitPush(); // Push changes after completion
           console.log('Task completed');
         })
-        .catch((err) => {
+        .catch(async (err) => {
           console.error(err);
-          gitPush(); // Still push any partial changes
+          await gitPush(); // Still push any partial changes
         });
     } else {
       // Trigger first pending task regardless of schedule
       if (sched.pendingTasks.length > 0) {
         const task = sched.pendingTasks[0];
         executeTask(task)
-          .then(() => {
+          .then(async () => {
             markTaskComplete(sched, task.id);
             saveSchedule(sched);
-            gitPush(); // Push changes after completion
+            await gitPush(); // Push changes after completion
             console.log('Task completed');
           })
-          .catch((err) => {
+          .catch(async (err) => {
             console.error(err);
-            gitPush(); // Still push any partial changes
+            await gitPush(); // Still push any partial changes
           });
       } else {
         console.log('No pending tasks');
