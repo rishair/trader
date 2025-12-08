@@ -1,10 +1,10 @@
 {
-  "lastEvaluated": "2025-12-08T15:11:55.849Z",
+  "lastEvaluated": "2025-12-08T15:23:10.205Z",
   "hypothesisHealth": {
     "total": 5,
     "byStatus": {
-      "proposed": 3,
-      "testing": 1,
+      "proposed": 2,
+      "testing": 2,
       "validated": 0,
       "invalidated": 1
     },

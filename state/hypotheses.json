@@ -120,15 +120,34 @@
     },
     {
       "id": "hyp-003",
-      "statement": "Markets with liquidity rewards offer risk-free spread capture opportunities",
-      "rationale": "Polymarket pays market makers to provide liquidity. If rewards exceed the expected loss from adverse selection, providing liquidity is +EV even without directional edge.",
-      "testMethod": "Calculate reward rates vs typical spreads. Simulate market-making P&L including rewards. Identify markets where rewards create profitable opportunities.",
-      "status": "proposed",
-      "confidence": 0.5,
-      "evidence": [],
+      "statement": "Polymarket liquidity rewards create +EV market making opportunities despite adverse selection risk",
+      "rationale": "Polymarket pays market makers via two programs: daily rewards for limit orders (quadratic scoring, 3x bonus for two-sided quotes) and 4% APY holding rewards on 13 markets. If rewards exceed adverse selection costs, market making is profitable without directional edge.",
+      "testMethod": "1. Query CLOB API for max_incentive_spread and min_incentive_size per market. 2. Calculate reward/spread ratios. 3. Build simple MM bot for paper trading in low-volatility markets. 4. Track: spread P&L, rewards earned, adverse selection losses.",
+      "status": "testing",
+      "confidence": 0.45,
+      "evidence": [
+        {
+          "date": "2025-12-08",
+          "observation": "Research confirms rewards are NOT risk-free. Two programs: (1) Daily liquidity rewards with quadratic scoring - closer to midpoint = higher rewards, 3x multiplier for two-sided quotes, (2) 4% APY holding rewards on 13 long-term markets. Reported earnings: $200-800/day for active MMs during peak. Post-2024 election: rewards reduced significantly. Requires: significant capital, automated execution, sophisticated pricing. Competition 'not fierce' currently but window likely narrowing.",
+          "supports": true,
+          "confidenceImpact": -0.05
+        }
+      ],
       "conclusion": null,
       "createdAt": "2025-12-07T00:00:00Z",
-      "updatedAt": "2025-12-07T00:00:00Z"
+      "updatedAt": "2025-12-08T15:30:00Z",
+      "testStartedAt": "2025-12-08T15:30:00Z",
+      "infrastructureRequired": [
+        "Automated order placement system",
+        "Real-time order book monitoring",
+        "Inventory tracking across markets",
+        "Reward parameter monitoring API integration"
+      ],
+      "nextSteps": [
+        "Query CLOB API for markets with best reward parameters",
+        "Identify low-volatility markets for initial testing",
+        "Build simple two-sided quoting bot"
+      ]
     },
     {
       "id": "hyp-004",
