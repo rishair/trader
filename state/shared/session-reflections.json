@@ -1,6 +1,26 @@
 {
   "sessions": [
     {
+      "sessionId": "sess-20251208-184500",
+      "agent": "agent-engineer",
+      "timestamp": "2025-12-08T18:45:00Z",
+      "responsibility": "build-sprint",
+      "taskDescription": "Implement imp-011 hypothesis-tester - automated testing framework for trading hypotheses",
+      "completed": true,
+      "friction": [
+        "Existing position (trade-001) wasn't tracked in tester state - had to manually register it",
+        "Portfolio positions had strategyId but not hypothesisId field - needed to add mapping"
+      ],
+      "mistakes": [],
+      "rootCauses": [
+        "System evolved incrementally - original trade predates tester infrastructure",
+        "Field naming inconsistency between hypothesis tracking and trade execution"
+      ],
+      "improvementIdea": null,
+      "learningLogged": false,
+      "notes": "Built tools/pipelines/hypothesis-tester.ts (cap-008). Core trading automation: monitors hypotheses in 'testing' status, executes entries for auto-generated hypotheses (drift detector, closing scanner), monitors TP/SL/time-limit exits, tracks testResults (wins/losses/P&L), auto-validates at >60% win rate + 1.5x profit factor, auto-invalidates at <35% win rate or confidence <20%. Configurable position sizing scaled by confidence. Scheduled 4-hourly via daemon. This completes the core autonomous trading loop: generate hypotheses → test with paper trades → evaluate results → promote/kill."
+    },
+    {
       "sessionId": "sess-20251208-213600",
       "agent": "agent-engineer",
       "timestamp": "2025-12-08T21:36:00Z",

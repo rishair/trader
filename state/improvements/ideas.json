@@ -1,21 +1,6 @@
 {
   "backlog": [
     {
-      "id": "imp-011",
-      "title": "Hypothesis auto-tester",
-      "category": "capability",
-      "leverage": "high",
-      "effort": "medium",
-      "priority": 2,
-      "rationale": "Automated testing framework. Takes hypothesis, executes trades per rules, tracks results, auto-promotes/kills based on performance.",
-      "triageNotes": "Core engine capability. Would enable truly autonomous operation. High value but needs careful design.",
-      "status": "triaged",
-      "outcome": null,
-      "createdAt": "2025-12-08T00:00:00Z",
-      "triagedAt": "2025-12-08T18:45:00Z",
-      "completedAt": null
-    },
-    {
       "id": "imp-006",
       "title": "Backtest framework for strategy validation",
       "category": "capability",
@@ -143,6 +128,18 @@
       "outcome": "Built tools/pipelines/price-drift-detector.ts that: (1) monitors active markets with >$10k volume, (2) compares current prices to previous snapshot, (3) detects >5% moves as drift signals (moderate/strong/extreme), (4) generates follow-signal hypotheses for strong/extreme drifts, (5) sends Telegram alerts, (6) saves drift history. Scheduled to run hourly. Registered as cap-007.",
       "createdAt": "2025-12-08T00:00:00Z",
       "completedAt": "2025-12-08T21:00:00Z"
+    },
+    {
+      "id": "imp-011",
+      "title": "Hypothesis auto-tester",
+      "category": "capability",
+      "leverage": "high",
+      "effort": "medium",
+      "rationale": "Automated testing framework. Takes hypothesis, executes trades per rules, tracks results, auto-promotes/kills based on performance.",
+      "status": "completed",
+      "outcome": "Built tools/pipelines/hypothesis-tester.ts that: (1) monitors hypotheses in 'testing' status, (2) checks entry conditions for auto-generated hypotheses (from drift detector, closing scanner), (3) executes paper trades with configurable position sizing, (4) monitors exit conditions (TP/SL/time limit), (5) updates hypothesis testResults and confidence, (6) auto-validates (>60% win rate + 1.5x profit factor) or invalidates (<35% win rate or low confidence), (7) sends alerts on trades and status changes. Scheduled to run every 4 hours. Registered as cap-008.",
+      "createdAt": "2025-12-08T00:00:00Z",
+      "completedAt": "2025-12-08T18:45:00Z"
     }
   ],
   "schema": {
@@ -159,5 +156,5 @@
       "completedAt": "ISO date | null"
     }
   },
-  "notes": "Track system improvements separately from trading learnings. Next priorities: imp-011 (hypothesis auto-tester), imp-006 (backtest framework)."
+  "notes": "Track system improvements separately from trading learnings. Next priority: imp-006 (backtest framework). Core trading loop now complete with hypothesis-tester (imp-011)."
 }
