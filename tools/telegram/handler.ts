@@ -24,11 +24,18 @@ interface SessionState {
   createdAt: string;
   lastMessageAt: string;
   messageCount: number;
+  // Track if this session has been successfully started with Claude
+  claudeSessionStarted: boolean;
 }
 
 function loadSession(): SessionState | null {
   try {
-    return JSON.parse(fs.readFileSync(SESSION_FILE, 'utf-8'));
+    const session = JSON.parse(fs.readFileSync(SESSION_FILE, 'utf-8'));
+    // Handle legacy sessions without claudeSessionStarted field
+    if (session.claudeSessionStarted === undefined) {
+      session.claudeSessionStarted = false;
+    }
+    return session;
   } catch {
     return null;
   }
@@ -44,6 +51,7 @@ function createNewSession(): SessionState {
     createdAt: new Date().toISOString(),
     lastMessageAt: new Date().toISOString(),
     messageCount: 0,
+    claudeSessionStarted: false,
   };
   saveSession(session);
   return session;
@@ -63,6 +71,26 @@ function updateSessionActivity(): void {
     session.lastMessageAt = new Date().toISOString();
     session.messageCount++;
     saveSession(session);
+  }
+}
+
+function markSessionStarted(): void {
+  const session = loadSession();
+  if (session) {
+    session.claudeSessionStarted = true;
+    saveSession(session);
+  }
+}
+
+// Check if a Claude session actually exists
+function claudeSessionExists(sessionId: string): boolean {
+  try {
+    // Use claude --list-sessions or check if we can resume
+    // Since there's no direct API, we track this ourselves
+    const session = loadSession();
+    return session?.claudeSessionStarted === true && session.sessionId === sessionId;
+  } catch {
+    return false;
   }
 }
 
@@ -551,6 +579,11 @@ async function spawnClaudeSession(
       fs.writeFileSync(sessionLogFile, output);
 
       if (code === 0) {
+        // Mark persistent session as successfully started
+        if (options.persistent && options.sessionId) {
+          markSessionStarted();
+        }
+
         // Final update to the streaming message
         await updateMessage(true);
 
@@ -572,6 +605,26 @@ async function spawnClaudeSession(
           }
         }
       } else {
+        // Check if this was a failed resume attempt (session not found)
+        const isSessionNotFound = output.includes('No conversation found with session ID') ||
+                                   output.includes('session ID') && output.includes('not found');
+
+        if (isSessionNotFound && options.persistent && options.sessionId && !options.isFirstMessage) {
+          // Reset session and retry with --session-id instead of --resume
+          await editMessage(messageId!, `🔄 *${options.sessionName}* - Session expired, restarting...`, options.chatId);
+
+          // Reset the session state to force creation of new session
+          const session = loadSession();
+          if (session) {
+            session.claudeSessionStarted = false;
+            saveSession(session);
+          }
+
+          // The next message will use --session-id to create a new session
+          resolve('SESSION_EXPIRED');
+          return;
+        }
+
         await editMessage(messageId!, `❌ *${options.sessionName}* - Failed (code ${code})\n\n${output.slice(-500) || 'No output'}`, options.chatId);
       }
       resolve(output);
@@ -825,8 +878,9 @@ Read MISSION.md for context.`,
       return;
     }
     const age = Math.round((Date.now() - new Date(session.createdAt).getTime()) / 1000 / 60);
+    const claudeStatus = session.claudeSessionStarted ? '✅ Active' : '⏳ Not started';
     await sendMessage(
-      `*Session Info*\n\nID: \`${session.sessionId.slice(0, 8)}...\`\nCreated: ${age} min ago\nMessages: ${session.messageCount}`,
+      `*Session Info*\n\nID: \`${session.sessionId.slice(0, 8)}...\`\nCreated: ${age} min ago\nMessages: ${session.messageCount}\nClaude: ${claudeStatus}`,
       chatId
     );
     return;
@@ -1061,13 +1115,16 @@ Check the relevant files, understand what went wrong, and apply fixes. Update st
   const session = getOrCreateSession();
   updateSessionActivity();
 
-  // Build prompt - first message gets the agent context, follow-ups are just the message
-  const isFirstMessage = session.messageCount === 1;
+  // Check if Claude session was successfully started before
+  // Use claudeSessionStarted flag, not messageCount, because:
+  // - The Claude CLI session may have expired or been cleared
+  // - We need to track actual Claude state, not just our message count
+  const isFirstMessage = !session.claudeSessionStarted;
   const prompt = isFirstMessage
     ? `You are the trader agent. Read MISSION.md for context.\n\nUser message: ${trimmed}`
     : trimmed;
 
-  await spawnClaudeSession({
+  const result = await spawnClaudeSession({
     prompt,
     chatId,
     sessionName: 'chat',
@@ -1075,6 +1132,19 @@ Check the relevant files, understand what went wrong, and apply fixes. Update st
     sessionId: session.sessionId,
     isFirstMessage,
   });
+
+  // If session expired, retry with a fresh start
+  if (result === 'SESSION_EXPIRED') {
+    const newPrompt = `You are the trader agent. Read MISSION.md for context.\n\nUser message: ${trimmed}`;
+    await spawnClaudeSession({
+      prompt: newPrompt,
+      chatId,
+      sessionName: 'chat',
+      persistent: true,
+      sessionId: session.sessionId,
+      isFirstMessage: true,
+    });
+  }
 }
 
 // ============ Main ============
