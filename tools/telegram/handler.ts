@@ -470,6 +470,7 @@ async function handleMessage(text: string, chatId: string): Promise<void> {
 /status - Current status
 /pending - Show pending approvals
 /errors - Recent errors
+/ps - Running processes
 /help - This help
 
 *Approvals:*
@@ -674,6 +675,31 @@ Read MISSION.md for context.`,
 
   if (lower === '/ping' || lower === 'ping') {
     await sendMessage('pong 🏓', chatId);
+    return;
+  }
+
+  if (lower === '/ps') {
+    // Check running processes
+    try {
+      const psOutput = execSync('ps aux | grep claude | grep -v grep || echo "No claude processes"', { encoding: 'utf-8' });
+      const nodeOutput = execSync('ps aux | grep "ts-node.*handler" | grep -v grep | wc -l', { encoding: 'utf-8' });
+
+      const claudeCount = psOutput.includes('No claude') ? 0 : psOutput.trim().split('\n').length;
+      const handlerCount = parseInt(nodeOutput.trim()) || 0;
+
+      let msg = `*Process Status*\n\n`;
+      msg += `🤖 Claude sessions: ${claudeCount}\n`;
+      msg += `📡 Handler instances: ${handlerCount}\n`;
+      msg += `⏳ Session active: ${claudeSessionActive ? 'Yes' : 'No'}\n`;
+
+      if (claudeCount > 0) {
+        msg += `\n\`\`\`\n${psOutput.slice(0, 500)}\n\`\`\``;
+      }
+
+      await sendMessage(msg, chatId);
+    } catch (e) {
+      await sendMessage(`Error checking processes: ${e}`, chatId);
+    }
     return;
   }
 
