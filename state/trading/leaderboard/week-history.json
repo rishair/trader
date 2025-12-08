@@ -1,0 +1,178 @@
+[
+  {
+    "timeframe": "week",
+    "scrapedAt": "2025-12-08T19:29:52.811Z",
+    "traders": []
+  },
+  {
+    "timeframe": "week",
+    "scrapedAt": "2025-12-08T19:30:14.534Z",
+    "traders": []
+  },
+  {
+    "timeframe": "week",
+    "scrapedAt": "2025-12-08T19:32:19.242Z",
+    "traders": [
+      {
+        "rank": 1,
+        "username": "wasianiversonworldchamp2025",
+        "walletAddress": "0xb744f56635b537e859152d14b022af5afe485210",
+        "profit": 1560487,
+        "volume": 12881445,
+        "scrapedAt": "2025-12-08T19:32:19.240Z"
+      },
+      {
+        "rank": 2,
+        "username": "gmanas",
+        "walletAddress": "0xe90bec87d9ef430f27f9dcfe72c34b76967d5da2",
+        "profit": 448915,
+        "volume": 7239905,
+        "scrapedAt": "2025-12-08T19:32:19.242Z"
+      },
+      {
+        "rank": 3,
+        "username": "0x006cc834Cc092684F1B56626E23BEdB3835c16ea-1729683673397",
+        "walletAddress": "0x006cc834cc092684f1b56626e23bedb3835c16ea",
+        "profit": 279338,
+        "volume": 1298421,
+        "scrapedAt": "2025-12-08T19:32:19.242Z"
+      },
+      {
+        "rank": 4,
+        "username": "primm",
+        "walletAddress": "0xd38b71f3e8ed1af71983e5c309eac3dfa9b35029",
+        "profit": 271753,
+        "volume": 1107017,
+        "scrapedAt": "2025-12-08T19:32:19.242Z"
+      },
+      {
+        "rank": 5,
+        "username": "piastri",
+        "walletAddress": "0x2f09642639aedd6ced432519c1a86e7d52034632",
+        "profit": 241756,
+        "volume": 2414560,
+        "scrapedAt": "2025-12-08T19:32:19.242Z"
+      },
+      {
+        "rank": 6,
+        "username": "potko",
+        "walletAddress": "0x43351dd7e8def5f29e5bd5954c8381c848a2fc2f",
+        "profit": 201063,
+        "volume": 1126959,
+        "scrapedAt": "2025-12-08T19:32:19.242Z"
+      },
+      {
+        "rank": 7,
+        "username": "crossfire154",
+        "walletAddress": "0xe73ee729fc8ac69c3ee6ca70dedb3875070574fe",
+        "profit": 126350,
+        "volume": 522026,
+        "scrapedAt": "2025-12-08T19:32:19.242Z"
+      },
+      {
+        "rank": 8,
+        "username": "dreamerwon",
+        "walletAddress": "0x8ca8445e5c0dda8dcfeef768c074dbd66b07bf49",
+        "profit": 90235,
+        "volume": 484951,
+        "scrapedAt": "2025-12-08T19:32:19.242Z"
+      },
+      {
+        "rank": 9,
+        "username": "JamaicanBobsledTeam",
+        "walletAddress": "0xd6b4bf910d4479184c4e17e01ec83ecbd376a278",
+        "profit": 83308,
+        "volume": 865728,
+        "scrapedAt": "2025-12-08T19:32:19.242Z"
+      },
+      {
+        "rank": 10,
+        "username": "0xb7511d7b0dcb75ffad0507cbac7223653d08915",
+        "walletAddress": "0xe60a9b0be459d9849bc2339dac20517639ae6a47",
+        "profit": 81141,
+        "volume": 2676969,
+        "scrapedAt": "2025-12-08T19:32:19.242Z"
+      },
+      {
+        "rank": 11,
+        "username": "sleepy-panda",
+        "walletAddress": "0xa49becb692927d455924583b5e3e5788246f4c40",
+        "profit": 81019,
+        "volume": 1006747,
+        "scrapedAt": "2025-12-08T19:32:19.242Z"
+      },
+      {
+        "rank": 12,
+        "username": "kch123",
+        "walletAddress": "0x6a72f61820b26b1fe4d956e17b6dc2a1ea3033ee",
+        "profit": 78821,
+        "volume": 3856441,
+        "scrapedAt": "2025-12-08T19:32:19.242Z"
+      },
+      {
+        "rank": 13,
+        "username": "NotGoodToday",
+        "walletAddress": "0x14ac84b66a27fc30e56ed620ebfa61cd8105cb21",
+        "profit": 67667,
+        "volume": 1330036,
+        "scrapedAt": "2025-12-08T19:32:19.242Z"
+      },
+      {
+        "rank": 14,
+        "username": "kinderSman",
+        "walletAddress": "0xa6d9b55a6a3a54a9d50ca94c64f00af69c50fd2f",
+        "profit": 59855,
+        "volume": 121982,
+        "scrapedAt": "2025-12-08T19:32:19.242Z"
+      },
+      {
+        "rank": 15,
+        "username": "Ktulhuu",
+        "walletAddress": "0xe5bd36fc97a0bfc002bd2a8afc7616b1074637e7",
+        "profit": 52924,
+        "volume": 0,
+        "scrapedAt": "2025-12-08T19:32:19.242Z"
+      },
+      {
+        "rank": 16,
+        "username": "jirobas",
+        "walletAddress": "0x78c54ecbe85c945b8f366aee36db5be8f6ebc09f",
+        "profit": 51505,
+        "volume": 103042,
+        "scrapedAt": "2025-12-08T19:32:19.242Z"
+      },
+      {
+        "rank": 17,
+        "username": "Ktulhu",
+        "walletAddress": "0xf32898291d309e3c5e499c85ddd03a13268c219c",
+        "profit": 50271,
+        "volume": 45789,
+        "scrapedAt": "2025-12-08T19:32:19.242Z"
+      },
+      {
+        "rank": 18,
+        "username": "fromagi",
+        "walletAddress": "0x976685b6e867a0400085b1273309e84cd0fc627c",
+        "profit": 50166,
+        "volume": 147792,
+        "scrapedAt": "2025-12-08T19:32:19.242Z"
+      },
+      {
+        "rank": 19,
+        "username": "0x2c335066FE58fe9237c3d3Dc7b275C2a034a0563-1759935795465",
+        "walletAddress": "0x2c335066fe58fe9237c3d3dc7b275c2a034a0563",
+        "profit": 48070,
+        "volume": 1089432,
+        "scrapedAt": "2025-12-08T19:32:19.242Z"
+      },
+      {
+        "rank": 20,
+        "username": "arme",
+        "walletAddress": "0xb574bcbc87bae0b9e95a7075bf67922612871331",
+        "profit": 47235,
+        "volume": 85883,
+        "scrapedAt": "2025-12-08T19:32:19.242Z"
+      }
+    ]
+  }
+]

@@ -173,13 +173,22 @@
       "statement": "Top traders on the Polymarket leaderboard exhibit identifiable patterns that can inform profitable trading strategies",
       "rationale": "The weekly profit leaderboard reveals who is consistently winning. Analyzing their trading patterns (market selection, timing, position sizing) could reveal edge. Source: polymarket.com/leaderboard/overall/weekly/profit",
       "testMethod": "1. Scrape/analyze leaderboard data over time. 2. Identify top performers. 3. Track their public positions/trades via activity feed. 4. Look for patterns in market selection and timing. 5. Paper trade mimicking patterns.",
-      "status": "proposed",
-      "confidence": 0.4,
-      "evidence": [],
+      "status": "testing",
+      "confidence": 0.55,
+      "evidence": [
+        {
+          "date": "2025-12-08",
+          "observation": "First analysis of top 5 weekly performers (wasianiversonworldchamp2025 +$1.56M, gmanas +$449K, primm +$272K, piastri +$242K, potko +$201K). Key findings: (1) 4/5 specialize in SPORTS markets (58-81% of trades), (2) All trade very high frequency (20+ trades/day), (3) All make occasional large concentrated bets (5x+ avg size), (4) All most active during morning 6-12 UTC, (5) Strong long/buy bias.",
+          "supports": true,
+          "confidenceImpact": 0.15
+        }
+      ],
       "conclusion": null,
       "createdAt": "2025-12-07T00:00:00Z",
-      "updatedAt": "2025-12-07T00:00:00Z",
-      "source": "user-shared-content"
+      "updatedAt": "2025-12-08T20:00:00Z",
+      "testStartedAt": "2025-12-08T20:00:00Z",
+      "source": "user-shared-content",
+      "derivedHypotheses": ["hyp-008", "hyp-009", "hyp-010", "hyp-011"]
     },
     {
       "id": "hyp-006",
@@ -264,6 +273,90 @@
       "createdAt": "2025-12-07T12:00:00Z",
       "updatedAt": "2025-12-09T01:30:00Z",
       "linkedTrade": "trade-001"
+    },
+    {
+      "id": "hyp-008",
+      "statement": "Sports betting markets on Polymarket offer better edge than politics/crypto markets",
+      "rationale": "Analysis of top 5 weekly performers shows 4/5 specialize in sports (58-81% of their trades). Sports markets may have: (1) more inefficiencies due to rapid information flow, (2) better arbitrage vs traditional sportsbooks, (3) more predictable patterns. Derived from hyp-004 analysis.",
+      "testMethod": "1. Compare win rates across market categories (sports vs politics vs crypto). 2. Analyze spread/volume ratios. 3. Paper trade sports-focused strategy vs diversified strategy. 4. Track if sports specialists consistently outperform.",
+      "status": "proposed",
+      "confidence": 0.45,
+      "evidence": [
+        {
+          "date": "2025-12-08",
+          "observation": "4/5 top weekly traders specialize in sports: gmanas (58%), 0x006cc834 (81%), primm (63%), piastri (73%). Combined weekly profit of these 4: $1.24M. Only wasianiversonworldchamp2025 focuses on 'other' category.",
+          "supports": true,
+          "confidenceImpact": 0
+        }
+      ],
+      "conclusion": null,
+      "createdAt": "2025-12-08T20:00:00Z",
+      "updatedAt": "2025-12-08T20:00:00Z",
+      "source": "leaderboard",
+      "parentHypothesis": "hyp-004"
+    },
+    {
+      "id": "hyp-009",
+      "statement": "High-frequency trading (20+ trades/day) on Polymarket correlates with top performance",
+      "rationale": "All top 5 weekly performers trade at very high frequency (20+ trades/day). This could indicate: (1) more opportunities to capture small edges, (2) better risk distribution, (3) faster reaction to information. Derived from hyp-004 analysis.",
+      "testMethod": "1. Correlate trading frequency with profitability across broader sample. 2. Test if frequency alone predicts performance or if it's confounded with capital/skill. 3. Simulate high-frequency vs low-frequency approaches with same signals.",
+      "status": "proposed",
+      "confidence": 0.35,
+      "evidence": [
+        {
+          "date": "2025-12-08",
+          "observation": "All 5 top performers show 'very high (20+/day)' trading frequency. However, this may be survivorship bias - we're only looking at winners. Need to check if losing traders also trade frequently.",
+          "supports": null,
+          "confidenceImpact": 0
+        }
+      ],
+      "conclusion": null,
+      "createdAt": "2025-12-08T20:00:00Z",
+      "updatedAt": "2025-12-08T20:00:00Z",
+      "source": "leaderboard",
+      "parentHypothesis": "hyp-004"
+    },
+    {
+      "id": "hyp-010",
+      "statement": "Concentrated high-conviction bets (5x+ average size) drive outsized returns on Polymarket",
+      "rationale": "All top 5 performers make occasional very large bets (5x+ their average trade size). This suggests edge comes not from consistent small wins but from correctly identifying and sizing high-conviction opportunities. Derived from hyp-004 analysis.",
+      "testMethod": "1. Analyze P&L attribution - what % comes from large vs small trades? 2. Study the specific large trades - what made them confident? 3. Develop criteria for identifying high-conviction opportunities.",
+      "status": "proposed",
+      "confidence": 0.5,
+      "evidence": [
+        {
+          "date": "2025-12-08",
+          "observation": "Trade size analysis: wasianiversonworldchamp2025 avg $25K, largest $610K (24x). gmanas avg $7.5K, largest $119K (16x). primm avg $14K, largest $118K (8x). piastri avg $10K, largest $244K (24x). All show concentrated conviction pattern.",
+          "supports": true,
+          "confidenceImpact": 0
+        }
+      ],
+      "conclusion": null,
+      "createdAt": "2025-12-08T20:00:00Z",
+      "updatedAt": "2025-12-08T20:00:00Z",
+      "source": "leaderboard",
+      "parentHypothesis": "hyp-004"
+    },
+    {
+      "id": "hyp-011",
+      "statement": "Morning trading (6-12 UTC) on Polymarket offers timing advantage due to overnight information incorporation",
+      "rationale": "All top 5 performers are most active during morning 6-12 UTC. This could reflect: (1) incorporating overnight news/results, (2) less competition from US traders (late night/early morning), (3) sports results from previous day settling. Derived from hyp-004 analysis.",
+      "testMethod": "1. Compare market efficiency (spread, price impact) across time zones. 2. Track if morning trades have better outcomes than afternoon/evening. 3. Analyze what events/information drive morning activity.",
+      "status": "proposed",
+      "confidence": 0.4,
+      "evidence": [
+        {
+          "date": "2025-12-08",
+          "observation": "5/5 top traders most active during morning (6-12 UTC). This is 2-8am EST / 11pm-5am PST - off-peak for US traders. May indicate either timezone advantage (non-US traders) or deliberate strategy to trade when competition is lower.",
+          "supports": null,
+          "confidenceImpact": 0
+        }
+      ],
+      "conclusion": null,
+      "createdAt": "2025-12-08T20:00:00Z",
+      "updatedAt": "2025-12-08T20:00:00Z",
+      "source": "leaderboard",
+      "parentHypothesis": "hyp-004"
     }
   ],
   "schema": {

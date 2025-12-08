@@ -120,6 +120,18 @@
         "recurring": true,
         "frequency": "4h"
       }
+    },
+    {
+      "id": "pipeline-health-check-1765220890835",
+      "type": "pipeline",
+      "description": "Health check: Analyze system state, propose actions for user approval",
+      "scheduledFor": "2025-12-09T07:08:10.835Z",
+      "priority": "high",
+      "context": {
+        "pipeline": "health-check",
+        "recurring": true,
+        "frequency": "12h"
+      }
     }
   ],
   "completedTasks": [
