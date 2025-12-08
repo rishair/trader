@@ -1,5 +1,5 @@
 {
-  "lastCheck": "2025-12-08T20:00:00Z",
+  "lastCheck": "2025-12-08T21:36:00Z",
   "status": "healthy",
   "services": {
     "telegram-handler": { "status": "unknown", "lastSeen": null },
@@ -7,13 +7,13 @@
   },
   "recentErrors": [],
   "metrics": {
-    "responsibilitiesCompleted24h": 1,
+    "responsibilitiesCompleted24h": 2,
     "handoffsCompleted24h": 0,
-    "ideasImplemented24h": 1
+    "ideasImplemented24h": 2
   },
   "lastBuildSprint": {
-    "timestamp": "2025-12-08T20:00:00Z",
-    "implemented": ["imp-005"],
-    "notes": "Implemented Telegram alerts capability (cap-006). Quick win - low effort, immediate user visibility."
+    "timestamp": "2025-12-08T21:36:00Z",
+    "implemented": ["imp-010"],
+    "notes": "Implemented price-drift-detector pipeline (cap-007). Monitors 50+ markets for sudden moves >5%, generates follow-signal hypotheses for informed money detection. Scheduled hourly via daemon."
   }
 }

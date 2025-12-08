@@ -1,6 +1,26 @@
 {
   "sessions": [
     {
+      "sessionId": "sess-20251208-213600",
+      "agent": "agent-engineer",
+      "timestamp": "2025-12-08T21:36:00Z",
+      "responsibility": "build-sprint",
+      "taskDescription": "Implement imp-010 price-drift-detector - monitor markets for sudden moves and generate follow signals",
+      "completed": true,
+      "friction": [
+        "Gamma API returns clobTokenIds as JSON string, not array - had to add parsing logic",
+        "TypeScript export type errors with isolatedModules flag"
+      ],
+      "mistakes": [],
+      "rootCauses": [
+        "API response format inconsistency - other pipelines have same issue but weren't noticed until now",
+        "TypeScript configuration is strict about type exports"
+      ],
+      "improvementIdea": null,
+      "learningLogged": false,
+      "notes": "Built tools/pipelines/price-drift-detector.ts (cap-007). Scans 50+ active markets with >$10k volume, compares to previous snapshots, detects >5% moves as drift signals (moderate/strong/extreme). Generates follow-signal hypotheses for strong/extreme drifts. Sends Telegram alerts. Scheduled hourly via daemon. First run captured 50 market snapshots - subsequent runs will detect actual drifts."
+    },
+    {
       "sessionId": "sess-20251208-200000",
       "agent": "agent-engineer",
       "timestamp": "2025-12-08T20:00:00Z",

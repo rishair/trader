@@ -132,6 +132,7 @@ const PIPELINES: Record<string, string> = {
   'health-check': 'tools/pipelines/health-check.ts',
   'leaderboard-tracker': 'tools/pipelines/leaderboard-tracker.ts',
   'daily-briefing': 'tools/pipelines/daily-briefing.ts',
+  'price-drift-detector': 'tools/pipelines/price-drift-detector.ts',
 };
 
 async function executePipeline(pipelineName: string): Promise<{ success: boolean; output: string }> {
