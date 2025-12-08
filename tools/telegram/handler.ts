@@ -617,6 +617,7 @@ Just message me - I'll respond in our ongoing conversation.
 /pending - Show pending approvals
 /errors - Recent errors
 /ps - Running processes
+/git [n] - Show last n commits (default 3)
 /help - This help
 
 *Approvals:*
@@ -631,7 +632,8 @@ Just message me - I'll respond in our ongoing conversation.
 /inbox <content> - Add content to inbox
 /heal - AI-analyze and fix errors
 /start - Start the daemon
-/stop - Stop the daemon`,
+/stop - Stop the daemon
+/rollback <hash> - Rollback to commit and redeploy`,
       chatId
     );
     return;
@@ -896,6 +898,73 @@ Read MISSION.md for context.`,
       await sendMessage(msg, chatId);
     } catch (e) {
       await sendMessage(`Error checking processes: ${e}`, chatId);
+    }
+    return;
+  }
+
+  // /git - Show recent git history
+  if (lower.startsWith('/git')) {
+    const parts = trimmed.split(/\s+/);
+    const count = parseInt(parts[1]) || 3;
+    const limitedCount = Math.min(count, 20); // Cap at 20
+
+    try {
+      const log = execSync(
+        `git log --oneline -${limitedCount}`,
+        { cwd: PROJECT_ROOT, encoding: 'utf-8' }
+      );
+      await sendMessage(`*Last ${limitedCount} commits:*\n\`\`\`\n${log}\`\`\`\n\nUse \`/rollback <hash>\` to revert.`, chatId);
+    } catch (e: any) {
+      await sendMessage(`❌ Git error: ${e.message}`, chatId);
+    }
+    return;
+  }
+
+  // /rollback - Rollback to a specific commit and redeploy
+  if (lower.startsWith('/rollback')) {
+    const parts = trimmed.split(/\s+/);
+    const hash = parts[1];
+
+    if (!hash) {
+      await sendMessage('Usage: /rollback <commit-hash>\n\nUse /git to see recent commits.', chatId);
+      return;
+    }
+
+    // Validate the hash exists
+    try {
+      execSync(`git cat-file -t ${hash}`, { cwd: PROJECT_ROOT, encoding: 'utf-8' });
+    } catch {
+      await sendMessage(`❌ Invalid commit hash: ${hash}`, chatId);
+      return;
+    }
+
+    await sendMessage(`⚠️ Rolling back to \`${hash}\`...`, chatId);
+
+    try {
+      // Reset to the commit
+      execSync(`git reset --hard ${hash}`, { cwd: PROJECT_ROOT, encoding: 'utf-8' });
+
+      // Force push (we're on the server, need to update origin)
+      execSync('git push origin main --force', { cwd: PROJECT_ROOT, encoding: 'utf-8' });
+
+      // Restart services
+      await sendMessage('🔄 Restarting services...', chatId);
+
+      try {
+        execSync('systemctl restart trader-daemon', { encoding: 'utf-8' });
+      } catch {
+        // Daemon might not be running
+      }
+
+      try {
+        execSync('systemctl restart trader-telegram', { encoding: 'utf-8' });
+      } catch {
+        // Will restart itself
+      }
+
+      await sendMessage(`✅ Rolled back to \`${hash}\` and redeployed.\n\n⚠️ Telegram handler restarting...`, chatId);
+    } catch (e: any) {
+      await sendMessage(`❌ Rollback failed: ${e.message}`, chatId);
     }
     return;
   }
