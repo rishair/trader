@@ -145,3 +145,19 @@ Guidelines:
 - Don't wait until end of session - commit as you go
 - Keep commits atomic and descriptive
 - Push to `origin main` after each commit
+
+## Deploying Changes
+
+After pushing changes to origin/main, deploy to the production server:
+
+```bash
+npm run deploy
+```
+
+This will:
+1. Verify local is in sync with origin/main
+2. SSH to the droplet and pull latest
+3. Install dependencies
+4. Restart the daemon and telegram services
+
+**Always run `npm run deploy` after pushing changes that affect the daemon or telegram handler.**

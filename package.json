@@ -9,7 +9,8 @@
     "trigger": "ts-node daemon.ts trigger",
     "query": "ts-node daemon.ts query",
     "telegram": "ts-node tools/telegram/handler.ts",
-    "telegram:send": "ts-node tools/telegram/bot.ts send"
+    "telegram:send": "ts-node tools/telegram/bot.ts send",
+    "deploy": "bash scripts/deploy.sh"
   },
   "keywords": [],
   "author": "",
