@@ -136,6 +136,20 @@
       "appliedTo": [],
       "createdAt": "2025-12-08T00:00:00Z",
       "references": []
+    },
+    {
+      "id": "top-trader-patterns-2025-12-08",
+      "category": "market",
+      "title": "Top Polymarket Trader Patterns: Sports Focus, High Frequency, Concentrated Bets",
+      "content": "Analysis of top 5 weekly performers on Polymarket leaderboard (combined profit: $2.8M this week).\n\n**Key Findings:**\n\n1. **Sports dominance**: 4/5 top traders specialize in sports markets (58-81% of their trades). Only wasianiversonworldchamp2025 focuses on 'other' category.\n\n2. **Very high frequency**: All 5 trade 20+ times/day. This could indicate: more edge opportunities, better risk distribution, or faster reaction to information.\n\n3. **Concentrated conviction bets**: All make occasional bets 5-24x their average trade size. Biggest winner's largest trade was $610K (avg $25K). Suggests edge comes from correctly sizing high-conviction opportunities.\n\n4. **Morning trading (6-12 UTC)**: All 5 most active during this window. This is 2-8am EST / 11pm-5am PST - off-peak for US traders. May indicate timezone advantage or deliberate strategy.\n\n5. **Strong buy bias**: Most top traders heavily favor buying (going long) over selling.\n\n**Top 5 This Week:**\n- wasianiversonworldchamp2025: +$1.56M, 177 markets, avg $25K, largest $610K\n- gmanas: +$449K, 233 markets, avg $7.5K, largest $119K\n- 0x006cc834: +$279K, 110 markets, sports specialist (81%)\n- primm: +$272K, 332 markets, avg $14K, largest $118K\n- piastri: +$242K, 150 markets, avg $10K, largest $244K\n\n**Caveats:**\n- Survivorship bias: Only looking at winners, not losers who may trade similarly\n- One week sample: Patterns may not persist\n- Correlation ≠ causation: High frequency may not CAUSE success\n\n**Generated Hypotheses:**\n- hyp-008: Sports markets offer better edge\n- hyp-009: High-frequency correlates with performance\n- hyp-010: Concentrated bets drive returns\n- hyp-011: Morning trading offers timing advantage",
+      "source": "trader-analyzer pipeline 2025-12-08: Analysis of top 5 weekly performers via Polymarket API",
+      "actionable": true,
+      "appliedTo": ["hyp-004", "hyp-008", "hyp-009", "hyp-010", "hyp-011"],
+      "createdAt": "2025-12-08T20:00:00Z",
+      "references": [
+        "https://polymarket.com/leaderboard/overall/weekly/profit",
+        "https://data-api.polymarket.com/trades"
+      ]
     }
   ],
   "schema": {

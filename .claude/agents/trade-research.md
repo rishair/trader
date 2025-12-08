@@ -71,6 +71,14 @@ Deep review of Polymarket trading strategy:
 - Archive underperforming strategies
 - Log insights to learnings.json
 
+### learning-capture (after every analysis)
+After running any analysis pipeline (trader-analyzer, market scans, etc.):
+- Extract key findings as a new learning in `learnings.json`
+- Keep learnings concise (200-500 words max)
+- Include: what we learned, evidence, caveats, generated hypotheses
+- Link to relevant hypotheses via `appliedTo` field
+- Don't duplicate existing learnings - update if similar insight exists
+
 ### learning-synthesis (weekly)
 Synthesize accumulated knowledge:
 - Review learnings.json for patterns
