@@ -25,6 +25,94 @@
       "notes": "First trade underwater (-19% from entry). Market trending toward incumbent despite close fundamentals. Key learning: close fundamentals ≠ close probabilities. Market may efficiently price momentum/narrative factors. Need more data before conclusions."
     }
   ],
+  "development": [
+    {
+      "id": "strat-002",
+      "name": "Single-Market Arbitrage",
+      "hypothesis": "Polymarket markets periodically have YES + NO prices that don't sum to $1.00 due to retail order flow imbalances. These mispricings can be captured by automated detection and execution.",
+      "sourceHypothesis": "hyp-009",
+      "edge": "Speed + automation. Retail creates mispricings; bots capture them in seconds. Top 3 arbitrage wallets made $4.2M from 10,200+ trades.",
+      "entryRules": "1. Monitor all active markets via WebSocket. 2. When YES + NO < 0.98 (>2% spread), buy both sides. 3. When YES + NO > 1.02, sell both sides (if holding). 4. Minimum opportunity size: $50 profit after fees.",
+      "exitRules": "1. Hold until resolution (guaranteed profit if entered correctly). 2. Or exit early if prices converge and can close at profit.",
+      "riskManagement": "Max $500 per opportunity. Max 10 concurrent positions. Verify prices before execution (stale data risk). Circuit breaker: pause if 3 consecutive failed executions.",
+      "infrastructure": {
+        "required": [
+          "WebSocket connection to CLOB for real-time prices",
+          "Wallet with signing capability for order execution",
+          "RPC provider for Polygon (Alchemy/QuickNode)",
+          "Shadow mode logging before live trading"
+        ],
+        "estimated_cost": "$100-500/month for RPC + infrastructure",
+        "capital_required": "$5,000-10,000 initial"
+      },
+      "phases": [
+        {
+          "phase": 1,
+          "name": "Shadow Mode",
+          "duration": "1-2 weeks",
+          "deliverables": [
+            "WebSocket price monitor connected to all markets",
+            "Arbitrage opportunity detector (YES+NO != 1.00)",
+            "Logging system for detected opportunities",
+            "Theoretical P&L tracker"
+          ],
+          "success_criteria": "Detect 10+ opportunities with >1% spread over 1 week",
+          "capital_at_risk": "$0"
+        },
+        {
+          "phase": 2,
+          "name": "Small Live Test",
+          "duration": "1-2 weeks",
+          "deliverables": [
+            "Order execution via CLOB API",
+            "Position tracking",
+            "Real P&L measurement"
+          ],
+          "success_criteria": "Execute 10+ trades with >50% success rate, positive P&L",
+          "capital_at_risk": "$1,000"
+        },
+        {
+          "phase": 3,
+          "name": "Scale Up",
+          "duration": "2-4 weeks",
+          "deliverables": [
+            "Increased position sizing",
+            "Multiple market monitoring",
+            "Performance optimization (latency)"
+          ],
+          "success_criteria": "Consistent daily profits, <5% failed executions",
+          "capital_at_risk": "$5,000-10,000"
+        }
+      ],
+      "status": "development",
+      "createdAt": "2025-12-08T00:00:00Z",
+      "research": {
+        "source": "hft-research-2025-12-08.json",
+        "key_findings": [
+          "$40M extracted by arbitrage bots historically",
+          "Top 3 wallets: $4.2M from 10,200+ bets",
+          "Opportunities last seconds - automation required",
+          "Competition: moderate but not saturated",
+          "Open source implementations available to fork"
+        ],
+        "references": [
+          "https://github.com/Trust412/Polymarket-spike-bot-v1",
+          "https://github.com/warproxxx/poly-maker",
+          "https://docs.polymarket.com/developers/CLOB/introduction"
+        ]
+      },
+      "performance": {
+        "trades": 0,
+        "wins": 0,
+        "losses": 0,
+        "winRate": null,
+        "avgReturn": null,
+        "totalPnL": 0,
+        "shadowPnL": 0
+      },
+      "notes": "Graduated from HYP-009 research. Starting with shadow mode to validate opportunity frequency before committing capital."
+    }
+  ],
   "retired": [],
   "insights": {
     "week1": {

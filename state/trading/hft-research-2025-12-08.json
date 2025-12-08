@@ -1,0 +1,580 @@
+{
+  "question": "What high-frequency trading (HFT) strategies are viable on Polymarket, and what infrastructure/edges are needed to execute them profitably?",
+  "researchDate": "2025-12-08",
+  "summary": "Polymarket offers viable HFT opportunities across 4 primary strategies: arbitrage (most accessible, $40M extracted historically), market making (requires capital + automation), spike trading (micro-movements), and statistical arbitrage (mean reversion). Competition is moderate but growing. Infrastructure requirements range from basic (API + bot) to advanced (sub-100ms latency, automated quoting). Arbitrage opportunities persist but last only seconds, captured primarily by bots on Polygon nodes. Market making remains profitable ($200-800/day reported) but post-election rewards decreased significantly. Key edge: speed + sophistication, not yet saturated by HFT firms.",
+
+  "insights": [
+    {
+      "insight": "Arbitrage is the most accessible HFT strategy on Polymarket, with $40M extracted historically",
+      "detail": "Two types exist: (1) Single-market rebalancing where YES+NO prices ≠ $1.00, and (2) Combinatorial arbitrage across related markets (synonym markets, dependent outcomes). Academic study found top 3 arbitrage wallets earned $4.2M from 10,200+ bets over one year. Most opportunities yield 1-5% but can reach 5% in 15 minutes. Opportunities last only seconds today, requiring bot-based execution.",
+      "sources": [
+        "https://arxiv.org/abs/2508.03474",
+        "https://www.dlnews.com/articles/markets/polymarket-users-lost-millions-of-dollars-to-bot-like-bettors-over-the-past-year/",
+        "https://investx.fr/en/crypto-news/unveiling-polymarket-bots-how-they-generate-millions-through-arbitrage/"
+      ],
+      "sourceQuality": "A",
+      "confidence": 0.9
+    },
+    {
+      "insight": "Market making on Polymarket can generate $200-800/day but requires capital, automation, and sophisticated models",
+      "detail": "One documented case: started with $10K capital, earned $200/day initially, scaled to $700-800/day at peak. Strategy: two-sided liquidity provision with tight spreads (0.1-3 cents on liquid markets). Liquidity rewards provide 3x bonus for two-sided quotes using quadratic scoring. Post-2024 election, rewards decreased significantly. Competition described as 'maybe one or two other bots per market' but increasing. Risk: adverse selection can exceed rewards without proper models.",
+      "sources": [
+        "https://news.polymarket.com/p/automated-market-making-on-polymarket",
+        "https://github.com/warproxxx/poly-maker"
+      ],
+      "sourceQuality": "B",
+      "confidence": 0.7
+    },
+    {
+      "insight": "Spike trading exploits short-term price movements of 2%+ using real-time monitoring",
+      "detail": "Bots monitor prices every second, detect spikes above threshold (typically 2%), execute with automatic take-profit (3% or $1) and stop-loss (-2.5% or $0.75). GitHub implementations exist (Trust412/Polymarket-spike-bot-v1) with risk controls: minimum liquidity requirements, maximum 3 concurrent positions, configurable holding limits (default 3,600 seconds). Early observations from our tracking show intraday movements are primarily noise/mean-reversion, suggesting 2%+ thresholds may be targeting actual repricing events rather than random noise.",
+      "sources": [
+        "https://github.com/Trust412/Polymarket-spike-bot-v1"
+      ],
+      "sourceQuality": "C",
+      "confidence": 0.6
+    },
+    {
+      "insight": "Statistical arbitrage via mean reversion is theoretically viable but less documented than pure arbitrage",
+      "detail": "Polymarket exhibits cases where dependent assets are mispriced beyond instant arbitrage - price relationships that should hold statistically but deviate temporarily. Strategy involves identifying correlated markets, calculating spreads, and betting on reversion to historical mean. Less evidence of successful implementation compared to pure arbitrage. May offer edge if bots focus on instant arbitrage and miss statistical relationships.",
+      "sources": [
+        "https://arxiv.org/abs/2508.03474",
+        "https://www.chaincatcher.com/en/article/2212288"
+      ],
+      "sourceQuality": "C",
+      "confidence": 0.5
+    },
+    {
+      "insight": "Competition is moderate: sophisticated individual traders and bots dominate, but not yet traditional HFT firms",
+      "detail": "IMDEA study identified bot-like behavior in top wallets (10,200+ bets/year). Top weekly traders trade 20+ times/day with concentrated conviction bets. Market making competition described as 'one or two other bots per market' vs DeFi where 'sophisticated firms operate with millions.' However, competition is increasing as platforms mature. Gartner warns 40% of prediction market bot projects may fail by 2027 due to cost/complexity.",
+      "sources": [
+        "https://www.dlnews.com/articles/markets/polymarket-users-lost-millions-of-dollars-to-bot-like-bettors-over-the-past-year/",
+        "https://news.polymarket.com/p/automated-market-making-on-polymarket"
+      ],
+      "sourceQuality": "B",
+      "confidence": 0.75
+    },
+    {
+      "insight": "Polymarket's CLOB infrastructure supports HFT: sub-100ms latency achievable, generous rate limits, WebSocket feeds",
+      "detail": "Polymarket uses Alchemy for RPC, achieved 2.5x latency improvement (250ms → ~100ms) for critical workflows. Rate limits are generous for trading: 2,400/10s burst for order placement (240/s), 24,000/10min sustained (40/s). WebSocket channels provide real-time updates. No colocation offered, but Alchemy handled 20% of Polygon network traffic during election peak. Gas fees <$0.01 on Polygon Layer 2.",
+      "sources": [
+        "https://docs.polymarket.com/quickstart/introduction/rate-limits",
+        "https://www.alchemy.com/case-studies/polymarket",
+        "https://docs.polymarket.com/developers/CLOB/websocket/wss-overview"
+      ],
+      "sourceQuality": "A",
+      "confidence": 0.95
+    }
+  ],
+
+  "strategies": {
+    "arbitrage": {
+      "viability": "HIGH",
+      "description": "Exploit YES+NO price mismatches within single markets or across related markets. Buy when sum < $1.00, sell when sum > $1.00.",
+      "infrastructure": {
+        "required": [
+          "Real-time order book monitoring via WebSocket",
+          "Fast Polygon RPC provider (Alchemy, QuickNode, Ankr)",
+          "Bot for automatic detection and execution",
+          "Multi-market correlation tracking for combinatorial arb"
+        ],
+        "optional": [
+          "Dedicated Polygon node for fastest propagation",
+          "Machine learning for prediction of arbitrage opportunities"
+        ]
+      },
+      "difficulty": "MEDIUM",
+      "cost": {
+        "development": "$0-5K (open source bots available)",
+        "infrastructure": "$100-500/month (RPC provider premium tier)",
+        "capital": "$10K+ minimum for meaningful profits",
+        "gasAndFees": "<$0.01 per transaction on Polygon"
+      },
+      "edge": {
+        "current": "Moderate - opportunities exist but last seconds, bot-captured primarily",
+        "sustainability": "Medium - as more bots enter, opportunities shrink but won't disappear due to retail participation",
+        "barriers": "Speed of detection and execution, capital to capture opportunities at scale"
+      },
+      "implementationSteps": [
+        "Deploy resilient API client with WebSocket connections to CLOB",
+        "Monitor all markets for YES+NO sum deviations from $1.00",
+        "Detect cross-market dependencies (synonym markets, related outcomes)",
+        "Execute trades when deviation > transaction costs + acceptable margin",
+        "Track performance and adjust thresholds"
+      ],
+      "estimatedReturns": "1-5% per trade, historically $40M total extracted by all traders, top 3 wallets $4.2M/year"
+    },
+
+    "marketMaking": {
+      "viability": "MEDIUM",
+      "description": "Provide two-sided liquidity, earn bid-ask spread plus liquidity rewards (3x bonus for two-sided quotes). Target low-volatility, high-reward markets.",
+      "infrastructure": {
+        "required": [
+          "Automated quoting system that adjusts spreads based on market conditions",
+          "Real-time WebSocket monitoring of order book and trades",
+          "Position management and inventory tracking",
+          "Risk controls (max position size, stop-loss, adverse selection detection)",
+          "Configuration system for per-market parameters (spread, size, max inventory)"
+        ],
+        "optional": [
+          "Machine learning models for mid-price prediction",
+          "Volatility analysis across multiple timeframes (3h, 24h, 7d, 30d)",
+          "Google Sheets integration for parameter tuning (see poly-maker repo)"
+        ]
+      },
+      "difficulty": "HIGH",
+      "cost": {
+        "development": "$5-20K (complex risk management, pricing models)",
+        "infrastructure": "$100-500/month (RPC, monitoring)",
+        "capital": "$50K-300K for proper inventory management across markets",
+        "gasAndFees": "Minimal for trading, ~$3 or 0.3% for deposits/withdrawals"
+      },
+      "edge": {
+        "current": "Moderate - less competition than DeFi MM, but rewards decreased post-election",
+        "sustainability": "Medium - edge comes from sophisticated pricing models, not just speed",
+        "barriers": "Capital requirements, adverse selection risk, model development"
+      },
+      "implementationSteps": [
+        "Identify low-volatility, high-reward markets using historical price data",
+        "Build automated quoting bot with two-sided order placement",
+        "Implement position limits and inventory management",
+        "Configure per-market parameters (max spread 3-4 cents, min size cutoffs)",
+        "Monitor liquidity rewards eligibility (within max_incentive_spread)",
+        "Track P&L: spread capture + liquidity rewards + 4% holding rewards",
+        "Continuously adjust parameters based on market conditions"
+      ],
+      "estimatedReturns": "$200-800/day reported with $10K-50K capital, ~0.2% of volume traded, rewards provide 3x multiplier for two-sided quotes but decreased significantly post-election",
+      "risks": [
+        "Adverse selection: informed traders pick off stale quotes",
+        "Price risk: inventory accumulates on one side during directional moves",
+        "Reward changes: liquidity rewards decreased post-election, may change further",
+        "Capital requirements: need 'pretty big bankroll to ride out swings'"
+      ]
+    },
+
+    "spikeTrading": {
+      "viability": "MEDIUM-LOW",
+      "description": "Monitor price movements every second, detect spikes >2%, execute with tight take-profit/stop-loss. Based on Trust412 open source implementation.",
+      "infrastructure": {
+        "required": [
+          "Real-time price monitoring (1-second intervals)",
+          "Price history buffer (100+ data points per market)",
+          "Automatic order execution on threshold breach",
+          "Position tracking with auto take-profit and stop-loss"
+        ],
+        "optional": [
+          "Multi-market monitoring to increase opportunity frequency",
+          "Machine learning to optimize thresholds per market"
+        ]
+      },
+      "difficulty": "MEDIUM",
+      "cost": {
+        "development": "$0-2K (open source implementation available)",
+        "infrastructure": "$50-200/month (WebSocket feeds, monitoring)",
+        "capital": "$5K+ minimum (limited to 3 concurrent positions typical)",
+        "gasAndFees": "Minimal"
+      },
+      "edge": {
+        "current": "Low-Medium - our 24h tracking shows intraday movements are primarily mean-reversion, 2% threshold may catch real repricing",
+        "sustainability": "Uncertain - depends on whether 2%+ spikes represent exploitable mispricings or efficient price discovery",
+        "barriers": "Low - open source code exists, easy to replicate"
+      },
+      "implementationSteps": [
+        "Fork Trust412/Polymarket-spike-bot-v1 or build from scratch",
+        "Configure spike_threshold (default 2%), take_profit (3% or $1), stop_loss (-2.5% or $0.75)",
+        "Monitor multiple markets simultaneously",
+        "Execute on spike detection with liquidity checks ($10 minimum)",
+        "Track performance per market to optimize thresholds"
+      ],
+      "estimatedReturns": "Uncertain - no documented profitability data. Early observations suggest intraday noise may dominate.",
+      "risks": [
+        "Intraday mean-reversion: spikes may be noise rather than signal",
+        "Execution slippage: by time spike detected, price may have moved",
+        "Overfitting: thresholds optimized on past may not predict future"
+      ]
+    },
+
+    "statisticalArbitrage": {
+      "viability": "LOW-MEDIUM",
+      "description": "Identify correlated markets, trade spreads when they deviate from historical mean. Assume mean reversion over multi-day periods.",
+      "infrastructure": {
+        "required": [
+          "Historical price data across all markets",
+          "Correlation analysis and spread calculation",
+          "Mean-reversion detection (z-score, Bollinger bands)",
+          "Multi-market position tracking"
+        ],
+        "optional": [
+          "Machine learning for spread prediction",
+          "Regime detection (correlations change over time)"
+        ]
+      },
+      "difficulty": "HIGH",
+      "cost": {
+        "development": "$10-30K (requires sophisticated statistical modeling)",
+        "infrastructure": "$200-500/month (data storage, computation)",
+        "capital": "$50K+ for portfolio diversification",
+        "gasAndFees": "Minimal"
+      },
+      "edge": {
+        "current": "Uncertain - less documented than pure arbitrage, may be underdeveloped",
+        "sustainability": "High IF edge exists - requires statistical sophistication, not just speed",
+        "barriers": "High - modeling complexity, capital requirements, validation difficulty"
+      },
+      "implementationSteps": [
+        "Collect multi-month historical price data for all markets",
+        "Identify correlated market pairs (e.g., 'Dems lose Senate' vs 'GOP control Senate')",
+        "Calculate spreads and historical mean/std deviation",
+        "Trade when spread deviates >2 standard deviations from mean",
+        "Exit when spread reverts to mean or stop-loss hit",
+        "Continuously validate correlations (may break during events)"
+      ],
+      "estimatedReturns": "Unknown - no documented cases. Traditional stat arb yields 10-20% annually in equities, but prediction markets have different dynamics.",
+      "risks": [
+        "Correlation breakdown: relationships may not hold during major events",
+        "Capital intensive: need diversification across many market pairs",
+        "Model risk: mean-reversion assumption may not hold in prediction markets"
+      ]
+    }
+  },
+
+  "competitiveLandscape": {
+    "currentState": "Moderate competition, primarily sophisticated individual traders and bots, not yet traditional HFT firms",
+    "keyPlayers": [
+      {
+        "type": "Arbitrage bots",
+        "scale": "Top 3 wallets: $4.2M profit from 10,200+ bets over one year",
+        "characteristics": "Automated programs scanning for mispricings, operating on Polygon nodes for minimal latency"
+      },
+      {
+        "type": "Market makers",
+        "scale": "'One or two other bots per market' per interview, but increasing",
+        "characteristics": "Automated two-sided quoting with Google Sheets parameter management (poly-maker pattern)"
+      },
+      {
+        "type": "High-frequency manual traders",
+        "scale": "Top 5 weekly traders: $2.8M combined profit, trading 20+ times/day",
+        "characteristics": "Sports specialists (4/5), concentrated conviction bets (5-24x average size), morning trading (6-12 UTC)"
+      },
+      {
+        "type": "Copy traders",
+        "scale": "Unknown but enough to create 'whale watching' industry",
+        "characteristics": "Track top wallets, automatically replicate trades. Top traders now use multiple wallets to evade"
+      }
+    ],
+    "barriers": {
+      "low": [
+        "No colocation advantage (everyone uses same Polygon RPC providers)",
+        "Open source code available for basic bots",
+        "Low gas fees remove cost barrier to experimentation"
+      ],
+      "medium": [
+        "Capital requirements for market making ($50K-300K)",
+        "Sophisticated pricing models for adverse selection management",
+        "Speed optimization (sub-100ms latency) requires premium infrastructure"
+      ],
+      "high": [
+        "Traditional HFT firms haven't entered (yet) - different from DeFi",
+        "Regulatory uncertainty may deter institutional players",
+        "Market size ($3.3B in 2024 election cycle) still small vs traditional markets"
+      ]
+    },
+    "trendAnalysis": "Competition increasing but not yet saturated. Platform growing (920% framework adoption increase 2023-2025), but Gartner warns 40% of projects may fail by 2027 due to cost/complexity. Post-election liquidity rewards decreased, potentially reducing new entrant motivation."
+  },
+
+  "technicalRequirements": {
+    "basic": {
+      "description": "Minimum to run arbitrage or spike trading bot",
+      "components": [
+        "Python or TypeScript environment",
+        "Polymarket CLOB client (py-clob-client or @polymarket/clob-client)",
+        "Wallet with USDC on Polygon",
+        "Basic WebSocket connection for real-time data",
+        "Free or basic RPC provider (100 req/min sufficient for single-market monitoring)"
+      ],
+      "estimatedCost": "$50-100/month",
+      "latency": "250-500ms achievable"
+    },
+    "intermediate": {
+      "description": "Market making or multi-market arbitrage",
+      "components": [
+        "Premium RPC provider (Alchemy, QuickNode, Ankr) for sub-100ms latency",
+        "WebSocket connections for multiple markets simultaneously",
+        "Position management and inventory tracking system",
+        "Risk controls and stop-loss automation",
+        "Parameter configuration system (Google Sheets or database)",
+        "Monitoring and alerting (Telegram integration)"
+      ],
+      "estimatedCost": "$200-500/month",
+      "latency": "100-200ms achievable"
+    },
+    "advanced": {
+      "description": "Professional-grade HFT operation",
+      "components": [
+        "Dedicated Polygon node or enterprise RPC tier",
+        "Multi-provider RPC setup with intelligent routing and failover",
+        "Machine learning models for price prediction and adverse selection detection",
+        "Historical data warehouse for backtesting and analysis",
+        "High-frequency monitoring (sub-second intervals)",
+        "Automated parameter optimization",
+        "Comprehensive logging and audit trails"
+      ],
+      "estimatedCost": "$500-2000/month",
+      "latency": "<100ms achievable (Polymarket achieved ~100ms with Alchemy optimization)"
+    },
+    "criticalInfrastructure": [
+      {
+        "component": "Polygon RPC Provider",
+        "options": "Alchemy (used by Polymarket, 2.5x latency improvement), QuickNode (<25ms), Ankr, GetBlock, dRPC",
+        "recommendation": "Start with Alchemy or QuickNode premium tier for proven reliability"
+      },
+      {
+        "component": "WebSocket Management",
+        "considerations": "Polymarket enforces 500 instruments per connection, no unsubscribe support. Need connection pooling for >500 markets.",
+        "recommendation": "Use official real-time-data-client or build custom with connection management"
+      },
+      {
+        "component": "Order Execution",
+        "considerations": "Rate limits: 240/s burst, 40/s sustained for order placement. EIP712 signing required. Funder address for proxy wallets.",
+        "recommendation": "Batch orders when possible (15 order limit per batch), respect rate limits to avoid throttling"
+      }
+    ]
+  },
+
+  "edgeAnalysis": {
+    "currentEdges": [
+      {
+        "edge": "Speed of arbitrage detection",
+        "sustainability": "Medium - as more bots enter, reaction time must improve from seconds to milliseconds",
+        "saturation": "Partial - instant arbitrage opportunities shrinking but retail participation ensures continued mispricings"
+      },
+      {
+        "edge": "Sophisticated market making models",
+        "sustainability": "High - requires statistical expertise, capital, and risk management beyond simple bots",
+        "saturation": "Low - competition described as 'one or two bots per market' vs DeFi sophistication"
+      },
+      {
+        "edge": "Cross-platform arbitrage (Polymarket vs Kalshi vs PredictIt)",
+        "sustainability": "Medium - requires integration with multiple platforms, regulatory complexity",
+        "saturation": "Low - less documented, higher barriers to entry"
+      },
+      {
+        "edge": "Statistical relationships (mean reversion, correlation)",
+        "sustainability": "High - requires modeling sophistication, not replicable by simple bots",
+        "saturation": "Very Low - little evidence of widespread implementation"
+      },
+      {
+        "edge": "Information advantage (faster news processing, sentiment analysis)",
+        "sustainability": "High - combines with any strategy, compounds returns",
+        "saturation": "Low-Medium - some traders use AI agents (Polymarket/agents framework) but not widespread"
+      },
+      {
+        "edge": "Capital scale (access to larger positions, inventory management)",
+        "sustainability": "High - structural advantage that cannot be replicated without capital",
+        "saturation": "Low - top market makers mention 'pretty big bankroll' as barrier"
+      }
+    ],
+    "decayingEdges": [
+      {
+        "edge": "Liquidity rewards arbitrage",
+        "reason": "Post-election rewards decreased significantly, may continue declining as platform matures"
+      },
+      {
+        "edge": "Simple algorithmic advantages",
+        "reason": "As more bots deploy, basic strategies (e.g., instant arbitrage detection) become table stakes"
+      }
+    ],
+    "emergingEdges": [
+      {
+        "edge": "AI-powered prediction (LLM analysis of news, social media, forums)",
+        "rationale": "Polymarket offers official 'agents' framework combining trading with LLM reasoning. Early stage, high potential."
+      },
+      {
+        "edge": "Multi-agent coordination (swarm trading)",
+        "rationale": "Multiple specialized agents (news, sentiment, technical, execution) coordinating strategies"
+      },
+      {
+        "edge": "Social signal exploitation (whale tracking, copy trade frontrunning)",
+        "rationale": "Tools like PolyWatch track large trades. Potential to detect and frontrun copy traders."
+      }
+    ]
+  },
+
+  "recommendations": {
+    "immediate": [
+      {
+        "action": "Test arbitrage strategy with basic bot",
+        "rationale": "Lowest barrier to entry, proven profitability, open source implementations available",
+        "estimatedEffort": "1-2 weeks to deploy and test",
+        "estimatedCost": "$100/month infrastructure + $5K test capital",
+        "expectedLearnings": "Validate opportunity frequency, test execution speed, measure actual vs theoretical edge"
+      },
+      {
+        "action": "Monitor leaderboard traders for pattern insights",
+        "rationale": "imp-009 (leaderboard tracker) now available. Can identify market types, timing patterns, position sizing strategies.",
+        "estimatedEffort": "Ongoing monitoring, 1 week to build analysis pipeline",
+        "estimatedCost": "Minimal (existing infrastructure)",
+        "expectedLearnings": "Discover what top traders focus on, avoid saturated strategies, identify emerging edges"
+      }
+    ],
+    "shortTerm": [
+      {
+        "action": "Build market making bot for low-volatility markets",
+        "rationale": "Moderate competition, liquidity rewards provide extra returns, scales with capital",
+        "estimatedEffort": "3-4 weeks for MVP with basic risk controls",
+        "estimatedCost": "$500/month infrastructure + $50K capital for meaningful scale",
+        "expectedLearnings": "Adverse selection management, optimal spread width, inventory risk, reward program mechanics",
+        "blockers": ["Automated quoting system (hyp-003)", "Sophisticated pricing models"]
+      },
+      {
+        "action": "Develop cross-market correlation analysis",
+        "rationale": "Less saturated than pure arbitrage, higher barriers mean fewer competitors",
+        "estimatedEffort": "4-6 weeks for data collection and statistical analysis",
+        "estimatedCost": "$200/month infrastructure + $20K test capital",
+        "expectedLearnings": "Which correlations persist, how quickly they mean-revert, position sizing for spread trades"
+      }
+    ],
+    "longTerm": [
+      {
+        "action": "Integrate AI prediction capabilities (news, sentiment, social)",
+        "rationale": "Combines information edge with execution edge, hard to replicate, Polymarket provides official framework",
+        "estimatedEffort": "8-12 weeks to build and validate",
+        "estimatedCost": "$500-1000/month (LLM APIs + infrastructure)",
+        "expectedLearnings": "Whether AI predictions improve entry timing, position sizing, or market selection"
+      },
+      {
+        "action": "Develop multi-strategy portfolio (arbitrage + MM + stat arb)",
+        "rationale": "Diversification across uncorrelated strategies, better risk-adjusted returns",
+        "estimatedEffort": "12-16 weeks to integrate multiple strategies with unified risk management",
+        "estimatedCost": "$1000/month infrastructure + $100K+ capital",
+        "expectedLearnings": "How strategies interact, optimal capital allocation, portfolio-level risk management"
+      }
+    ]
+  },
+
+  "sourceList": [
+    {
+      "url": "https://docs.polymarket.com/developers/CLOB/introduction",
+      "title": "Polymarket CLOB API Documentation",
+      "quality": "A",
+      "type": "Official technical documentation",
+      "accessed": "2025-12-08"
+    },
+    {
+      "url": "https://docs.polymarket.com/quickstart/introduction/rate-limits",
+      "title": "Polymarket API Rate Limits",
+      "quality": "A",
+      "type": "Official technical documentation",
+      "accessed": "2025-12-08"
+    },
+    {
+      "url": "https://arxiv.org/abs/2508.03474",
+      "title": "Unravelling the Probabilistic Forest: Arbitrage in Prediction Markets (IMDEA Study)",
+      "quality": "A",
+      "type": "Academic research paper",
+      "accessed": "2025-12-08"
+    },
+    {
+      "url": "https://www.dlnews.com/articles/markets/polymarket-users-lost-millions-of-dollars-to-bot-like-bettors-over-the-past-year/",
+      "title": "Polymarket users lost millions to bot-like bettors (DL News)",
+      "quality": "B",
+      "type": "Journalism covering IMDEA study",
+      "accessed": "2025-12-08"
+    },
+    {
+      "url": "https://news.polymarket.com/p/automated-market-making-on-polymarket",
+      "title": "Automated Market Making on Polymarket",
+      "quality": "B",
+      "type": "Case study from market maker",
+      "accessed": "2025-12-08"
+    },
+    {
+      "url": "https://github.com/warproxxx/poly-maker",
+      "title": "poly-maker: Automated market making bot",
+      "quality": "B",
+      "type": "Open source implementation",
+      "accessed": "2025-12-08"
+    },
+    {
+      "url": "https://github.com/Trust412/Polymarket-spike-bot-v1",
+      "title": "Polymarket spike trading bot",
+      "quality": "C",
+      "type": "Open source implementation",
+      "accessed": "2025-12-08"
+    },
+    {
+      "url": "https://www.alchemy.com/case-studies/polymarket",
+      "title": "Alchemy x Polymarket: RPC Infrastructure Case Study",
+      "quality": "A",
+      "type": "Technical case study",
+      "accessed": "2025-12-08"
+    },
+    {
+      "url": "https://www.ainvest.com/news/alchemy-arbitrage-exploiting-inefficiencies-polymarket-prediction-markets-2509/",
+      "title": "The Alchemy of Arbitrage: Exploiting Inefficiencies in Polymarket",
+      "quality": "C",
+      "type": "Analysis article",
+      "accessed": "2025-12-08"
+    },
+    {
+      "url": "https://beincrypto.com/polymarket-arbitrage-risk-free-profit/",
+      "title": "Arbitrage Traders Turn Polymarket Into A Precision Profit Engine",
+      "quality": "C",
+      "type": "Analysis article",
+      "accessed": "2025-12-08"
+    },
+    {
+      "url": "https://github.com/Polymarket/agents",
+      "title": "Polymarket AI Agents Framework",
+      "quality": "A",
+      "type": "Official framework",
+      "accessed": "2025-12-08"
+    },
+    {
+      "url": "https://polymarket.com/leaderboard",
+      "title": "Polymarket Leaderboard",
+      "quality": "A",
+      "type": "Official platform data",
+      "accessed": "2025-12-08"
+    },
+    {
+      "url": "https://polymarketanalytics.com/traders",
+      "title": "Polymarket Analytics - Traders Leaderboard",
+      "quality": "B",
+      "type": "Third-party analytics",
+      "accessed": "2025-12-08"
+    }
+  ],
+
+  "unverified": [
+    "Specific latency numbers for order execution (<100ms claimed but not benchmarked publicly)",
+    "Current state of competition in Dec 2025 (most data from 2024-early 2025 study period)",
+    "Presence of traditional HFT firms (anecdotal claims of absence but no systematic verification)",
+    "Actual profitability of spike trading strategy (implementation exists but no documented returns)",
+    "Sustainability of liquidity rewards program (decreased post-election, future changes unknown)"
+  ],
+
+  "followUp": [
+    "What is the actual latency distribution for order execution on Polymarket CLOB?",
+    "How has competition changed from the IMDEA study period (Apr 2024-Apr 2025) to now (Dec 2025)?",
+    "Are there any traditional HFT firms operating on Polymarket that maintain stealth?",
+    "What is the typical order book depth across different market categories?",
+    "How do arbitrage opportunities vary by market type (politics vs sports vs crypto)?",
+    "What percentage of top traders are using AI/ML vs pure algorithmic strategies?",
+    "How profitable is cross-platform arbitrage (Polymarket vs Kalshi) after accounting for regulatory friction?"
+  ],
+
+  "overallConfidence": 0.75,
+
+  "methodology": "7-phase research protocol: (1) Question scoping to clarify HFT viability on Polymarket, (2) Retrieval planning across 6 subtopics, (3) Iterative querying with 15+ web searches and 5+ deep fetches, (4) Source triangulation with quality ratings (A-E scale), (5) Synthesis into structured insights, (6) Self-critique identifying unverified claims, (7) Final output with actionable recommendations. Sources cross-verified: CLOB specs (official docs + GitHub), arbitrage profits (academic study + journalism), market making (case study + open source code), infrastructure (Alchemy case study + RPC provider research).",
+
+  "keyTakeaways": [
+    "Arbitrage is most accessible HFT strategy: $40M extracted historically, 1-5% returns per trade, but opportunities now last only seconds",
+    "Market making can generate $200-800/day but requires $50K+ capital, sophisticated models, and automation. Post-election rewards decreased.",
+    "Competition is moderate: sophisticated bots exist but not traditional HFT firms. 'One or two bots per market' vs DeFi saturation.",
+    "Infrastructure is HFT-friendly: Sub-100ms latency achievable, 240/s order rate limits, <$0.01 gas fees, WebSocket real-time feeds.",
+    "Open source implementations exist for arbitrage, market making, and spike trading - low barrier to experimentation.",
+    "Edge sustainability varies: Speed-based edges (arbitrage) partially saturated. Model-based edges (MM, stat arb) less saturated.",
+    "Start with arbitrage to test infrastructure and execution, then graduate to market making or statistical arbitrage for sustainable edge."
+  ]
+}

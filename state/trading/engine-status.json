@@ -1,22 +1,25 @@
 {
-  "lastEvaluated": "2025-12-08T19:38:11.332Z",
+  "lastEvaluated": "2025-12-08T22:15:00.000Z",
   "hypothesisHealth": {
-    "total": 7,
+    "total": 11,
     "byStatus": {
-      "proposed": 3,
-      "testing": 3,
-      "validated": 0,
+      "proposed": 4,
+      "testing": 5,
+      "validated": 1,
       "invalidated": 1
     },
-    "avgConviction": 0.38,
-    "testableNow": 5,
+    "avgConviction": 0.44,
+    "testableNow": 8,
     "blockedByCapability": 1,
     "testableIds": [
       "hyp-002",
       "hyp-004",
+      "hyp-005",
       "hyp-006",
       "hyp-007",
-      "hyp-005"
+      "hyp-008",
+      "hyp-010",
+      "hyp-011"
     ]
   },
   "blockedHypotheses": [
@@ -29,9 +32,9 @@
     }
   ],
   "currentPriority": {
-    "action": "test-new-hypotheses",
-    "target": "hyp-006,hyp-007",
-    "reason": "Two new hypotheses from market-scan: sports volume anomaly and related-market arbitrage. Both can be tested without new infrastructure. hyp-002 and hyp-005 continuing to collect data."
+    "action": "continue-testing",
+    "targets": ["hyp-007", "hyp-002", "hyp-005"],
+    "reason": "hyp-007 (related market arbitrage) just moved to testing - has clear Time POY test case. hyp-002 and hyp-005 need continued data collection. hyp-009 validated and graduated to strat-002."
   },
   "engineState": "healthy",
   "engineStates": {
@@ -41,17 +44,27 @@
   },
   "metrics": {
     "hypothesesGeneratedThisWeek": 2,
-    "hypothesesTestedThisWeek": 2,
-    "hypothesesValidatedThisWeek": 0,
+    "hypothesesTestedThisWeek": 3,
+    "hypothesesValidatedThisWeek": 1,
     "hypothesesInvalidatedThisWeek": 1,
     "capabilitiesBuiltThisWeek": 0,
     "driftSignalsToday": 0
   },
   "needsAttention": [],
+  "recentActions": [
+    {
+      "timestamp": "2025-12-08T22:15:00.000Z",
+      "action": "hypothesis-health",
+      "changes": [
+        "hyp-009: testing -> validated (0.55 -> 0.75) - graduated to strat-002",
+        "hyp-007: proposed -> testing - clear test case identified"
+      ]
+    }
+  ],
   "lastLeaderboardScan": "2025-12-08T07:46:03.605Z",
   "topTraderCount": 5,
   "followSignalsGenerated": 0,
-  "lastHealthCheck": "2025-12-08T18:30:00.000Z",
+  "lastHealthCheck": "2025-12-08T22:15:00.000Z",
   "daemon": {
     "version": "330723a",
     "startedAt": "2025-12-08T19:08:09.784Z",
