@@ -8,7 +8,7 @@
       "priority": "medium",
       "context": {
         "recurring": true,
-        "frequency": "30m",
+        "frequency": "1h",
         "purpose": "Regular autonomous operation - review state, advance work, take action"
       }
     },

@@ -511,7 +511,7 @@ async function runDaemon(): Promise<void> {
     fs.mkdirSync(LOG_DIR, { recursive: true });
   }
 
-  const checkInterval = 60 * 1000; // Check every minute
+  const checkInterval = 30 * 60 * 1000; // Check every 30 minutes
 
   const tick = async () => {
     // Pull latest state before checking for tasks
