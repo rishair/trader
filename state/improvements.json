@@ -1,6 +1,54 @@
 {
   "backlog": [
-            {
+    {
+      "id": "imp-008",
+      "title": "Closing-soon scanner pipeline",
+      "category": "capability",
+      "leverage": "high",
+      "effort": "low",
+      "rationale": "First autonomous pipeline. Every 6h scan markets closing in 72h, check momentum, auto-generate hypotheses. Enables hyp-002 testing at scale.",
+      "status": "backlog",
+      "outcome": null,
+      "createdAt": "2025-12-08T00:00:00Z",
+      "completedAt": null
+    },
+    {
+      "id": "imp-009",
+      "title": "Leaderboard tracker pipeline",
+      "category": "capability",
+      "leverage": "high",
+      "effort": "medium",
+      "rationale": "Daily scrape top traders, track their positions, generate follow signals. Copy smart money strategy.",
+      "status": "backlog",
+      "outcome": null,
+      "createdAt": "2025-12-08T00:00:00Z",
+      "completedAt": null
+    },
+    {
+      "id": "imp-010",
+      "title": "Price drift detector (real-time)",
+      "category": "capability",
+      "leverage": "high",
+      "effort": "medium",
+      "rationale": "Monitor all markets for sudden moves (>5% in 1h). When detected, follow the move. Informed money signal.",
+      "status": "backlog",
+      "outcome": null,
+      "createdAt": "2025-12-08T00:00:00Z",
+      "completedAt": null
+    },
+    {
+      "id": "imp-011",
+      "title": "Hypothesis auto-tester",
+      "category": "capability",
+      "leverage": "high",
+      "effort": "medium",
+      "rationale": "Automated testing framework. Takes hypothesis, executes trades per rules, tracks results, auto-promotes/kills based on performance.",
+      "status": "backlog",
+      "outcome": null,
+      "createdAt": "2025-12-08T00:00:00Z",
+      "completedAt": null
+    },
+    {
       "id": "imp-003",
       "title": "Price tracking for open positions",
       "category": "capability",

@@ -16,6 +16,20 @@
       }
     },
     {
+      "id": "pipeline-closing-001",
+      "type": "pipeline",
+      "description": "Closing-soon scanner: Find markets closing in 72h, check momentum, generate hypotheses",
+      "scheduledFor": "2025-12-08T14:00:00Z",
+      "priority": "high",
+      "context": {
+        "pipeline": "closing-scanner",
+        "recurring": true,
+        "frequency": "6h",
+        "feedsTo": "hypotheses.json",
+        "source": "platform"
+      }
+    },
+    {
       "id": "monitor-001",
       "type": "monitor",
       "description": "Scan for markets closing within 7 days - track price movements for momentum hypothesis",

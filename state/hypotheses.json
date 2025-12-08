@@ -94,20 +94,44 @@
       "id": "string - unique identifier",
       "statement": "string - clear, testable hypothesis",
       "rationale": "string - why this might be true",
+      "source": "academic | leaderboard | platform | observation | user | cross-market",
+      "sourcePipeline": "string - which pipeline generated this (null if manual)",
       "testMethod": "string - how to validate/invalidate",
+      "entryRules": "string - specific conditions to enter trade",
+      "exitRules": "string - specific conditions to exit trade",
+      "expectedWinRate": "number 0-1 - what we expect",
+      "expectedPayoff": "number - average win/loss ratio",
+      "minSampleSize": "number - trades needed to validate",
       "status": "proposed | testing | validated | invalidated | inconclusive",
       "confidence": "number 0-1 - prior belief",
+      "testResults": {
+        "trades": "number - trades executed",
+        "wins": "number",
+        "losses": "number",
+        "totalPnL": "number",
+        "actualWinRate": "number"
+      },
       "evidence": [
         {
           "date": "ISO date",
           "observation": "string",
           "supports": "boolean",
-          "confidenceImpact": "number - how much this changed confidence"
+          "confidenceImpact": "number"
         }
       ],
       "conclusion": "string - final assessment if status is terminal",
       "createdAt": "ISO date",
-      "updatedAt": "ISO date"
+      "updatedAt": "ISO date",
+      "testStartedAt": "ISO date | null",
+      "testEndedAt": "ISO date | null"
     }
+  },
+  "pipelineStats": {
+    "academic": { "generated": 0, "validated": 0, "invalidated": 0 },
+    "leaderboard": { "generated": 0, "validated": 0, "invalidated": 0 },
+    "platform": { "generated": 0, "validated": 0, "invalidated": 0 },
+    "observation": { "generated": 0, "validated": 0, "invalidated": 0 },
+    "user": { "generated": 0, "validated": 0, "invalidated": 0 },
+    "cross-market": { "generated": 0, "validated": 0, "invalidated": 0 }
   }
 }
