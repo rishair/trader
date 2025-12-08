@@ -83,3 +83,19 @@ When the user shares content (links, ideas, tweets, papers):
 - Be direct and concise
 - If you don't know, say so - then go find out
 - Provide your actual assessment, not what you think they want to hear
+
+## Git Workflow
+
+**Commit and push at reasonable intervals** - after completing a logical unit of work (new feature, content intake, state updates, infrastructure changes).
+
+```bash
+git add <files>
+git commit -m "concise description"
+git push origin main
+```
+
+Guidelines:
+- Commit after: content intake processed, hypothesis added, strategy changes, config updates, tool creation
+- Don't wait until end of session - commit as you go
+- Keep commits atomic and descriptive
+- Push to `origin main` after each commit
