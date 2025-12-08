@@ -87,10 +87,11 @@ When the user shares content (links, ideas, tweets, papers):
 ## Infrastructure
 
 ### Droplet (Production Server)
+- **Domain**: goodtraderbot.com
 - **IP**: 104.248.8.100
 - **OS**: Ubuntu 24.04 LTS
 - **Path**: `/opt/trader`
-- **Access**: SSH with deploy key (root@104.248.8.100)
+- **Access**: SSH with deploy key (root@goodtraderbot.com)
 
 The daemon runs on this droplet. All state files are synced via git.
 
