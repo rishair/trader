@@ -343,7 +343,11 @@ async function spawnClaudeSession(prompt: string, chatId: string, sessionName: s
   }
 
   return new Promise((resolve) => {
-    const claude = spawn('claude', ['-p', prompt, '--output-format', 'text'], {
+    const claude = spawn('claude', [
+      '-p', prompt,
+      '--output-format', 'text',
+      '--dangerously-skip-permissions'
+    ], {
       cwd: PROJECT_ROOT,
       stdio: ['pipe', 'pipe', 'pipe'],
       env: { ...process.env }
