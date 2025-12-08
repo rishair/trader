@@ -1,7 +1,92 @@
 {
-  "cash": 9866.679999999998,
+  "cash": 9758.309999999998,
   "startingCapital": 10000,
-  "positions": [],
+  "positions": [
+    {
+      "id": "trade-mixt4w9j",
+      "market": "Will 3 Fed rate cuts happen in 2025?",
+      "marketSlug": "will-3-fed-rate-cuts-happen-in-2025",
+      "platform": "Polymarket",
+      "direction": "YES",
+      "entryPrice": 0.95,
+      "shares": 31,
+      "cost": 29.45,
+      "currentPrice": 0.95,
+      "unrealizedPnL": 0,
+      "hypothesisId": "hyp-002",
+      "entryDate": "2025-12-08T23:53:33.271Z",
+      "exitCriteria": {
+        "takeProfit": 0.99,
+        "stopLoss": 0.85,
+        "timeLimit": "2025-12-10T12:00:00Z",
+        "notes": "Hold to resolution - expect YES to reach 99%+ as Fed meeting confirms"
+      },
+      "rationale": "Testing momentum hypothesis on Fed market closing in 36h. Market has already priced in high probability, betting on continued momentum toward resolution."
+    },
+    {
+      "id": "trade-mixt4w9m",
+      "market": "Russia x Ukraine ceasefire in 2025?",
+      "marketSlug": "russia-x-ukraine-ceasefire-in-2025",
+      "platform": "Polymarket",
+      "direction": "NO",
+      "entryPrice": 0.6,
+      "shares": 41,
+      "cost": 24.599999999999998,
+      "currentPrice": 0.6,
+      "unrealizedPnL": 0,
+      "hypothesisId": "hyp-006",
+      "entryDate": "2025-12-08T23:53:33.274Z",
+      "exitCriteria": {
+        "takeProfit": 0.8,
+        "stopLoss": 0.4,
+        "timeLimit": "2025-12-31T12:00:00Z",
+        "notes": "Monitor news for ceasefire announcements"
+      },
+      "rationale": "High volume market ($351k/day). Testing if following volume signals works. Betting NO on ceasefire in remaining 23 days - seems rushed despite headlines."
+    },
+    {
+      "id": "trade-mixt4w9n",
+      "market": "Will Bitcoin reach $150,000 by December 31, 2025?",
+      "marketSlug": "will-bitcoin-reach-150000-by-december-31-2025-188",
+      "platform": "Polymarket",
+      "direction": "NO",
+      "entryPrice": 0.85,
+      "shares": 35,
+      "cost": 29.75,
+      "currentPrice": 0.85,
+      "unrealizedPnL": 0,
+      "hypothesisId": "hyp-010",
+      "entryDate": "2025-12-08T23:53:33.275Z",
+      "exitCriteria": {
+        "takeProfit": 0.95,
+        "stopLoss": 0.6,
+        "timeLimit": "2025-12-31T12:00:00Z",
+        "notes": "Exit early if BTC surges past $130k"
+      },
+      "rationale": "BTC at ~$100k would need 50% gain in 23 days. While crypto is volatile, this seems overpriced. Testing conviction betting on clear probability assessments."
+    },
+    {
+      "id": "trade-mixt4w9o",
+      "market": "Will NVIDIA be the largest company in the world by market cap on December 31?",
+      "marketSlug": "will-nvidia-be-the-largest-company-in-the-world-by-market-cap-on-december-31-2025",
+      "platform": "Polymarket",
+      "direction": "YES",
+      "entryPrice": 0.91,
+      "shares": 27,
+      "cost": 24.57,
+      "currentPrice": 0.91,
+      "unrealizedPnL": 0,
+      "hypothesisId": "hyp-002",
+      "entryDate": "2025-12-08T23:53:33.276Z",
+      "exitCriteria": {
+        "takeProfit": 0.98,
+        "stopLoss": 0.8,
+        "timeLimit": "2025-12-31T12:00:00Z",
+        "notes": "Learning from AAPL loss - go with momentum not against"
+      },
+      "rationale": "NVDA already at 91%, testing momentum continuation. Our previous AAPL bet lost because we bet against momentum. Now testing WITH momentum."
+    }
+  ],
   "tradeHistory": [
     {
       "id": "trade-001",
@@ -37,10 +122,66 @@
       "reason": "Thesis invalidated: Market cap gap widening not narrowing. NVDA pulling ahead. Price down 27% from entry with no reversal catalyst. Exiting to preserve capital.",
       "cashAfter": 9866.679999999998,
       "hypothesisId": "hyp-005"
+    },
+    {
+      "tradeId": "trade-mixt4w9j",
+      "type": "ENTRY",
+      "timestamp": "2025-12-08T23:53:33.272Z",
+      "market": "Will 3 Fed rate cuts happen in 2025?",
+      "marketSlug": "will-3-fed-rate-cuts-happen-in-2025",
+      "direction": "YES",
+      "price": 0.95,
+      "shares": 31,
+      "cost": 29.45,
+      "hypothesisId": "hyp-002",
+      "rationale": "Testing momentum hypothesis on Fed market closing in 36h. Market has already priced in high probability, betting on continued momentum toward resolution.",
+      "cashAfter": 9837.229999999998
+    },
+    {
+      "tradeId": "trade-mixt4w9m",
+      "type": "ENTRY",
+      "timestamp": "2025-12-08T23:53:33.274Z",
+      "market": "Russia x Ukraine ceasefire in 2025?",
+      "marketSlug": "russia-x-ukraine-ceasefire-in-2025",
+      "direction": "NO",
+      "price": 0.6,
+      "shares": 41,
+      "cost": 24.599999999999998,
+      "hypothesisId": "hyp-006",
+      "rationale": "High volume market ($351k/day). Testing if following volume signals works. Betting NO on ceasefire in remaining 23 days - seems rushed despite headlines.",
+      "cashAfter": 9812.629999999997
+    },
+    {
+      "tradeId": "trade-mixt4w9n",
+      "type": "ENTRY",
+      "timestamp": "2025-12-08T23:53:33.275Z",
+      "market": "Will Bitcoin reach $150,000 by December 31, 2025?",
+      "marketSlug": "will-bitcoin-reach-150000-by-december-31-2025-188",
+      "direction": "NO",
+      "price": 0.85,
+      "shares": 35,
+      "cost": 29.75,
+      "hypothesisId": "hyp-010",
+      "rationale": "BTC at ~$100k would need 50% gain in 23 days. While crypto is volatile, this seems overpriced. Testing conviction betting on clear probability assessments.",
+      "cashAfter": 9782.879999999997
+    },
+    {
+      "tradeId": "trade-mixt4w9o",
+      "type": "ENTRY",
+      "timestamp": "2025-12-08T23:53:33.276Z",
+      "market": "Will NVIDIA be the largest company in the world by market cap on December 31?",
+      "marketSlug": "will-nvidia-be-the-largest-company-in-the-world-by-market-cap-on-december-31-2025",
+      "direction": "YES",
+      "price": 0.91,
+      "shares": 27,
+      "cost": 24.57,
+      "hypothesisId": "hyp-002",
+      "rationale": "NVDA already at 91%, testing momentum continuation. Our previous AAPL bet lost because we bet against momentum. Now testing WITH momentum.",
+      "cashAfter": 9758.309999999998
     }
   ],
   "createdAt": "2024-12-07T00:00:00Z",
-  "lastUpdated": "2025-12-08T23:48:44.713Z",
+  "lastUpdated": "2025-12-08T23:53:33.276Z",
   "metrics": {
     "totalReturn": -133.32,
     "totalReturnPct": -1.3332,
