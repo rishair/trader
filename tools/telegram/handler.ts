@@ -519,6 +519,9 @@ Just send me links, ideas, news - I'll add to inbox.`,
   }
 
   if (lower === '/process') {
+    // Get pending count before processing
+    const beforeCount = getPendingApprovals().length;
+
     await spawnClaudeSession(
       `You are the trader agent. Process pending items in state/inbox.json. For each:
 1. Evaluate relevance, actionability, urgency
@@ -530,6 +533,24 @@ Read MISSION.md for context.`,
       'process-inbox'
     );
     gitPush('Inbox processed');
+
+    // Check for new pending approvals and notify
+    gitPull(); // Get latest state after Claude session
+    const afterPending = getPendingApprovals();
+    const newCount = afterPending.length - beforeCount;
+
+    if (newCount > 0) {
+      let msg = `\n📋 *${newCount} new proposal(s) awaiting approval:*\n\n`;
+      // Show the newest ones (at the end of the array)
+      const newApprovals = afterPending.slice(-newCount);
+      for (const p of newApprovals) {
+        msg += `*${p.id}*\n`;
+        msg += `${p.title}\n`;
+        msg += `${p.description.slice(0, 150)}${p.description.length > 150 ? '...' : ''}\n\n`;
+      }
+      msg += `Reply: /approve <id> or /reject <id>`;
+      await sendMessage(msg, chatId);
+    }
     return;
   }
 
