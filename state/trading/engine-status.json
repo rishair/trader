@@ -1,5 +1,5 @@
 {
-  "lastEvaluated": "2025-12-08T22:15:00.000Z",
+  "lastEvaluated": "2025-12-08T18:17:07.159Z",
   "hypothesisHealth": {
     "total": 7,
     "byStatus": {
@@ -13,9 +13,9 @@
     "blockedByCapability": 2,
     "testableIds": [
       "hyp-002",
-      "hyp-005",
       "hyp-006",
-      "hyp-007"
+      "hyp-007",
+      "hyp-005"
     ]
   },
   "blockedHypotheses": [
@@ -58,8 +58,8 @@
   "followSignalsGenerated": 0,
   "lastHealthCheck": "2025-12-08T18:30:00.000Z",
   "daemon": {
-    "version": "0ec2208",
-    "startedAt": "2025-12-08T18:09:32.800Z",
-    "pid": 20180
+    "version": "df44431",
+    "startedAt": "2025-12-08T18:17:06.129Z",
+    "pid": 20981
   }
 }

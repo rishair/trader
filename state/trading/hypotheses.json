@@ -220,7 +220,7 @@
       "rationale": "In the 'Largest Company end of 2025' market, NVDA is priced at 89% and AAPL at 9%, despite AAPL market cap being only 5-7% behind NVDA. Market may be extrapolating recent momentum rather than pricing in realistic volatility scenarios.",
       "testMethod": "Track multi-outcome markets where gap between leading outcomes is <10%. Compare market pricing to volatility-adjusted fair value. Execute trades where mispricing is detected.",
       "status": "testing",
-      "confidence": 0.40,
+      "confidence": 0.35,
       "evidence": [
         {
           "date": "2025-12-07",
@@ -239,11 +239,17 @@
           "observation": "Market scan update: AAPL now at 7.8¢ (down from 9¢ entry, -13.3%). NVDA at 91% (up from 90%). Market continues trending toward incumbent (NVDA) despite close underlying fundamentals. Unrealized P&L: -$66.66. Position still above 4¢ stop-loss but hypothesis looking weaker. May need longer timeframe or stronger catalyst for reversal.",
           "supports": false,
           "confidenceImpact": -0.05
+        },
+        {
+          "date": "2025-12-08",
+          "observation": "Portfolio review: AAPL at 7.5¢ (down from 9¢ entry, -16.7%). NVDA stable at 91%. Unrealized P&L: -$83.32. Position still 46% above 4¢ stop-loss. No exit criteria met. Hypothesis continues to face headwinds - market appears to be pricing in momentum rather than volatility potential. 23 days to resolution.",
+          "supports": false,
+          "confidenceImpact": -0.05
         }
       ],
       "conclusion": null,
       "createdAt": "2025-12-07T12:00:00Z",
-      "updatedAt": "2025-12-08T22:15:00Z",
+      "updatedAt": "2025-12-08T23:45:00Z",
       "linkedTrade": "trade-001"
     }
   ],
