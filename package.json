@@ -7,7 +7,9 @@
     "daemon": "ts-node daemon.ts start",
     "status": "ts-node daemon.ts status",
     "trigger": "ts-node daemon.ts trigger",
-    "query": "ts-node daemon.ts query"
+    "query": "ts-node daemon.ts query",
+    "telegram": "ts-node tools/telegram/handler.ts",
+    "telegram:send": "ts-node tools/telegram/bot.ts send"
   },
   "keywords": [],
   "author": "",
