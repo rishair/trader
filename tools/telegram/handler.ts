@@ -902,7 +902,7 @@ Read MISSION.md for context.`,
     return;
   }
 
-  // /git - Show recent git history
+  // /git - Show recent git history with descriptions
   if (lower.startsWith('/git')) {
     const parts = trimmed.split(/\s+/);
     const count = parseInt(parts[1]) || 3;
@@ -910,7 +910,7 @@ Read MISSION.md for context.`,
 
     try {
       const log = execSync(
-        `git log --oneline -${limitedCount}`,
+        `git log --pretty=format:"%h %s" -${limitedCount}`,
         { cwd: PROJECT_ROOT, encoding: 'utf-8' }
       );
       await sendMessage(`*Last ${limitedCount} commits:*\n\`\`\`\n${log}\`\`\`\n\nUse \`/rollback <hash>\` to revert.`, chatId);
