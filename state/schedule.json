@@ -49,7 +49,7 @@
         "tradeId": "trade-001",
         "hypothesisId": "hyp-005",
         "exitCriteria": {
-          "takeProfit": 0.20,
+          "takeProfit": 0.2,
           "stopLoss": 0.04
         }
       }
@@ -66,18 +66,6 @@
         "frequency": "6h",
         "feedsTo": "hypotheses.json",
         "source": "platform"
-      }
-    },
-    {
-      "id": "monitor-004",
-      "type": "monitor",
-      "description": "Update momentum tracking markets (hyp-002) - compare current prices to baseline",
-      "scheduledFor": "2025-12-10T14:00:00Z",
-      "priority": "medium",
-      "context": {
-        "hypothesisId": "hyp-002",
-        "action": "Compare prices to baseline established Dec 8",
-        "trackingMarkets": ["Largest Company EOY", "Time Person of Year", "Fed 8+ Rate Cuts (resolved by then)"]
       }
     },
     {
@@ -111,18 +99,6 @@
   ],
   "completedTasks": [
     {
-      "id": "monitor-001",
-      "type": "monitor",
-      "description": "Scan for markets closing within 7 days - track price movements for momentum hypothesis",
-      "scheduledFor": "2025-12-08T12:00:00Z",
-      "priority": "medium",
-      "context": {
-        "hypothesisId": "hyp-002"
-      },
-      "completedAt": "2025-12-08T15:30:00Z",
-      "result": "Found 8 Fed rate markets closing Dec 10 (45h) - too short for momentum. Established baseline prices for 3 tracking markets (Largest Company EOY, Time POTY, Fed 8+ cuts). Updated hyp-002 to testing status. Will compare prices on Dec 10."
-    },
-    {
       "id": "monitor-002",
       "type": "monitor",
       "description": "Check AAPL position price and evaluate exit criteria",
@@ -132,7 +108,7 @@
         "tradeId": "trade-001",
         "hypothesisId": "hyp-005",
         "exitCriteria": {
-          "takeProfit": 0.20,
+          "takeProfit": 0.2,
           "stopLoss": 0.04
         }
       },
@@ -175,10 +151,25 @@
       "priority": "high",
       "context": {
         "hypothesisId": "hyp-001",
-        "markets": ["nuclear-weapon-detonation-in-2025", "us-recession-in-2025", "usdt-depeg-in-2025"]
+        "markets": [
+          "nuclear-weapon-detonation-in-2025",
+          "us-recession-in-2025",
+          "usdt-depeg-in-2025"
+        ]
       },
       "completedAt": "2025-12-07T14:00:00Z",
       "result": "Analyzed 3 tail-risk markets. Finding: Markets appear reasonably efficient, no clear mispricing detected. Reduced hyp-001 confidence from 40% to 25%. Pivoted to find alternative opportunity. Discovered potential mispricing in 'Largest Company EOY 2025' market. Created hyp-005 (volatility mispricing). Opened first trade: 5,555 AAPL YES @ $0.09."
+    },
+    {
+      "id": "monitor-001",
+      "type": "monitor",
+      "description": "Scan for markets closing within 7 days - track price movements for momentum hypothesis",
+      "scheduledFor": "2025-12-08T12:00:00Z",
+      "priority": "medium",
+      "context": {
+        "hypothesisId": "hyp-002"
+      },
+      "completedAt": "2025-12-08T15:19:56.311Z"
     }
   ],
   "schema": {
@@ -189,7 +180,9 @@
       "scheduledFor": "ISO date - when to execute",
       "priority": "low | medium | high | critical",
       "context": "object - any data needed for the task",
-      "dependsOn": ["string - task IDs that must complete first"],
+      "dependsOn": [
+        "string - task IDs that must complete first"
+      ],
       "createdAt": "ISO date",
       "completedAt": "ISO date | null"
     }
