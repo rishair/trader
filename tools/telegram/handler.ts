@@ -367,10 +367,29 @@ async function spawnClaudeSession(prompt: string, chatId: string, sessionName: s
       fs.writeFileSync(sessionLogFile, output);
 
       if (code === 0) {
-        const summary = output.length > 1000
-          ? '...' + output.slice(-1000)
-          : output;
-        await sendMessage(`✅ Done.\n\n${summary}`, chatId);
+        // Telegram limit is 4096 chars - split into multiple messages if needed
+        const MAX_MSG_LEN = 4000; // Leave room for formatting
+        const fullMessage = output.trim();
+
+        if (fullMessage.length <= MAX_MSG_LEN) {
+          await sendMessage(`✅ Done.\n\n${fullMessage}`, chatId);
+        } else {
+          // Split into chunks
+          const chunks: string[] = [];
+          let remaining = fullMessage;
+          while (remaining.length > 0) {
+            chunks.push(remaining.slice(0, MAX_MSG_LEN));
+            remaining = remaining.slice(MAX_MSG_LEN);
+          }
+
+          // Send first chunk with header
+          await sendMessage(`✅ Done (${chunks.length} parts):\n\n${chunks[0]}`, chatId);
+
+          // Send remaining chunks
+          for (let i = 1; i < chunks.length; i++) {
+            await sendMessage(`(${i + 1}/${chunks.length})\n${chunks[i]}`, chatId);
+          }
+        }
       } else {
         await sendMessage(`❌ Failed (code ${code}). Check logs.`, chatId);
       }
