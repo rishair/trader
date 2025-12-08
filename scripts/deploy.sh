@@ -25,23 +25,15 @@ if [[ "$HOSTNAME" == "trader" ]]; then
   npx tsc --noEmit 2>/dev/null || echo "Type check completed (warnings ok)"
 
   echo "🔄 Restarting services..."
-  # Use sudo for systemctl if not root
-  if [[ $EUID -eq 0 ]]; then
-    systemctl restart telegram-handler 2>/dev/null || echo "telegram-handler: starting fresh"
-    systemctl restart trader-daemon 2>/dev/null || true
-  else
-    # Kill processes and let systemd auto-restart them
-    pkill -f "handler.ts" 2>/dev/null || true
-    pkill -f "daemon.ts" 2>/dev/null || true
-    sleep 2
-  fi
+  sudo systemctl restart telegram-handler 2>/dev/null || echo "telegram-handler: starting fresh"
+  sudo systemctl restart trader-daemon 2>/dev/null || true
 
   echo ""
   echo "✅ Deploy complete!"
   echo ""
   echo "Service status:"
-  systemctl is-active telegram-handler 2>/dev/null || echo "telegram-handler: not running"
-  systemctl is-active trader-daemon 2>/dev/null || echo "trader-daemon: not running"
+  sudo systemctl is-active telegram-handler 2>/dev/null || echo "telegram-handler: not running"
+  sudo systemctl is-active trader-daemon 2>/dev/null || echo "trader-daemon: not running"
 
   exit 0
 fi
