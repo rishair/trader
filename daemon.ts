@@ -346,8 +346,7 @@ async function executeTask(task: ScheduledTask): Promise<void> {
   return new Promise((resolve, reject) => {
     const claude = spawn('claude', [
       '-p', prompt,
-      '--output-format', 'text',
-      '--permission-mode', 'bypassPermissions'
+      '--output-format', 'text'
     ], {
       cwd: path.join(__dirname),
       stdio: ['ignore', 'pipe', 'pipe'],  // ignore stdin to prevent hanging
