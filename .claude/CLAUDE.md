@@ -109,8 +109,10 @@ This is how the system learns from interaction, not just from trading outcomes.
 When implementing infrastructure changes (new tools, services, integrations, daemon changes, deployment scripts, etc.):
 
 1. **Plan first** - Write out the proposed approach, components, and changes
-2. **Ask for confirmation** - Present the plan to the user and wait for approval
-3. **Execute after approval** - Only implement once the user confirms
+2. **Send Telegram for approval** - Send the plan via Telegram message and wait for user confirmation before proceeding
+3. **Execute after approval** - Only implement once the user confirms via Telegram
+
+Use `sendMessage()` from `tools/telegram/bot.ts` to send the plan summary and request approval.
 
 This applies to:
 - Creating new tools or MCP servers
