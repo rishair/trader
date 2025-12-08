@@ -1,5 +1,55 @@
 {
-  "hypotheses": [],
+  "hypotheses": [
+    {
+      "id": "hyp-001",
+      "statement": "Tail-risk markets (probability <5%) are systematically overpriced due to fear/uncertainty premium",
+      "rationale": "Markets like nuclear detonation (1.5%), recession (1.5%), USDT depeg (0.45%) may reflect fear rather than rational probability. If base rates are even lower, there's edge in selling these contracts.",
+      "testMethod": "Compare implied probabilities to historical base rates and expert forecasts. Track P&L on small NO positions in tail-risk markets.",
+      "status": "proposed",
+      "confidence": 0.4,
+      "evidence": [],
+      "conclusion": null,
+      "createdAt": "2025-12-07T00:00:00Z",
+      "updatedAt": "2025-12-07T00:00:00Z"
+    },
+    {
+      "id": "hyp-002",
+      "statement": "Markets approaching resolution (closing within 7 days) exhibit price momentum that continues until resolution",
+      "rationale": "As information crystallizes near resolution, early movers may create momentum. Late traders pile in, pushing prices further in the direction of the likely outcome.",
+      "testMethod": "Track price movements in final 7 days before resolution. Look for continuation patterns. Paper trade momentum strategy on closing-soon markets.",
+      "status": "proposed",
+      "confidence": 0.35,
+      "evidence": [],
+      "conclusion": null,
+      "createdAt": "2025-12-07T00:00:00Z",
+      "updatedAt": "2025-12-07T00:00:00Z"
+    },
+    {
+      "id": "hyp-003",
+      "statement": "Markets with liquidity rewards offer risk-free spread capture opportunities",
+      "rationale": "Polymarket pays market makers to provide liquidity. If rewards exceed the expected loss from adverse selection, providing liquidity is +EV even without directional edge.",
+      "testMethod": "Calculate reward rates vs typical spreads. Simulate market-making P&L including rewards. Identify markets where rewards create profitable opportunities.",
+      "status": "proposed",
+      "confidence": 0.5,
+      "evidence": [],
+      "conclusion": null,
+      "createdAt": "2025-12-07T00:00:00Z",
+      "updatedAt": "2025-12-07T00:00:00Z"
+    },
+    {
+      "id": "hyp-004",
+      "statement": "Top traders on the Polymarket leaderboard exhibit identifiable patterns that can inform profitable trading strategies",
+      "rationale": "The weekly profit leaderboard reveals who is consistently winning. Analyzing their trading patterns (market selection, timing, position sizing) could reveal edge. Source: polymarket.com/leaderboard/overall/weekly/profit",
+      "testMethod": "1. Scrape/analyze leaderboard data over time. 2. Identify top performers. 3. Track their public positions/trades via activity feed. 4. Look for patterns in market selection and timing. 5. Paper trade mimicking patterns.",
+      "status": "proposed",
+      "confidence": 0.4,
+      "evidence": [],
+      "conclusion": null,
+      "createdAt": "2025-12-07T00:00:00Z",
+      "updatedAt": "2025-12-07T00:00:00Z",
+      "source": "user-shared-content"
+    }
+  ],
   "schema": {
     "hypothesis": {
       "id": "string - unique identifier",

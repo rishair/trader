@@ -1,6 +1,50 @@
 {
   "pendingTasks": [
     {
+      "id": "research-002",
+      "type": "research",
+      "description": "Deep dive on tail-risk pricing - compare Polymarket implied probabilities to base rates",
+      "scheduledFor": "2025-12-07T12:00:00Z",
+      "priority": "high",
+      "context": {
+        "hypothesisId": "hyp-001",
+        "markets": ["nuclear-weapon-detonation-in-2025", "us-recession-in-2025", "usdt-depeg-in-2025"]
+      }
+    },
+    {
+      "id": "monitor-001",
+      "type": "monitor",
+      "description": "Scan for markets closing within 7 days - track price movements for momentum hypothesis",
+      "scheduledFor": "2025-12-07T14:00:00Z",
+      "priority": "medium",
+      "context": {
+        "hypothesisId": "hyp-002"
+      }
+    },
+    {
+      "id": "research-003",
+      "type": "research",
+      "description": "Analyze liquidity rewards program - calculate reward rates vs spreads",
+      "scheduledFor": "2025-12-08T10:00:00Z",
+      "priority": "medium",
+      "context": {
+        "hypothesisId": "hyp-003"
+      }
+    },
+    {
+      "id": "review-001",
+      "type": "review",
+      "description": "Weekly review - assess hypothesis progress, update learnings, plan next week",
+      "scheduledFor": "2025-12-14T10:00:00Z",
+      "priority": "high",
+      "context": {
+        "recurring": true,
+        "frequency": "weekly"
+      }
+    }
+  ],
+  "completedTasks": [
+    {
       "id": "bootstrap-001",
       "type": "research",
       "description": "Initial research: Understand Polymarket mechanics and identify first research directions",
@@ -9,10 +53,11 @@
       "context": {
         "isFirstRun": true,
         "focus": "exploration"
-      }
+      },
+      "completedAt": "2025-12-07T00:00:00Z",
+      "result": "Completed bootstrap. MCP working (search queries find current markets). Identified 3 initial hypotheses around tail-risk pricing, momentum near resolution, and liquidity rewards."
     }
   ],
-  "completedTasks": [],
   "schema": {
     "task": {
       "id": "string - unique identifier",

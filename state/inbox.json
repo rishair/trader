@@ -1,0 +1,66 @@
+{
+  "items": [
+    {
+      "id": "polymarket-links-2024-12-07",
+      "type": "reference",
+      "source": "twitter",
+      "receivedAt": "2024-12-07T00:00:00Z",
+      "status": "processed",
+      "title": "Polymarket Official Resources Collection",
+      "content": {
+        "links": [
+          {"name": "Leaderboard (Weekly Profit)", "url": "polymarket.com/leaderboard/overall/weekly/profit", "category": "analytics"},
+          {"name": "Official News", "url": "news.polymarket.com", "category": "news"},
+          {"name": "Daily Rewards", "url": "polymarket.com/rewards", "category": "trading"},
+          {"name": "Feedback Forum", "url": "feedback.polymarket.com", "category": "community"},
+          {"name": "Global Elections Dashboard", "url": "poly.market/elections", "category": "dashboard"},
+          {"name": "Fed Rate Tracker", "url": "federivative.polymarket.com", "category": "dashboard"},
+          {"name": "Activity Feed", "url": "polymarket.com/activity", "category": "analytics"},
+          {"name": "Derivatives Between Markets", "url": "derivative.polymarket.com", "category": "analytics"},
+          {"name": "Brand Assets", "url": "polymarket.com/brand", "category": "reference"},
+          {"name": "Builder's Program", "url": "builders.polymarket.com", "category": "development"},
+          {"name": "API Status", "url": "status.polymarket.com", "category": "infrastructure"},
+          {"name": "Elon Tweet Tracker", "url": "xtracker.polymarket.com/user/elonmusk", "category": "signals"},
+          {"name": "Live Ticker", "url": "ticker.polymarket.com", "category": "tools"},
+          {"name": "Deposit Recovery", "url": "recovery.polymarket.com", "category": "support"},
+          {"name": "Deposit Recovery Docs", "url": "docs.polymarket.com/polymarket-learn/FAQ/recover-missing-deposit", "category": "docs"}
+        ]
+      },
+      "evaluation": {
+        "relevance": "high",
+        "actionability": "high",
+        "urgency": "low",
+        "categories": ["polymarket", "infrastructure", "analytics"]
+      },
+      "actions": [
+        {"type": "saved", "to": "state/resources.json", "note": "Added as polymarket-official-resources"},
+        {"type": "hypothesis", "note": "Leaderboard data could inform strategy - what do top traders do?"}
+      ]
+    }
+  ],
+  "schema": {
+    "item": {
+      "id": "string - unique identifier",
+      "type": "reference | strategy | tool | news | insight | hypothesis | other",
+      "source": "twitter | reddit | discord | paper | direct | other",
+      "receivedAt": "ISO date",
+      "status": "pending | processing | processed | discarded",
+      "title": "string",
+      "content": "object - varies by type",
+      "evaluation": {
+        "relevance": "high | medium | low | none",
+        "actionability": "high | medium | low | none",
+        "urgency": "high | medium | low | none",
+        "categories": ["string"]
+      },
+      "actions": [
+        {
+          "type": "saved | hypothesis | research | tool | discarded | deferred",
+          "to": "string - where it was saved",
+          "note": "string"
+        }
+      ]
+    }
+  },
+  "notes": "Inbox for content shared by user. Evaluate and route to appropriate state files."
+}

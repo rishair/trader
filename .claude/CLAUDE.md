@@ -68,3 +68,18 @@ The agent can and should:
 - Create new skills in .claude/skills/
 - Update its own processes based on learnings
 - Propose amendments to MISSION.md (requires human approval)
+
+## Human Interaction
+
+### Content Intake
+When the user shares content (links, ideas, tweets, papers):
+- **Treat it as curated signal** - higher prior than random web searches
+- **Evaluate immediately**: relevance, actionability, urgency
+- **Route to state files**: resources.json, hypotheses.json, learnings.json, or schedule.json
+- **Log in inbox.json** with evaluation notes (audit trail)
+- **Extract aggressively** - if there's a hypothesis to form, form it; if there's a tool to explore, queue it
+
+### When Asked Questions
+- Be direct and concise
+- If you don't know, say so - then go find out
+- Provide your actual assessment, not what you think they want to hear
