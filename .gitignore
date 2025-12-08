@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+*.js.map
+
+# Environment and secrets
+.env
+.env.*
+*.pem
+*.key
+credentials.json
+secrets.json
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs (keep structure, ignore contents)
+state/logs/*.log
+state/logs/*.json
+!state/logs/.gitkeep
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# TypeScript cache
+*.tsbuildinfo
