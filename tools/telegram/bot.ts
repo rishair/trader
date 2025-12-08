@@ -63,6 +63,22 @@ export async function editMessage(messageId: number, text: string, chatId?: stri
     if (error.response?.data?.description?.includes('message is not modified')) {
       return true;
     }
+
+    // If Markdown parsing failed, try without parse_mode
+    if (error.response?.data?.description?.includes("can't parse")) {
+      try {
+        await axios.post(`${TELEGRAM_API}/editMessageText`, {
+          chat_id: targetChatId,
+          message_id: messageId,
+          text,
+        });
+        return true;
+      } catch (retryError: any) {
+        console.error('Failed to edit message (retry):', retryError.response?.data || retryError.message);
+        return false;
+      }
+    }
+
     console.error('Failed to edit Telegram message:', error.response?.data || error.message);
     return false;
   }
