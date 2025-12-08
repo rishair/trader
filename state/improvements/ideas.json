@@ -1,0 +1,154 @@
+{
+  "backlog": [
+    {
+      "id": "imp-009",
+      "title": "Leaderboard tracker pipeline",
+      "category": "capability",
+      "leverage": "high",
+      "effort": "medium",
+      "rationale": "Daily scrape top traders, track their positions, generate follow signals. Copy smart money strategy.",
+      "status": "backlog",
+      "outcome": null,
+      "createdAt": "2025-12-08T00:00:00Z",
+      "completedAt": null
+    },
+    {
+      "id": "imp-010",
+      "title": "Price drift detector (real-time)",
+      "category": "capability",
+      "leverage": "high",
+      "effort": "medium",
+      "rationale": "Monitor all markets for sudden moves (>5% in 1h). When detected, follow the move. Informed money signal.",
+      "status": "backlog",
+      "outcome": null,
+      "createdAt": "2025-12-08T00:00:00Z",
+      "completedAt": null
+    },
+    {
+      "id": "imp-011",
+      "title": "Hypothesis auto-tester",
+      "category": "capability",
+      "leverage": "high",
+      "effort": "medium",
+      "rationale": "Automated testing framework. Takes hypothesis, executes trades per rules, tracks results, auto-promotes/kills based on performance.",
+      "status": "backlog",
+      "outcome": null,
+      "createdAt": "2025-12-08T00:00:00Z",
+      "completedAt": null
+    },
+        {
+      "id": "imp-004",
+      "title": "Leaderboard scraper for top trader analysis",
+      "category": "capability",
+      "leverage": "medium",
+      "effort": "medium",
+      "rationale": "Hypothesis hyp-004 requires analyzing top traders. Need tool to fetch and parse leaderboard data. Could reveal edge patterns.",
+      "status": "backlog",
+      "outcome": null,
+      "createdAt": "2025-12-07T00:00:00Z",
+      "completedAt": null
+    },
+    {
+      "id": "imp-005",
+      "title": "Telegram alerts for position changes and key events",
+      "category": "capability",
+      "leverage": "medium",
+      "effort": "low",
+      "rationale": "Keep user informed of agent activity. Alert on: trades executed, hypotheses validated/invalidated, escalation triggers hit.",
+      "status": "backlog",
+      "outcome": null,
+      "createdAt": "2025-12-07T00:00:00Z",
+      "completedAt": null
+    },
+    {
+      "id": "imp-006",
+      "title": "Backtest framework for strategy validation",
+      "category": "capability",
+      "leverage": "medium",
+      "effort": "high",
+      "rationale": "Currently can only forward-test. Historical data + backtest would accelerate hypothesis validation. Check if Polymarket provides historical data first.",
+      "status": "backlog",
+      "outcome": null,
+      "createdAt": "2025-12-07T00:00:00Z",
+      "completedAt": null
+    },
+    {
+      "id": "imp-007",
+      "title": "Audit and improve subagent prompts",
+      "category": "agent",
+      "leverage": "medium",
+      "effort": "medium",
+      "rationale": "8 subagents exist but quality unknown. Review each, test with real tasks, improve underperformers. Better agents = better autonomous operation.",
+      "status": "backlog",
+      "outcome": null,
+      "createdAt": "2025-12-07T00:00:00Z",
+      "completedAt": null
+    }
+  ],
+  "in_progress": [],
+  "completed": [
+    {
+      "id": "imp-002",
+      "title": "Daemon pulls git before executing, pushes after",
+      "category": "infrastructure",
+      "leverage": "high",
+      "effort": "low",
+      "rationale": "Ensures state consistency between local dev and droplet. Without this, state can diverge and cause conflicts.",
+      "status": "completed",
+      "outcome": "Added gitPull() before task execution and gitPush() after. Both daemon tick loop and manual trigger command now sync with origin. Handles failures gracefully.",
+      "createdAt": "2025-12-07T00:00:00Z",
+      "completedAt": "2025-12-07T23:30:00Z"
+    },
+    {
+      "id": "imp-001",
+      "title": "Telegram bot receives content and routes to inbox + strategy approval flow",
+      "category": "capability",
+      "leverage": "high",
+      "effort": "medium",
+      "rationale": "Enables async communication. User sends content anytime, agent processes. User approves/rejects strategies via Telegram.",
+      "status": "completed",
+      "outcome": "Rewrote handler.ts with: (1) proper inbox.json integration, (2) pending_approvals.json for strategy approval workflow, (3) /pending, /approve, /reject commands, (4) /process to evaluate inbox items, (5) git sync on every action. User flow: send content → /process → agent proposes strategies → /approve or /reject → agent executes.",
+      "createdAt": "2025-12-07T00:00:00Z",
+      "completedAt": "2025-12-08T00:00:00Z"
+    },
+    {
+      "id": "imp-008",
+      "title": "Closing-soon scanner pipeline",
+      "category": "capability",
+      "leverage": "high",
+      "effort": "low",
+      "rationale": "First autonomous pipeline. Every 6h scan markets closing in 72h, check momentum, auto-generate hypotheses. Enables hyp-002 testing at scale.",
+      "status": "completed",
+      "outcome": "Built tools/pipelines/closing-scanner.ts that: (1) fetches markets via Gamma API, (2) filters to closing in 72h, (3) checks momentum signals, (4) auto-generates hypotheses for strong signals, (5) updates engine-status.json. Daemon now handles pipeline tasks directly (no Claude spawn), auto-reschedules recurring pipelines. Added engine health check to daemon tick. Note: price history not yet available - needs imp-003.",
+      "createdAt": "2025-12-08T00:00:00Z",
+      "completedAt": "2025-12-08T06:00:00Z"
+    },
+    {
+      "id": "imp-003",
+      "title": "Price tracking for open positions",
+      "category": "capability",
+      "leverage": "high",
+      "effort": "medium",
+      "rationale": "Can't evaluate P&L without current prices. market-watcher agent needs to update portfolio.json with live prices from Polymarket MCP.",
+      "status": "completed",
+      "outcome": "Built tools/pipelines/price-tracker.ts that: (1) fetches prices from CLOB API for known tokens, (2) updates portfolio.json with current prices and P&L, (3) saves price history snapshots, (4) checks exit triggers (TP/SL). Added npm run prices script. AAPL position confirmed at 9¢, same as entry - P&L flat.",
+      "createdAt": "2025-12-07T00:00:00Z",
+      "completedAt": "2025-12-08T07:20:00Z"
+    }
+  ],
+  "schema": {
+    "improvement": {
+      "id": "string",
+      "title": "string - what to improve",
+      "category": "infrastructure | capability | process | agent | tool",
+      "leverage": "high | medium | low",
+      "effort": "high | medium | low",
+      "rationale": "string - why this matters",
+      "status": "backlog | in_progress | completed | abandoned",
+      "outcome": "string - what changed, was it worth it",
+      "createdAt": "ISO date",
+      "completedAt": "ISO date | null"
+    }
+  },
+  "notes": "Track system improvements separately from trading learnings. Prioritize high-leverage, low-effort items. Next priority: imp-009 (leaderboard tracker) to enable hyp-004 testing."
+}

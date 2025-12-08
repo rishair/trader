@@ -1,0 +1,35 @@
+{
+  "approvals": [
+    {
+      "id": "fy",
+      "type": "improvement",
+      "title": "Build imp-009: Leaderboard tracker pipeline",
+      "description": "Engine is starved (only 2 testable hypotheses). Building imp-009 would unblock hyp-004. Effort: medium",
+      "proposedAt": "2025-12-08T06:16:56.534Z",
+      "status": "approved",
+      "context": {
+        "improvementId": "imp-009",
+        "action": "build",
+        "unblocks": "hyp-004",
+        "effort": "medium",
+        "leverage": "high"
+      },
+      "decidedAt": "2025-12-08T07:28:59.406Z",
+      "decisionNote": null
+    }
+  ],
+  "schema": {
+    "approval": {
+      "id": "string - unique identifier",
+      "type": "strategy | trade | tool | other",
+      "title": "string - short description",
+      "description": "string - full details",
+      "proposedAt": "ISO date",
+      "status": "pending | approved | rejected | expired",
+      "context": "object - relevant data (market, hypothesis, etc)",
+      "decidedAt": "ISO date | null",
+      "decisionNote": "string | null"
+    }
+  },
+  "notes": "Strategies and trades proposed by agent, awaiting user approval via Telegram."
+}

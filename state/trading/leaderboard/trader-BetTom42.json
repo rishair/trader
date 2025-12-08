@@ -1,0 +1,15 @@
+[
+  {
+    "trader": {
+      "proxyWallet": "0x885783760858e1bd5dd09a3c3f916cfa251ac270",
+      "name": "BetTom42",
+      "pseudonym": "BetTom42",
+      "profit": 5642135.735356,
+      "profitRank": 8,
+      "bio": "",
+      "profileImage": ""
+    },
+    "positions": [],
+    "snapshotAt": "2025-12-08T07:40:14.681Z"
+  }
+]

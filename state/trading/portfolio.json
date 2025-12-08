@@ -1,0 +1,58 @@
+{
+  "cash": 9500.05,
+  "startingCapital": 10000,
+  "positions": [
+    {
+      "id": "trade-001",
+      "market": "Largest Company end of 2025",
+      "marketSlug": "largest-company-end-of-2025",
+      "platform": "Polymarket",
+      "direction": "YES",
+      "outcome": "Apple",
+      "entryPrice": 0.09,
+      "shares": 5555,
+      "cost": 499.95,
+      "currentPrice": 0.086,
+      "unrealizedPnL": -22.22000000000002,
+      "strategyId": "hypothesis-001",
+      "entryDate": "2025-12-07T00:00:00Z",
+      "exitCriteria": {
+        "takeProfit": 0.2,
+        "stopLoss": 0.04,
+        "timeLimit": "2025-12-31T23:59:59Z",
+        "notes": "Exit if AAPL probability >20% (take profit) or <4% (stop loss), or at market resolution"
+      },
+      "rationale": "AAPL ($4.1-4.2T) only 5-7% behind NVDA ($4.44T). Market prices AAPL at 9% vs estimated 15-20% true probability. With 24 days to resolution, volatility could close gap. Testing hypothesis that multi-outcome markets misprice volatility in close races.",
+      "tokenId": "64608332692655386624219169603174714750740291631647562666654835455208498486268"
+    }
+  ],
+  "tradeHistory": [
+    {
+      "id": "trade-001",
+      "type": "ENTRY",
+      "timestamp": "2025-12-07T00:00:00Z",
+      "market": "Largest Company end of 2025",
+      "marketSlug": "largest-company-end-of-2025",
+      "platform": "Polymarket",
+      "direction": "YES",
+      "outcome": "Apple",
+      "price": 0.09,
+      "shares": 5555,
+      "cost": 499.95,
+      "cashAfter": 9500.05,
+      "strategyId": "hypothesis-001",
+      "rationale": "AAPL ($4.1-4.2T) only 5-7% behind NVDA ($4.44T). Market prices AAPL at 9% vs estimated 15-20% true probability. With 24 days to resolution, volatility could close gap. Testing hypothesis that multi-outcome markets misprice volatility in close races."
+    }
+  ],
+  "createdAt": "2024-12-07T00:00:00Z",
+  "lastUpdated": "2025-12-08T15:23:38.231Z",
+  "metrics": {
+    "totalReturn": -22.220000000001164,
+    "totalReturnPct": -0.2222000000000116,
+    "realizedPnL": 0,
+    "unrealizedPnL": -22.22000000000002,
+    "winCount": 0,
+    "lossCount": 0,
+    "winRate": 0
+  }
+}

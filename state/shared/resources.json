@@ -1,0 +1,70 @@
+{
+  "discovered": [
+    {
+      "id": "polymarket-official-resources",
+      "name": "Polymarket Official Resources",
+      "url": null,
+      "type": "other",
+      "category": "polymarket",
+      "status": "discovered",
+      "evaluation": {
+        "quality": "high",
+        "pros": ["Official sources", "Comprehensive coverage", "Multiple useful dashboards"],
+        "cons": ["Need to verify which are programmatically accessible"]
+      },
+      "recommendation": "REFERENCE",
+      "reason": "Collection of official Polymarket URLs for research and monitoring",
+      "resources": {
+        "analytics": [
+          {"name": "Leaderboard", "url": "polymarket.com/leaderboard/overall/weekly/profit", "notes": "Could scrape for top trader behavior"},
+          {"name": "Activity Feed", "url": "polymarket.com/activity", "notes": "Real-time trade flow"},
+          {"name": "Derivatives", "url": "derivative.polymarket.com", "notes": "Cross-market correlations"}
+        ],
+        "dashboards": [
+          {"name": "Elections", "url": "poly.market/elections"},
+          {"name": "Fed Rate Tracker", "url": "federivative.polymarket.com"}
+        ],
+        "signals": [
+          {"name": "Elon Tweet Tracker", "url": "xtracker.polymarket.com/user/elonmusk", "notes": "Elon-related market signals"}
+        ],
+        "infrastructure": [
+          {"name": "API Status", "url": "status.polymarket.com"},
+          {"name": "Builder Program", "url": "builders.polymarket.com"}
+        ],
+        "tools": [
+          {"name": "Live Ticker", "url": "ticker.polymarket.com"},
+          {"name": "Deposit Recovery", "url": "recovery.polymarket.com"}
+        ]
+      },
+      "discoveredAt": "2024-12-07T00:00:00Z",
+      "installedAt": null
+    }
+  ],
+  "installed": [],
+  "rejected": [],
+  "schema": {
+    "resource": {
+      "id": "string",
+      "name": "string",
+      "url": "string",
+      "type": "npm | github | mcp | api | reference | other",
+      "category": "polymarket | data | analysis | trading | utility",
+      "status": "discovered | evaluating | installed | rejected",
+      "evaluation": {
+        "stars": "number",
+        "lastUpdate": "ISO date",
+        "license": "string",
+        "quality": "high | medium | low",
+        "pros": ["string"],
+        "cons": ["string"]
+      },
+      "recommendation": "USE | FORK | REFERENCE | SKIP",
+      "reason": "string - why this decision",
+      "installCommand": "string | null",
+      "integrationNotes": "string | null",
+      "discoveredAt": "ISO date",
+      "installedAt": "ISO date | null"
+    }
+  },
+  "notes": "Use resourcer agent to populate this. Track what we find so we don't re-search."
+}

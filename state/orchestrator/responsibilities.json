@@ -1,0 +1,17 @@
+{
+  "trade-research": {
+    "hypothesis-health": { "frequency": "4h", "lastRun": null },
+    "market-scan": { "frequency": "8h", "lastRun": null },
+    "portfolio-review": { "frequency": "24h", "lastRun": null },
+    "experiment-progress": { "frequency": "24h", "lastRun": null },
+    "strategy-review": { "frequency": "7d", "lastRun": null },
+    "learning-synthesis": { "frequency": "7d", "lastRun": null }
+  },
+  "agent-engineer": {
+    "idea-triage": { "frequency": "6h", "lastRun": null },
+    "build-sprint": { "frequency": "24h", "lastRun": null },
+    "system-health": { "frequency": "24h", "lastRun": null },
+    "agent-review": { "frequency": "7d", "lastRun": null },
+    "capability-audit": { "frequency": "7d", "lastRun": null }
+  }
+}

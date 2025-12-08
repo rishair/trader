@@ -635,6 +635,7 @@ Just message me - I'll respond in our ongoing conversation.
 /heal - AI-analyze and fix errors
 /start - Start the daemon
 /stop - Stop the daemon
+/deploy - Restart services with latest code
 /rollback <hash> - Rollback to commit and redeploy`,
       chatId
     );
@@ -939,6 +940,28 @@ Read MISSION.md for context.`,
     return;
   }
 
+  // /deploy - Restart services to pick up new code
+  if (lower === '/deploy') {
+    await sendMessage('🔄 Deploying... handler will restart in 3s', chatId);
+
+    // Give time for message to send, then kill processes
+    // Systemd will auto-restart them with new code
+    setTimeout(() => {
+      try {
+        execSync('pkill -f "daemon.ts"', { encoding: 'utf-8' });
+      } catch {
+        // Daemon might not be running
+      }
+      // Kill handler last (this will kill us)
+      try {
+        execSync('pkill -f "handler.ts"', { encoding: 'utf-8' });
+      } catch {
+        // Expected to fail since we're killing ourselves
+      }
+    }, 3000);
+    return;
+  }
+
   // /rollback - Rollback to a specific commit and redeploy
   if (lower.startsWith('/rollback')) {
     const parts = trimmed.split(/\s+/);
@@ -966,22 +989,21 @@ Read MISSION.md for context.`,
       // Force push (we're on the server, need to update origin)
       execSync('git push origin main --force', { cwd: PROJECT_ROOT, encoding: 'utf-8' });
 
-      // Restart services
-      await sendMessage('🔄 Restarting services...', chatId);
+      await sendMessage('🔄 Restarting services in 3s...', chatId);
 
-      try {
-        execSync('systemctl restart trader-daemon', { encoding: 'utf-8' });
-      } catch {
-        // Daemon might not be running
-      }
-
-      try {
-        execSync('systemctl restart trader-telegram', { encoding: 'utf-8' });
-      } catch {
-        // Will restart itself
-      }
-
-      await sendMessage(`✅ Rolled back to \`${hash}\` and redeployed.\n\n⚠️ Telegram handler restarting...`, chatId);
+      // Give time for message to send, then kill processes
+      setTimeout(() => {
+        try {
+          execSync('pkill -f "daemon.ts"', { encoding: 'utf-8' });
+        } catch {
+          // Daemon might not be running
+        }
+        try {
+          execSync('pkill -f "handler.ts"', { encoding: 'utf-8' });
+        } catch {
+          // Expected
+        }
+      }, 3000);
     } catch (e: any) {
       await sendMessage(`❌ Rollback failed: ${e.message}`, chatId);
     }

@@ -1,0 +1,30 @@
+[
+  {
+    "trader": {
+      "proxyWallet": "0xe9ad918c7678cd38b12603a762e638a5d1ee7091",
+      "name": "walletmobile",
+      "pseudonym": "walletmobile",
+      "profit": 5942685.453396838,
+      "profitRank": 7,
+      "bio": "",
+      "profileImage": ""
+    },
+    "positions": [
+      {
+        "asset": "21742633143463906290569050155826241533067272736897614950488156847949938836455",
+        "conditionId": "0xdd22472e552920b8438158ea7238bfadfa4f736aa4cee91a6b86c39ead110917",
+        "title": "Will Donald Trump win the 2024 US Presidential Election?",
+        "slug": "will-donald-trump-win-the-2024-us-presidential-election",
+        "outcome": "Yes",
+        "size": 0.009276,
+        "avgPrice": 0.618064,
+        "currentValue": 0.009276,
+        "curPrice": 1,
+        "cashPnl": 0.003542838336000001,
+        "percentPnl": 61.79554220922107,
+        "endDate": "2024-11-05"
+      }
+    ],
+    "snapshotAt": "2025-12-08T07:39:32.299Z"
+  }
+]

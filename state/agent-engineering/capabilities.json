@@ -1,0 +1,49 @@
+{
+  "capabilities": [
+    {
+      "id": "cap-001",
+      "name": "closing-scanner",
+      "type": "pipeline",
+      "path": "tools/pipelines/closing-scanner.ts",
+      "description": "Scans Polymarket for markets closing within 72 hours",
+      "createdAt": "2025-12-08T00:00:00Z",
+      "status": "active"
+    },
+    {
+      "id": "cap-002",
+      "name": "health-check",
+      "type": "pipeline",
+      "path": "tools/pipelines/health-check.ts",
+      "description": "Analyzes system state and proposes improvements",
+      "createdAt": "2025-12-08T00:00:00Z",
+      "status": "active"
+    },
+    {
+      "id": "cap-003",
+      "name": "leaderboard-tracker",
+      "type": "pipeline",
+      "path": "tools/pipelines/leaderboard-tracker.ts",
+      "description": "Tracks top Polymarket traders and their positions",
+      "createdAt": "2025-12-08T00:00:00Z",
+      "status": "active"
+    },
+    {
+      "id": "cap-004",
+      "name": "price-tracker",
+      "type": "pipeline",
+      "path": "tools/pipelines/price-tracker.ts",
+      "description": "Tracks price history for monitored markets",
+      "createdAt": "2025-12-08T00:00:00Z",
+      "status": "active"
+    },
+    {
+      "id": "cap-005",
+      "name": "telegram-bot",
+      "type": "service",
+      "path": "tools/telegram/bot.ts",
+      "description": "Telegram bot for user interaction",
+      "createdAt": "2025-12-08T00:00:00Z",
+      "status": "active"
+    }
+  ]
+}

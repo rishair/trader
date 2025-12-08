@@ -1,0 +1,24 @@
+{
+  "active": [],
+  "testing": [],
+  "retired": [],
+  "schema": {
+    "strategy": {
+      "id": "string - unique identifier",
+      "name": "string - descriptive name",
+      "hypothesis": "string - what we believe and why",
+      "entryRules": "string - when to enter positions",
+      "exitRules": "string - when to exit positions",
+      "riskManagement": "string - position sizing, stop losses",
+      "status": "draft | testing | active | retired",
+      "createdAt": "ISO date",
+      "performance": {
+        "trades": "number",
+        "winRate": "number 0-1",
+        "avgReturn": "number",
+        "sharpeRatio": "number"
+      },
+      "notes": "string - observations and learnings"
+    }
+  }
+}

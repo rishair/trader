@@ -1,0 +1,14 @@
+{
+  "lastCheck": null,
+  "status": "unknown",
+  "services": {
+    "telegram-handler": { "status": "unknown", "lastSeen": null },
+    "daemon": { "status": "unknown", "lastSeen": null }
+  },
+  "recentErrors": [],
+  "metrics": {
+    "responsibilitiesCompleted24h": 0,
+    "handoffsCompleted24h": 0,
+    "ideasImplemented24h": 0
+  }
+}

@@ -1,0 +1,255 @@
+{
+  "hypotheses": [
+    {
+      "id": "hyp-001",
+      "statement": "Tail-risk markets (probability <5%) are systematically overpriced due to fear/uncertainty premium",
+      "rationale": "Markets like nuclear detonation (1.5%), recession (1.5%), USDT depeg (0.45%) may reflect fear rather than rational probability. If base rates are even lower, there's edge in selling these contracts.",
+      "testMethod": "Compare implied probabilities to historical base rates and expert forecasts. Track P&L on small NO positions in tail-risk markets.",
+      "status": "invalidated",
+      "confidence": 0.25,
+      "evidence": [
+        {
+          "date": "2025-12-07",
+          "observation": "Nuclear detonation market: Polymarket 1.55% vs expert estimates ~1-2% annual. No clear mispricing detected.",
+          "supports": false,
+          "confidenceImpact": -0.1
+        },
+        {
+          "date": "2025-12-07",
+          "observation": "US Recession 2025 market: Polymarket 2.5% is reasonable given only 24 days left in year and no recession declared. Earlier in year market showed 40-66% when experts forecast 33-60%.",
+          "supports": false,
+          "confidenceImpact": -0.05
+        },
+        {
+          "date": "2025-12-07",
+          "observation": "USDT depeg market: 0.45% seems appropriately low given USDT's historical stability through crises.",
+          "supports": false,
+          "confidenceImpact": 0
+        }
+      ],
+      "conclusion": "Invalidated. Examined 3 tail-risk markets, all showed efficient pricing aligned with expert estimates. No systematic overpricing found. Polymarket participants appear to price tail risks rationally.",
+      "createdAt": "2025-12-07T00:00:00Z",
+      "updatedAt": "2025-12-08T06:15:00Z",
+      "testEndedAt": "2025-12-08T06:15:00Z"
+    },
+    {
+      "id": "hyp-002",
+      "statement": "Markets approaching resolution (closing within 7 days) exhibit price momentum that continues until resolution",
+      "rationale": "As information crystallizes near resolution, early movers may create momentum. Late traders pile in, pushing prices further in the direction of the likely outcome.",
+      "testMethod": "Track price movements in final 7 days before resolution. Look for continuation patterns. Paper trade momentum strategy on closing-soon markets.",
+      "status": "testing",
+      "confidence": 0.35,
+      "evidence": [
+        {
+          "date": "2025-12-08",
+          "observation": "Scan of closing-soon markets: Found 8 Fed rate decision markets (Dec 10) - 97% volume concentrated in '8+ cuts' market ($1.38M/day). Markets at extreme prices (near-binary outcomes), making momentum less observable. Need markets in 40-60% range for proper momentum testing.",
+          "supports": null,
+          "confidenceImpact": 0
+        },
+        {
+          "date": "2025-12-08",
+          "observation": "Largest Company EOY 2025: NVDA 90% (up from 89%), AAPL 8.7% (down from 9%). Slight movement toward winner (NVDA) and away from challenger (AAPL). Could support momentum hypothesis but sample size n=1 and movement <1% is within noise.",
+          "supports": null,
+          "confidenceImpact": 0
+        },
+        {
+          "date": "2025-12-08",
+          "observation": "Time Person of Year 2025: AI leads at 39%, Jensen Huang 21%, Sam Altman 14%. Market closing Dec 31 - good candidate for momentum tracking over next 23 days. Need to establish baseline prices today for comparison.",
+          "supports": null,
+          "confidenceImpact": 0
+        },
+        {
+          "date": "2025-12-08",
+          "observation": "Time Person of Year 2025 - First price check 3.3 hours after baseline: AI down 1.28% (0.39->0.385), Jensen Huang down 7.14% (0.21->0.195), Sam Altman down 10.71% (0.14->0.125), Trump flat (0.05->0.05). ALL candidates declining. Contradicts momentum hypothesis prediction that leader should gain relative to field. Instead market consolidating with broader compression of probability across all candidates.",
+          "supports": false,
+          "confidenceImpact": -0.05
+        }
+      ],
+      "conclusion": null,
+      "createdAt": "2025-12-07T00:00:00Z",
+      "updatedAt": "2025-12-08T15:25:00Z",
+      "testStartedAt": "2025-12-08T12:00:00Z",
+      "trackingMarkets": [
+        {
+          "market": "Largest Company end of 2025",
+          "baseline": {
+            "NVDA": 0.9,
+            "AAPL": 0.087,
+            "GOOGL": 0.023
+          },
+          "recordedAt": "2025-12-08T12:00:00Z",
+          "closesAt": "2025-12-31"
+        },
+        {
+          "market": "Time 2025 Person of the Year",
+          "baseline": {
+            "AI": 0.39,
+            "Jensen Huang": 0.21,
+            "Sam Altman": 0.14,
+            "Pope Leo XIV": 0.09,
+            "Donald Trump": 0.05
+          },
+          "recordedAt": "2025-12-08T12:00:00Z",
+          "closesAt": "2025-12-31",
+          "latestCheck": {
+            "timestamp": "2025-12-08T15:25:00Z",
+            "prices": {
+              "AI": 0.385,
+              "Jensen Huang": 0.195,
+              "Sam Altman": 0.125,
+              "Donald Trump": 0.05
+            },
+            "marketIds": {
+              "AI": 555826,
+              "Jensen Huang": 555836,
+              "Sam Altman": 555837,
+              "Donald Trump": 555821
+            }
+          }
+        },
+        {
+          "market": "Fed rate cuts 2025 (8+)",
+          "baseline": {
+            "YES": "unknown - API limitation"
+          },
+          "recordedAt": "2025-12-08T12:00:00Z",
+          "closesAt": "2025-12-10",
+          "notes": "Very short window (45h), will use for post-resolution analysis"
+        }
+      ]
+    },
+    {
+      "id": "hyp-003",
+      "statement": "Polymarket liquidity rewards create +EV market making opportunities despite adverse selection risk",
+      "rationale": "Polymarket pays market makers via two programs: daily rewards for limit orders (quadratic scoring, 3x bonus for two-sided quotes) and 4% APY holding rewards on 13 markets. If rewards exceed adverse selection costs, market making is profitable without directional edge.",
+      "testMethod": "1. Query CLOB API for max_incentive_spread and min_incentive_size per market. 2. Calculate reward/spread ratios. 3. Build simple MM bot for paper trading in low-volatility markets. 4. Track: spread P&L, rewards earned, adverse selection losses.",
+      "status": "testing",
+      "confidence": 0.45,
+      "evidence": [
+        {
+          "date": "2025-12-08",
+          "observation": "Research confirms rewards are NOT risk-free. Two programs: (1) Daily liquidity rewards with quadratic scoring - closer to midpoint = higher rewards, 3x multiplier for two-sided quotes, (2) 4% APY holding rewards on 13 long-term markets. Reported earnings: $200-800/day for active MMs during peak. Post-2024 election: rewards reduced significantly. Requires: significant capital, automated execution, sophisticated pricing. Competition 'not fierce' currently but window likely narrowing.",
+          "supports": true,
+          "confidenceImpact": -0.05
+        }
+      ],
+      "conclusion": null,
+      "createdAt": "2025-12-07T00:00:00Z",
+      "updatedAt": "2025-12-08T15:30:00Z",
+      "testStartedAt": "2025-12-08T15:30:00Z",
+      "infrastructureRequired": [
+        "Automated order placement system",
+        "Real-time order book monitoring",
+        "Inventory tracking across markets",
+        "Reward parameter monitoring API integration"
+      ],
+      "nextSteps": [
+        "Query CLOB API for markets with best reward parameters",
+        "Identify low-volatility markets for initial testing",
+        "Build simple two-sided quoting bot"
+      ]
+    },
+    {
+      "id": "hyp-004",
+      "statement": "Top traders on the Polymarket leaderboard exhibit identifiable patterns that can inform profitable trading strategies",
+      "rationale": "The weekly profit leaderboard reveals who is consistently winning. Analyzing their trading patterns (market selection, timing, position sizing) could reveal edge. Source: polymarket.com/leaderboard/overall/weekly/profit",
+      "testMethod": "1. Scrape/analyze leaderboard data over time. 2. Identify top performers. 3. Track their public positions/trades via activity feed. 4. Look for patterns in market selection and timing. 5. Paper trade mimicking patterns.",
+      "status": "proposed",
+      "confidence": 0.4,
+      "evidence": [],
+      "conclusion": null,
+      "createdAt": "2025-12-07T00:00:00Z",
+      "updatedAt": "2025-12-07T00:00:00Z",
+      "source": "user-shared-content"
+    },
+    {
+      "id": "hyp-005",
+      "statement": "Multi-outcome markets with close competitors misprice volatility, underweighting the probability of reversals",
+      "rationale": "In the 'Largest Company end of 2025' market, NVDA is priced at 89% and AAPL at 9%, despite AAPL market cap being only 5-7% behind NVDA. Market may be extrapolating recent momentum rather than pricing in realistic volatility scenarios.",
+      "testMethod": "Track multi-outcome markets where gap between leading outcomes is <10%. Compare market pricing to volatility-adjusted fair value. Execute trades where mispricing is detected.",
+      "status": "testing",
+      "confidence": 0.5,
+      "evidence": [
+        {
+          "date": "2025-12-07",
+          "observation": "AAPL vs NVDA gap is ~5-7% ($200-300B) but market prices AAPL at only 9%. With 24 days of market volatility, a 5-7% swing is plausible. Opened position: 5,555 AAPL YES @ $0.09.",
+          "supports": true,
+          "confidenceImpact": 0
+        }
+      ],
+      "conclusion": null,
+      "createdAt": "2025-12-07T12:00:00Z",
+      "updatedAt": "2025-12-07T12:00:00Z",
+      "linkedTrade": "trade-001"
+    }
+  ],
+  "schema": {
+    "hypothesis": {
+      "id": "string - unique identifier",
+      "statement": "string - clear, testable hypothesis",
+      "rationale": "string - why this might be true",
+      "source": "academic | leaderboard | platform | observation | user | cross-market",
+      "sourcePipeline": "string - which pipeline generated this (null if manual)",
+      "testMethod": "string - how to validate/invalidate",
+      "entryRules": "string - specific conditions to enter trade",
+      "exitRules": "string - specific conditions to exit trade",
+      "expectedWinRate": "number 0-1 - what we expect",
+      "expectedPayoff": "number - average win/loss ratio",
+      "minSampleSize": "number - trades needed to validate",
+      "status": "proposed | testing | validated | invalidated | inconclusive",
+      "confidence": "number 0-1 - prior belief",
+      "testResults": {
+        "trades": "number - trades executed",
+        "wins": "number",
+        "losses": "number",
+        "totalPnL": "number",
+        "actualWinRate": "number"
+      },
+      "evidence": [
+        {
+          "date": "ISO date",
+          "observation": "string",
+          "supports": "boolean",
+          "confidenceImpact": "number"
+        }
+      ],
+      "conclusion": "string - final assessment if status is terminal",
+      "createdAt": "ISO date",
+      "updatedAt": "ISO date",
+      "testStartedAt": "ISO date | null",
+      "testEndedAt": "ISO date | null"
+    }
+  },
+  "pipelineStats": {
+    "academic": {
+      "generated": 0,
+      "validated": 0,
+      "invalidated": 0
+    },
+    "leaderboard": {
+      "generated": 0,
+      "validated": 0,
+      "invalidated": 0
+    },
+    "platform": {
+      "generated": 0,
+      "validated": 0,
+      "invalidated": 0
+    },
+    "observation": {
+      "generated": 0,
+      "validated": 0,
+      "invalidated": 0
+    },
+    "user": {
+      "generated": 0,
+      "validated": 0,
+      "invalidated": 0
+    },
+    "cross-market": {
+      "generated": 0,
+      "validated": 0,
+      "invalidated": 0
+    }
+  }
+}

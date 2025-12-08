@@ -42,6 +42,7 @@ const COMMANDS = [
   { command: 'heal', description: 'AI-analyze and fix errors' },
   { command: 'start', description: 'Start the daemon' },
   { command: 'stop', description: 'Stop the daemon' },
+  { command: 'deploy', description: 'Restart services with latest code' },
   { command: 'rollback', description: 'Rollback to a commit and redeploy' },
 ];
 
