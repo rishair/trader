@@ -95,13 +95,23 @@
         "marketId": 555837,
         "price": 0.125,
         "liquidity": 33355.9375,
-        "volume24hr": 70876.80
+        "volume24hr": 70876.8
       },
       "Donald_Trump": {
         "marketId": 555821,
         "price": 0.05,
-        "liquidity": 152920.10,
+        "liquidity": 152920.1,
         "volume24hr": 232145.22
+      }
+    }
+  },
+  {
+    "timestamp": "2025-12-08T18:01:13.683Z",
+    "prices": {
+      "64608332692655386624219169603174714750740291631647562666654835455208498486268": {
+        "market": "Largest Company end of 2025",
+        "outcome": "Apple",
+        "price": 0.08449999999999999
       }
     }
   }
