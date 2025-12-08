@@ -24,5 +24,18 @@
     },
     "positions": [],
     "snapshotAt": "2025-12-08T07:46:03.400Z"
+  },
+  {
+    "trader": {
+      "proxyWallet": "0x863134d00841b2e200492805a01e1e2f5defaa53",
+      "name": "RepTrump",
+      "pseudonym": "RepTrump",
+      "profit": 7532409.671579,
+      "profitRank": 5,
+      "bio": "",
+      "profileImage": ""
+    },
+    "positions": [],
+    "snapshotAt": "2025-12-08T19:03:49.550Z"
   }
 ]

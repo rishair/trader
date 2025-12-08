@@ -24,5 +24,18 @@
     },
     "positions": [],
     "snapshotAt": "2025-12-08T07:46:02.806Z"
+  },
+  {
+    "trader": {
+      "proxyWallet": "0x78b9ac44a6d7d7a076c14e0ad518b301b63c6b76",
+      "name": "Len9311238",
+      "pseudonym": "Len9311238",
+      "profit": 8709972.988069998,
+      "profitRank": 3,
+      "bio": "",
+      "profileImage": ""
+    },
+    "positions": [],
+    "snapshotAt": "2025-12-08T19:03:48.935Z"
   }
 ]

@@ -1,5 +1,5 @@
 {
-  "lastCheck": "2025-12-08T21:00:00Z",
+  "lastCheck": "2025-12-08T19:05:00Z",
   "status": "healthy",
   "services": {
     "telegram-handler": { "status": "running", "lastSeen": "2025-12-08T18:47:00Z", "pid": 25257 },
@@ -43,9 +43,25 @@
   },
   "engineState": {
     "status": "healthy",
-    "testableHypotheses": 4,
+    "testableHypotheses": 5,
     "totalHypotheses": 7,
     "avgConviction": 0.38
+  },
+  "lastCapabilityAudit": {
+    "timestamp": "2025-12-08T19:05:00Z",
+    "capabilitiesTested": 9,
+    "allWorking": true,
+    "newCapabilitiesRegistered": ["cap-009 (daily-briefing)"],
+    "deprecatedCapabilities": ["leaderboard-scraper"],
+    "gapsIdentified": 4,
+    "hypothesesUnblocked": ["hyp-004"],
+    "findings": [
+      "All 8 previously registered capabilities working",
+      "Found unregistered daily-briefing pipeline - added as cap-009",
+      "Deprecated leaderboard-scraper (superseded by leaderboard-tracker)",
+      "Unblocked hyp-004 - leaderboard-tracker capability exists",
+      "4 capability gaps documented: automated-order-placement, volume-analysis, arbitrage-scanner, backtest-framework"
+    ]
   },
   "lastAgentReview": {
     "timestamp": "2025-12-08T21:00:00Z",

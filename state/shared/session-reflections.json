@@ -1,6 +1,26 @@
 {
   "sessions": [
     {
+      "sessionId": "sess-20251208-190500",
+      "agent": "agent-engineer",
+      "timestamp": "2025-12-08T19:05:00Z",
+      "responsibility": "capability-audit",
+      "taskDescription": "Weekly capability audit: test all registered capabilities, identify unused/redundant tools, find capability gaps blocking hypotheses, prioritize development",
+      "completed": true,
+      "friction": [
+        "leaderboard-tracker weekly API returns 400 error - only all-time works",
+        "daily-briefing pipeline existed but was not registered in capabilities.json"
+      ],
+      "mistakes": [],
+      "rootCauses": [
+        "Polymarket LB API may have different requirements for weekly vs all-time endpoints",
+        "Pipeline was likely created before capability registry was fully established"
+      ],
+      "improvementIdea": null,
+      "learningLogged": false,
+      "notes": "First capability-audit execution. Tested all 8 registered capabilities - all working. Found unregistered daily-briefing pipeline - added as cap-009. Deprecated leaderboard-scraper (superseded by API-based leaderboard-tracker). Key action: unblocked hyp-004 which was incorrectly marked as blocked by 'leaderboard-scraper' when imp-009 (leaderboard-tracker) was already completed. Documented 4 capability gaps: automated-order-placement (blocks hyp-003), volume-analysis (supports hyp-006), arbitrage-scanner (supports hyp-007), backtest-framework. Engine now has 5 testable hypotheses vs 4 before. Priority: existing capabilities adequate for current hypothesis testing; no urgent development needed."
+    },
+    {
       "sessionId": "sess-20251208-000000",
       "agent": "trade-research",
       "timestamp": "2025-12-08T00:00:00Z",

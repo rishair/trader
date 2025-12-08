@@ -39,5 +39,33 @@
       }
     ],
     "snapshotAt": "2025-12-08T07:46:02.200Z"
+  },
+  {
+    "trader": {
+      "proxyWallet": "0x56687bf447db6ffa42ffe2204a05edaa20f55839",
+      "name": "Theo4",
+      "pseudonym": "Theo4",
+      "profit": 22053933.752321757,
+      "profitRank": 1,
+      "bio": "",
+      "profileImage": ""
+    },
+    "positions": [
+      {
+        "asset": "25668899010402601503955316115022032698540963421550564631866184099140706515292",
+        "conditionId": "0x749de8f149c7b94e9a202482cadb8df6c568db7fec7165852ccce561b07ec168",
+        "title": "Taylor Swift pregnant in 2024?",
+        "slug": "taylor-swift-pregnant-in-2024",
+        "outcome": "No",
+        "size": 0.009435,
+        "avgPrice": 0.927,
+        "currentValue": 0.009435,
+        "curPrice": 1,
+        "cashPnl": 0.0006887549999999992,
+        "percentPnl": 7.8748651564185455,
+        "endDate": "2024-12-31"
+      }
+    ],
+    "snapshotAt": "2025-12-08T19:03:48.332Z"
   }
 ]

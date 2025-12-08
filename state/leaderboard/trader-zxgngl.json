@@ -54,5 +54,33 @@
       }
     ],
     "snapshotAt": "2025-12-08T07:46:03.104Z"
+  },
+  {
+    "trader": {
+      "proxyWallet": "0xd235973291b2b75ff4070e9c0b01728c520b0f29",
+      "name": "zxgngl",
+      "pseudonym": "zxgngl",
+      "profit": 7807265.589240883,
+      "profitRank": 4,
+      "bio": "",
+      "profileImage": ""
+    },
+    "positions": [
+      {
+        "asset": "105698626207188362137224559516875335051389535882173153619615964622033134253951",
+        "conditionId": "0xb4961db4b70b4ebeebce6dee9816eda7a18443ae2d25240a70a0614a01f44ed2",
+        "title": "Will Mike Tyson win his boxing match against Jake Paul?",
+        "slug": "will-mike-tyson-win-his-boxing-match-against-jake-paul",
+        "outcome": "Yes",
+        "size": 11077378.182806,
+        "avgPrice": 0.328666,
+        "currentValue": 0,
+        "curPrice": 0,
+        "cashPnl": -3640757.577830117,
+        "percentPnl": -100,
+        "endDate": "2024-07-20"
+      }
+    ],
+    "snapshotAt": "2025-12-08T19:03:49.247Z"
   }
 ]

@@ -1,5 +1,5 @@
 {
-  "lastEvaluated": "2025-12-08T18:58:25.172Z",
+  "lastEvaluated": "2025-12-08T19:02:36.644Z",
   "hypothesisHealth": {
     "total": 7,
     "byStatus": {
@@ -9,13 +9,14 @@
       "invalidated": 1
     },
     "avgConviction": 0.38,
-    "testableNow": 4,
-    "blockedByCapability": 2,
+    "testableNow": 5,
+    "blockedByCapability": 1,
     "testableIds": [
       "hyp-002",
+      "hyp-004",
+      "hyp-005",
       "hyp-006",
-      "hyp-007",
-      "hyp-005"
+      "hyp-007"
     ]
   },
   "blockedHypotheses": [
@@ -25,13 +26,6 @@
       "blockedBy": "automated-order-placement",
       "improvementId": null,
       "note": "Requires MM bot infrastructure to properly test. Manual observation continuing."
-    },
-    {
-      "hypothesisId": "hyp-004",
-      "title": "Copy top traders",
-      "blockedBy": "leaderboard-scraper",
-      "improvementId": "imp-009",
-      "note": "Proposed >24h, needs capability to move to testing"
     }
   ],
   "currentPriority": {
@@ -59,8 +53,8 @@
   "followSignalsGenerated": 0,
   "lastHealthCheck": "2025-12-08T18:30:00.000Z",
   "daemon": {
-    "version": "f1dfdba",
-    "startedAt": "2025-12-08T18:58:24.156Z",
-    "pid": 26269
+    "version": "6deef1f",
+    "startedAt": "2025-12-08T19:02:35.571Z",
+    "pid": 26626
   }
 }
