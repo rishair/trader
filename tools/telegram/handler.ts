@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import * as crypto from 'crypto';
 import { execSync } from 'child_process';
 import { spawn } from 'child_process';
 import { sendMessage, editMessage, pollMessages } from './bot';
@@ -11,9 +12,59 @@ const STATUS_FILE = path.join(STATE_DIR, 'status.md');
 const ERRORS_FILE = path.join(STATE_DIR, 'errors.json');
 const PROJECT_ROOT = path.join(__dirname, '../..');
 const LOG_DIR = path.join(STATE_DIR, 'logs');
+const SESSION_FILE = path.join(STATE_DIR, 'telegram_session.json');
 
 // Track if a Claude session is currently running
 let claudeSessionActive = false;
+
+// ============ Persistent Session Management ============
+
+interface SessionState {
+  sessionId: string;
+  createdAt: string;
+  lastMessageAt: string;
+  messageCount: number;
+}
+
+function loadSession(): SessionState | null {
+  try {
+    return JSON.parse(fs.readFileSync(SESSION_FILE, 'utf-8'));
+  } catch {
+    return null;
+  }
+}
+
+function saveSession(session: SessionState): void {
+  fs.writeFileSync(SESSION_FILE, JSON.stringify(session, null, 2));
+}
+
+function createNewSession(): SessionState {
+  const session: SessionState = {
+    sessionId: crypto.randomUUID(),
+    createdAt: new Date().toISOString(),
+    lastMessageAt: new Date().toISOString(),
+    messageCount: 0,
+  };
+  saveSession(session);
+  return session;
+}
+
+function getOrCreateSession(): SessionState {
+  let session = loadSession();
+  if (!session) {
+    session = createNewSession();
+  }
+  return session;
+}
+
+function updateSessionActivity(): void {
+  const session = loadSession();
+  if (session) {
+    session.lastMessageAt = new Date().toISOString();
+    session.messageCount++;
+    saveSession(session);
+  }
+}
 
 // ============ Error Tracking & Self-Healing ============
 
@@ -330,30 +381,67 @@ function detectContentType(text: string): { type: string; title: string } {
 const MAX_MSG_LEN = 4000; // Telegram limit is 4096, leave room for formatting
 const STREAM_UPDATE_INTERVAL = 1500; // Update message every 1.5 seconds
 
-async function spawnClaudeSession(prompt: string, chatId: string, sessionName: string): Promise<string> {
+interface ClaudeSessionOptions {
+  prompt: string;
+  chatId: string;
+  sessionName: string;
+  // If true, use persistent session with --resume
+  persistent?: boolean;
+  // Custom session ID (for persistent sessions)
+  sessionId?: string;
+}
+
+async function spawnClaudeSession(prompt: string, chatId: string, sessionName: string): Promise<string>;
+async function spawnClaudeSession(options: ClaudeSessionOptions): Promise<string>;
+async function spawnClaudeSession(
+  promptOrOptions: string | ClaudeSessionOptions,
+  chatId?: string,
+  sessionName?: string
+): Promise<string> {
+  // Handle overloaded signatures
+  let options: ClaudeSessionOptions;
+  if (typeof promptOrOptions === 'string') {
+    options = {
+      prompt: promptOrOptions,
+      chatId: chatId!,
+      sessionName: sessionName!,
+      persistent: false,
+    };
+  } else {
+    options = promptOrOptions;
+  }
+
   if (claudeSessionActive) {
-    await sendMessage('⚠️ A Claude session is already running. Please wait.', chatId);
+    await sendMessage('⚠️ A Claude session is already running. Please wait.', options.chatId);
     return '';
   }
 
   claudeSessionActive = true;
 
   // Send initial message and capture message_id for streaming updates
-  const messageId = await sendMessage(`🚀 *${sessionName}*\n\n_Starting..._`, chatId);
+  const messageId = await sendMessage(`🚀 *${options.sessionName}*\n\n_Starting..._`, options.chatId);
 
-  const sessionLogFile = path.join(LOG_DIR, `telegram-${sessionName}-${Date.now()}.log`);
+  const sessionLogFile = path.join(LOG_DIR, `telegram-${options.sessionName}-${Date.now()}.log`);
 
   if (!fs.existsSync(LOG_DIR)) {
     fs.mkdirSync(LOG_DIR, { recursive: true });
   }
 
+  // Build Claude CLI arguments
+  const claudeArgs: string[] = [
+    '-p', options.prompt,
+    '--output-format', 'stream-json',
+    '--verbose',
+    '--dangerously-skip-permissions'
+  ];
+
+  // For persistent sessions, use --session-id to maintain conversation
+  if (options.persistent && options.sessionId) {
+    claudeArgs.push('--session-id', options.sessionId);
+  }
+
   return new Promise((resolve) => {
-    const claude = spawn('claude', [
-      '-p', prompt,
-      '--output-format', 'stream-json',
-      '--verbose',
-      '--dangerously-skip-permissions'
-    ], {
+    const claude = spawn('claude', claudeArgs, {
       cwd: PROJECT_ROOT,
       stdio: ['ignore', 'pipe', 'pipe'],
       env: { ...process.env }
@@ -395,8 +483,8 @@ async function spawnClaudeSession(prompt: string, chatId: string, sessionName: s
       // Show tools being used
       const toolsInfo = toolsUsed.length > 0 ? `\n🔧 _${toolsUsed.slice(-3).join(' → ')}_\n` : '';
 
-      const header = final ? `${status} *${sessionName}* - Done` : `${status} *${sessionName}* - Running...`;
-      await editMessage(messageId, `${header}${toolsInfo}\n${displayOutput || '_waiting for output..._'}`, chatId);
+      const header = final ? `${status} *${options.sessionName}* - Done` : `${status} *${options.sessionName}* - Running...`;
+      await editMessage(messageId, `${header}${toolsInfo}\n${displayOutput || '_waiting for output..._'}`, options.chatId);
     };
 
     claude.stdout?.on('data', (data: Buffer) => {
@@ -467,13 +555,13 @@ async function spawnClaudeSession(prompt: string, chatId: string, sessionName: s
           }
 
           // Send full output as separate messages
-          await sendMessage(`📄 *Full output (${chunks.length} parts):*`, chatId);
+          await sendMessage(`📄 *Full output (${chunks.length} parts):*`, options.chatId);
           for (let i = 0; i < chunks.length; i++) {
-            await sendMessage(`(${i + 1}/${chunks.length})\n${chunks[i]}`, chatId);
+            await sendMessage(`(${i + 1}/${chunks.length})\n${chunks[i]}`, options.chatId);
           }
         }
       } else {
-        await editMessage(messageId!, `❌ *${sessionName}* - Failed (code ${code})\n\n${output.slice(-500) || 'No output'}`, chatId);
+        await editMessage(messageId!, `❌ *${options.sessionName}* - Failed (code ${code})\n\n${output.slice(-500) || 'No output'}`, options.chatId);
       }
       resolve(output);
     });
@@ -481,7 +569,7 @@ async function spawnClaudeSession(prompt: string, chatId: string, sessionName: s
     claude.on('error', async (error: Error) => {
       claudeSessionActive = false;
       if (messageId) {
-        await editMessage(messageId, `❌ *${sessionName}* - Error: ${error.message}`, chatId);
+        await editMessage(messageId, `❌ *${options.sessionName}* - Error: ${error.message}`, options.chatId);
       }
       resolve('');
     });
@@ -510,6 +598,11 @@ async function handleMessage(text: string, chatId: string): Promise<void> {
     await sendMessage(
 `*Trader Bot Commands*
 
+*Chat:*
+Just message me - I'll respond in our ongoing conversation.
+/new - Start a fresh conversation
+/session - Show current session info
+
 *Info:*
 /status - Current status
 /pending - Show pending approvals
@@ -526,13 +619,10 @@ async function handleMessage(text: string, chatId: string): Promise<void> {
 *Actions:*
 /wake - Run next scheduled task
 /process - Process inbox items
-/claude <prompt> - Run custom prompt
+/inbox <content> - Add content to inbox
 /heal - AI-analyze and fix errors
 /start - Start the daemon
-/stop - Stop the daemon
-
-*Content:*
-Just send me links, ideas, news - I'll add to inbox.`,
+/stop - Stop the daemon`,
       chatId
     );
     return;
@@ -703,19 +793,42 @@ Read MISSION.md for context.`,
     return;
   }
 
-  if (lower.startsWith('/claude')) {
-    const userPrompt = trimmed.slice(7).trim();
-    if (!userPrompt) {
-      await sendMessage('Usage: /claude <your prompt>', chatId);
+  // /new - Start a fresh conversation
+  if (lower === '/new') {
+    const session = createNewSession();
+    await sendMessage(
+      `🆕 Started new conversation.\nSession: \`${session.sessionId.slice(0, 8)}...\``,
+      chatId
+    );
+    return;
+  }
+
+  // /session - Show current session info
+  if (lower === '/session') {
+    const session = loadSession();
+    if (!session) {
+      await sendMessage('No active session. Send a message to start one.', chatId);
       return;
     }
-
-    await spawnClaudeSession(
-      `You are the trader agent. Read MISSION.md for context.\n\nUser request: ${userPrompt}\n\nExecute and summarize.`,
-      chatId,
-      'custom'
+    const age = Math.round((Date.now() - new Date(session.createdAt).getTime()) / 1000 / 60);
+    await sendMessage(
+      `*Session Info*\n\nID: \`${session.sessionId.slice(0, 8)}...\`\nCreated: ${age} min ago\nMessages: ${session.messageCount}`,
+      chatId
     );
-    gitPush('Custom Claude session');
+    return;
+  }
+
+  // /inbox - Add content to inbox (explicit)
+  if (lower.startsWith('/inbox')) {
+    const content = trimmed.slice(6).trim();
+    if (!content) {
+      await sendMessage('Usage: /inbox <content to add>', chatId);
+      return;
+    }
+    const { type, title } = detectContentType(content);
+    const id = addToInbox(content, type, title);
+    gitPush(`Inbox: ${title}`);
+    await sendMessage(`📥 Added to inbox (${type})\nID: ${id}`, chatId);
     return;
   }
 
@@ -824,13 +937,24 @@ Check the relevant files, understand what went wrong, and apply fixes. Update st
     return;
   }
 
-  // ===== Content (not a command) =====
+  // ===== Default: Send to persistent Claude conversation =====
 
-  const { type, title } = detectContentType(trimmed);
-  const id = addToInbox(trimmed, type, title);
-  gitPush(`Inbox: ${title}`);
+  const session = getOrCreateSession();
+  updateSessionActivity();
 
-  await sendMessage(`📥 Added to inbox (${type})\nID: ${id}\n\nI'll process it on next /process or wake.`, chatId);
+  // Build prompt - first message gets the agent context, follow-ups are just the message
+  const isFirstMessage = session.messageCount === 1;
+  const prompt = isFirstMessage
+    ? `You are the trader agent. Read MISSION.md for context.\n\nUser message: ${trimmed}`
+    : trimmed;
+
+  await spawnClaudeSession({
+    prompt,
+    chatId,
+    sessionName: 'chat',
+    persistent: true,
+    sessionId: session.sessionId,
+  });
 }
 
 // ============ Main ============
