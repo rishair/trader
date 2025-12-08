@@ -14,6 +14,13 @@
   },
   "blockedHypotheses": [
     {
+      "hypothesisId": "hyp-002",
+      "title": "Closing-soon momentum",
+      "blockedBy": "price-history-tracking",
+      "improvementId": "imp-003",
+      "note": "Closing-scanner exists but can't detect momentum without historical prices"
+    },
+    {
       "hypothesisId": "hyp-003",
       "title": "Liquidity rewards",
       "blockedBy": "rewards-data-research",
@@ -27,9 +34,9 @@
     }
   ],
   "currentPriority": {
-    "action": "test-hypothesis",
-    "target": "hyp-002",
-    "reason": "Closing-scanner pipeline now built. Can start testing momentum hypothesis on closing-soon markets."
+    "action": "build-capability",
+    "target": "imp-003",
+    "reason": "Only 1 testable hypothesis (hyp-005). Need price history tracking to unblock hyp-002 momentum testing."
   },
   "engineState": "starved",
   "engineStates": {

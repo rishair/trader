@@ -110,6 +110,7 @@ function saveSchedule(schedule: Schedule): void {
 // Pipeline registry - maps pipeline names to their scripts
 const PIPELINES: Record<string, string> = {
   'closing-scanner': 'tools/pipelines/closing-scanner.ts',
+  'health-check': 'tools/pipelines/health-check.ts',
 };
 
 async function executePipeline(pipelineName: string): Promise<{ success: boolean; output: string }> {
@@ -167,11 +168,50 @@ function updateEngineStatus(): void {
       invalidated: hypList.filter((h: any) => h.status === 'invalidated').length
     };
 
-    // Calculate testable hypotheses (proposed or testing, not blocked)
+    // Calculate testable hypotheses with stricter criteria:
+    // - Status is 'proposed' or 'testing'
+    // - Not in blocked list
+    // - Confidence > 0.30 (below this, should be killed or needs more research)
+    // - If testing, must have linkedTrade or recent activity
     const blockedIds = engineStatus.blockedHypotheses.map((b: any) => b.hypothesisId);
-    engineStatus.hypothesisHealth.testableNow = hypList.filter(
-      (h: any) => ['proposed', 'testing'].includes(h.status) && !blockedIds.includes(h.id)
-    ).length;
+    const testableHypotheses = hypList.filter((h: any) => {
+      if (!['proposed', 'testing'].includes(h.status)) return false;
+      if (blockedIds.includes(h.id)) return false;
+      if (h.confidence <= 0.30) return false;
+      return true;
+    });
+    engineStatus.hypothesisHealth.testableNow = testableHypotheses.length;
+    engineStatus.hypothesisHealth.testableIds = testableHypotheses.map((h: any) => h.id);
+
+    // Identify hypotheses that need attention
+    const needsAttention: any[] = [];
+
+    for (const h of hypList) {
+      // Low confidence but still active - should kill or research more
+      if (['proposed', 'testing'].includes(h.status) && h.confidence <= 0.30) {
+        needsAttention.push({
+          hypothesisId: h.id,
+          issue: 'low_confidence',
+          detail: `Confidence ${(h.confidence * 100).toFixed(0)}% - consider invalidating or gathering more evidence`,
+          suggestedAction: h.evidence?.length >= 3 ? 'invalidate' : 'research'
+        });
+      }
+
+      // Testing for too long without results
+      if (h.status === 'testing' && h.testStartedAt) {
+        const daysTesting = (Date.now() - new Date(h.testStartedAt).getTime()) / (1000 * 60 * 60 * 24);
+        if (daysTesting > 14 && (!h.testResults || h.testResults.trades < 5)) {
+          needsAttention.push({
+            hypothesisId: h.id,
+            issue: 'stale_test',
+            detail: `Testing for ${daysTesting.toFixed(0)} days with insufficient data`,
+            suggestedAction: 'review'
+          });
+        }
+      }
+    }
+
+    engineStatus.needsAttention = needsAttention;
 
     // Determine engine state
     const testable = engineStatus.hypothesisHealth.testableNow;
@@ -185,7 +225,11 @@ function updateEngineStatus(): void {
 
     engineStatus.lastEvaluated = new Date().toISOString();
     fs.writeFileSync(ENGINE_STATUS_FILE, JSON.stringify(engineStatus, null, 2));
-    log(`Engine status updated: ${engineStatus.engineState} (${testable} testable hypotheses)`);
+    log(`Engine status updated: ${engineStatus.engineState} (${testable} testable: ${engineStatus.hypothesisHealth.testableIds?.join(', ') || 'none'})`);
+
+    if (needsAttention.length > 0) {
+      log(`Hypotheses needing attention: ${needsAttention.map(n => n.hypothesisId).join(', ')}`);
+    }
   } catch (error: any) {
     log(`Failed to update engine status: ${error.message}`);
   }
@@ -254,7 +298,20 @@ async function executeTask(task: ScheduledTask): Promise<void> {
       // Parse output to get summary
       try {
         const pipelineOutput = JSON.parse(result.output);
-        const summary = `Scanned ${pipelineOutput.marketsScanned} markets, found ${pipelineOutput.candidatesFound} candidates, generated ${pipelineOutput.hypothesesGenerated?.length || 0} hypotheses`;
+
+        // Different summaries for different pipelines
+        let summary = '';
+        if (pipelineName === 'closing-scanner') {
+          summary = `Scanned ${pipelineOutput.marketsScanned} markets, found ${pipelineOutput.candidatesFound} candidates, generated ${pipelineOutput.hypothesesGenerated?.length || 0} hypotheses`;
+        } else if (pipelineName === 'health-check') {
+          summary = pipelineOutput.summary || `Found ${pipelineOutput.issuesFound} issues`;
+          if (pipelineOutput.proposalsCreated > 0) {
+            summary += `\n\n📋 *${pipelineOutput.proposalsCreated} proposals awaiting approval*\nUse /pending to review`;
+          }
+        } else {
+          summary = pipelineOutput.summary || 'Completed';
+        }
+
         await sendTelegramAlert(`✅ *Pipeline completed*\n\`${task.id}\`\n${summary}`);
       } catch {
         await sendTelegramAlert(`✅ *Pipeline completed*\n\`${task.id}\``);

@@ -1,5 +1,40 @@
 {
-  "approvals": [],
+  "approvals": [
+    {
+      "id": "approval-1765174298831-9gteb4",
+      "type": "improvement",
+      "title": "Build imp-003: Price tracking for open positions",
+      "description": "Engine is starved (only 2 testable hypotheses). Building imp-003 would unblock hyp-002. Effort: medium",
+      "proposedAt": "2025-12-08T06:11:38.831Z",
+      "status": "pending",
+      "context": {
+        "improvementId": "imp-003",
+        "action": "build",
+        "unblocks": "hyp-002",
+        "effort": "medium",
+        "leverage": "high"
+      },
+      "decidedAt": null,
+      "decisionNote": null
+    },
+    {
+      "id": "approval-1765174298831-uh1mtq",
+      "type": "improvement",
+      "title": "Build imp-009: Leaderboard tracker pipeline",
+      "description": "Engine is starved (only 2 testable hypotheses). Building imp-009 would unblock hyp-004. Effort: medium",
+      "proposedAt": "2025-12-08T06:11:38.831Z",
+      "status": "pending",
+      "context": {
+        "improvementId": "imp-009",
+        "action": "build",
+        "unblocks": "hyp-004",
+        "effort": "medium",
+        "leverage": "high"
+      },
+      "decidedAt": null,
+      "decisionNote": null
+    }
+  ],
   "schema": {
     "approval": {
       "id": "string - unique identifier",

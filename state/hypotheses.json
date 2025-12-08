@@ -5,7 +5,7 @@
       "statement": "Tail-risk markets (probability <5%) are systematically overpriced due to fear/uncertainty premium",
       "rationale": "Markets like nuclear detonation (1.5%), recession (1.5%), USDT depeg (0.45%) may reflect fear rather than rational probability. If base rates are even lower, there's edge in selling these contracts.",
       "testMethod": "Compare implied probabilities to historical base rates and expert forecasts. Track P&L on small NO positions in tail-risk markets.",
-      "status": "testing",
+      "status": "invalidated",
       "confidence": 0.25,
       "evidence": [
         {
@@ -27,9 +27,10 @@
           "confidenceImpact": 0
         }
       ],
-      "conclusion": null,
+      "conclusion": "Invalidated. Examined 3 tail-risk markets, all showed efficient pricing aligned with expert estimates. No systematic overpricing found. Polymarket participants appear to price tail risks rationally.",
       "createdAt": "2025-12-07T00:00:00Z",
-      "updatedAt": "2025-12-07T12:00:00Z"
+      "updatedAt": "2025-12-08T06:15:00Z",
+      "testEndedAt": "2025-12-08T06:15:00Z"
     },
     {
       "id": "hyp-002",

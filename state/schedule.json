@@ -1,6 +1,19 @@
 {
   "pendingTasks": [
     {
+      "id": "pipeline-health-001",
+      "type": "pipeline",
+      "description": "Health check: Analyze system state, propose actions for user approval",
+      "scheduledFor": "2025-12-08T07:00:00Z",
+      "priority": "high",
+      "context": {
+        "pipeline": "health-check",
+        "recurring": true,
+        "frequency": "12h",
+        "feedsTo": "pending_approvals.json"
+      }
+    },
+    {
       "id": "monitor-002",
       "type": "monitor",
       "description": "Check AAPL position price and evaluate exit criteria",
