@@ -389,6 +389,9 @@ interface ClaudeSessionOptions {
   persistent?: boolean;
   // Custom session ID (for persistent sessions)
   sessionId?: string;
+  // If true, this is the first message in the session (use --session-id to create)
+  // If false, this is a follow-up (use --resume to continue)
+  isFirstMessage?: boolean;
 }
 
 async function spawnClaudeSession(prompt: string, chatId: string, sessionName: string): Promise<string>;
@@ -435,9 +438,15 @@ async function spawnClaudeSession(
     '--dangerously-skip-permissions'
   ];
 
-  // For persistent sessions, use --session-id to maintain conversation
+  // For persistent sessions:
+  // - First message: use --session-id to create a new session with that ID
+  // - Follow-up messages: use --resume to continue the existing conversation
   if (options.persistent && options.sessionId) {
-    claudeArgs.push('--session-id', options.sessionId);
+    if (options.isFirstMessage) {
+      claudeArgs.push('--session-id', options.sessionId);
+    } else {
+      claudeArgs.push('--resume', options.sessionId);
+    }
   }
 
   return new Promise((resolve) => {
@@ -954,6 +963,7 @@ Check the relevant files, understand what went wrong, and apply fixes. Update st
     sessionName: 'chat',
     persistent: true,
     sessionId: session.sessionId,
+    isFirstMessage,
   });
 }
 

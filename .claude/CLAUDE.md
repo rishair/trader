@@ -184,3 +184,14 @@ This will:
 4. Restart the daemon and telegram services
 
 **Always run `npm run deploy` after pushing changes that affect the daemon or telegram handler.**
+
+## Operational Learnings
+
+### Process Management
+- **Never manually start processes** - Always use `npm run deploy` or `systemctl restart`. Starting processes manually while systemd services exist causes duplicates.
+- **Check what's running first** - Before killing/starting anything: `ps aux | grep <process>` and `systemctl status <service>`
+
+### Claude CLI Session Flags
+- `--session-id <uuid>` - Names a NEW session with that ID (creates it)
+- `--resume <uuid>` - Continues an EXISTING session (loads history)
+- For persistent Telegram conversations: use `--session-id` on first message, `--resume` on follow-ups
