@@ -31,21 +31,6 @@
       "completedAt": null
     },
     {
-      "id": "imp-005",
-      "title": "Telegram alerts for position changes and key events",
-      "category": "capability",
-      "leverage": "medium",
-      "effort": "low",
-      "priority": 1,
-      "rationale": "Keep user informed of agent activity. Alert on: trades executed, hypotheses validated/invalidated, escalation triggers hit.",
-      "triageNotes": "QUICK WIN: Low effort, immediate visibility. User can stay informed without checking manually.",
-      "status": "triaged",
-      "outcome": null,
-      "createdAt": "2025-12-07T00:00:00Z",
-      "triagedAt": "2025-12-08T18:45:00Z",
-      "completedAt": null
-    },
-    {
       "id": "imp-006",
       "title": "Backtest framework for strategy validation",
       "category": "capability",
@@ -149,6 +134,18 @@
       "outcome": "Superseded by imp-009 (leaderboard-tracker pipeline) which provides the same capability plus additional features.",
       "createdAt": "2025-12-07T00:00:00Z",
       "completedAt": "2025-12-08T12:00:00Z"
+    },
+    {
+      "id": "imp-005",
+      "title": "Telegram alerts for position changes and key events",
+      "category": "capability",
+      "leverage": "medium",
+      "effort": "low",
+      "rationale": "Keep user informed of agent activity. Alert on: trades executed, hypotheses validated/invalidated, escalation triggers hit.",
+      "status": "completed",
+      "outcome": "Built tools/alerts/telegram-alerts.ts library with typed alert functions for: trade_executed, exit_trigger, hypothesis_update, price_alert, system_alert, daily_summary. Integrated into price-tracker pipeline to send alerts when exit triggers hit or significant price movements occur (>10% change or >$50 P&L change). Registered as cap-006.",
+      "createdAt": "2025-12-07T00:00:00Z",
+      "completedAt": "2025-12-08T20:00:00Z"
     }
   ],
   "schema": {
@@ -165,5 +162,5 @@
       "completedAt": "ISO date | null"
     }
   },
-  "notes": "Track system improvements separately from trading learnings. Next priorities: imp-005 (Telegram alerts - quick win), imp-010 (price drift detector), imp-011 (hypothesis auto-tester)."
+  "notes": "Track system improvements separately from trading learnings. Next priorities: imp-010 (price drift detector), imp-011 (hypothesis auto-tester), imp-006 (backtest framework)."
 }

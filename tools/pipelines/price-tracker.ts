@@ -3,6 +3,7 @@
  *
  * Fetches current prices for all open positions and updates portfolio.json.
  * Can also be used to fetch individual market prices.
+ * Sends Telegram alerts for significant price movements and exit triggers.
  *
  * Usage:
  *   npx ts-node tools/pipelines/price-tracker.ts              # Update all positions
@@ -11,6 +12,7 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
+import { alertExitTrigger, alertPriceMovement } from '../alerts/telegram-alerts';
 
 const STATE_DIR = path.join(__dirname, '../../state');
 const PORTFOLIO_FILE = path.join(STATE_DIR, 'portfolio.json');
@@ -272,6 +274,10 @@ function checkExitTriggers(portfolio: Portfolio): {
   return triggers;
 }
 
+// Thresholds for alerts
+const PRICE_CHANGE_ALERT_THRESHOLD = 0.10; // 10% price change triggers alert
+const PNL_CHANGE_ALERT_THRESHOLD = 50; // $50 P&L change triggers alert
+
 async function main() {
   const args = process.argv.slice(2);
 
@@ -294,19 +300,52 @@ async function main() {
 
   if (result.updated) {
     console.log('\nPrice updates:');
+    const portfolio = JSON.parse(fs.readFileSync(PORTFOLIO_FILE, 'utf-8'));
+
     for (const pos of result.positions) {
       const pnlSign = pos.pnlChange >= 0 ? '+' : '';
       console.log(`  ${pos.id}: ${(pos.oldPrice * 100).toFixed(1)}¢ → ${(pos.newPrice * 100).toFixed(1)}¢ (${pnlSign}$${pos.pnlChange.toFixed(2)})`);
+
+      // Send price alert if significant movement
+      const changePercent = Math.abs((pos.newPrice - pos.oldPrice) / pos.oldPrice);
+      if (changePercent >= PRICE_CHANGE_ALERT_THRESHOLD || Math.abs(pos.pnlChange) >= PNL_CHANGE_ALERT_THRESHOLD) {
+        const position = portfolio.positions.find((p: Position) => p.id === pos.id);
+        if (position) {
+          console.log(`  → Sending price alert for ${pos.id}`);
+          await alertPriceMovement(
+            position.market,
+            position.outcome,
+            pos.oldPrice,
+            pos.newPrice,
+            pos.pnlChange,
+            pos.id
+          );
+        }
+      }
     }
 
     // Check exit triggers
-    const portfolio = JSON.parse(fs.readFileSync(PORTFOLIO_FILE, 'utf-8'));
     const triggers = checkExitTriggers(portfolio);
 
     if (triggers.length > 0) {
       console.log('\n⚠️  EXIT TRIGGERS:');
       for (const t of triggers) {
         console.log(`  ${t.position}: ${t.trigger} at ${(t.currentPrice * 100).toFixed(1)}¢ (threshold: ${(t.threshold * 100).toFixed(1)}¢)`);
+
+        // Send exit trigger alert
+        const position = portfolio.positions.find((p: Position) => p.id === t.position);
+        if (position) {
+          console.log(`  → Sending exit trigger alert for ${t.position}`);
+          await alertExitTrigger(
+            t.trigger,
+            t.position,
+            position.market,
+            position.outcome,
+            t.currentPrice,
+            t.threshold,
+            position.unrealizedPnL
+          );
+        }
       }
     }
 
