@@ -1,0 +1,22 @@
+[Unit]
+Description=Trader Telegram Handler
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/trader
+ExecStart=/usr/bin/npx ts-node tools/telegram/handler.ts
+Restart=always
+RestartSec=10
+Environment=NODE_ENV=production
+
+# Load environment variables from .env
+EnvironmentFile=/opt/trader/.env
+
+# Logging
+StandardOutput=append:/opt/trader/state/logs/telegram-handler.log
+StandardError=append:/opt/trader/state/logs/telegram-handler.log
+
+[Install]
+WantedBy=multi-user.target
