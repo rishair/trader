@@ -1,11 +1,11 @@
 {
   "approvals": [
     {
-      "id": "approval-1765174298831-9gteb4",
+      "id": "en",
       "type": "improvement",
       "title": "Build imp-003: Price tracking for open positions",
       "description": "Engine is starved (only 2 testable hypotheses). Building imp-003 would unblock hyp-002. Effort: medium",
-      "proposedAt": "2025-12-08T06:11:38.831Z",
+      "proposedAt": "2025-12-08T06:16:56.534Z",
       "status": "pending",
       "context": {
         "improvementId": "imp-003",
@@ -18,11 +18,11 @@
       "decisionNote": null
     },
     {
-      "id": "approval-1765174298831-uh1mtq",
+      "id": "fy",
       "type": "improvement",
       "title": "Build imp-009: Leaderboard tracker pipeline",
       "description": "Engine is starved (only 2 testable hypotheses). Building imp-009 would unblock hyp-004. Effort: medium",
-      "proposedAt": "2025-12-08T06:11:38.831Z",
+      "proposedAt": "2025-12-08T06:16:56.534Z",
       "status": "pending",
       "context": {
         "improvementId": "imp-009",
