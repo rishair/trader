@@ -140,6 +140,17 @@
       "content": {
         "raw": "we need to find a way to give you full permissions. so you can access the internet and tools and everything"
       }
+    },
+    {
+      "id": "inbox-1765180897214",
+      "type": "other",
+      "source": "telegram",
+      "receivedAt": "2025-12-08T08:01:37.214Z",
+      "status": "pending",
+      "title": "Content",
+      "content": {
+        "raw": "okay but i want the claude code session to not be every minute bc it’s expensive. let’s make it every 30m"
+      }
     }
   ],
   "schema": {
