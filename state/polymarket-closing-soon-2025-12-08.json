@@ -1,0 +1,223 @@
+{
+  "timestamp": "2025-12-08T15:14:03.442Z",
+  "windowEnds": "2025-12-15T15:14:03.442Z",
+  "hoursWindow": 168,
+  "marketsClosed": "Fed rate decision announced on December 10, 2025 at 12:00 PM UTC (2:00 PM EST)",
+  "summary": {
+    "totalFound": 8,
+    "category": "Federal Reserve monetary policy (rate cuts in 2025)",
+    "allCloseDate": "2025-12-10T12:00:00Z",
+    "hoursUntilClose": 44.77,
+    "daysUntilClose": 1.87,
+    "averageVolume24h": 152689.72,
+    "averageLiquidity": 168144.56
+  },
+  "markets": [
+    {
+      "rank": 1,
+      "id": "516729",
+      "slug": "will-8plus-fed-rate-cuts-happen-in-2025",
+      "question": "Will 8+ Fed rate cuts happen in 2025?",
+      "endDate": "2025-12-10T12:00:00Z",
+      "hoursUntilClose": 44.77,
+      "daysUntilClose": 1.87,
+      "volume24h": 1383380,
+      "volumeLevel": "high",
+      "liquidity": 202401.37,
+      "liquidityLevel": "high",
+      "suitabilityScore": 70,
+      "rationale": "Highest volume market in the set. High liquidity and trading activity suggests this is a major market for rate cut expectations. Most liquid option for momentum analysis.",
+      "outcomeTokens": [
+        "61673387045681238454585997121170806826401631642653090831500827557099057497566",
+        "75673530794317709253317435585138828689432689207295322743064114581203964183879"
+      ]
+    },
+    {
+      "rank": 2,
+      "id": "516725",
+      "slug": "will-2-fed-rate-cuts-happen-in-2025",
+      "question": "Will 2 Fed rate cuts happen in 2025?",
+      "endDate": "2025-12-10T12:00:00Z",
+      "hoursUntilClose": 44.77,
+      "daysUntilClose": 1.87,
+      "volume24h": 14150.91,
+      "volumeLevel": "high",
+      "liquidity": 81209.34,
+      "liquidityLevel": "high",
+      "suitabilityScore": 70,
+      "rationale": "Baseline market - will 2 cuts happen? Good volume and liquidity. This is likely to be the most resolved outcome given historical context.",
+      "outcomeTokens": [
+        "11661882248425579028730127122226588074844109517532906275870117904036267401870",
+        "61032109452954507190234229613640921045186796600337553837681909605067067778814"
+      ]
+    },
+    {
+      "rank": 3,
+      "id": "516706",
+      "slug": "fed-rate-hike-in-2025",
+      "question": "Fed rate hike in 2025?",
+      "endDate": "2025-12-10T12:00:00Z",
+      "hoursUntilClose": 44.77,
+      "daysUntilClose": 1.87,
+      "volume24h": 10174.06,
+      "volumeLevel": "high",
+      "liquidity": 60543.69,
+      "liquidityLevel": "high",
+      "suitabilityScore": 70,
+      "rationale": "Binary Yes/No market on whether any rate hike occurred in 2025. Lower volume than 8+ cuts but solid liquidity. Good for directional bets.",
+      "outcomeTokens": [
+        "60487116984468020978247225474488676749601001829886755968952521846780452448915",
+        "81104637750588840860328515305303028259865221573278091453716127842023614249200"
+      ]
+    },
+    {
+      "rank": 4,
+      "id": "516730",
+      "slug": "will-7-fed-rate-cuts-happen-in-2025",
+      "question": "Will 7 Fed rate cuts happen in 2025?",
+      "endDate": "2025-12-10T12:00:00Z",
+      "hoursUntilClose": 44.77,
+      "daysUntilClose": 1.87,
+      "volume24h": 9265.73,
+      "volumeLevel": "medium",
+      "liquidity": 234146.71,
+      "liquidityLevel": "high",
+      "suitabilityScore": 55,
+      "rationale": "Extreme outcome market (7 cuts). High liquidity but lower volume. Less trading activity suggests lower conviction, good for contrarian positions.",
+      "outcomeTokens": [
+        "106637218023173886895550072700357013102189022015797096007920322441434274793343",
+        "79328870430805014620288089322067795525620481132773427804769291919755554601870"
+      ]
+    },
+    {
+      "rank": 5,
+      "id": "516726",
+      "slug": "will-3-fed-rate-cuts-happen-in-2025",
+      "question": "Will 3 Fed rate cuts happen in 2025?",
+      "endDate": "2025-12-10T12:00:00Z",
+      "hoursUntilClose": 44.77,
+      "daysUntilClose": 1.87,
+      "volume24h": 5460.49,
+      "volumeLevel": "medium",
+      "liquidity": 82256.36,
+      "liquidityLevel": "high",
+      "suitabilityScore": 55,
+      "rationale": "3 cuts outcome. Moderate volume and liquidity. Middle ground between conservative (2 cuts) and aggressive (7+ cuts) scenarios.",
+      "outcomeTokens": [
+        "17601770442239563289082275181138749951422899442850916335476881677007065139739",
+        "39979393291433838641824861631885750592113619894259619599511650636783179688654"
+      ]
+    },
+    {
+      "rank": 6,
+      "id": "516727",
+      "slug": "will-4-fed-rate-cuts-happen-in-2025",
+      "question": "Will 4 Fed rate cuts happen in 2025?",
+      "endDate": "2025-12-10T12:00:00Z",
+      "hoursUntilClose": 44.77,
+      "daysUntilClose": 1.87,
+      "volume24h": 1776.62,
+      "volumeLevel": "medium",
+      "liquidity": 155514.60,
+      "liquidityLevel": "high",
+      "suitabilityScore": 55,
+      "rationale": "4 cuts outcome. Low trading volume but high liquidity. Less liquid than baseline 2-cut market, suggesting lower market focus.",
+      "outcomeTokens": [
+        "89004595068776945908481855030043950109477136860300352348370395226706216458498",
+        "66497712136360061394637670796773281770486705493678163278744913561923724550407"
+      ]
+    },
+    {
+      "rank": 7,
+      "id": "516728",
+      "slug": "will-5-fed-rate-cuts-happen-in-2025",
+      "question": "Will 5 Fed rate cuts happen in 2025?",
+      "endDate": "2025-12-10T12:00:00Z",
+      "hoursUntilClose": 44.77,
+      "daysUntilClose": 1.87,
+      "volume24h": 1073.83,
+      "volumeLevel": "medium",
+      "liquidity": 296823.43,
+      "liquidityLevel": "high",
+      "suitabilityScore": 55,
+      "rationale": "5 cuts outcome. Lowest volume in the dataset but highest liquidity. Suggests some demand but little trading conviction.",
+      "outcomeTokens": [
+        "302273160494790559492931429044277112497487176914839291053945756072421867571",
+        "71168072025438256100937333610884784661496543167790290367141049156834121296266"
+      ]
+    },
+    {
+      "rank": 8,
+      "id": "516731",
+      "slug": "will-6-fed-rate-cuts-happen-in-2025",
+      "question": "Will 6 Fed rate cuts happen in 2025?",
+      "endDate": "2025-12-10T12:00:00Z",
+      "hoursUntilClose": 44.77,
+      "daysUntilClose": 1.87,
+      "volume24h": 1210,
+      "volumeLevel": "medium",
+      "liquidity": 372868.24,
+      "liquidityLevel": "high",
+      "suitabilityScore": 55,
+      "rationale": "6 cuts outcome. Very low volume but highest liquidity. Represents an edge case scenario with low market engagement.",
+      "outcomeTokens": [
+        "35428628589990747181456921610814206632405028717182760412162159083085892664954",
+        "33673334616268013961585301204311121178127515047580027207826322300546567181423"
+      ]
+    }
+  ],
+  "analysis": {
+    "category": "Federal Reserve Policy",
+    "context": "All markets close on December 10, 2025 at 12:00 UTC (2:00 PM EST) when the Federal Reserve announces its interest rate decision. These markets resolve based on the actual number of rate cuts the Fed has implemented throughout 2025.",
+    "characteristics": {
+      "closingDate": "2025-12-10",
+      "timeRemaining": "45 hours",
+      "allSameTopic": true,
+      "priceRangeIssue": "Unable to fetch current prices from CLOB API - likely API rate limiting or endpoint changes",
+      "liquidityCondition": "Generally strong - all markets show high liquidity levels (60k-375k)",
+      "volumeDistribution": "Highly skewed - 8+ cuts market dominates with 1.38M volume, other markets 1-14k volume"
+    },
+    "suitabilityForMomentumAnalysis": {
+      "score": "MODERATE",
+      "reasoning": [
+        "All markets close simultaneously, eliminating time decay edge",
+        "Fed decision is a known binary event happening in 45 hours",
+        "No meaningful price movement data available (API limitation)",
+        "Volume heavily concentrated in 8+ cuts market (90% of total)",
+        "Highly correlated outcomes - if market leans YES on 2 cuts, likely affects others"
+      ],
+      "opportunities": [
+        "Arbitrage between correlated outcomes (e.g., 2-cuts vs 3-cuts spreads)",
+        "Sentiment analysis from volume patterns across related markets",
+        "Follow smart money in high-volume 8+ cuts market",
+        "Intraday price movement once current prices are fetched"
+      ],
+      "risks": [
+        "All positions resolve simultaneously - no staggered exit opportunities",
+        "Single binary event - news-driven gap risk high",
+        "Limited data on price history (API not returning historical prices)",
+        "Highly informed traders (institutions) likely already positioned",
+        "Volatility spike near resolution - wide bid-ask spreads expected"
+      ]
+    }
+  },
+  "recommendations": {
+    "topCandidatesForTrading": [
+      {
+        "marketId": "516729",
+        "slug": "will-8plus-fed-rate-cuts-happen-in-2025",
+        "reason": "Highest volume and tightest liquidity. Best for momentum following. Volume concentration suggests this is the main sentiment indicator.",
+        "strategy": "Follow volume and price action in this market as primary signal for broader Fed cut expectations.",
+        "riskLevel": "High - extreme outcome, binary event, 45 hours to expiration"
+      },
+      {
+        "marketId": "516725",
+        "slug": "will-2-fed-rate-cuts-happen-in-2025",
+        "reason": "Baseline outcome with good volume and liquidity. Most tradable for directional bets.",
+        "strategy": "Use as primary position. Can pair with spreads against 3-cut or 4-cut markets.",
+        "riskLevel": "High - binary event, 45 hours to expiration, but more consensus expectation"
+      }
+    ],
+    "recommendation": "CAUTION: These are not ideal candidates for long-term momentum analysis due to imminent resolution. Best use case is short-term event trading based on news flow and sentiment monitoring until Fed announcement on December 10. Suggest waiting for markets with longer time horizons (beyond December 15) for better momentum analysis opportunities."
+  }
+}

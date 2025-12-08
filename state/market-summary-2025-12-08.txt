@@ -1,0 +1,164 @@
+================================================================================
+POLYMARKET CLOSING BY DECEMBER 15, 2025 - SUMMARY TABLE
+================================================================================
+Report Generated: 2025-12-08 @ 15:14 UTC
+Search Window: 7 days (by Dec 15)
+Markets Found: 8 (all Federal Reserve rate decision markets)
+
+CRITICAL INFO:
+- All markets close: December 10, 2025 @ 12:00 UTC (2:00 PM EST)
+- Time remaining: 44.8 hours
+- Event: Federal Reserve interest rate decision announcement
+- All positions resolve simultaneously
+
+================================================================================
+MARKETS RANKED BY TRADING VOLUME (Volume = Price Movement Indicator)
+================================================================================
+
+RANK  MARKET QUESTION                              VOLUME      LIQUIDITY   VOLUME
+                                                    24h         24h         TIER
+----  ---------------------------------------------  ----------  ----------  ------
+ 1.   Will 8+ Fed rate cuts happen in 2025?      $1,383,380   $202,401    HIGH
+ 2.   Will 2 Fed rate cuts happen in 2025?         $14,151     $81,209     HIGH
+ 3.   Fed rate hike in 2025?                       $10,174     $60,544     HIGH
+ 4.   Will 7 Fed rate cuts happen in 2025?          $9,266    $234,147     MED
+ 5.   Will 3 Fed rate cuts happen in 2025?          $5,460     $82,256     MED
+ 6.   Will 4 Fed rate cuts happen in 2025?          $1,777    $155,515     MED
+ 7.   Will 5 Fed rate cuts happen in 2025?          $1,074    $296,823     MED
+ 8.   Will 6 Fed rate cuts happen in 2025?          $1,210    $372,868     MED
+
+TOTAL VOLUME: $1,426,492
+VOLUME DOMINANCE: 97% concentrated in top 3 markets (8+, 2, hike)
+
+================================================================================
+MARKET CHARACTERISTICS BY CATEGORY
+================================================================================
+
+HIGH VOLUME MARKETS (Good for momentum):
+  - 8+ cuts: Volume = $1.38M (dominates sentiment)
+  - 2 cuts: Volume = $14k (baseline expectation)
+  - Hike: Volume = $10k (tail risk)
+
+SPREAD MARKETS (For arbitrage):
+  - 3-7 cuts: Combined volume = $17.8k
+  - Paired against 2-cut baseline for relative value betting
+  - Lower volume = wider spreads, harder to exit
+
+LIQUIDITY DISTRIBUTION:
+  - Most liquid: 6 cuts ($372k) and 5 cuts ($296k)
+  - Liquid: 4 cuts ($155k), 7 cuts ($234k), 3 cuts ($82k)
+  - Less liquid: 2 cuts ($81k), 8+ cuts ($202k), Hike ($60k)
+
+PARADOX: Higher liquidity in lower-volume markets indicates market-maker hedging
+         Suggests institutional traders are using spreads, not directional bets
+
+================================================================================
+SUITABILITY SCORING (0-100)
+================================================================================
+
+Market Question                              Score  Reasoning
+---------------------------------------------  -----  -------------------------------------------------------
+Will 8+ Fed rate cuts happen in 2025?         70    Volume leader, good liquidity, clear sentiment
+Will 2 Fed rate cuts happen in 2025?          70    Baseline consensus, good volume, liquid
+Fed rate hike in 2025?                        70    Binary directional, solid metrics
+Will 3 Fed rate cuts happen in 2025?          55    Spread market, medium volume
+Will 4 Fed rate cuts happen in 2025?          55    Spread market, low volume
+Will 5 Fed rate cuts happen in 2025?          55    Spread market, low volume
+Will 7 Fed rate cuts happen in 2025?          55    Spread market, low volume
+Will 6 Fed rate cuts happen in 2025?          55    Spread market, very low volume
+
+OVERALL SUITABILITY FOR MOMENTUM: MODERATE (50/100)
+
+Why not higher?
+- 45 hours to expiration (no time for trends)
+- Single binary event (all resolve together)
+- Correlated outcomes (can't trade independently)
+- Known deadline (no information edge from timing)
+
+================================================================================
+TRADING RECOMMENDATIONS
+================================================================================
+
+BEST POSITIONS (If trading these markets):
+1. 8+ Cuts Market (516729)
+   - Primary sentiment indicator
+   - Most liquid for entry/exit
+   - Use as index of Fed expectations
+   - Action: Monitor intraday (Dec 9-10 morning)
+
+2. 2 Cuts Market (516725)
+   - Consensus baseline
+   - Hedge or counter against 8+ cuts
+   - Good entry/exit liquidity
+   - Action: Take directional position based on news
+
+3. 2-Cut vs 3-Cut Spread (516725 vs 516726)
+   - Arbitrage if pricing diverges
+   - Hedged position (reduces binary risk)
+   - Action: If 2 cuts at 60%, expect 3 cuts at 35-40%
+
+DO NOT RECOMMEND:
+- 4, 5, 6, 7 cuts markets individually (too illiquid)
+- Holding past Dec 9 6:00 PM UTC (gap risk on announcement)
+- Scaling large positions (spreads will widen)
+
+================================================================================
+KEY CONSTRAINTS FOR MOMENTUM ANALYSIS
+================================================================================
+
+Time Constraint:
+  - Only 45 hours to expiration
+  - Momentum needs time to develop
+  - Better timeframe: 5-30 days minimum
+
+Event Risk:
+  - Single announcement Dec 10 @ 12:00 UTC
+  - Market will gap significantly on news
+  - Trend following impossible near event
+
+Correlation Problem:
+  - If 2 cuts market moves up, others cascade
+  - Can't identify independent signals
+  - Spread analysis more useful than momentum
+
+Data Limitations:
+  - Current prices not available (API issue)
+  - No historical price data (can't see recent trend)
+  - Volume data 24h old (real-time data needed)
+
+================================================================================
+ALTERNATIVE OPPORTUNITIES
+================================================================================
+
+If you want to find better markets for momentum analysis:
+
+1. SEARCH BROADER: Query for markets closing by Dec 31 (not just Dec 15)
+2. DIVERSIFY CATEGORIES: Sports, politics, crypto events likely have longer runways
+3. EXTEND WINDOW: 5-7 day running markets are ideal (current = 2 days)
+4. FILTER BY VOLUME: Only look at markets with 10k+ in daily volume
+5. TRACK SENTIMENT: Use volume distribution (like the 8+ cuts phenomenon) to find consensus breaks
+
+================================================================================
+NEXT ACTIONS
+================================================================================
+
+Immediate (before Dec 10):
+  1. Monitor 8+ cuts market price action
+  2. Track Fed speaker commentary (Dec 8-9)
+  3. Check market reaction to any CPI/jobs data
+  4. Close positions 1-2 hours before announcement
+
+After Dec 10 (post-announcement):
+  1. Analyze accuracy of market predictions vs actual Fed decision
+  2. Check if 8+ cuts market was correct direction
+  3. Look for markets that had best predictive signal
+  4. Search for next set of closing markets (likely election 2026)
+
+System Improvements:
+  1. Debug CLOB API price fetching
+  2. Build historical price tracking (6-hour snapshots)
+  3. Extend search to broader date ranges automatically
+  4. Add category filtering (sports, politics, crypto)
+  5. Build real-time WebSocket feed for price updates
+
+================================================================================
