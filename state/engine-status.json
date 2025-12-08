@@ -1,16 +1,19 @@
 {
-  "lastEvaluated": "2025-12-08T06:00:11.611Z",
+  "lastEvaluated": "2025-12-08T06:17:24.877Z",
   "hypothesisHealth": {
     "total": 5,
     "byStatus": {
       "proposed": 3,
-      "testing": 2,
+      "testing": 1,
       "validated": 0,
-      "invalidated": 0
+      "invalidated": 1
     },
     "avgConviction": 0.4,
-    "testableNow": 2,
-    "blockedByCapability": 3
+    "testableNow": 1,
+    "blockedByCapability": 3,
+    "testableIds": [
+      "hyp-005"
+    ]
   },
   "blockedHypotheses": [
     {
@@ -50,5 +53,6 @@
     "hypothesesValidatedThisWeek": 0,
     "hypothesesInvalidatedThisWeek": 0,
     "capabilitiesBuiltThisWeek": 0
-  }
+  },
+  "needsAttention": []
 }
