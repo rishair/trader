@@ -129,6 +129,17 @@
       "content": {
         "raw": "/pa"
       }
+    },
+    {
+      "id": "inbox-1765176980728",
+      "type": "other",
+      "source": "telegram",
+      "receivedAt": "2025-12-08T06:56:20.728Z",
+      "status": "pending",
+      "title": "Content",
+      "content": {
+        "raw": "we need to find a way to give you full permissions. so you can access the internet and tools and everything"
+      }
     }
   ],
   "schema": {
