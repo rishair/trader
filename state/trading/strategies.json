@@ -1,7 +1,48 @@
 {
   "active": [],
-  "testing": [],
+  "testing": [
+    {
+      "id": "strat-001",
+      "name": "Multi-Outcome Volatility Mispricing",
+      "hypothesis": "Multi-outcome markets with close competitors (gap <10% in underlying metric) misprice volatility, underweighting the probability of reversals. The incumbent is overpriced and challengers are underpriced.",
+      "sourceHypothesis": "hyp-005",
+      "entryRules": "1. Identify multi-outcome markets where top 2 competitors are within 10% in underlying metric. 2. Calculate fair probability based on volatility scenarios. 3. If market prices challenger >50% below fair value, enter YES on challenger. 4. Only enter if >14 days to resolution (time for reversal).",
+      "exitRules": "1. Take profit at 2x entry price (100% gain). 2. Stop loss at 55% decline from entry. 3. Exit 3 days before resolution if no movement. 4. Exit immediately if underlying metric gap widens to >15%.",
+      "riskManagement": "Max 5% of capital per position. Max 2 positions in correlated markets. Required: 14+ days to resolution, clear underlying metric for tracking.",
+      "status": "testing",
+      "createdAt": "2025-12-08T00:00:00Z",
+      "performance": {
+        "trades": 1,
+        "wins": 0,
+        "losses": 0,
+        "winRate": null,
+        "avgReturn": null,
+        "totalPnL": -94.44,
+        "unrealizedPnL": -94.44,
+        "sharpeRatio": null
+      },
+      "linkedTrades": ["trade-001"],
+      "notes": "First trade underwater (-19% from entry). Market trending toward incumbent despite close fundamentals. Key learning: close fundamentals ≠ close probabilities. Market may efficiently price momentum/narrative factors. Need more data before conclusions."
+    }
+  ],
   "retired": [],
+  "insights": {
+    "week1": {
+      "date": "2025-12-08",
+      "keyFindings": [
+        "System is research-heavy, execution-light (7 hypotheses, 1 trade)",
+        "Tail-risk markets appear efficiently priced (hyp-001 invalidated)",
+        "Short-term price movements show mean-reversion, not momentum",
+        "Infrastructure gaps blocking several hypotheses (MM, leaderboard, cross-platform)"
+      ],
+      "recommendations": [
+        "Increase trade velocity - test hypotheses with paper money rather than endless research",
+        "Prioritize hypotheses that don't require infrastructure (hyp-007 arbitrage looks executable now)",
+        "Don't bet against market momentum without strong catalyst",
+        "Formalize more hypotheses into strategies with clear rules"
+      ]
+    }
+  },
   "schema": {
     "strategy": {
       "id": "string - unique identifier",
