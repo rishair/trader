@@ -82,18 +82,6 @@
       }
     },
     {
-      "id": "pipeline-price-tracker-1765235691208",
-      "type": "pipeline",
-      "description": "Price tracker: Update portfolio prices, check exit triggers",
-      "scheduledFor": "2025-12-09T03:14:51.208Z",
-      "priority": "high",
-      "context": {
-        "pipeline": "price-tracker",
-        "recurring": true,
-        "frequency": "4h"
-      }
-    },
-    {
       "id": "pipeline-closing-scanner-1765244559821",
       "type": "pipeline",
       "description": "Closing-soon scanner: Find markets closing in 72h, check momentum, generate hypotheses",
@@ -115,6 +103,18 @@
         "pipeline": "trade-retrospective",
         "recurring": true,
         "frequency": "6h"
+      }
+    },
+    {
+      "id": "pipeline-hypothesis-tester-1765250980235",
+      "type": "pipeline",
+      "description": "Hypothesis tester: Monitor entry/exit conditions, execute trades, track results",
+      "scheduledFor": "2025-12-09T07:29:40.235Z",
+      "priority": "high",
+      "context": {
+        "pipeline": "hypothesis-tester",
+        "recurring": true,
+        "frequency": "4h"
       }
     }
   ],
@@ -328,6 +328,19 @@
         "frequency": "4h"
       },
       "completedAt": "2025-12-09T02:58:52.024Z"
+    },
+    {
+      "id": "pipeline-price-tracker-1765235691208",
+      "type": "pipeline",
+      "description": "Price tracker: Update portfolio prices, check exit triggers",
+      "scheduledFor": "2025-12-09T03:14:51.208Z",
+      "priority": "high",
+      "context": {
+        "pipeline": "price-tracker",
+        "recurring": true,
+        "frequency": "4h"
+      },
+      "completedAt": "2025-12-09T03:29:48.793Z"
     }
   ],
   "schema": {
