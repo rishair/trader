@@ -30,5 +30,13 @@
     "delta": 0.09999999999999998,
     "reason": "Evidence: Position opened: Ukraine ceasefire NO @ 60¢ (41 sh...",
     "timestamp": "2025-12-09T06:13:27.622Z"
+  },
+  {
+    "hypothesisId": "hyp-mixz9def",
+    "previousConfidence": 0.2,
+    "currentConfidence": 0.05000000000000002,
+    "delta": -0.15,
+    "reason": "Evidence: Confidence remains very low (20%) without concrete...",
+    "timestamp": "2025-12-09T06:45:01.287Z"
   }
 ]

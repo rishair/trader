@@ -431,7 +431,7 @@
       "statement": "NBA markets offer better edge than NFL due to higher game frequency and more statistical predictability",
       "rationale": "NBA has 82-game seasons with games daily, creating more trading opportunities. Basketball is higher-scoring and more stat-driven than football (less randomness). Polymarket shows NBA Champion market has $410M volume. Leaderboard analysis showed top traders focus on sports (4/5 specialists).",
       "testMethod": "1. Compare spreads and liquidity between NBA and NFL markets 2. Track if NBA specialists show higher win rates than NFL specialists 3. Paper trade NBA-focused strategy vs NFL-focused 4. Analyze predictability: NBA point spreads vs NFL spreads",
-      "status": "proposed",
+      "status": "invalidated",
       "confidence": null,
       "evidence": [
         {
@@ -444,15 +444,16 @@
           }
         }
       ],
-      "conclusion": null,
+      "conclusion": "0% confidence indicates this hypothesis lacks supporting evidence. NBA vs NFL edge comparison requires specific market data we haven't collected. Should reformulate with concrete testable criteria if we want to revisit.",
       "createdAt": "2025-12-09T02:40:00Z",
-      "updatedAt": "2025-12-09T02:43:58.772Z",
+      "updatedAt": "2025-12-09T06:45:00.564Z",
       "source": "market-scan",
       "entryRules": "Focus on NBA player props and game outcomes. Avoid season-long futures. Enter when line is 2%+ off our model. Min liquidity $10k.",
       "exitRules": "Exit at game start or when line moves to our target. No holding through games initially.",
       "expectedWinRate": 0.55,
       "expectedPayoff": 1.1,
-      "minSampleSize": 20
+      "minSampleSize": 20,
+      "testEndedAt": "2025-12-09T06:45:00.564Z"
     },
     {
       "id": "hyp-014",
@@ -573,17 +574,23 @@
       "expectedPayoff": 1.05,
       "minSampleSize": 20,
       "status": "proposed",
-      "confidence": 0.2,
+      "confidence": 0.05000000000000002,
       "evidence": [
         {
           "date": "2025-12-09T06:12:49.736Z",
           "observation": "Hypothesis contradicts learning-arbitrage-reality-check-2025-12-08: When attempting to execute multi-market arbitrage, ASK prices eliminate perceived opportunities. Mid-price calculations show 2.25% spreads that disappear when facing actual execution prices. Market makers already capture these edges. Additionally, the risk/reward is prohibitive: 5% gain if right vs 95% loss if wrong requires 97%+ accuracy - unrealistic for 48h outcome prediction.",
           "supports": false,
           "confidenceImpact": -0.25
+        },
+        {
+          "date": "2025-12-09T06:45:01.284Z",
+          "observation": "Confidence remains very low (20%) without concrete market examples or testing. High-probability markets may not exhibit the convergence pattern we hypothesized.",
+          "supports": false,
+          "confidenceImpact": -0.15
         }
       ],
       "createdAt": "2025-12-09T02:50:00Z",
-      "updatedAt": "2025-12-09T06:12:49.736Z"
+      "updatedAt": "2025-12-09T06:45:01.286Z"
     },
     {
       "id": "hyp-mixz9ghi",
