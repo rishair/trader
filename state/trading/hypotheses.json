@@ -81,11 +81,17 @@
           "observation": "Experiment progress (24h check): Time POY prices still near baseline - AI 39% (flat), Jensen 21% (flat), Sam Altman 13% (-1pp from 14%), Trump 5.1% (+0.1). Largest Company: NVDA 91% (flat), AAPL 7.4% (-0.1pp). After ~24h of tracking, markets show stability rather than momentum. Sam Altman's 1pp decline is the only notable movement - could be noise or early sign of momentum away from mid-tier candidates. Need to continue tracking for multi-day patterns.",
           "supports": null,
           "confidenceImpact": 0
+        },
+        {
+          "date": "2025-12-09T00:25:52.885Z",
+          "observation": "Fed rate cuts 2025 (8+) market closing Dec 10: YES at 0.05%, NO at 99.95%. Market correctly priced as 8+ cuts is mathematically impossible (only 3 cuts have occurred, max possible is 4 with Dec meeting). Not useful for momentum testing - extreme prices reflect settled outcome, not tradeable momentum. PASS on this market.",
+          "supports": null,
+          "confidenceImpact": 0
         }
       ],
       "conclusion": null,
       "createdAt": "2025-12-07T00:00:00Z",
-      "updatedAt": "2025-12-09T01:30:00Z",
+      "updatedAt": "2025-12-09T00:25:52.885Z",
       "testStartedAt": "2025-12-08T12:00:00Z",
       "trackingMarkets": [
         {

@@ -1,22 +1,21 @@
 {
-  "lastEvaluated": "2025-12-08T23:47:41.612Z",
+  "lastEvaluated": "2025-12-09T00:24:37.782Z",
   "hypothesisHealth": {
     "total": 17,
     "byStatus": {
       "proposed": 10,
-      "testing": 5,
+      "testing": 4,
       "validated": 1,
-      "invalidated": 1
+      "invalidated": 2
     },
     "avgConviction": 0.44,
-    "testableNow": 14,
+    "testableNow": 13,
     "blockedByCapability": 1,
     "testableIds": [
       "hyp-002",
       "hyp-004",
       "hyp-006",
       "hyp-007",
-      "hyp-005",
       "hyp-008",
       "hyp-010",
       "hyp-011",
@@ -76,8 +75,8 @@
   "followSignalsGenerated": 0,
   "lastHealthCheck": "2025-12-08T22:15:00.000Z",
   "daemon": {
-    "version": "8040e82",
-    "startedAt": "2025-12-08T23:14:50.128Z",
-    "pid": 45351
+    "version": "16985b3",
+    "startedAt": "2025-12-08T23:54:36.264Z",
+    "pid": 47589
   }
 }

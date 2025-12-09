@@ -116,6 +116,18 @@
         "recurring": true,
         "frequency": "4h"
       }
+    },
+    {
+      "id": "pipeline-price-drift-detector-1765238077240",
+      "type": "pipeline",
+      "description": "Price drift detector: Monitor markets for sudden moves, generate follow signals",
+      "scheduledFor": "2025-12-09T00:54:37.240Z",
+      "priority": "high",
+      "context": {
+        "pipeline": "price-drift-detector",
+        "recurring": true,
+        "frequency": "1h"
+      }
     }
   ],
   "completedTasks": [
