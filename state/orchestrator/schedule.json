@@ -94,18 +94,6 @@
       }
     },
     {
-      "id": "pipeline-hypothesis-tester-1765250980235",
-      "type": "pipeline",
-      "description": "Hypothesis tester: Monitor entry/exit conditions, execute trades, track results",
-      "scheduledFor": "2025-12-09T07:29:40.235Z",
-      "priority": "high",
-      "context": {
-        "pipeline": "hypothesis-tester",
-        "recurring": true,
-        "frequency": "4h"
-      }
-    },
-    {
       "id": "pipeline-price-tracker-1765262900655",
       "type": "pipeline",
       "description": "Price tracker: Update portfolio prices, check exit triggers",
@@ -115,6 +103,18 @@
         "pipeline": "price-tracker",
         "recurring": true,
         "frequency": "1h"
+      }
+    },
+    {
+      "id": "pipeline-health-check-1765264761171",
+      "type": "pipeline",
+      "description": "Health check: Analyze system state, propose actions for user approval",
+      "scheduledFor": "2025-12-09T19:19:21.171Z",
+      "priority": "high",
+      "context": {
+        "pipeline": "health-check",
+        "recurring": true,
+        "frequency": "12h"
       }
     }
   ],
@@ -176,6 +176,22 @@
         "frequency": "12h"
       },
       "completedAt": "2025-12-09T07:18:28.507Z",
+      "result": {
+        "success": true
+      }
+    },
+    {
+      "id": "pipeline-hypothesis-tester-1765250980235",
+      "type": "pipeline",
+      "description": "Hypothesis tester: Monitor entry/exit conditions, execute trades, track results",
+      "scheduledFor": "2025-12-09T07:29:40.235Z",
+      "priority": "high",
+      "context": {
+        "pipeline": "hypothesis-tester",
+        "recurring": true,
+        "frequency": "4h"
+      },
+      "completedAt": "2025-12-09T07:49:30.154Z",
       "result": {
         "success": true
       }
