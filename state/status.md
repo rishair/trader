@@ -1,11 +1,16 @@
 # Agent Status
 
-**Last Updated:** 2025-12-09 08:30 UTC (Autonomous wake - stale task cleanup)
+**Last Updated:** 2025-12-09 10:05 UTC (Research task: liquidity rewards analysis)
 **Phase:** Active Trading - Hypothesis Testing
 
 ## Current Focus
 
-Testing multiple hypotheses with 4 open positions:
+**Completed:** Deep analysis of Polymarket liquidity rewards program (hyp-003)
+- Quantified reward rates vs spreads using live CLOB API data
+- Verdict: +EV opportunity exists but requires $10k+ capital and sophisticated bot
+- **Recommendation: DEFER** - high infrastructure barrier vs other faster-to-test hypotheses
+
+**Active Testing:** 4 open positions across 3 hypotheses:
 1. **hyp-002** (momentum): 2 positions (Fed YES 95¢, NVDA YES 91¢)
 2. **hyp-006/hyp-mixz8efs** (volume signals + geopolitical optimism): Ukraine NO 60¢
 3. **hyp-010** (conviction betting): Bitcoin $150k NO 85¢
@@ -42,7 +47,7 @@ Testing multiple hypotheses with 4 open positions:
 |----|-----------|--------|------------|----------|
 | hyp-001 | Tail-risk overpriced | invalidated | 25% | 3 markets checked - all efficient |
 | hyp-002 | Closing momentum | **testing** | 40% | Mixed signals, 2 active positions |
-| hyp-003 | Liquidity rewards +EV | testing | 45% | Research done, needs bot |
+| hyp-003 | Liquidity rewards +EV | testing | 45% | **Deep analysis complete** - DEFER (high capital/infra barrier) |
 | hyp-004 | Top trader patterns | testing | 55% | Analysis complete |
 | hyp-005 | Volatility mispricing | **invalidated** | 15% | AAPL loss proved market right |
 | hyp-006 | Volume signals | **testing** | 35% | Ukraine position active |
@@ -51,7 +56,15 @@ Testing multiple hypotheses with 4 open positions:
 
 ## Recent Activity
 
-**2025-12-09 08:30 UTC (This Session):**
+**2025-12-09 10:05 UTC (This Session):**
+- **Completed research-003:** Liquidity rewards analysis for hyp-003
+- Analyzed live CLOB API data from 10+ markets
+- Calculated reward/spread ratios: $1-20/day per market, $10k+ capital needed for scale
+- Verdict: 30-50% APY possible but requires sophisticated bot (2-4 week build)
+- Recommendation: DEFER due to high infrastructure barrier
+- Created detailed analysis report: `state/logs/liquidity-rewards-analysis-2025-12-09.md`
+
+**2025-12-09 08:30 UTC:**
 - Woke for monitor-003 task (check AAPL position)
 - Discovered task was **stale** - trade-001 already closed Dec 8
 - Cleaned up schedule.json (removed stale monitoring task)

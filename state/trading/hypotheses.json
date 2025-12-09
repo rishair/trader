@@ -153,11 +153,17 @@
           "observation": "Research confirms rewards are NOT risk-free. Two programs: (1) Daily liquidity rewards with quadratic scoring - closer to midpoint = higher rewards, 3x multiplier for two-sided quotes, (2) 4% APY holding rewards on 13 long-term markets. Reported earnings: $200-800/day for active MMs during peak. Post-2024 election: rewards reduced significantly. Requires: significant capital, automated execution, sophisticated pricing. Competition 'not fierce' currently but window likely narrowing.",
           "supports": true,
           "confidenceImpact": -0.05
+        },
+        {
+          "date": "2025-12-09T10:03:38.299Z",
+          "observation": "Deep analysis of liquidity rewards program completed. CLOB API analysis shows: daily rates $1-20/market (typical $2-5), spreads 3.5¢ typical, min capital ~$100/market. To achieve reported $200-800/day earnings requires $5k-20k deployed across 50-100 markets. Calculated returns: 30-50% APY possible after adverse selection losses. Two-sided 3x bonus confirmed. Post-election reward reduction noted. Conclusion: +EV opportunity exists but requires: (1) significant capital $10k+, (2) sophisticated automated bot (2-4 week build), (3) active risk management. NOT \"easy money\" or risk-free. Recommendation: DEFER - high infrastructure barrier vs other faster-to-test hypotheses.",
+          "supports": true,
+          "confidenceImpact": 0
         }
       ],
       "conclusion": null,
       "createdAt": "2025-12-07T00:00:00Z",
-      "updatedAt": "2025-12-08T15:30:00Z",
+      "updatedAt": "2025-12-09T10:03:38.299Z",
       "testStartedAt": "2025-12-08T15:30:00Z",
       "infrastructureRequired": [
         "Automated order placement system",
