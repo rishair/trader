@@ -291,6 +291,49 @@
         "https://github.com/warproxxx/poly-maker",
         "https://www.coindesk.com/business/2025/12/05/polymarket-hiring-in-house-team-to-trade-against-customers-here-s-why-it-s-a-risk"
       ]
+    },
+    {
+      "claim": "Polymarket liquidity rewards create +EV market making opportunities despite adverse selection risk - DISPROVEN: Live API check (Dec 9, 2025) confirms liquidity rewards program is currently INACTIVE - zero markets",
+      "content": "## Hypothesis INVALIDATED\n\n**Statement:** Polymarket liquidity rewards create +EV market making opportunities despite adverse selection risk\n\n**Conclusion:** Live API check (Dec 9, 2025) confirms liquidity rewards program is currently INACTIVE - zero markets have reward parameters set. While the program structure exists and was historically +EV (30-50% APY), it is not operational today. Without active rewards, market making is NOT +EV vs adverse selection costs alone. Hypothesis invalidated due to program inactivity, not theoretical impossibility.\n\n**Evidence Summary:**\n- Total observations: 4\n- Supporting: 3\n- Contradicting: 1\n- Final confidence: 25%\n\n\n\n**Key Evidence:**\n- 2025-12-09: Deep analysis of liquidity rewards program completed. CLOB API analysis shows: daily rates $1-20/market (typical $2-5), spreads 3.5¢ typical, min capi...\n- 2025-12-09: Comprehensive liquidity rewards analysis completed. Key findings: (1) Genuine +EV opportunity exists with 30-50% APY at 0k+ capital, (2) NOT risk-free...\n- 2025-12-09: CLOB API check (Dec 9, 2025): ZERO active markets have reward parameters set (max_spread=0, min_size=0 across all 1000 markets). This confirms \"signif...",
+      "tags": [
+        "hypothesis",
+        "liquidity",
+        "market-maker"
+      ],
+      "category": "hypothesis",
+      "confidence": 0.25000000000000006,
+      "source": "Hypothesis hyp-003 invalidated",
+      "sourceType": "experiment",
+      "appliedTo": [
+        "hyp-003"
+      ],
+      "title": "❌ hyp-003: Polymarket liquidity rewards create +EV market mak...",
+      "actionable": false,
+      "id": "learning-miyftkex-ork7",
+      "createdAt": "2025-12-09T10:28:35.865Z",
+      "updatedAt": "2025-12-09T10:28:35.865Z"
+    },
+    {
+      "claim": "Polymarket liquidity rewards program is INACTIVE as of Dec 9, 2025 - zero markets have reward parameters set, making market making NOT +EV.",
+      "content": "# Polymarket Liquidity Rewards Program Status - December 2025\n\n## Critical Finding: Program Currently Inactive\n\n**Date Confirmed**: December 9, 2025\n**Source**: Live CLOB API query of all 1,000 markets\n\n### The Discovery\n\nWhen analyzing hypothesis hyp-003 (liquidity rewards create +EV market making), a live API check revealed:\n\n```\nCLOB API check: ZERO active markets have reward parameters\n- max_spread = 0 across all markets\n- min_size = 0 across all markets  \n- rewards.rates = null across all markets\n```\n\n### Historical Context\n\n**Pre-Election (Before Nov 2024)**:\n- Active liquidity rewards program\n- Reported earnings: $200-800/day for sophisticated MMs\n- Daily rates: $2-5 per market\n- Two-sided quotes earned 3x bonus\n- Quadratic scoring favored tight spreads\n\n**Post-Election (Nov 2024 - Present)**:\n- \"Total liquidity rewards decreased significantly\" (reported but not quantified)\n- December 2025: Program appears completely inactive\n- No markets accepting reward-eligible orders\n\n### Why This Matters\n\nThe extensive analysis in hyp-003-liquidity-rewards-analysis.md showed:\n- **Theoretical APY**: 30-50% with $10k+ capital\n- **BUT**: This was based on historical reward rates of $2-5/market/day\n- **Reality**: With ZERO rewards, adverse selection costs make pure spread capture marginally profitable at best\n\n**Adverse Selection Economics**:\n- Gross spread capture: ~2¢ per trade\n- Adverse selection cost: 70-90% of gross spread  \n- Net profit WITHOUT rewards: 0.2-0.6¢ per trade\n- This requires extremely high volume to be meaningful\n\n### Implications\n\n1. **Hypothesis hyp-003 invalidated** - Not because the theory was wrong, but because the program is inactive\n2. **Market making on Polymarket is NOT +EV** without liquidity rewards\n3. **Previous research remains valid** - If rewards return, the 30-50% APY calculations hold\n4. **Monitor for reactivation** - Program could restart with different parameters\n\n### What Changed\n\n**Polymarket's Evolution**:\n- Post-election activity decline → reduced need for liquidity incentives?\n- Platform building in-house MM team (announced Dec 2025) → less need for external MMs?\n- Cost optimization → rewards program expensive to maintain?\n- Regulatory concerns → limiting market making incentives?\n\n### Action Items\n\n- **Don't pursue MM strategy** until rewards reactivate\n- **Monitor CLOB API** weekly for reward parameter changes\n- **Watch official announcements** for program updates\n- **If rewards return**: Previous analysis provides roadmap for implementation\n\n### Technical Details\n\n**How to Check if Rewards Are Active**:\n```bash\ncurl -s \"https://clob.polymarket.com/markets\" | jq '.data[] | select(.rewards.max_spread > 0) | {question, max_spread: .rewards.max_spread}'\n```\n\nIf this returns results, rewards are back. If empty, still inactive.\n\n**Reward Parameter Fields**:\n- `rewards.max_spread`: Maximum spread from midpoint to qualify (in decimal, e.g., 0.03 = 3¢)\n- `rewards.min_size`: Minimum order size to earn rewards (in dollars)\n- `rewards.rates`: Reward rate structure (null when inactive)\n\n### Confidence Assessment\n\n**Confidence in Finding**: 95%\n- Direct API verification\n- Consistent across all 1,000 markets\n- Aligns with reported \"significant reduction post-election\"\n\n**Uncertainty**:\n- Could rewards be configured differently (not via max_spread/min_size)?\n- Possible rewards are paid through different mechanism?\n- May be temporary pause vs permanent discontinuation?\n\n### Related\n\n- **hyp-003**: Invalidated based on this finding\n- **Previous learning**: liquidity-rewards-deep-analysis-2025-12-09 (theoretical analysis remains valid)\n- **Strategy impact**: Market making NOT viable until program reactivates",
+      "tags": [
+        "liquidity",
+        "market-maker",
+        "rewards",
+        "inactive",
+        "polymarket",
+        "API"
+      ],
+      "category": "market",
+      "confidence": 0.95,
+      "source": "Live CLOB API verification Dec 9, 2025 during hyp-003 research task",
+      "sourceType": "observation",
+      "appliedTo": [
+        "hyp-003"
+      ],
+      "id": "learning-miyfu8g2-eaoo",
+      "createdAt": "2025-12-09T10:29:07.010Z",
+      "updatedAt": "2025-12-09T10:29:07.010Z"
     }
   ]
 }

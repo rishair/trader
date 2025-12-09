@@ -1,5 +1,5 @@
 {
-  "lastEvaluated": "2025-12-09T10:21:29.803Z",
+  "lastEvaluated": "2025-12-09T10:28:27.003Z",
   "hypothesisHealth": {
     "total": 25,
     "byStatus": {
@@ -66,6 +66,12 @@
   },
   "needsAttention": [
     {
+      "hypothesisId": "hyp-003",
+      "issue": "low_confidence",
+      "detail": "Confidence 25% - consider invalidating or gathering more evidence",
+      "suggestedAction": "invalidate"
+    },
+    {
       "hypothesisId": "hyp-mixz9def",
       "issue": "low_confidence",
       "detail": "Confidence 5% - consider invalidating or gathering more evidence",
@@ -87,8 +93,8 @@
   "followSignalsGenerated": 0,
   "lastHealthCheck": "2025-12-08T22:15:00.000Z",
   "daemon": {
-    "version": "4e2da16",
-    "startedAt": "2025-12-09T10:21:28.815Z",
-    "pid": 84505
+    "version": "5b8ac29",
+    "startedAt": "2025-12-09T10:26:25.581Z",
+    "pid": 85119
   }
 }

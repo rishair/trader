@@ -145,8 +145,8 @@
       "statement": "Polymarket liquidity rewards create +EV market making opportunities despite adverse selection risk",
       "rationale": "Polymarket pays market makers via two programs: daily rewards for limit orders (quadratic scoring, 3x bonus for two-sided quotes) and 4% APY holding rewards on 13 markets. If rewards exceed adverse selection costs, market making is profitable without directional edge.",
       "testMethod": "1. Query CLOB API for max_incentive_spread and min_incentive_size per market. 2. Calculate reward/spread ratios. 3. Build simple MM bot for paper trading in low-volatility markets. 4. Track: spread P&L, rewards earned, adverse selection losses.",
-      "status": "testing",
-      "confidence": 0.55,
+      "status": "invalidated",
+      "confidence": 0.25000000000000006,
       "evidence": [
         {
           "date": "2025-12-08",
@@ -165,11 +165,17 @@
           "observation": "Comprehensive liquidity rewards analysis completed. Key findings: (1) Genuine +EV opportunity exists with 30-50% APY at 0k+ capital, (2) NOT risk-free - adverse selection costs 70-90% of gross spread, (3) Requires 4-7 week development timeline for competitive bot, (4) Infrastructure: WebSocket feeds, automated order placement, inventory tracking, (5) Competition increasing but not saturated - \"1-2 bots per market\" currently, (6) Breakeven spread: 0.2-0.5¢ on markets with k+ daily turnover, (7) Daily rewards: -5 per market typical, (8) Post-election reward reduction confirmed but not quantified. RECOMMENDATION: DEFER - high infrastructure barrier vs faster-to-test hypotheses (sports, momentum, arbitrage). Revisit after validating 2-3 simpler strategies. Full analysis: hyp-003-liquidity-rewards-analysis.md",
           "supports": true,
           "confidenceImpact": 0.05
+        },
+        {
+          "date": "2025-12-09T10:28:26.987Z",
+          "observation": "CLOB API check (Dec 9, 2025): ZERO active markets have reward parameters set (max_spread=0, min_size=0 across all 1000 markets). This confirms \"significant reduction post-election\" reported earlier. Liquidity rewards program may be paused, drastically reduced, or reconfigured. ROI calculations based on historical averages ($2-5/market/day) show theoretical 30-50% APY with $10k capital IF rewards were active, but current state shows NO active rewards. This dramatically changes the opportunity assessment from \"+EV but high barrier\" to \"currently NOT VIABLE - rewards inactive\".",
+          "supports": false,
+          "confidenceImpact": -0.3
         }
       ],
-      "conclusion": null,
+      "conclusion": "Live API check (Dec 9, 2025) confirms liquidity rewards program is currently INACTIVE - zero markets have reward parameters set. While the program structure exists and was historically +EV (30-50% APY), it is not operational today. Without active rewards, market making is NOT +EV vs adverse selection costs alone. Hypothesis invalidated due to program inactivity, not theoretical impossibility.",
       "createdAt": "2025-12-07T00:00:00Z",
-      "updatedAt": "2025-12-09T10:13:46.834Z",
+      "updatedAt": "2025-12-09T10:28:35.862Z",
       "testStartedAt": "2025-12-08T15:30:00Z",
       "infrastructureRequired": [
         "Automated order placement system",
@@ -183,7 +189,8 @@
         "Build MVP bot using warproxxx/poly-maker as template",
         "Paper trade for 2 weeks before risking capital"
       ],
-      "recommendation": "DEFER - Opportunity is genuine (+EV, 30-50% APY possible) but requires: $10k+ capital, 4-7 weeks dev time, WebSocket infrastructure, sophisticated pricing. High barrier vs faster-to-test hypotheses (sports, momentum). Revisit after validating 2-3 simpler strategies."
+      "recommendation": "DEFER - Opportunity is genuine (+EV, 30-50% APY possible) but requires: $10k+ capital, 4-7 weeks dev time, WebSocket infrastructure, sophisticated pricing. High barrier vs faster-to-test hypotheses (sports, momentum). Revisit after validating 2-3 simpler strategies.",
+      "testEndedAt": "2025-12-09T10:28:35.862Z"
     },
     {
       "id": "hyp-004",

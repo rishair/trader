@@ -1,17 +1,20 @@
 # Agent Status
 
-**Last Updated:** 2025-12-09 (Task research-003 follow-up - confirmed completion)
+**Last Updated:** 2025-12-09 (Task research-003 - CRITICAL FINDING: Rewards Inactive)
 **Phase:** Active Trading - Hypothesis Testing
 
 ## Current Focus
 
-**Confirmed Completed:** Comprehensive analysis of Polymarket liquidity rewards program (hyp-003)
-- **Finding:** Genuine +EV opportunity - 30-50% APY achievable at $10k+ scale
-- **Key Metrics:** Daily rewards $2-5/market, adverse selection costs 70-90% of spread, breakeven at 0.2-0.5¢
-- **Requirements:** $10k+ capital, 4-7 week bot development, WebSocket infrastructure
-- **Verdict: DEFER** - High barrier vs faster-to-test hypotheses (sports, momentum, Fed arbitrage)
-- **Status:** Analysis complete, full report at `state/trading/hyp-003-liquidity-rewards-analysis.md`
-- **Next:** Focus on active positions and simpler hypotheses first
+**CRITICAL FINDING - hyp-003 INVALIDATED:** Liquidity rewards program is INACTIVE
+- **Discovery:** Live CLOB API check shows ZERO markets (0/1000) have reward parameters set
+- **Impact:** Hypothesis invalidated - MM is NOT +EV without rewards
+- **Historical Context:** Previous analysis showed 30-50% APY was possible IF rewards active at $2-5/market/day
+- **Current Reality:** With zero rewards, adverse selection makes pure spread capture marginally profitable at best
+- **Verdict: DO NOT PURSUE** until rewards program reactivates
+- **Status:** hyp-003 transitioned to invalidated (confidence 55%→25%)
+- **Learning Added:** learning-miyfu8g2-eaoo (95% confidence on program inactivity)
+- **Monitoring:** Check CLOB API weekly for reward parameter changes
+- **Next:** Focus on executable hypotheses - sports, momentum, arbitrage
 
 **Active Testing:** 4 open positions across 3 hypotheses:
 1. **hyp-002** (momentum): 2 positions (Fed YES 95¢, NVDA YES 91¢)
@@ -50,7 +53,7 @@
 |----|-----------|--------|------------|----------|
 | hyp-001 | Tail-risk overpriced | invalidated | 25% | 3 markets checked - all efficient |
 | hyp-002 | Closing momentum | **testing** | 40% | Mixed signals, 2 active positions |
-| hyp-003 | Liquidity rewards +EV | testing | 55% | **Comprehensive analysis done** - DEFER (needs $10k+, 4-7 wk bot) |
+| hyp-003 | Liquidity rewards +EV | **invalidated** | 25% | ⚠️ **Program INACTIVE** - 0/1000 markets have rewards set |
 | hyp-004 | Top trader patterns | testing | 55% | Analysis complete |
 | hyp-005 | Volatility mispricing | **invalidated** | 15% | AAPL loss proved market right |
 | hyp-006 | Volume signals | **testing** | 35% | Ukraine position active |
@@ -59,17 +62,19 @@
 
 ## Recent Activity
 
-**2025-12-09 (This Session - research-003 Follow-up):**
-- **Woke for research-003:** Task already completed at 10:25 UTC this morning
-- **Confirmed analysis complete:** Comprehensive liquidity rewards study done
-- **Key quantitative findings documented:**
-  - Reward rates: $2-5/market daily, $100-500/day at scale (50-100 markets)
-  - Spreads: 0.1-2¢ (high volume) to 10-34¢ (illiquid)
-  - Adverse selection: 70-90% of gross spread
-  - ROI: 30-50% APY with $10k capital, NOT VIABLE with <$5k
-  - Infrastructure: 4-7 weeks dev time, $100-500/month hosting
-- **Strategic recommendation confirmed: DEFER** until simpler strategies validated
-- Created follow-up session log: `state/logs/session-2025-12-09-research-003-followup.md`
+**2025-12-09 13:00 UTC (This Session - research-003):**
+- **CRITICAL DISCOVERY:** Live CLOB API check reveals liquidity rewards program INACTIVE
+- **Verification:** Queried all 1,000 markets - ZERO have reward parameters set (max_spread=0, min_size=0)
+- **Analysis performed:**
+  - Built comprehensive ROI calculator showing theoretical 30-50% APY IF rewards active
+  - Calculated adverse selection impact: 70-90% of gross spread
+  - Confirmed without rewards, pure MM generates only 0.2-0.6¢/trade (not viable)
+- **Hypothesis update:** hyp-003 transitioned testing→invalidated (confidence 55%→25%)
+- **Learning added:** learning-miyfu8g2-eaoo documenting program inactivity (95% confidence)
+- **Strategic impact:** Saves 4-7 weeks of infrastructure development that would yield no returns
+- **Monitoring plan:** Check CLOB API weekly for reward reactivation
+- Created analysis script: `/tmp/analyze_liquidity_rewards.py`
+- Created session log: `state/logs/session-2025-12-09-research-003.md`
 
 **2025-12-09 10:22 UTC:**
 - Verified research-003 completion

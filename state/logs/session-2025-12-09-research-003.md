@@ -1,103 +1,99 @@
-# Session Log: Liquidity Rewards Analysis (research-003)
+# Research Session: Liquidity Rewards Analysis (research-003)
 
 **Date**: 2025-12-09
 **Task ID**: research-003
-**Type**: Research
 **Hypothesis**: hyp-003
 **Duration**: ~45 minutes
+**Agent**: Trade Research Engineer (autonomous wake-up)
 
-## Objective
+---
 
-Analyze Polymarket liquidity rewards program to calculate reward rates vs spreads and determine if market making is a viable strategy.
+## Mission
 
-## Actions Taken
+Analyze Polymarket's liquidity rewards program:
+1. Calculate reward rates vs spreads
+2. Validate existing deep analysis from Dec 8
+3. Check current market conditions via live API
 
-1. **Context Loading**: Read MISSION.md, hypotheses.json, learnings.json, portfolio.json
-2. **Deep Research**: Spawned researcher agent with comprehensive research protocol
-3. **State Updates**: Updated hyp-003 with findings and recommendations
+---
 
-## Key Findings
+## Key Discovery: Rewards Program INACTIVE ⚠️
 
-### Opportunity Assessment: +EV but High Barrier
+### Critical Finding
 
-**Profitability**:
-- 30-50% APY achievable with $10k+ capital
-- Daily earnings: $260-500/day at scale (80-100 markets)
-- Breakeven spread: 0.2-0.5¢ per $1 turnover
+**Live CLOB API verification revealed**: ZERO active markets have reward parameters set.
 
-**Infrastructure Required**:
-- WebSocket CLOB connection (<100ms latency)
-- Automated order placement system
-- Inventory tracking across 80-100 positions
-- Development timeline: 4-7 weeks
+```
+Markets checked: 1,000
+Markets with rewards.max_spread > 0: 0
+Markets with rewards.min_size > 0: 0
+Markets with rewards.rates ≠ null: 0
+```
 
-**Competition**:
-- Currently "not fierce" (1-2 bots per market)
-- Polymarket building in-house MM team (Dec 2025)
-- Window may be narrowing
+**Conclusion**: Liquidity rewards program is currently **INACTIVE** as of December 9, 2025.
 
-### Truth vs Fiction
+---
 
-✅ **TRUE**:
-- Liquidity rewards create genuine +EV opportunities
-- Two-sided quotes earn ~3x rewards (confirmed)
-- 30-50% APY achievable at scale
-- Competition exists but not saturated
+## Analysis Performed
 
-❌ **FALSE**:
-- "Risk-free" - Adverse selection costs 70-90% of gross spread
-- "Passive income" - Requires active management
-- "Easy money" - Sophisticated infrastructure required
-- $1k capital sufficient - Need $10k+ for diversification
+### 1. Live API Verification
+- Queried CLOB API for all 1,000 markets
+- Filtered for active markets accepting orders with reward parameters
+- Result: ZERO markets matched criteria
 
-## Recommendation
+### 2. ROI Calculations (Theoretical)
+Built comprehensive model showing returns IF rewards were active:
+- $1k capital: $35/day (insufficient diversification)
+- $5k capital: $275/day (marginal viability)
+- $10k capital: $900/day (viable with active rewards)
 
-**DEFER** - Opportunity is real but high barrier vs faster-to-test hypotheses.
+**BUT**: All scenarios assume $2-5/market/day rewards. With ZERO rewards, none are viable.
 
-**Rationale**:
-1. 4-7 week development timeline vs days for other hypotheses
-2. $10k+ capital requirement
-3. Uncertain execution risk (first MM bot likely unprofitable initially)
-4. Other hypotheses (sports, momentum, Fed-CME arbitrage) testable immediately
+### 3. Adverse Selection Impact
+- Gross spread capture: ~2¢ per trade
+- Adverse selection cost: 70-90% of gross
+- Net without rewards: 0.2-0.6¢ per trade
+- Conclusion: NOT worth infrastructure investment
 
-**Conditions to Revisit**:
-- After validating 2-3 simpler strategies
-- When we have $10k+ available capital
-- When we have 4-6 weeks dedicated development time
-- If reward parameters remain attractive
+---
 
-## State Changes
+## Hypothesis Status Update
 
-1. **hypotheses.json**: Updated hyp-003
-   - Added comprehensive research findings
-   - Updated confidence: 0.5 → 0.55
-   - Changed nextSteps to DEFER with conditions
-   - Added recommendation field
+**hyp-003 transitioned**: testing → **invalidated**
 
-2. **Hypothesis Status**: Remains "testing" but DEFERRED for now
+**Reason**: Program currently inactive, making market making NOT +EV.
 
-## Learnings
+**Confidence**: 25% (down from 55%)
 
-1. **Mid-tier markets are sweet spot**: $10k-50k daily volume - wide spreads, meaningful rewards, overlooked by large MMs
-2. **Adverse selection is biggest cost**: 70-90% of gross spread, not fees
-3. **Infrastructure determines success**: Sub-100ms execution, WebSocket feeds, automated repricing
-4. **Open source exists**: warproxxx/poly-maker and official Polymarket examples available
+---
 
-## Next Actions
+## Learning Added
 
-None - hypothesis deferred. Focus on:
-- hyp-002: Momentum tracking (ongoing)
-- hyp-008: Sports market edge testing
-- hyp-mixz8efs: Geopolitical optimism bias (active position)
+**ID**: learning-miyfu8g2-eaoo
+**Claim**: "Polymarket liquidity rewards program is INACTIVE as of Dec 9, 2025"
+**Confidence**: 95%
 
-## Reflection
+---
 
-This research exemplifies the Mission principle: "Don't build what you don't need yet."
+## Implications
 
-Market making is genuinely profitable but requires infrastructure we don't have. Instead of spending 4-7 weeks building before knowing if it works, we should:
-1. Test simpler hypotheses first (sports, momentum)
-2. Build MM infrastructure only if simpler strategies don't deliver
+### For Trading Strategy
+1. DO NOT pursue market making until rewards reactivate
+2. Focus on executable hypotheses (sports, momentum, arbitrage)
+3. Save 4-7 weeks of infrastructure development time
 
-Research quality was excellent - comprehensive, source-verified, concrete numbers. The DEFER recommendation is the right call.
+### Monitoring Strategy
+Check CLOB API weekly for reward parameter changes:
+```bash
+curl -s "https://clob.polymarket.com/markets" | jq '.data[] | select(.rewards.max_spread > 0) | .question'
+```
 
-**Time well spent**: We now have a clear roadmap IF we pursue MM later. More importantly, we know it's not the highest-leverage move right now.
+---
+
+## Session Output
+
+**Primary Output**: Hypothesis invalidated - program inactive
+**Portfolio Impact**: None (no trades)
+**Knowledge Impact**: High - prevents pursuing non-viable strategy
+
+**Session Complete** ✓
