@@ -616,6 +616,120 @@
         "signalStrength": "extreme",
         "detectedAt": "2025-12-08T23:15:03.198Z"
       }
+    },
+    {
+      "id": "hyp-drift-1765242722377",
+      "statement": "Follow informed money: \"will-wicked-for-good-be-the-top-grossing-movie-of-2025\" drift signal suggests YES continuation",
+      "rationale": "Price moved 66.7% in 117 minutes (extreme signal). Volume $146k. Hypothesis: someone knows something, follow the move.",
+      "source": "platform",
+      "sourcePipeline": "price-drift-detector",
+      "testMethod": "Buy YES at current price (~0¢), target 34¢ or hold.",
+      "entryRules": "Entry: 0¢, Signal strength: extreme, Volume: $146k",
+      "exitRules": "Target: 34¢, Stop: 5¢",
+      "expectedWinRate": 0.55,
+      "expectedPayoff": 1.4,
+      "minSampleSize": 10,
+      "status": "proposed",
+      "confidence": 0.5,
+      "evidence": [
+        {
+          "type": "signal",
+          "description": "Drift detected: 66.7% UP in 117min",
+          "impact": "strong_for",
+          "addedAt": "2025-12-09T01:12:02.377Z"
+        }
+      ],
+      "conclusion": null,
+      "createdAt": "2025-12-09T01:12:02.377Z",
+      "updatedAt": "2025-12-09T01:12:02.377Z",
+      "linkedMarket": {
+        "slug": "will-wicked-for-good-be-the-top-grossing-movie-of-2025",
+        "question": "Will Wicked: For Good be the top grossing movie of 2025?",
+        "tokenId": "107516807630292044096997874487388103106064958463700149740608855411786327728317"
+      },
+      "driftData": {
+        "previousPrice": 0.0015,
+        "currentPrice": 0.0025,
+        "priceChangePct": 0.6666666666666666,
+        "signalStrength": "extreme",
+        "detectedAt": "2025-12-09T01:12:01.898Z"
+      }
+    },
+    {
+      "id": "hyp-drift-1765242722378",
+      "statement": "Follow informed money: \"will-zai-have-the-top-ai-model-on-december-31\" drift signal suggests NO continuation",
+      "rationale": "Price moved -28.6% in 117 minutes (extreme signal). Volume $162k. Hypothesis: someone knows something, follow the move.",
+      "source": "platform",
+      "sourcePipeline": "price-drift-detector",
+      "testMethod": "Buy NO at current price (~0¢), target 5¢ or hold.",
+      "entryRules": "Entry: 0¢, Signal strength: extreme, Volume: $162k",
+      "exitRules": "Target: 5¢, Stop: 2¢",
+      "expectedWinRate": 0.55,
+      "expectedPayoff": 1.4,
+      "minSampleSize": 10,
+      "status": "proposed",
+      "confidence": 0.5,
+      "evidence": [
+        {
+          "type": "signal",
+          "description": "Drift detected: -28.6% DOWN in 117min",
+          "impact": "strong_for",
+          "addedAt": "2025-12-09T01:12:02.378Z"
+        }
+      ],
+      "conclusion": null,
+      "createdAt": "2025-12-09T01:12:02.378Z",
+      "updatedAt": "2025-12-09T01:12:02.378Z",
+      "linkedMarket": {
+        "slug": "will-zai-have-the-top-ai-model-on-december-31",
+        "question": "Will Z.ai have the top AI model on December 31?",
+        "tokenId": "74935923164071817798002840081376532164044780378050701373087139158661506419792"
+      },
+      "driftData": {
+        "previousPrice": 0.0035,
+        "currentPrice": 0.0025,
+        "priceChangePct": -0.2857142857142857,
+        "signalStrength": "extreme",
+        "detectedAt": "2025-12-09T01:12:01.604Z"
+      }
+    },
+    {
+      "id": "hyp-drift-1765242722378",
+      "statement": "Follow informed money: \"will-ethereum-hit-6000-by-december-31-843-315\" drift signal suggests NO continuation",
+      "rationale": "Price moved -22.7% in 117 minutes (extreme signal). Volume $106k. Hypothesis: someone knows something, follow the move.",
+      "source": "platform",
+      "sourcePipeline": "price-drift-detector",
+      "testMethod": "Buy NO at current price (~1¢), target 5¢ or hold.",
+      "entryRules": "Entry: 1¢, Signal strength: extreme, Volume: $106k",
+      "exitRules": "Target: 5¢, Stop: 3¢",
+      "expectedWinRate": 0.55,
+      "expectedPayoff": 1.4,
+      "minSampleSize": 10,
+      "status": "proposed",
+      "confidence": 0.5,
+      "evidence": [
+        {
+          "type": "signal",
+          "description": "Drift detected: -22.7% DOWN in 117min",
+          "impact": "strong_for",
+          "addedAt": "2025-12-09T01:12:02.378Z"
+        }
+      ],
+      "conclusion": null,
+      "createdAt": "2025-12-09T01:12:02.378Z",
+      "updatedAt": "2025-12-09T01:12:02.378Z",
+      "linkedMarket": {
+        "slug": "will-ethereum-hit-6000-by-december-31-843-315",
+        "question": "Will Ethereum hit $6,000 by December 31?",
+        "tokenId": "81425397446351426621727450375895254607015946433493851514616485979278175609514"
+      },
+      "driftData": {
+        "previousPrice": 0.011,
+        "currentPrice": 0.0085,
+        "priceChangePct": -0.22727272727272718,
+        "signalStrength": "extreme",
+        "detectedAt": "2025-12-09T01:11:59.598Z"
+      }
     }
   ],
   "schema": {

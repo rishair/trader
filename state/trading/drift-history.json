@@ -1,5 +1,5 @@
 {
-  "lastRun": "2025-12-08T23:14:59.005Z",
+  "lastRun": "2025-12-09T01:11:56.541Z",
   "snapshots": [
     {
       "marketId": "516716",
@@ -7,9 +7,19 @@
       "question": "Khamenei out as Supreme Leader of Iran in 2025?",
       "tokenId": "75505728818237076147318796536066812362152358606307154083407489467059230821371",
       "price": 0.016,
-      "volume24h": 41317.347688,
-      "liquidity": "87405.79165",
-      "timestamp": "2025-12-08T23:14:59.589Z"
+      "volume24h": 40374.079456000014,
+      "liquidity": "88052.60254",
+      "timestamp": "2025-12-09T01:11:57.199Z"
+    },
+    {
+      "marketId": "516717",
+      "slug": "nuclear-weapon-detonation-in-2025",
+      "question": "Nuclear weapon detonation in 2025?",
+      "tokenId": "84933668601774689515031739413415177606677344300836824135590506442377653851020",
+      "price": 0.017,
+      "volume24h": 10039.127519999998,
+      "liquidity": "50344.31822",
+      "timestamp": "2025-12-09T01:11:57.313Z"
     },
     {
       "marketId": "516719",
@@ -17,29 +27,29 @@
       "question": "Russia x Ukraine ceasefire in 2025?",
       "tokenId": "15974786252393396629980467963784550802583781222733347534844974829144359265969",
       "price": 0.045,
-      "volume24h": 351601.6308260002,
-      "liquidity": "852331.0639",
-      "timestamp": "2025-12-08T23:14:59.719Z"
+      "volume24h": 276102.2212029995,
+      "liquidity": "854155.9063",
+      "timestamp": "2025-12-09T01:11:57.416Z"
     },
     {
       "marketId": "516720",
       "slug": "putin-out-as-president-of-russia-in-2025",
       "question": "Putin out as President of Russia in 2025?",
       "tokenId": "17194352395514663527290362639703875985320281242609142069125752934895379462929",
-      "price": 0.010499999999999999,
-      "volume24h": 36235.515372,
-      "liquidity": "40125.59287",
-      "timestamp": "2025-12-08T23:14:59.821Z"
+      "price": 0.0095,
+      "volume24h": 22722.473673999997,
+      "liquidity": "40797.23237",
+      "timestamp": "2025-12-09T01:11:57.509Z"
     },
     {
       "marketId": "516725",
       "slug": "will-2-fed-rate-cuts-happen-in-2025",
       "question": "Will 2 Fed rate cuts happen in 2025?",
       "tokenId": "11661882248425579028730127122226588074844109517532906275870117904036267401870",
-      "price": 0.055,
-      "volume24h": 41090.813801,
-      "liquidity": "81476.1862",
-      "timestamp": "2025-12-08T23:14:59.919Z"
+      "price": 0.065,
+      "volume24h": 60050.46868500001,
+      "liquidity": "85613.7813",
+      "timestamp": "2025-12-09T01:11:57.610Z"
     },
     {
       "marketId": "516726",
@@ -47,9 +57,19 @@
       "question": "Will 3 Fed rate cuts happen in 2025?",
       "tokenId": "17601770442239563289082275181138749951422899442850916335476881677007065139739",
       "price": 0.935,
-      "volume24h": 72918.23562000002,
-      "liquidity": "70869.0411",
-      "timestamp": "2025-12-08T23:15:00.021Z"
+      "volume24h": 73887.76931300003,
+      "liquidity": "80918.7431",
+      "timestamp": "2025-12-09T01:11:57.703Z"
+    },
+    {
+      "marketId": "516727",
+      "slug": "will-4-fed-rate-cuts-happen-in-2025",
+      "question": "Will 4 Fed rate cuts happen in 2025?",
+      "tokenId": "89004595068776945908481855030043950109477136860300352348370395226706216458498",
+      "price": 0.006500000000000001,
+      "volume24h": 19664.198067000005,
+      "liquidity": "148697.72259",
+      "timestamp": "2025-12-09T01:11:57.808Z"
     },
     {
       "marketId": "516729",
@@ -57,19 +77,19 @@
       "question": "Will 8+ Fed rate cuts happen in 2025?",
       "tokenId": "61673387045681238454585997121170806826401631642653090831500827557099057497566",
       "price": 0.0005,
-      "volume24h": 1387967.72,
-      "liquidity": "207463.69076",
-      "timestamp": "2025-12-08T23:15:00.116Z"
+      "volume24h": 1387077.72,
+      "liquidity": "208021.95579",
+      "timestamp": "2025-12-09T01:11:57.910Z"
     },
     {
       "marketId": "516818",
       "slug": "will-nvidia-be-the-largest-company-in-the-world-by-market-cap-on-december-31-2025",
       "question": "Will NVIDIA be the largest company in the world by market cap on December 31?",
       "tokenId": "94850533403292240972948844256810904078895883844462287088135166537739765648754",
-      "price": 0.915,
-      "volume24h": 142789.62308499994,
-      "liquidity": "84387.3717",
-      "timestamp": "2025-12-08T23:15:00.208Z"
+      "price": 0.92,
+      "volume24h": 229619.109552,
+      "liquidity": "86245.2834",
+      "timestamp": "2025-12-09T01:11:58.010Z"
     },
     {
       "marketId": "516820",
@@ -77,19 +97,29 @@
       "question": "Will Microsoft be the largest company in the world by market cap on December 31?",
       "tokenId": "51657657151055530627321198005838882818455292318658915621742481565942363716363",
       "price": 0.002,
-      "volume24h": 74707.303542,
-      "liquidity": "199070.62186",
-      "timestamp": "2025-12-08T23:15:00.330Z"
+      "volume24h": 116894.072032,
+      "liquidity": "197839.87808",
+      "timestamp": "2025-12-09T01:11:58.107Z"
+    },
+    {
+      "marketId": "516821",
+      "slug": "will-apple-be-the-largest-company-in-the-world-by-market-cap-on-december-31-2025",
+      "question": "Will Apple be the largest company in the world by market cap on December 31?",
+      "tokenId": "64608332692655386624219169603174714750740291631647562666654835455208498486268",
+      "price": 0.0655,
+      "volume24h": 36990.711115,
+      "liquidity": "37748.93845",
+      "timestamp": "2025-12-09T01:11:58.206Z"
     },
     {
       "marketId": "516822",
       "slug": "will-alphabet-be-the-largest-company-in-the-world-by-market-cap-on-december-31",
       "question": "Will Alphabet be the largest company in the world by market cap on December 31?",
       "tokenId": "63284454060282294254937404992798326595384274761940104982495030320283116592205",
-      "price": 0.013000000000000001,
-      "volume24h": 44279.011971,
-      "liquidity": "89312.63296",
-      "timestamp": "2025-12-08T23:15:00.424Z"
+      "price": 0.015,
+      "volume24h": 102846.00593400002,
+      "liquidity": "99704.75606",
+      "timestamp": "2025-12-09T01:11:58.306Z"
     },
     {
       "marketId": "516824",
@@ -97,9 +127,9 @@
       "question": "Will Tesla be the largest company in the world by market cap on December 31?",
       "tokenId": "20754954427427178281469581263846329008146070520504999815539832461608878525555",
       "price": 0.0005,
-      "volume24h": 56130,
-      "liquidity": "480923.255",
-      "timestamp": "2025-12-08T23:15:00.528Z"
+      "volume24h": 47082,
+      "liquidity": "480360.41157",
+      "timestamp": "2025-12-09T01:11:58.402Z"
     },
     {
       "marketId": "516861",
@@ -107,9 +137,9 @@
       "question": "Will Bitcoin reach $1,000,000 by December 31, 2025?",
       "tokenId": "112540911653160777059655478391259433595972605218365763034134019729862917878641",
       "price": 0.002,
-      "volume24h": 207064.96187199876,
-      "liquidity": "332813.27534",
-      "timestamp": "2025-12-08T23:15:00.696Z"
+      "volume24h": 389156.6176539983,
+      "liquidity": "223610.98079",
+      "timestamp": "2025-12-09T01:11:58.496Z"
     },
     {
       "marketId": "516862",
@@ -117,39 +147,39 @@
       "question": "Will Bitcoin reach $250,000 by December 31, 2025?",
       "tokenId": "15600657178409553723631854347165934450743544837722869853285023214749561849304",
       "price": 0.0035,
-      "volume24h": 135248.13094900004,
-      "liquidity": "286636.31638",
-      "timestamp": "2025-12-08T23:15:00.805Z"
+      "volume24h": 145121.97837900007,
+      "liquidity": "187843.58759",
+      "timestamp": "2025-12-09T01:11:58.594Z"
     },
     {
       "marketId": "516863",
       "slug": "will-bitcoin-reach-200000-by-december-31-2025",
       "question": "Will Bitcoin reach $200,000 by December 31, 2025?",
       "tokenId": "85949163243245471221790979452091560100141884930227668573477517865165344048388",
-      "price": 0.0035,
-      "volume24h": 142231.878765,
-      "liquidity": "355575.6435",
-      "timestamp": "2025-12-08T23:15:00.898Z"
+      "price": 0.004,
+      "volume24h": 318171.840132,
+      "liquidity": "258401.62445",
+      "timestamp": "2025-12-09T01:11:58.703Z"
     },
     {
       "marketId": "516864",
       "slug": "will-bitcoin-reach-150000-by-december-31-2025-188",
       "question": "Will Bitcoin reach $150,000 by December 31, 2025?",
       "tokenId": "87484108660213248881541352117231933897620313251765619093583161767567942237143",
-      "price": 0.0075,
-      "volume24h": 319245.893885,
-      "liquidity": "188080.91529",
-      "timestamp": "2025-12-08T23:15:01.012Z"
+      "price": 0.006,
+      "volume24h": 166478.157619,
+      "liquidity": "189878.89303",
+      "timestamp": "2025-12-09T01:11:58.798Z"
     },
     {
       "marketId": "516865",
       "slug": "will-bitcoin-reach-130000-by-december-31-2025-911-832",
       "question": "Will Bitcoin reach $130,000 by December 31, 2025?",
       "tokenId": "70455106433105725093003807079135685186309776081399075740142938507518314484366",
-      "price": 0.016,
-      "volume24h": 309235.169186,
-      "liquidity": "173134.72781",
-      "timestamp": "2025-12-08T23:15:01.108Z"
+      "price": 0.0135,
+      "volume24h": 222545.17786500006,
+      "liquidity": "165991.44681",
+      "timestamp": "2025-12-09T01:11:58.906Z"
     },
     {
       "marketId": "516871",
@@ -157,79 +187,79 @@
       "question": "Will Bitcoin dip to $70,000 by December 31, 2025?",
       "tokenId": "95047670164958340277111777643825971965059782358468932324606496632183052684085",
       "price": 0.07500000000000001,
-      "volume24h": 78798.505092,
-      "liquidity": "172928.5602",
-      "timestamp": "2025-12-08T23:15:01.220Z"
+      "volume24h": 75291.38971100001,
+      "liquidity": "168322.9818",
+      "timestamp": "2025-12-09T01:11:59.013Z"
     },
     {
       "marketId": "516872",
       "slug": "will-bitcoin-dip-to-50000-by-december-31-2025-391-715-682-587-692-994-786-318-267-857-157-791-189-328-186",
       "question": "Will Bitcoin dip to $50,000 by December 31, 2025?",
       "tokenId": "19172660598358578032571481657371270203404516640166684953652435968273007603461",
-      "price": 0.0115,
-      "volume24h": 67506.299846,
-      "liquidity": "198822.25358",
-      "timestamp": "2025-12-08T23:15:01.320Z"
+      "price": 0.009,
+      "volume24h": 67498.58202399999,
+      "liquidity": "198803.97898",
+      "timestamp": "2025-12-09T01:11:59.110Z"
     },
     {
       "marketId": "516874",
       "slug": "will-ethereum-hit-10000-by-december-31-218-525",
       "question": "Will Ethereum hit $10,000 by December 31?",
       "tokenId": "18892243695879775649132895952659643324540464857988525878273043687363786020355",
-      "price": 0.005,
-      "volume24h": 55063.588313000015,
-      "liquidity": "133774.27627",
-      "timestamp": "2025-12-08T23:15:01.425Z"
+      "price": 0.004,
+      "volume24h": 124134.769456,
+      "liquidity": "135743.49198",
+      "timestamp": "2025-12-09T01:11:59.211Z"
     },
     {
       "marketId": "516875",
       "slug": "will-ethereum-hit-8000-by-december-31-124-489",
       "question": "Will Ethereum hit $8,000 by December 31?",
       "tokenId": "74506979693843962080154121859467197249348465510614170753380333192495557936975",
-      "price": 0.005,
-      "volume24h": 101315.98084700009,
-      "liquidity": "130652.73385",
-      "timestamp": "2025-12-08T23:15:01.537Z"
+      "price": 0.0045000000000000005,
+      "volume24h": 120200.85436300008,
+      "liquidity": "131384.71886",
+      "timestamp": "2025-12-09T01:11:59.310Z"
     },
     {
       "marketId": "516876",
       "slug": "will-ethereum-hit-7000-by-december-31-733-852",
       "question": "Will Ethereum hit $7,000 by December 31?",
       "tokenId": "66776654258002694324853229694339306737497274534009979978324520345248856607706",
-      "price": 0.007,
-      "volume24h": 212813.28550599996,
-      "liquidity": "174134.33671",
-      "timestamp": "2025-12-08T23:15:01.643Z"
+      "price": 0.006500000000000001,
+      "volume24h": 202162.213133,
+      "liquidity": "184549.17409",
+      "timestamp": "2025-12-09T01:11:59.501Z"
     },
     {
       "marketId": "516877",
       "slug": "will-ethereum-hit-6000-by-december-31-843-315",
       "question": "Will Ethereum hit $6,000 by December 31?",
       "tokenId": "81425397446351426621727450375895254607015946433493851514616485979278175609514",
-      "price": 0.011,
-      "volume24h": 128275.46454900005,
-      "liquidity": "234449.60984",
-      "timestamp": "2025-12-08T23:15:01.755Z"
+      "price": 0.0085,
+      "volume24h": 105598.55482299998,
+      "liquidity": "241515.29311",
+      "timestamp": "2025-12-09T01:11:59.598Z"
     },
     {
       "marketId": "516878",
       "slug": "will-ethereum-hit-5000-by-december-31-796-376",
       "question": "Will Ethereum hit $5,000 by December 31?",
       "tokenId": "96638575418189284731461006608299472691495172793493062289677934142140726427384",
-      "price": 0.0185,
-      "volume24h": 291602.3674909995,
-      "liquidity": "280747.26718",
-      "timestamp": "2025-12-08T23:15:01.850Z"
+      "price": 0.017,
+      "volume24h": 216179.3635570001,
+      "liquidity": "285062.5733",
+      "timestamp": "2025-12-09T01:11:59.701Z"
     },
     {
       "marketId": "516925",
       "slug": "will-the-us-confirm-that-aliens-exist-in-2025",
       "question": "Will the US confirm that aliens exist in 2025?",
       "tokenId": "27489607967254830440928740057210075156058938975022466608385700336406661385026",
-      "price": 0.025,
-      "volume24h": 198718.39617999998,
-      "liquidity": "77176.11683",
-      "timestamp": "2025-12-08T23:15:01.953Z"
+      "price": 0.0245,
+      "volume24h": 156042.013732,
+      "liquidity": "92791.45463",
+      "timestamp": "2025-12-09T01:11:59.805Z"
     },
     {
       "marketId": "516926",
@@ -237,9 +267,9 @@
       "question": "MicroStrategy sells any Bitcoin in 2025?",
       "tokenId": "93592949212798121127213117304912625505836768562433217537850469496310204567695",
       "price": 0.020999999999999998,
-      "volume24h": 93333.16343200006,
-      "liquidity": "76309.81978",
-      "timestamp": "2025-12-08T23:15:02.050Z"
+      "volume24h": 93236.17831399999,
+      "liquidity": "76572.66238",
+      "timestamp": "2025-12-09T01:11:59.901Z"
     },
     {
       "marketId": "516927",
@@ -247,9 +277,9 @@
       "question": "Will Gold close under $2,500 at the end of 2025?",
       "tokenId": "66204185532864199574384406941577195085446103029962077842365412910416109897360",
       "price": 0.0015,
-      "volume24h": 40241.82412,
-      "liquidity": "40524.5746",
-      "timestamp": "2025-12-08T23:15:02.144Z"
+      "volume24h": 43177.274119999995,
+      "liquidity": "38614.38458",
+      "timestamp": "2025-12-09T01:12:00.021Z"
     },
     {
       "marketId": "516930",
@@ -257,9 +287,9 @@
       "question": "Will Gold close at $2,700-2,800 at the end of 2025?",
       "tokenId": "21232593340271475643172245433790960840308637808125263056222954587338309282025",
       "price": 0.0015,
-      "volume24h": 12910.372000000001,
-      "liquidity": "139284.49903",
-      "timestamp": "2025-12-08T23:15:02.237Z"
+      "volume24h": 10994.792,
+      "liquidity": "140005.94482",
+      "timestamp": "2025-12-09T01:12:00.161Z"
     },
     {
       "marketId": "516931",
@@ -267,9 +297,9 @@
       "question": "Will Gold close at $2,800-2,900 at the end of 2025?",
       "tokenId": "101081296560212033074205347057065245530779184810576378510101554885350813891877",
       "price": 0.0005,
-      "volume24h": 16012.239249,
-      "liquidity": "114548.49494",
-      "timestamp": "2025-12-08T23:15:02.334Z"
+      "volume24h": 28994.769249000004,
+      "liquidity": "112378.44729",
+      "timestamp": "2025-12-09T01:12:00.266Z"
     },
     {
       "marketId": "516934",
@@ -277,39 +307,29 @@
       "question": "Will Gold close at $3,100-3,200 at the end of 2025?",
       "tokenId": "21723604204196327281996148396298820652913902449143569639752897608981857229286",
       "price": 0.004,
-      "volume24h": 14908.170367,
-      "liquidity": "95096.0732",
-      "timestamp": "2025-12-08T23:15:02.427Z"
-    },
-    {
-      "marketId": "516935",
-      "slug": "will-gold-close-at-3200-or-more-at-the-end-of-2025",
-      "question": "Will Gold close at $3,200 or more at the end of 2025?",
-      "tokenId": "97579473323266133487764893548542552161490448526418028272734208413262454616719",
-      "price": 0.9884999999999999,
-      "volume24h": 29185.587870999985,
-      "liquidity": "106362.09366",
-      "timestamp": "2025-12-08T23:15:02.530Z"
+      "volume24h": 14726.009614,
+      "liquidity": "95815.80504",
+      "timestamp": "2025-12-09T01:12:00.371Z"
     },
     {
       "marketId": "516937",
       "slug": "us-national-bitcoin-reserve-in-2025",
       "question": "US national Bitcoin reserve in 2025?",
       "tokenId": "83894672511259544049673946661753374355328822374216474995072428966535091173758",
-      "price": 0.0135,
-      "volume24h": 27094.847299000005,
-      "liquidity": "58221.89788",
-      "timestamp": "2025-12-08T23:15:02.625Z"
+      "price": 0.013999999999999999,
+      "volume24h": 13650.640276000004,
+      "liquidity": "59011.42064",
+      "timestamp": "2025-12-09T01:12:00.471Z"
     },
     {
       "marketId": "516947",
       "slug": "maduro-out-in-2025-411",
       "question": "Maduro out in 2025?",
       "tokenId": "45343480653694577807177505914664405669209636932459044719445554137639656106379",
-      "price": 0.08499999999999999,
-      "volume24h": 271249.4265140004,
-      "liquidity": "342453.5378",
-      "timestamp": "2025-12-08T23:15:02.720Z"
+      "price": 0.07500000000000001,
+      "volume24h": 271093.3759169997,
+      "liquidity": "377238.6869",
+      "timestamp": "2025-12-09T01:12:00.601Z"
     },
     {
       "marketId": "516950",
@@ -317,49 +337,49 @@
       "question": "Kraken IPO in 2025?",
       "tokenId": "106229668102716149832209250222340847662201251266419359322746795373714233470739",
       "price": 0.004,
-      "volume24h": 13584.282594000004,
-      "liquidity": "26046.61807",
-      "timestamp": "2025-12-08T23:15:02.816Z"
+      "volume24h": 14604.5807,
+      "liquidity": "27639.99954",
+      "timestamp": "2025-12-09T01:12:00.701Z"
     },
     {
       "marketId": "516960",
       "slug": "which-company-has-best-ai-model-end-of-2025",
       "question": "Will Google have the top AI model on December 31?",
       "tokenId": "95439201103958291841222373625424698303339849105476314992984252617398188905150",
-      "price": 0.785,
-      "volume24h": 97066.56432299998,
-      "liquidity": "47915.3398",
-      "timestamp": "2025-12-08T23:15:02.911Z"
+      "price": 0.745,
+      "volume24h": 86018.17333900003,
+      "liquidity": "46558.0392",
+      "timestamp": "2025-12-09T01:12:00.794Z"
     },
     {
       "marketId": "516961",
       "slug": "will-openai-have-the-top-ai-model-on-december-31",
       "question": "Will OpenAI have the top AI model on December 31?",
       "tokenId": "29370433468126418379827896143797575739436853610287532509760876690489490660887",
-      "price": 0.1565,
-      "volume24h": 114768.62057799996,
-      "liquidity": "28830.16864",
-      "timestamp": "2025-12-08T23:15:03.011Z"
+      "price": 0.1815,
+      "volume24h": 96920.52596899997,
+      "liquidity": "28388.77464",
+      "timestamp": "2025-12-09T01:12:00.891Z"
     },
     {
       "marketId": "516962",
       "slug": "will-xai-have-the-top-ai-model-on-december-31",
       "question": "Will xAI have the top AI model on December 31?",
       "tokenId": "102999968845900441563984227184244976654134769519899727417416638269272028235268",
-      "price": 0.042499999999999996,
-      "volume24h": 84514.81149200001,
-      "liquidity": "40322.02566",
-      "timestamp": "2025-12-08T23:15:03.103Z"
+      "price": 0.051000000000000004,
+      "volume24h": 73330.05000600003,
+      "liquidity": "38564.21913",
+      "timestamp": "2025-12-09T01:12:00.986Z"
     },
     {
       "marketId": "516963",
       "slug": "will-anthropic-have-the-top-ai-model-on-december-31",
       "question": "Will Anthropic have the top AI model on December 31?",
       "tokenId": "36969025040005932681817118833100769474314136025602369280317661994966807870564",
-      "price": 0.006500000000000001,
-      "volume24h": 75210.99173499999,
-      "liquidity": "176946.21243",
-      "timestamp": "2025-12-08T23:15:03.198Z"
+      "price": 0.007,
+      "volume24h": 113083.58146399999,
+      "liquidity": "174374.49702",
+      "timestamp": "2025-12-09T01:12:01.087Z"
     },
     {
       "marketId": "516964",
@@ -367,9 +387,9 @@
       "question": "Will Meta have the top AI model on December 31?",
       "tokenId": "104471191007760957789994563546881648186869785130556413398226932885924537455636",
       "price": 0.0015,
-      "volume24h": 40595.50568199998,
-      "liquidity": "290832.713",
-      "timestamp": "2025-12-08T23:15:03.290Z"
+      "volume24h": 33894.88566,
+      "liquidity": "289694.67397",
+      "timestamp": "2025-12-09T01:12:01.182Z"
     },
     {
       "marketId": "516965",
@@ -377,9 +397,9 @@
       "question": "Will DeepSeek have the top AI model on December 31?",
       "tokenId": "67952170237118161113823978955884644334240779330929575423311924287450926538956",
       "price": 0.0025,
-      "volume24h": 51682.65533099998,
-      "liquidity": "80474.54279",
-      "timestamp": "2025-12-08T23:15:03.389Z"
+      "volume24h": 56430.72333100001,
+      "liquidity": "78801.71401",
+      "timestamp": "2025-12-09T01:12:01.282Z"
     },
     {
       "marketId": "516967",
@@ -387,9 +407,9 @@
       "question": "Will Alibaba have the top AI model on December 31?",
       "tokenId": "8719418414326709897439966959310868099766860487466920674004552892514480301444",
       "price": 0.0015,
-      "volume24h": 155060.43103100004,
-      "liquidity": "230375.33387",
-      "timestamp": "2025-12-08T23:15:03.483Z"
+      "volume24h": 93532.69603099998,
+      "liquidity": "227532.98858",
+      "timestamp": "2025-12-09T01:12:01.410Z"
     },
     {
       "marketId": "516968",
@@ -397,39 +417,19 @@
       "question": "Will Mistral AI have the top AI model on December 31?",
       "tokenId": "29342854370575341379074031096244981056550993525825593301590524247018316727590",
       "price": 0.0005,
-      "volume24h": 633181.3,
-      "liquidity": "113796.00403",
-      "timestamp": "2025-12-08T23:15:03.580Z"
-    },
-    {
-      "marketId": "516969",
-      "slug": "will-microsoft-have-the-top-ai-model-on-december-31",
-      "question": "Will Microsoft have the top AI model on December 31?",
-      "tokenId": "94483763215904102737715534811483835997414013687836952960666923130702965537191",
-      "price": 0.0005,
-      "volume24h": 323661.3,
-      "liquidity": "141759.04077",
-      "timestamp": "2025-12-08T23:15:03.676Z"
+      "volume24h": 601227.1799999999,
+      "liquidity": "112667.01419",
+      "timestamp": "2025-12-09T01:12:01.501Z"
     },
     {
       "marketId": "516970",
       "slug": "will-zai-have-the-top-ai-model-on-december-31",
       "question": "Will Z.ai have the top AI model on December 31?",
       "tokenId": "74935923164071817798002840081376532164044780378050701373087139158661506419792",
-      "price": 0.0035,
-      "volume24h": 174923.88455000002,
-      "liquidity": "113516.32978",
-      "timestamp": "2025-12-08T23:15:03.771Z"
-    },
-    {
-      "marketId": "516971",
-      "slug": "will-tencent-have-the-top-ai-model-on-december-31",
-      "question": "Will Tencent have the top AI model on December 31?",
-      "tokenId": "59256827013308582977039266985187462607658460901638049707670565688943758576451",
-      "price": 0.0015,
-      "volume24h": 48787.24,
-      "liquidity": "78547.59292",
-      "timestamp": "2025-12-08T23:15:03.864Z"
+      "price": 0.0025,
+      "volume24h": 162322.681531,
+      "liquidity": "113706.50065",
+      "timestamp": "2025-12-09T01:12:01.604Z"
     },
     {
       "marketId": "516972",
@@ -437,29 +437,29 @@
       "question": "Will Moonshot have the top AI model on December 31?",
       "tokenId": "99046967530935195759951329009063458639985706942702094115167357674478195840320",
       "price": 0.0015,
-      "volume24h": 24518.100049000004,
-      "liquidity": "239896.0297",
-      "timestamp": "2025-12-08T23:15:03.962Z"
+      "volume24h": 21707.524049000003,
+      "liquidity": "238626.87869",
+      "timestamp": "2025-12-09T01:12:01.707Z"
     },
     {
       "marketId": "517011",
       "slug": "will-avatar-3-be-the-top-grossing-movie-of-2025",
       "question": "Will Avatar 3 be the top grossing movie of 2025?",
       "tokenId": "46031991343302022758885232715327973278894914473014946268947234642842781512787",
-      "price": 0.034,
-      "volume24h": 97849.24868800002,
-      "liquidity": "233599.79201",
-      "timestamp": "2025-12-08T23:15:04.062Z"
+      "price": 0.0335,
+      "volume24h": 73741.193404,
+      "liquidity": "233294.18414",
+      "timestamp": "2025-12-09T01:12:01.803Z"
     },
     {
       "marketId": "517012",
       "slug": "will-wicked-for-good-be-the-top-grossing-movie-of-2025",
       "question": "Will Wicked: For Good be the top grossing movie of 2025?",
       "tokenId": "107516807630292044096997874487388103106064958463700149740608855411786327728317",
-      "price": 0.0015,
-      "volume24h": 80252.61793600001,
-      "liquidity": "181711.54671",
-      "timestamp": "2025-12-08T23:15:04.163Z"
+      "price": 0.0025,
+      "volume24h": 146171.884436,
+      "liquidity": "165383.82331",
+      "timestamp": "2025-12-09T01:12:01.898Z"
     },
     {
       "marketId": "517013",
@@ -467,9 +467,9 @@
       "question": "Will Superman be the top grossing movie of 2025?",
       "tokenId": "105082902118227548826249086653013297053246139018561657722591473048372450842215",
       "price": 0.0015,
-      "volume24h": 309640.0289999999,
-      "liquidity": "1164229.45361",
-      "timestamp": "2025-12-08T23:15:04.260Z"
+      "volume24h": 206760.613,
+      "liquidity": "1163646.6197",
+      "timestamp": "2025-12-09T01:12:02.014Z"
     },
     {
       "marketId": "517015",
@@ -477,19 +477,19 @@
       "question": "Will Jurassic World: Rebirth be the top grossing movie of 2025?",
       "tokenId": "4597169797317084862349120825009191286596299748214987624297297321423753269997",
       "price": 0.0015,
-      "volume24h": 297719.6269999999,
-      "liquidity": "1160080.11205",
-      "timestamp": "2025-12-08T23:15:04.381Z"
+      "volume24h": 231016.466,
+      "liquidity": "1158209.54687",
+      "timestamp": "2025-12-09T01:12:02.116Z"
     },
     {
       "marketId": "517017",
       "slug": "will-zootopia-2-be-the-top-grossing-movie-of-2025",
       "question": "Will Zootopia 2 be the top grossing movie of 2025?",
       "tokenId": "49225255785153140271978028633331398187057596497890648373700315193116553934019",
-      "price": 0.006,
-      "volume24h": 99999.03849700002,
-      "liquidity": "81121.59014",
-      "timestamp": "2025-12-08T23:15:04.473Z"
+      "price": 0.0055,
+      "volume24h": 91271.13563899999,
+      "liquidity": "80614.02902",
+      "timestamp": "2025-12-09T01:12:02.279Z"
     },
     {
       "marketId": "517018",
@@ -497,12 +497,332 @@
       "question": "Will Thunderbolts be the top grossing movie of 2025?",
       "tokenId": "35831181492141694980692915198174791166488782428631847611464512939858296812162",
       "price": 0.0015,
-      "volume24h": 178664.27900000004,
-      "liquidity": "1175334.13586",
-      "timestamp": "2025-12-08T23:15:04.567Z"
+      "volume24h": 225057.49300000007,
+      "liquidity": "1174912.96487",
+      "timestamp": "2025-12-09T01:12:02.375Z"
     }
   ],
   "recentDrifts": [
+    {
+      "marketId": "517012",
+      "slug": "will-wicked-for-good-be-the-top-grossing-movie-of-2025",
+      "question": "Will Wicked: For Good be the top grossing movie of 2025?",
+      "tokenId": "107516807630292044096997874487388103106064958463700149740608855411786327728317",
+      "previousPrice": 0.0015,
+      "currentPrice": 0.0025,
+      "priceChange": 0.001,
+      "priceChangePct": 0.6666666666666666,
+      "direction": "UP",
+      "volume24h": 146171.884436,
+      "liquidity": "165383.82331",
+      "timeSinceLastSnapshot": 116.96225,
+      "timestamp": "2025-12-09T01:12:01.898Z",
+      "signalStrength": "extreme"
+    },
+    {
+      "marketId": "516970",
+      "slug": "will-zai-have-the-top-ai-model-on-december-31",
+      "question": "Will Z.ai have the top AI model on December 31?",
+      "tokenId": "74935923164071817798002840081376532164044780378050701373087139158661506419792",
+      "previousPrice": 0.0035,
+      "currentPrice": 0.0025,
+      "priceChange": -0.001,
+      "priceChangePct": -0.2857142857142857,
+      "direction": "DOWN",
+      "volume24h": 162322.681531,
+      "liquidity": "113706.50065",
+      "timeSinceLastSnapshot": 116.96388333333333,
+      "timestamp": "2025-12-09T01:12:01.604Z",
+      "signalStrength": "extreme"
+    },
+    {
+      "marketId": "516877",
+      "slug": "will-ethereum-hit-6000-by-december-31-843-315",
+      "question": "Will Ethereum hit $6,000 by December 31?",
+      "tokenId": "81425397446351426621727450375895254607015946433493851514616485979278175609514",
+      "previousPrice": 0.011,
+      "currentPrice": 0.0085,
+      "priceChange": -0.0024999999999999988,
+      "priceChangePct": -0.22727272727272718,
+      "direction": "DOWN",
+      "volume24h": 105598.55482299998,
+      "liquidity": "241515.29311",
+      "timeSinceLastSnapshot": 116.96405,
+      "timestamp": "2025-12-09T01:11:59.598Z",
+      "signalStrength": "extreme"
+    },
+    {
+      "marketId": "516872",
+      "slug": "will-bitcoin-dip-to-50000-by-december-31-2025-391-715-682-587-692-994-786-318-267-857-157-791-189-328-186",
+      "question": "Will Bitcoin dip to $50,000 by December 31, 2025?",
+      "tokenId": "19172660598358578032571481657371270203404516640166684953652435968273007603461",
+      "previousPrice": 0.0115,
+      "currentPrice": 0.009,
+      "priceChange": -0.0025000000000000005,
+      "priceChangePct": -0.21739130434782614,
+      "direction": "DOWN",
+      "volume24h": 67498.58202399999,
+      "liquidity": "198803.97898",
+      "timeSinceLastSnapshot": 116.96316666666667,
+      "timestamp": "2025-12-09T01:11:59.110Z",
+      "signalStrength": "extreme"
+    },
+    {
+      "marketId": "516962",
+      "slug": "will-xai-have-the-top-ai-model-on-december-31",
+      "question": "Will xAI have the top AI model on December 31?",
+      "tokenId": "102999968845900441563984227184244976654134769519899727417416638269272028235268",
+      "previousPrice": 0.042499999999999996,
+      "currentPrice": 0.051000000000000004,
+      "priceChange": 0.008500000000000008,
+      "priceChangePct": 0.2000000000000002,
+      "direction": "UP",
+      "volume24h": 73330.05000600003,
+      "liquidity": "38564.21913",
+      "timeSinceLastSnapshot": 116.96471666666666,
+      "timestamp": "2025-12-09T01:12:00.986Z",
+      "signalStrength": "extreme"
+    },
+    {
+      "marketId": "516874",
+      "slug": "will-ethereum-hit-10000-by-december-31-218-525",
+      "question": "Will Ethereum hit $10,000 by December 31?",
+      "tokenId": "18892243695879775649132895952659643324540464857988525878273043687363786020355",
+      "previousPrice": 0.005,
+      "currentPrice": 0.004,
+      "priceChange": -0.001,
+      "priceChangePct": -0.2,
+      "direction": "DOWN",
+      "volume24h": 124134.769456,
+      "liquidity": "135743.49198",
+      "timeSinceLastSnapshot": 116.9631,
+      "timestamp": "2025-12-09T01:11:59.211Z",
+      "signalStrength": "extreme"
+    },
+    {
+      "marketId": "516864",
+      "slug": "will-bitcoin-reach-150000-by-december-31-2025-188",
+      "question": "Will Bitcoin reach $150,000 by December 31, 2025?",
+      "tokenId": "87484108660213248881541352117231933897620313251765619093583161767567942237143",
+      "previousPrice": 0.0075,
+      "currentPrice": 0.006,
+      "priceChange": -0.0014999999999999996,
+      "priceChangePct": -0.19999999999999996,
+      "direction": "DOWN",
+      "volume24h": 166478.157619,
+      "liquidity": "189878.89303",
+      "timeSinceLastSnapshot": 116.9631,
+      "timestamp": "2025-12-09T01:11:58.798Z",
+      "signalStrength": "extreme"
+    },
+    {
+      "marketId": "516725",
+      "slug": "will-2-fed-rate-cuts-happen-in-2025",
+      "question": "Will 2 Fed rate cuts happen in 2025?",
+      "tokenId": "11661882248425579028730127122226588074844109517532906275870117904036267401870",
+      "previousPrice": 0.055,
+      "currentPrice": 0.065,
+      "priceChange": 0.010000000000000002,
+      "priceChangePct": 0.18181818181818185,
+      "direction": "UP",
+      "volume24h": 60050.46868500001,
+      "liquidity": "85613.7813",
+      "timeSinceLastSnapshot": 116.96151666666667,
+      "timestamp": "2025-12-09T01:11:57.610Z",
+      "signalStrength": "extreme"
+    },
+    {
+      "marketId": "516961",
+      "slug": "will-openai-have-the-top-ai-model-on-december-31",
+      "question": "Will OpenAI have the top AI model on December 31?",
+      "tokenId": "29370433468126418379827896143797575739436853610287532509760876690489490660887",
+      "previousPrice": 0.1565,
+      "currentPrice": 0.1815,
+      "priceChange": 0.024999999999999994,
+      "priceChangePct": 0.15974440894568687,
+      "direction": "UP",
+      "volume24h": 96920.52596899997,
+      "liquidity": "28388.77464",
+      "timeSinceLastSnapshot": 116.96466666666667,
+      "timestamp": "2025-12-09T01:12:00.891Z",
+      "signalStrength": "extreme"
+    },
+    {
+      "marketId": "516865",
+      "slug": "will-bitcoin-reach-130000-by-december-31-2025-911-832",
+      "question": "Will Bitcoin reach $130,000 by December 31, 2025?",
+      "tokenId": "70455106433105725093003807079135685186309776081399075740142938507518314484366",
+      "previousPrice": 0.016,
+      "currentPrice": 0.0135,
+      "priceChange": -0.0025000000000000005,
+      "priceChangePct": -0.15625000000000003,
+      "direction": "DOWN",
+      "volume24h": 222545.17786500006,
+      "liquidity": "165991.44681",
+      "timeSinceLastSnapshot": 116.9633,
+      "timestamp": "2025-12-09T01:11:58.906Z",
+      "signalStrength": "extreme"
+    },
+    {
+      "marketId": "516822",
+      "slug": "will-alphabet-be-the-largest-company-in-the-world-by-market-cap-on-december-31",
+      "question": "Will Alphabet be the largest company in the world by market cap on December 31?",
+      "tokenId": "63284454060282294254937404992798326595384274761940104982495030320283116592205",
+      "previousPrice": 0.013000000000000001,
+      "currentPrice": 0.015,
+      "priceChange": 0.0019999999999999983,
+      "priceChangePct": 0.15384615384615372,
+      "direction": "UP",
+      "volume24h": 102846.00593400002,
+      "liquidity": "99704.75606",
+      "timeSinceLastSnapshot": 116.9647,
+      "timestamp": "2025-12-09T01:11:58.306Z",
+      "signalStrength": "extreme"
+    },
+    {
+      "marketId": "516863",
+      "slug": "will-bitcoin-reach-200000-by-december-31-2025",
+      "question": "Will Bitcoin reach $200,000 by December 31, 2025?",
+      "tokenId": "85949163243245471221790979452091560100141884930227668573477517865165344048388",
+      "previousPrice": 0.0035,
+      "currentPrice": 0.004,
+      "priceChange": 0.0005,
+      "priceChangePct": 0.14285714285714285,
+      "direction": "UP",
+      "volume24h": 318171.840132,
+      "liquidity": "258401.62445",
+      "timeSinceLastSnapshot": 116.96341666666666,
+      "timestamp": "2025-12-09T01:11:58.703Z",
+      "signalStrength": "strong"
+    },
+    {
+      "marketId": "516947",
+      "slug": "maduro-out-in-2025-411",
+      "question": "Maduro out in 2025?",
+      "tokenId": "45343480653694577807177505914664405669209636932459044719445554137639656106379",
+      "previousPrice": 0.08499999999999999,
+      "currentPrice": 0.07500000000000001,
+      "priceChange": -0.009999999999999981,
+      "priceChangePct": -0.1176470588235292,
+      "direction": "DOWN",
+      "volume24h": 271093.3759169997,
+      "liquidity": "377238.6869",
+      "timeSinceLastSnapshot": 116.96468333333333,
+      "timestamp": "2025-12-09T01:12:00.601Z",
+      "signalStrength": "strong"
+    },
+    {
+      "marketId": "516875",
+      "slug": "will-ethereum-hit-8000-by-december-31-124-489",
+      "question": "Will Ethereum hit $8,000 by December 31?",
+      "tokenId": "74506979693843962080154121859467197249348465510614170753380333192495557936975",
+      "previousPrice": 0.005,
+      "currentPrice": 0.0045000000000000005,
+      "priceChange": -0.0004999999999999996,
+      "priceChangePct": -0.09999999999999991,
+      "direction": "DOWN",
+      "volume24h": 120200.85436300008,
+      "liquidity": "131384.71886",
+      "timeSinceLastSnapshot": 116.96288333333334,
+      "timestamp": "2025-12-09T01:11:59.310Z",
+      "signalStrength": "moderate"
+    },
+    {
+      "marketId": "516720",
+      "slug": "putin-out-as-president-of-russia-in-2025",
+      "question": "Putin out as President of Russia in 2025?",
+      "tokenId": "17194352395514663527290362639703875985320281242609142069125752934895379462929",
+      "previousPrice": 0.010499999999999999,
+      "currentPrice": 0.0095,
+      "priceChange": -0.0009999999999999992,
+      "priceChangePct": -0.09523809523809516,
+      "direction": "DOWN",
+      "volume24h": 22722.473673999997,
+      "liquidity": "40797.23237",
+      "timeSinceLastSnapshot": 116.96146666666667,
+      "timestamp": "2025-12-09T01:11:57.509Z",
+      "signalStrength": "moderate"
+    },
+    {
+      "marketId": "517017",
+      "slug": "will-zootopia-2-be-the-top-grossing-movie-of-2025",
+      "question": "Will Zootopia 2 be the top grossing movie of 2025?",
+      "tokenId": "49225255785153140271978028633331398187057596497890648373700315193116553934019",
+      "previousPrice": 0.006,
+      "currentPrice": 0.0055,
+      "priceChange": -0.0005000000000000004,
+      "priceChangePct": -0.08333333333333341,
+      "direction": "DOWN",
+      "volume24h": 91271.13563899999,
+      "liquidity": "80614.02902",
+      "timeSinceLastSnapshot": 116.96343333333333,
+      "timestamp": "2025-12-09T01:12:02.279Z",
+      "signalStrength": "moderate"
+    },
+    {
+      "marketId": "516878",
+      "slug": "will-ethereum-hit-5000-by-december-31-796-376",
+      "question": "Will Ethereum hit $5,000 by December 31?",
+      "tokenId": "96638575418189284731461006608299472691495172793493062289677934142140726427384",
+      "previousPrice": 0.0185,
+      "currentPrice": 0.017,
+      "priceChange": -0.0014999999999999979,
+      "priceChangePct": -0.08108108108108097,
+      "direction": "DOWN",
+      "volume24h": 216179.3635570001,
+      "liquidity": "285062.5733",
+      "timeSinceLastSnapshot": 116.96418333333334,
+      "timestamp": "2025-12-09T01:11:59.701Z",
+      "signalStrength": "moderate"
+    },
+    {
+      "marketId": "516963",
+      "slug": "will-anthropic-have-the-top-ai-model-on-december-31",
+      "question": "Will Anthropic have the top AI model on December 31?",
+      "tokenId": "36969025040005932681817118833100769474314136025602369280317661994966807870564",
+      "previousPrice": 0.006500000000000001,
+      "currentPrice": 0.007,
+      "priceChange": 0.0004999999999999996,
+      "priceChangePct": 0.07692307692307686,
+      "direction": "UP",
+      "volume24h": 113083.58146399999,
+      "liquidity": "174374.49702",
+      "timeSinceLastSnapshot": 116.96481666666666,
+      "timestamp": "2025-12-09T01:12:01.087Z",
+      "signalStrength": "moderate"
+    },
+    {
+      "marketId": "516876",
+      "slug": "will-ethereum-hit-7000-by-december-31-733-852",
+      "question": "Will Ethereum hit $7,000 by December 31?",
+      "tokenId": "66776654258002694324853229694339306737497274534009979978324520345248856607706",
+      "previousPrice": 0.007,
+      "currentPrice": 0.006500000000000001,
+      "priceChange": -0.0004999999999999996,
+      "priceChangePct": -0.07142857142857137,
+      "direction": "DOWN",
+      "volume24h": 202162.213133,
+      "liquidity": "184549.17409",
+      "timeSinceLastSnapshot": 116.9643,
+      "timestamp": "2025-12-09T01:11:59.501Z",
+      "signalStrength": "moderate"
+    },
+    {
+      "marketId": "516960",
+      "slug": "which-company-has-best-ai-model-end-of-2025",
+      "question": "Will Google have the top AI model on December 31?",
+      "tokenId": "95439201103958291841222373625424698303339849105476314992984252617398188905150",
+      "previousPrice": 0.785,
+      "currentPrice": 0.745,
+      "priceChange": -0.040000000000000036,
+      "priceChangePct": -0.0509554140127389,
+      "direction": "DOWN",
+      "volume24h": 86018.17333900003,
+      "liquidity": "46558.0392",
+      "timeSinceLastSnapshot": 116.96471666666666,
+      "timestamp": "2025-12-09T01:12:00.794Z",
+      "signalStrength": "moderate"
+    },
     {
       "marketId": "516961",
       "slug": "will-openai-have-the-top-ai-model-on-december-31",
@@ -937,6 +1257,9 @@
     }
   ],
   "generatedHypotheses": [
+    "hyp-drift-1765242722377",
+    "hyp-drift-1765242722378",
+    "hyp-drift-1765242722378",
     "hyp-drift-1765235704569",
     "hyp-drift-1765235704570",
     "hyp-drift-1765235704571",
