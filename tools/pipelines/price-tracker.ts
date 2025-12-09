@@ -301,7 +301,7 @@ async function main() {
 
   if (result.updated) {
     console.log('\nPrice updates:');
-    const portfolio = JSON.parse(fs.readFileSync(PORTFOLIO_FILE, 'utf-8'));
+    let portfolio = JSON.parse(fs.readFileSync(PORTFOLIO_FILE, 'utf-8'));
 
     for (const pos of result.positions) {
       const pnlSign = pos.pnlChange >= 0 ? '+' : '';
@@ -375,8 +375,7 @@ async function main() {
       }
 
       // Reload portfolio after exits
-      const updatedPortfolio = JSON.parse(fs.readFileSync(PORTFOLIO_FILE, 'utf-8'));
-      portfolio = updatedPortfolio;
+      portfolio = JSON.parse(fs.readFileSync(PORTFOLIO_FILE, 'utf-8'));
     }
 
     // Print summary
