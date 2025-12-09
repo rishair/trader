@@ -1,0 +1,10 @@
+[
+  {
+    "hypothesisId": "hyp-002",
+    "previousConfidence": 0.35,
+    "currentConfidence": 0.39999999999999997,
+    "delta": 0.04999999999999999,
+    "reason": "Evidence: 48h tracking check: Largest Company shows clear mo...",
+    "timestamp": "2025-12-09T02:00:51.381Z"
+  }
+]
