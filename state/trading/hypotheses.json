@@ -400,22 +400,23 @@
       "statement": "Multi-option markets with sum < $1.00 create risk-free arbitrage when buying all outcomes",
       "rationale": "Research shows this is a known arbitrage strategy on Polymarket. If total probability across all options < 100%, buying one share of each guarantees profit. Example: if sum = $0.995, buying all outcomes locks in $0.005 profit (0.5% yield). Top arbitrageurs made $20M+ using this.",
       "testMethod": "1. Scan multi-outcome markets (Super Bowl, Person of Year, etc.) 2. Calculate sum of all option prices 3. When sum < $0.98, buy all outcomes 4. Hold to resolution for guaranteed profit 5. Track: opportunity frequency, execution speed vs competition",
-      "status": "proposed",
-      "confidence": 0.70,
+      "status": "testing",
+      "confidence": 0.7,
       "evidence": [],
       "conclusion": null,
       "createdAt": "2025-12-09T02:40:00Z",
-      "updatedAt": "2025-12-09T02:40:00Z",
+      "updatedAt": "2025-12-09T02:43:44.097Z",
       "source": "market-scan",
       "entryRules": "Sum of all outcome prices < $0.98 (2%+ spread). Minimum $50 profit after fees. Can execute all buys within 60 seconds. Market has clear resolution criteria.",
       "exitRules": "Hold to resolution (guaranteed payout). Or exit if sum converges to $1.00 and can close at profit.",
-      "expectedWinRate": 1.0,
+      "expectedWinRate": 1,
       "expectedPayoff": 1.02,
       "minSampleSize": 10,
       "infrastructureRequired": [
         "Real-time price monitoring across all outcomes in multi-option markets",
         "Fast execution capability"
-      ]
+      ],
+      "testStartedAt": "2025-12-09T02:43:44.097Z"
     },
     {
       "id": "hyp-013",
@@ -423,11 +424,21 @@
       "rationale": "NBA has 82-game seasons with games daily, creating more trading opportunities. Basketball is higher-scoring and more stat-driven than football (less randomness). Polymarket shows NBA Champion market has $410M volume. Leaderboard analysis showed top traders focus on sports (4/5 specialists).",
       "testMethod": "1. Compare spreads and liquidity between NBA and NFL markets 2. Track if NBA specialists show higher win rates than NFL specialists 3. Paper trade NBA-focused strategy vs NFL-focused 4. Analyze predictability: NBA point spreads vs NFL spreads",
       "status": "proposed",
-      "confidence": 0.50,
-      "evidence": [],
+      "confidence": null,
+      "evidence": [
+        {
+          "date": "2025-12-09T02:43:58.772Z",
+          "observation": {
+            "date": "2025-12-09T02:43:58.771Z",
+            "observation": "Market scan: NBA Champion market shows 10M volume - among highest on platform. Daily NBA games provide frequent opportunities. NBA season ongoing through June provides sustained trading window. Leaderboard analysis showed 4/5 top traders focus on sports, suggesting edge exists in sports category.",
+            "supports": true,
+            "confidenceImpact": 0.1
+          }
+        }
+      ],
       "conclusion": null,
       "createdAt": "2025-12-09T02:40:00Z",
-      "updatedAt": "2025-12-09T02:40:00Z",
+      "updatedAt": "2025-12-09T02:43:58.772Z",
       "source": "market-scan",
       "entryRules": "Focus on NBA player props and game outcomes. Avoid season-long futures. Enter when line is 2%+ off our model. Min liquidity $10k.",
       "exitRules": "Exit at game start or when line moves to our target. No holding through games initially.",
@@ -441,7 +452,7 @@
       "rationale": "Research shows 90% of large orders ($10k+) execute at 95%+ prices. This suggests late-stage convergence to 100% creates small but reliable edge. Risk: wrong at 95% loses 95%. Reward: right at 95% gains 5%. Need 95%+ accuracy to profit.",
       "testMethod": "1. Identify markets closing within 24-48h 2. Find outcomes priced 95-99% 3. Buy small positions 4. Track: actual win rate, avg price paid, profitability after fees",
       "status": "proposed",
-      "confidence": 0.40,
+      "confidence": 0.4,
       "evidence": [],
       "conclusion": null,
       "createdAt": "2025-12-09T02:40:00Z",
@@ -453,6 +464,70 @@
       "expectedPayoff": 0.05,
       "minSampleSize": 30,
       "notes": "High win rate but low payoff. Needs very accurate outcome assessment. One wrong call at 99% wipes out 20 correct calls."
+    },
+    {
+      "id": "hyp-mixz74wr",
+      "statement": "Trump executive orders in first 100 days exceed historical baseline - market may underprice due to recency bias from second-term preparation",
+      "rationale": "Trump signed 220 executive orders in first term (55/year). First 100 days of presidencies typically show highest EO activity. Trump second term likely to be more prepared with ready-to-sign orders. Markets may underprice this based on average expectations rather than first-100-days surge pattern.",
+      "testMethod": "Find Trump EO markets on Polymarket. Compare market price to historical baseline plus second-term preparation advantage. Enter YES if market <65% for 40+ EOs in first 100 days.",
+      "source": "market-scan",
+      "entryRules": "Market price <0.65 for Trump 40+ EOs in first 100 days (Jan 20-Apr 30, 2025). Min 0k liquidity.",
+      "exitRules": "Take profit at 0.80 (+23%). Stop loss at 0.50 (-23%). Exit Jan 30 if pace is <10 EOs in first 10 days.",
+      "expectedWinRate": 0.6,
+      "minSampleSize": 1,
+      "status": "proposed",
+      "confidence": 0.5,
+      "evidence": [],
+      "createdAt": "2025-12-09T02:43:15.483Z",
+      "updatedAt": "2025-12-09T02:43:15.483Z"
+    },
+    {
+      "id": "hyp-mixz7kka",
+      "statement": "Major tech earnings create exploitable volatility windows in related Polymarket markets 24-48h before announcements",
+      "rationale": "When companies like NVIDIA, Apple, or Microsoft announce earnings, related markets (largest company, stock price targets, AI developments) become more volatile. Informed traders may position early, creating momentum we can follow or fade.",
+      "testMethod": "Track major tech earnings calendar (NVDA, AAPL, MSFT, GOOGL, META). Monitor related Polymarket markets 48h before earnings. Look for price movements >5% that may signal informed positioning.",
+      "source": "market-scan",
+      "entryRules": "Major tech earnings in 24-48h. Related market moves >5% in 24h. Strong directional volume confirms. Enter in direction of move if continuing, or fade if overextended.",
+      "exitRules": "Exit before earnings announcement or at +15% profit / -10% loss.",
+      "expectedWinRate": 0.55,
+      "minSampleSize": 8,
+      "status": "proposed",
+      "confidence": 0.5,
+      "evidence": [],
+      "createdAt": "2025-12-09T02:43:35.770Z",
+      "updatedAt": "2025-12-09T02:43:35.770Z"
+    },
+    {
+      "id": "hyp-mixz7kkc",
+      "statement": "Following top sports traders' positions within 1 hour of execution captures profitable alpha",
+      "rationale": "Leaderboard shows 4/5 top traders specialize in sports. Their public positions visible on activity feed. If we copy within 1h, may capture value before market fully adjusts. Risk: adverse selection if we're last money in.",
+      "testMethod": "Track top 5 sports traders via API. When they make >000 bet, check if we can enter at similar price within 1h. Paper trade copying strategy.",
+      "source": "leaderboard",
+      "entryRules": "Top trader (wasianiversonworldchamp2025, gmanas, primm, piastri, potko) makes >k sports bet. Price hasn't moved >3% from their entry. Can deploy 0-100 within 1h.",
+      "exitRules": "Exit when they exit (if visible) or at game resolution. Stop loss -20%.",
+      "expectedWinRate": 0.58,
+      "minSampleSize": 15,
+      "status": "proposed",
+      "confidence": 0.5,
+      "evidence": [],
+      "createdAt": "2025-12-09T02:43:35.772Z",
+      "updatedAt": "2025-12-09T02:43:35.772Z"
+    },
+    {
+      "id": "hyp-mixz8efs",
+      "statement": "Geopolitical resolution markets overprice positive outcomes in final weeks of year due to optimism bias",
+      "rationale": "End-of-year markets (Ukraine ceasefire 2025, Israel-Palestine peace, etc.) may exhibit optimism bias as news focuses on potential breakthroughs. Markets priced at 30-40% for unlikely December resolutions may be overpriced given historical resolution timelines typically take months/years. Our Ukraine ceasefire position at NO (60¢) tests this.",
+      "testMethod": "Scan geopolitical markets closing Dec 31. Identify those requiring major breakthroughs in <23 days. Compare market prices to base rates of similar resolutions. Enter NO if market >35% for unlikely breakthrough.",
+      "source": "market-scan",
+      "entryRules": "Geopolitical market closes Dec 31, 2025. Requires major diplomatic breakthrough. Market >0.35. Strong NO case based on timeline analysis. Min 0k volume.",
+      "exitRules": "Take profit at market <0.25 (40%+ gain). Stop loss if major ceasefire/peace announcement emerges. Exit by Dec 29 before final 48h volatility.",
+      "expectedWinRate": 0.65,
+      "minSampleSize": 3,
+      "status": "proposed",
+      "confidence": 0.5,
+      "evidence": [],
+      "createdAt": "2025-12-09T02:44:14.489Z",
+      "updatedAt": "2025-12-09T02:44:14.489Z"
     }
   ],
   "schema": {
