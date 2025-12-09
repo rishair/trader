@@ -8,15 +8,13 @@
   "recentErrors": [],
   "pipelineStatus": {
     "price-drift-detector": {
-      "status": "healthy",
+      "status": "deprecated",
       "lastRun": "2025-12-09T01:48:03.128Z",
       "lastResult": "success",
-      "marketsScanned": 50,
-      "driftsDetected": 10,
-      "hypothesesGenerated": 2,
-      "issue": "RESOLVED - Pipeline working correctly",
-      "note": "Minor Telegram MarkdownV2 formatting warnings (non-critical), pipeline functionality fully operational",
-      "verifiedAt": "2025-12-09T01:48:30Z"
+      "deprecatedAt": "2025-12-09T03:48:30Z",
+      "reason": "No edge in momentum chasing - academic research shows noise traders cause reversals, not continuation",
+      "removedFrom": "daemon.ts RECURRING_PIPELINES",
+      "note": "Pipeline was intentionally killed, not failing. Removed from recurring schedule per strategic decision."
     }
   },
   "scheduledTasksStatus": {
