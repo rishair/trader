@@ -1,5 +1,5 @@
 {
-  "lastEvaluated": "2025-12-09T00:26:52.805Z",
+  "lastEvaluated": "2025-12-09T00:34:28.120Z",
   "hypothesisHealth": {
     "total": 17,
     "byStatus": {
@@ -75,8 +75,8 @@
   "followSignalsGenerated": 0,
   "lastHealthCheck": "2025-12-08T22:15:00.000Z",
   "daemon": {
-    "version": "fef0024",
-    "startedAt": "2025-12-09T00:26:49.467Z",
-    "pid": 48528
+    "version": "ab1252b",
+    "startedAt": "2025-12-09T00:34:26.057Z",
+    "pid": 51089
   }
 }
