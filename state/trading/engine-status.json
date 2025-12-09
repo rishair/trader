@@ -1,15 +1,15 @@
 {
-  "lastEvaluated": "2025-12-09T02:00:52.042Z",
+  "lastEvaluated": "2025-12-09T02:34:01.174Z",
   "hypothesisHealth": {
-    "total": 22,
+    "total": 11,
     "byStatus": {
-      "proposed": 15,
+      "proposed": 4,
       "testing": 4,
       "validated": 1,
       "invalidated": 2
     },
     "avgConviction": 0.44,
-    "testableNow": 18,
+    "testableNow": 7,
     "blockedByCapability": 1,
     "testableIds": [
       "hyp-002",
@@ -18,18 +18,7 @@
       "hyp-007",
       "hyp-008",
       "hyp-010",
-      "hyp-011",
-      "hyp-drift-1765231983489",
-      "hyp-drift-1765231983489",
-      "hyp-drift-1765231983489",
-      "hyp-drift-1765235704569",
-      "hyp-drift-1765235704570",
-      "hyp-drift-1765235704571",
-      "hyp-drift-1765242722377",
-      "hyp-drift-1765242722378",
-      "hyp-drift-1765242722378",
-      "hyp-drift-1765244884765",
-      "hyp-drift-1765244884765"
+      "hyp-011"
     ]
   },
   "blockedHypotheses": [
@@ -50,7 +39,7 @@
     ],
     "reason": "hyp-007 (related market arbitrage) just moved to testing - has clear Time POY test case. hyp-002 and hyp-005 need continued data collection. hyp-009 validated and graduated to strat-002."
   },
-  "engineState": "saturated",
+  "engineState": "healthy",
   "engineStates": {
     "starved": "Too few testable hypotheses (<3) - need to generate or unblock",
     "healthy": "3-10 testable hypotheses with good conviction spread",
@@ -80,8 +69,8 @@
   "followSignalsGenerated": 0,
   "lastHealthCheck": "2025-12-08T22:15:00.000Z",
   "daemon": {
-    "version": "54b104c",
-    "startedAt": "2025-12-09T01:59:06.570Z",
-    "pid": 60968
+    "version": "a920110",
+    "startedAt": "2025-12-09T02:33:59.952Z",
+    "pid": 62984
   }
 }
