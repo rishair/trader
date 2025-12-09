@@ -1,15 +1,15 @@
 {
-  "lastEvaluated": "2025-12-09T02:34:01.174Z",
+  "lastEvaluated": "2025-12-09T02:58:51.612Z",
   "hypothesisHealth": {
-    "total": 11,
+    "total": 25,
     "byStatus": {
-      "proposed": 4,
-      "testing": 4,
+      "proposed": 17,
+      "testing": 5,
       "validated": 1,
       "invalidated": 2
     },
     "avgConviction": 0.44,
-    "testableNow": 7,
+    "testableNow": 20,
     "blockedByCapability": 1,
     "testableIds": [
       "hyp-002",
@@ -18,7 +18,20 @@
       "hyp-007",
       "hyp-008",
       "hyp-010",
-      "hyp-011"
+      "hyp-011",
+      "hyp-012",
+      "hyp-014",
+      "hyp-mixz74wr",
+      "hyp-mixz7kka",
+      "hyp-mixz7kkc",
+      "hyp-mixz8efs",
+      "hyp-mixz9abc",
+      "hyp-mixz9def",
+      "hyp-mixz9ghi",
+      "hyp-mixzhj47",
+      "hyp-mixzpj0e",
+      "hyp-mixzpj1u",
+      "hyp-mixzpj2x"
     ]
   },
   "blockedHypotheses": [
@@ -39,7 +52,7 @@
     ],
     "reason": "hyp-007 (related market arbitrage) just moved to testing - has clear Time POY test case. hyp-002 and hyp-005 need continued data collection. hyp-009 validated and graduated to strat-002."
   },
-  "engineState": "healthy",
+  "engineState": "saturated",
   "engineStates": {
     "starved": "Too few testable hypotheses (<3) - need to generate or unblock",
     "healthy": "3-10 testable hypotheses with good conviction spread",
@@ -53,7 +66,14 @@
     "capabilitiesBuiltThisWeek": 0,
     "driftSignalsToday": 59
   },
-  "needsAttention": [],
+  "needsAttention": [
+    {
+      "hypothesisId": "hyp-013",
+      "issue": "low_confidence",
+      "detail": "Confidence 0% - consider invalidating or gathering more evidence",
+      "suggestedAction": "research"
+    }
+  ],
   "recentActions": [
     {
       "timestamp": "2025-12-08T22:15:00.000Z",
@@ -69,8 +89,8 @@
   "followSignalsGenerated": 0,
   "lastHealthCheck": "2025-12-08T22:15:00.000Z",
   "daemon": {
-    "version": "a920110",
-    "startedAt": "2025-12-09T02:33:59.952Z",
-    "pid": 62984
+    "version": "7a0006b",
+    "startedAt": "2025-12-09T02:58:44.614Z",
+    "pid": 67526
   }
 }
