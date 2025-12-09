@@ -131,15 +131,6 @@
               "Donald Trump": 555821
             }
           }
-        },
-        {
-          "market": "Fed rate cuts 2025 (8+)",
-          "baseline": {
-            "YES": "unknown - API limitation"
-          },
-          "recordedAt": "2025-12-08T12:00:00Z",
-          "closesAt": "2025-12-10",
-          "notes": "Very short window (45h), will use for post-resolution analysis"
         }
       ]
     },
