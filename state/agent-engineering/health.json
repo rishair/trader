@@ -1,5 +1,5 @@
 {
-  "lastCheck": "2025-12-09T01:46:00Z",
+  "lastCheck": "2025-12-09T01:48:30Z",
   "status": "healthy",
   "services": {
     "telegram-handler": { "status": "running", "lastSeen": "2025-12-09T01:37:00Z", "pid": 25257 },
@@ -8,19 +8,15 @@
   "recentErrors": [],
   "pipelineStatus": {
     "price-drift-detector": {
-      "status": "verified-working",
-      "lastRun": "2025-12-09T01:45:41.728Z",
+      "status": "healthy",
+      "lastRun": "2025-12-09T01:48:03.128Z",
       "lastResult": "success",
       "marketsScanned": 50,
-      "driftsDetected": 4,
-      "hypothesesGenerated": 0,
-      "alertsSent": 1,
-      "issue": "RESOLVED - Pipeline was not scheduled after daemon restart",
-      "rootCause": "Daemon restarts don't immediately trigger ensurePipelinesScheduled() - race condition where schedule.json can be missing recurring tasks",
-      "fix": "Implemented ensurePipelinesScheduled() in daemon.ts that runs on every tick, automatically rescheduling missing recurring pipelines",
-      "verification": "Manual test successful - scanned 50 markets, detected 4 drifts, sent 1 alert, 0 errors",
-      "fixedAt": "2025-12-09T01:42:25Z",
-      "verifiedAt": "2025-12-09T01:46:00Z"
+      "driftsDetected": 10,
+      "hypothesesGenerated": 2,
+      "issue": "RESOLVED - Pipeline working correctly",
+      "note": "Minor Telegram MarkdownV2 formatting warnings (non-critical), pipeline functionality fully operational",
+      "verifiedAt": "2025-12-09T01:48:30Z"
     }
   },
   "scheduledTasksStatus": {
