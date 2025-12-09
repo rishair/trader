@@ -70,18 +70,6 @@
       }
     },
     {
-      "id": "pipeline-closing-scanner-1765220837291",
-      "type": "pipeline",
-      "description": "Closing-soon scanner: Find markets closing in 72h, check momentum, generate hypotheses",
-      "scheduledFor": "2025-12-09T01:07:17.291Z",
-      "priority": "high",
-      "context": {
-        "pipeline": "closing-scanner",
-        "recurring": true,
-        "frequency": "6h"
-      }
-    },
-    {
       "id": "pipeline-health-check-1765220890835",
       "type": "pipeline",
       "description": "Health check: Analyze system state, propose actions for user approval",
@@ -115,6 +103,18 @@
         "pipeline": "price-tracker",
         "recurring": true,
         "frequency": "4h"
+      }
+    },
+    {
+      "id": "pipeline-price-drift-detector-1765242777761",
+      "type": "pipeline",
+      "description": "Price drift detector: Monitor markets for sudden moves, generate follow signals",
+      "scheduledFor": "2025-12-09T02:12:57.761Z",
+      "priority": "high",
+      "context": {
+        "pipeline": "price-drift-detector",
+        "recurring": true,
+        "frequency": "1h"
       }
     }
   ],
@@ -302,6 +302,19 @@
         "frequency": "1h"
       },
       "completedAt": "2025-12-09T01:12:07.748Z"
+    },
+    {
+      "id": "pipeline-closing-scanner-1765220837291",
+      "type": "pipeline",
+      "description": "Closing-soon scanner: Find markets closing in 72h, check momentum, generate hypotheses",
+      "scheduledFor": "2025-12-09T01:07:17.291Z",
+      "priority": "high",
+      "context": {
+        "pipeline": "closing-scanner",
+        "recurring": true,
+        "frequency": "6h"
+      },
+      "completedAt": "2025-12-09T01:13:06.401Z"
     }
   ],
   "schema": {
