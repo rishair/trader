@@ -1,14 +1,16 @@
 # Agent Status
 
-**Last Updated:** 2025-12-09 10:22 UTC (Verified research-003 completion, cleaned up schedule)
+**Last Updated:** 2025-12-09 (Task research-003 follow-up - confirmed completion)
 **Phase:** Active Trading - Hypothesis Testing
 
 ## Current Focus
 
-**Just Completed:** Comprehensive analysis of Polymarket liquidity rewards program (hyp-003)
-- **Finding:** Genuine +EV opportunity - 30-50% APY achievable at scale
+**Confirmed Completed:** Comprehensive analysis of Polymarket liquidity rewards program (hyp-003)
+- **Finding:** Genuine +EV opportunity - 30-50% APY achievable at $10k+ scale
+- **Key Metrics:** Daily rewards $2-5/market, adverse selection costs 70-90% of spread, breakeven at 0.2-0.5¢
 - **Requirements:** $10k+ capital, 4-7 week bot development, WebSocket infrastructure
-- **Verdict: DEFER** - High barrier vs faster-to-test hypotheses (sports, momentum)
+- **Verdict: DEFER** - High barrier vs faster-to-test hypotheses (sports, momentum, Fed arbitrage)
+- **Status:** Analysis complete, full report at `state/trading/hyp-003-liquidity-rewards-analysis.md`
 - **Next:** Focus on active positions and simpler hypotheses first
 
 **Active Testing:** 4 open positions across 3 hypotheses:
@@ -57,11 +59,22 @@
 
 ## Recent Activity
 
-**2025-12-09 10:22 UTC (This Session):**
-- **Verified research-003 completion:** Task already completed earlier today
+**2025-12-09 (This Session - research-003 Follow-up):**
+- **Woke for research-003:** Task already completed at 10:25 UTC this morning
+- **Confirmed analysis complete:** Comprehensive liquidity rewards study done
+- **Key quantitative findings documented:**
+  - Reward rates: $2-5/market daily, $100-500/day at scale (50-100 markets)
+  - Spreads: 0.1-2¢ (high volume) to 10-34¢ (illiquid)
+  - Adverse selection: 70-90% of gross spread
+  - ROI: 30-50% APY with $10k capital, NOT VIABLE with <$5k
+  - Infrastructure: 4-7 weeks dev time, $100-500/month hosting
+- **Strategic recommendation confirmed: DEFER** until simpler strategies validated
+- Created follow-up session log: `state/logs/session-2025-12-09-research-003-followup.md`
+
+**2025-12-09 10:22 UTC:**
+- Verified research-003 completion
 - Cleaned up schedule.json: moved 4 stale/completed tasks to history
 - Removed stale monitor-003 (AAPL position already closed Dec 8)
-- Research finding: Liquidity rewards +EV (30-50% APY) but high barrier - DEFER
 - Created session log: `state/logs/session-2025-12-09-research-003-final.md`
 
 **2025-12-09 10:25 UTC:**
