@@ -802,6 +802,43 @@ Read MISSION.md for context. Execute the task, update state files, and report re
     return;
   }
 
+  // /test <hypothesis-id> - Start testing a hypothesis immediately
+  if (lower.startsWith('/test')) {
+    const parts = trimmed.split(/\s+/);
+    const hypId = parts[1];
+
+    if (!hypId) {
+      await sendMessage('Usage: /test <hypothesis-id>\n\nExample: /test hyp-abc123\n\nThis will link a market (if needed) and immediately enter a position.', chatId);
+      return;
+    }
+
+    await spawnClaudeSession(
+      `You are the trader agent. The user wants to IMMEDIATELY start testing hypothesis ${hypId}.
+
+## Instructions
+
+1. Load the hypothesis from state/trading/hypotheses.json
+2. If it doesn't have a linkedMarket:
+   - Use mcp__polymarket__search_markets to find relevant markets based on the hypothesis statement
+   - Pick the best match and add linkedMarket with slug, question, and tokenId
+3. Transition to "testing" status using transitionHypothesis() from lib/hypothesis.ts
+4. IMMEDIATELY execute the paper trade entry:
+   - Use executePaperTrade() from lib/trading.ts
+   - Position size: $100 default (scale by confidence: confidence * $200)
+   - Determine direction (YES/NO) based on hypothesis
+   - Set exit criteria (take profit ~2x, stop loss ~50%)
+5. Report: hypothesis linked, position entered, entry price, exit criteria
+
+If the hypothesis doesn't exist or can't be linked to a market, explain why.
+
+Read MISSION.md for context.`,
+      chatId,
+      'test-hypothesis'
+    );
+    await gitPush('Test hypothesis triggered');
+    return;
+  }
+
   if (lower === '/wake') {
     await spawnClaudeSession(
       `You are waking up to execute scheduled tasks. Read MISSION.md first. Check state/schedule.json for pending tasks. Execute the highest priority due task. Update state files. Log session.`,

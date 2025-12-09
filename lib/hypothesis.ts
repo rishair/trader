@@ -57,6 +57,12 @@ export interface BacktestResults {
   notes?: string;
 }
 
+export interface LinkedMarket {
+  slug: string;
+  question: string;
+  tokenId: string;
+}
+
 export interface Hypothesis {
   id: string;
   statement: string;
@@ -80,6 +86,7 @@ export interface Hypothesis {
   testEndedAt?: string;
   linkedTrade?: string;
   linkedStrategy?: string;
+  linkedMarket?: LinkedMarket;  // Market to trade for testing
   blockedReason?: string;
   blockedHandoffId?: string;
 }
@@ -494,6 +501,33 @@ export function createHypothesis(params: {
   console.log(`[Hypothesis] Created ${id}: ${params.statement.slice(0, 50)}...`);
 
   return hypothesis;
+}
+
+/**
+ * Link a market to a hypothesis for testing.
+ * Required before hypothesis-tester pipeline can execute trades.
+ */
+export function linkMarketToHypothesis(
+  hypothesisId: string,
+  market: LinkedMarket
+): TransitionResult {
+  const hypothesis = loadHypothesis(hypothesisId);
+
+  if (!hypothesis) {
+    return { success: false, error: `Hypothesis ${hypothesisId} not found` };
+  }
+
+  if (!market.slug || !market.tokenId) {
+    return { success: false, error: 'Market must have slug and tokenId' };
+  }
+
+  hypothesis.linkedMarket = market;
+  hypothesis.updatedAt = new Date().toISOString();
+  saveHypothesis(hypothesis);
+
+  console.log(`[Hypothesis] Linked ${hypothesisId} to market ${market.slug}`);
+
+  return { success: true, hypothesis };
 }
 
 // ============================================================================

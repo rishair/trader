@@ -695,16 +695,24 @@ async function executeTask(task: ScheduledTask): Promise<void> {
     // Phase 1: Orchestrator gathers context and decides
     const orchestratorPrompt = `You are the Orchestrator deciding what needs attention.
 
-## Your Job
-1. Read state files to understand the current situation
-2. Check for: errors, stuck hypotheses, portfolio risks, system health issues
-3. Decide: Is the highest priority task for Trade Research or Agent Engineer?
-4. Return a JSON decision (do NOT execute the work yourself)
+## Priority Checks (in order of importance)
+
+1. **CEO-shared hypotheses** - Check state/trading/hypotheses.json for hypotheses with \`source: "ceo-shared"\` and \`status: "proposed"\`
+   - These get HIGHEST priority - the CEO shared them for a reason
+   - For each: evaluate against learnings, decide if should promote to testing
+   - If promoting: agent should find linkedMarket using MCP tools if missing, then transition to testing
+
+2. **Portfolio risks** - Stop losses about to trigger, positions needing attention
+
+3. **Stuck hypotheses** - Testing too long without progress, low confidence items to kill
+
+4. **System health** - Errors, issues to fix
 
 ## Files to Check
-- state/trading/hypotheses.json - hypothesis health, stuck items
+- state/trading/hypotheses.json - hypothesis health, stuck items, CEO-shared items
 - state/trading/portfolio.json - positions, P&L, risks
 - state/trading/engine-status.json - overall engine health
+- state/trading/learnings.json - past learnings to inform decisions
 - state/agent-engineering/health.json - system errors, issues
 - state/orchestrator/handoffs.json - pending requests between agents
 
