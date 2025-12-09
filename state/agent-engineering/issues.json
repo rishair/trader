@@ -1,5 +1,21 @@
 {
-  "issues": [],
+  "issues": [
+    {
+      "id": "issue-1765247562372",
+      "title": "Price drift detector creating hypotheses with duplicate IDs",
+      "description": "The price-drift-detector pipeline is generating multiple hypotheses with the same ID (e.g., hyp-drift-1765231983489). This violates the unique ID constraint and makes hypotheses unmanageable. All drift hypotheses have been removed from the system until this is fixed.",
+      "severity": "high",
+      "component": "price-drift-detector",
+      "impact": "Hypothesis integrity compromised, drift signals not actionable",
+      "status": "open",
+      "createdAt": "2025-12-09T02:32:42.372Z",
+      "context": {
+        "affectedHypotheses": 11,
+        "duplicateIdPattern": "hyp-drift-{timestamp}",
+        "action": "Removed all drift hypotheses"
+      }
+    }
+  ],
   "schema": {
     "issue": {
       "id": "string - unique identifier",
