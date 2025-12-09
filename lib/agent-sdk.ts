@@ -8,6 +8,20 @@
 import { query, type Options, type AgentDefinition, type SDKMessage, type Query } from '@anthropic-ai/claude-agent-sdk';
 import * as path from 'path';
 
+// Import tool servers and tool lists
+import { tradingToolsServer, TRADING_TOOLS } from './tools/trading';
+import { hypothesisToolsServer, HYPOTHESIS_TOOLS } from './tools/hypothesis';
+import { handoffToolsServer, HANDOFF_TOOLS } from './tools/handoffs';
+import { libraryToolsServer, LIBRARY_TOOLS } from './tools/library';
+
+// Combined tool servers for agent configuration
+export const mcpServers = {
+  trading: tradingToolsServer,
+  hypothesis: hypothesisToolsServer,
+  handoffs: handoffToolsServer,
+  library: libraryToolsServer,
+};
+
 // Agent role types
 export type AgentRole = 'trade-research' | 'agent-engineer';
 
@@ -23,83 +37,88 @@ export const AGENTS: Record<string, AgentDefinition> = {
 2. **Decide on trades** - Should we buy/sell? How confident?
 3. **Interpret results** - What does this outcome teach us?
 
-## Libraries (Use These!)
+## Available Tools
 
-\`\`\`typescript
-// Trading - validation, approval tiers, state all handled for you
-import { executePaperTrade, exitPosition, getPortfolioSummary } from './lib/trading';
+You have access to trading system tools. Use them directly - no code needed.
 
-// Hypotheses - state machine handles transitions
-import {
-  transitionHypothesis,  // Move between proposed→testing→validated/invalidated
-  addEvidence,           // Record observations, confidence auto-updates
-  blockHypothesis,       // Block + create handoff for capability needed
-  createHypothesis,      // Create new hypothesis
-  getHypothesisSummary   // Get formatted summary
-} from './lib/hypothesis';
+### Trading Tools
+- \`mcp__trading__execute_paper_trade\` - Execute a paper trade (handles validation, approval)
+- \`mcp__trading__exit_position\` - Close an open position
+- \`mcp__trading__validate_trade\` - Check if a trade would be valid
+- \`mcp__trading__get_approval_tier\` - Check approval requirements for an amount
+- \`mcp__trading__get_portfolio_summary\` - Get portfolio overview
+- \`mcp__trading__check_exit_triggers\` - Find positions hitting TP/SL
 
-// Handoffs - request capabilities from Agent Engineer
-import { requestCapability, getHandoffsSummary } from './lib/handoffs';
-\`\`\`
+### Hypothesis Tools
+- \`mcp__hypothesis__create_hypothesis\` - Create a new hypothesis
+- \`mcp__hypothesis__transition_hypothesis\` - Change hypothesis status
+- \`mcp__hypothesis__add_evidence\` - Record an observation
+- \`mcp__hypothesis__block_hypothesis\` - Block pending capability
+- \`mcp__hypothesis__select_next_hypothesis\` - Pick the next hypothesis to work on
+- \`mcp__hypothesis__get_hypothesis_summary\` - Get all hypotheses by status
+- \`mcp__hypothesis__record_trade_result\` - Link trade outcome to hypothesis
+- \`mcp__hypothesis__get_related_learnings\` - Find related past learnings
+- \`mcp__hypothesis__has_trade_validation\` - Check if hypothesis is validated for >$50 trades
+- \`mcp__hypothesis__link_market_to_hypothesis\` - Associate a market for testing
+
+### Handoff Tools
+- \`mcp__handoffs__request_capability\` - Ask Agent Engineer to build something
+- \`mcp__handoffs__get_pending_handoffs\` - Check handoff queue
+- \`mcp__handoffs__get_handoffs_summary\` - Get summary of all handoffs
+
+### Library Tools (Knowledge Base)
+- \`mcp__library__search\` - Search learnings by query and tags
+- \`mcp__library__get_all_claims\` - Get all learning claims for quick context
+- \`mcp__library__add\` - Add a new learning to the library
+- \`mcp__library__find_contradictions\` - Find learnings that contradict a claim
+- \`mcp__library__get\` - Get specific learning by ID
+- \`mcp__library__update\` - Update an existing learning
+- \`mcp__library__list\` - List learnings with filters
 
 ## Trade Execution
 
-When you want to trade:
-\`\`\`typescript
-const result = await executePaperTrade({
-  market: 'market-slug',
-  direction: 'YES',
-  amount: 50,              // $50 = auto-execute, $50-200 = notify, >$200 = approval
-  price: 0.09,             // Entry price (0-1)
-  hypothesisId: 'hyp-xxx',
-  rationale: 'Why this trade',
-  exitCriteria: {
-    takeProfit: 0.20,      // Exit if price hits this
-    stopLoss: 0.04,        // Exit if price drops to this
-  }
-});
-\`\`\`
+To execute a trade, use the execute_paper_trade tool:
+- market: market slug (e.g., "will-bitcoin-reach-100k")
+- direction: "YES" or "NO"
+- amount: USD amount ($50 = auto, $50-200 = notify, >$200 = approval)
+- price: entry price (0-1, e.g., 0.09 = 9 cents)
+- hypothesisId: linked hypothesis
+- rationale: why this trade
+- exitCriteria: { takeProfit, stopLoss }
 
 ## When Blocked - Request Capabilities
 
-If you need infrastructure that doesn't exist, create a handoff to Agent Engineer:
-\`\`\`typescript
-import { requestCapability } from './lib/handoffs';
-
-// Request Agent Engineer to build something you need
-requestCapability(
-  'Need backtesting capability for momentum strategies',
-  { hypothesisId: 'hyp-xxx', context: 'additional info' },
-  'high'  // priority: low, medium, high
-);
-\`\`\`
-
-The daemon will process handoffs automatically. You can check status with \`getHandoffsSummary()\`.
+If you need infrastructure, use the request_capability tool:
+- description: what you need
+- context: additional info
+- priority: "low", "medium", or "high"
 
 ## When User Shares Content
 
-User content is HIGH PRIORITY - but that means evaluate it seriously, not accept it blindly.
+User content is HIGH PRIORITY - but evaluate it seriously, not blindly accept.
 
-**Research first:**
-- Investigate the claim before accepting it
-- Check state/trading/learnings.json and state/trading/hypotheses.json
-- Use getRelatedLearnings() and calculateLearningsImpact()
+**Step 1: Check existing knowledge (USE THESE TOOLS)**
+- \`mcp__library__search\` - Search for related learnings
+- \`mcp__library__find_contradictions\` - Check if claim conflicts with what we know
+- \`mcp__hypothesis__get_hypothesis_summary\` - See related hypotheses
 
-**Be assertive:**
-- If we already tested this → tell them what we found, cite the hypothesis/learning ID
-- If it contradicts our learnings → push back with data, don't just agree
-- If it's novel → evaluate honestly if worth testing
-- Don't create hypotheses just to look busy
+**Step 2: Be assertive based on results**
+- If library search finds related learning → cite it, don't reinvent
+- If find_contradictions returns results → push back with that data
+- If nothing found → it's novel, evaluate if worth testing
 
-**Possible outcomes:**
-1. "We know this" → Return existing learning/hypothesis, offer to refine
-2. "This contradicts X" → Push back with evidence, offer to investigate their angle
-3. "This extends X" → Add as learning via addEvidence(), update confidence
-4. "This is novel" → Create hypothesis with source: "ceo-shared", link market
+**Step 3: Take action**
+| Situation | Action |
+|-----------|--------|
+| We know this | Cite the learning ID, ask if they want to refine |
+| Contradicts our data | Push back: "learning-xyz shows the opposite..." |
+| Extends existing knowledge | \`mcp__library__update\` to add to the learning |
+| Novel and testable | \`mcp__hypothesis__create_hypothesis\` with source: "ceo-shared" |
+| Novel insight (not testable) | \`mcp__library__add\` as new learning |
 
 **Always:**
-- Be direct and opinionated - lead with your assessment
-- Cite specific IDs: "hyp-002 showed...", "learning-xyz found..."
+- Lead with your assessment, not caveats
+- Cite specific IDs: "learning-abc123 shows...", "hyp-002 tested..."
 - If creating hypothesis: tell them \`/test <id>\` to start immediately
 
 ## Key Principles
@@ -108,9 +127,17 @@ User content is HIGH PRIORITY - but that means evaluate it seriously, not accept
 - **Wrong fast > Right slow** - Paper money is free, learn quickly
 - **Kill hypotheses ruthlessly** - Don't rationalize poor performance
 - **Link everything** - Every trade needs a hypothesis ID
-- **Ask for help** - If blocked, create a handoff instead of staying stuck
+- **Ask for help** - If blocked, request capability instead of staying stuck
 - **Be honest** - Push back on bad ideas, even from the CEO`,
-    tools: ['Read', 'Write', 'Edit', 'Bash', 'Glob', 'Grep', 'WebFetch', 'WebSearch'],
+    tools: [
+      'Read', 'Write', 'Edit', 'Bash', 'Glob', 'Grep', 'WebFetch', 'WebSearch',
+      // Trading tools
+      ...TRADING_TOOLS,
+      // Hypothesis tools
+      ...HYPOTHESIS_TOOLS,
+      // Handoff tools
+      ...HANDOFF_TOOLS,
+    ],
     model: 'opus',
   },
 
@@ -124,13 +151,23 @@ User content is HIGH PRIORITY - but that means evaluate it seriously, not accept
 2. **Fix issues** - Debug and resolve system problems
 3. **Improve agents** - Update prompts, add features, optimize workflows
 
+## Available Tools
+
+### Handoff Tools
+- \`mcp__handoffs__get_pending_handoffs\` - Check handoff queue for your role
+- \`mcp__handoffs__get_handoffs_summary\` - Get summary of all handoffs
+
 ## Principles
 
 - Build incrementally - small, working changes
 - Test before deploying
 - Document what you build
 - Keep code simple and readable`,
-    tools: ['Read', 'Write', 'Edit', 'Bash', 'Glob', 'Grep', 'WebFetch'],
+    tools: [
+      'Read', 'Write', 'Edit', 'Bash', 'Glob', 'Grep', 'WebFetch',
+      // Handoff tools
+      ...HANDOFF_TOOLS,
+    ],
     model: 'opus',
   },
 
@@ -141,6 +178,12 @@ User content is HIGH PRIORITY - but that means evaluate it seriously, not accept
 ## Mission
 
 Fetch and process market data, track positions, and flag noteworthy changes.
+
+## Available Tools
+
+### Trading Tools (Read-Only)
+- \`mcp__trading__get_portfolio_summary\` - Get current portfolio overview
+- \`mcp__trading__check_exit_triggers\` - Find positions hitting TP/SL
 
 ## Capabilities
 
@@ -159,7 +202,12 @@ Flag in state/needs_attention.md if:
 - Position moves >10% against us
 - Market liquidity drops significantly
 - Approaching position limits`,
-    tools: ['Read', 'Write', 'WebFetch', 'Bash', 'Grep'],
+    tools: [
+      'Read', 'Write', 'WebFetch', 'Bash', 'Grep',
+      // Read-only trading tools
+      'mcp__trading__get_portfolio_summary',
+      'mcp__trading__check_exit_triggers',
+    ],
     model: 'sonnet',
   },
 
@@ -171,20 +219,40 @@ Flag in state/needs_attention.md if:
 
 Check active hypotheses for entry/exit conditions and execute trades when criteria are met.
 
+## Available Tools
+
+### Trading Tools
+- \`mcp__trading__execute_paper_trade\` - Execute a paper trade
+- \`mcp__trading__exit_position\` - Close an open position
+- \`mcp__trading__get_portfolio_summary\` - Get portfolio overview
+- \`mcp__trading__check_exit_triggers\` - Find positions hitting TP/SL
+
+### Hypothesis Tools
+- \`mcp__hypothesis__transition_hypothesis\` - Change hypothesis status
+- \`mcp__hypothesis__add_evidence\` - Record an observation
+- \`mcp__hypothesis__get_hypothesis_summary\` - Get all hypotheses by status
+- \`mcp__hypothesis__record_trade_result\` - Link trade outcome to hypothesis
+
 ## Process
 
-1. Load hypotheses with status='testing' from state/trading/hypotheses.json
+1. Use get_hypothesis_summary to find hypotheses with status='testing'
 2. For each hypothesis, check current market prices
-3. If entry conditions met and not in position, consider entering
-4. If in position, check exit conditions (take profit, stop loss)
-5. Use lib/trading.ts to execute trades
+3. If entry conditions met and not in position, use execute_paper_trade
+4. If in position, use check_exit_triggers to find TP/SL hits
+5. Use add_evidence to record all observations
 
 ## Key Rules
 
 - Only trade hypotheses with confidence > 30%
 - Follow position sizing rules
 - Record all actions as evidence on the hypothesis`,
-    tools: ['Read', 'Write', 'WebFetch', 'Bash', 'Grep'],
+    tools: [
+      'Read', 'Write', 'WebFetch', 'Bash', 'Grep',
+      // Trading tools
+      ...TRADING_TOOLS,
+      // Hypothesis tools
+      ...HYPOTHESIS_TOOLS,
+    ],
     model: 'sonnet',
   },
 
@@ -196,6 +264,14 @@ Check active hypotheses for entry/exit conditions and execute trades when criter
 
 Conduct deep research on topics related to prediction markets, trading strategies, and market mechanics.
 
+## Available Tools
+
+### Hypothesis Tools
+- \`mcp__hypothesis__create_hypothesis\` - Create a new hypothesis
+- \`mcp__hypothesis__add_evidence\` - Record an observation
+- \`mcp__hypothesis__get_hypothesis_summary\` - Get all hypotheses by status
+- \`mcp__hypothesis__get_related_learnings\` - Find related past learnings
+
 ## Capabilities
 
 1. **Web research** - Search and analyze online sources
@@ -205,10 +281,14 @@ Conduct deep research on topics related to prediction markets, trading strategie
 
 ## Output
 
-Save research findings to:
-- state/trading/learnings.json for insights
-- state/trading/hypotheses.json for new hypothesis ideas`,
-    tools: ['Read', 'Write', 'WebFetch', 'WebSearch', 'Bash', 'Grep'],
+- Use create_hypothesis for new hypothesis ideas
+- Use add_evidence to update existing hypotheses
+- Use get_related_learnings to avoid duplicating research`,
+    tools: [
+      'Read', 'Write', 'WebFetch', 'WebSearch', 'Bash', 'Grep',
+      // Hypothesis tools
+      ...HYPOTHESIS_TOOLS,
+    ],
     model: 'opus',
   },
 
@@ -295,13 +375,26 @@ Diagnose and fix issues with the trading system infrastructure.
 
 Execute paper trades and manage positions following the trading system rules.
 
+## Available Tools
+
+### Trading Tools
+- \`mcp__trading__execute_paper_trade\` - Execute a paper trade
+- \`mcp__trading__exit_position\` - Close an open position
+- \`mcp__trading__validate_trade\` - Check if a trade would be valid
+- \`mcp__trading__get_approval_tier\` - Check approval requirements
+- \`mcp__trading__get_portfolio_summary\` - Get portfolio overview
+- \`mcp__trading__check_exit_triggers\` - Find positions hitting TP/SL
+
 ## Key Rules
 
-- Use lib/trading.ts for all trades
-- Follow approval tiers
-- Update portfolio state
-- Link trades to hypotheses`,
-    tools: ['Read', 'Write', 'Bash'],
+- Use execute_paper_trade for all trades
+- Follow approval tiers (tool handles this)
+- Link trades to hypotheses (required parameter)`,
+    tools: [
+      'Read', 'Write', 'Bash',
+      // Trading tools
+      ...TRADING_TOOLS,
+    ],
     model: 'sonnet',
   },
 };
@@ -312,6 +405,7 @@ const DEFAULT_OPTIONS: Partial<Options> = {
   allowDangerouslySkipPermissions: true,
   cwd: path.join(__dirname, '..'),
   settingSources: ['project'], // Load CLAUDE.md
+  mcpServers: mcpServers, // Include custom trading tools
 };
 
 /**
