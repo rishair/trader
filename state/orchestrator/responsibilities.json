@@ -3,7 +3,7 @@
     "hypothesis-selection": {
       "frequency": "4h",
       "description": "Select next hypothesis to focus on using priority scoring",
-      "lastRun": "2025-12-09T06:13:50.148Z"
+      "lastRun": "2025-12-09T10:20:36.791Z"
     },
     "hypothesis-health": {
       "frequency": "4h",

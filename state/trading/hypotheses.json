@@ -547,17 +547,23 @@
       "expectedWinRate": 0.65,
       "minSampleSize": 3,
       "status": "testing",
-      "confidence": 0.6,
+      "confidence": 0.7,
       "evidence": [
         {
           "date": "2025-12-09T06:13:27.622Z",
           "observation": "Position opened: Ukraine ceasefire NO @ 60¢ (41 shares, $24.60 cost). Market at 40% YES for ceasefire in remaining 22 days of 2025. Historical precedent: geopolitical conflicts take months/years to resolve, not weeks. Ukraine-Russia war ongoing since Feb 2022. Recent news shows continued fighting, no serious peace talks scheduled. 40% probability for December breakthrough appears optimistic given timeline constraints.",
           "supports": true,
           "confidenceImpact": 0.1
+        },
+        {
+          "date": "2025-12-09T10:19:52.191Z",
+          "observation": "Comparison scan of other geopolitical breakthrough markets closing Dec 31: Israel withdraws from Gaza at 2% YES ($2.16M volume), US-Iran nuclear deal at 1.15% YES ($2.73M volume). Both price diplomatic breakthroughs in final 22 days at ~1-2%, suggesting market efficiently prices low probability of rapid resolutions. Ukraine ceasefire at 40% is significant outlier - 20-40x higher than comparable geopolitical breakthrough markets with similar timelines. This strengthens case that Ukraine ceasefire YES is overpriced.",
+          "supports": true,
+          "confidenceImpact": 0.1
         }
       ],
       "createdAt": "2025-12-09T02:44:14.489Z",
-      "updatedAt": "2025-12-09T06:13:27.746Z",
+      "updatedAt": "2025-12-09T10:19:52.191Z",
       "testStartedAt": "2025-12-09T06:13:27.746Z"
     },
     {

@@ -260,6 +260,29 @@
       "improvementIdea": null,
       "learningLogged": false,
       "notes": "Key actions: (1) hyp-009 validated (confidence 0.55->0.75) - HFT research showed $40M extracted by arb bots, graduated to strat-002; (2) hyp-007 moved from proposed to testing - clear test case with Time POY Human/AI arbitrage gap. No hypotheses stale (all <24h old). No hypotheses at kill threshold. Engine state remains healthy with 5 testing, 4 proposed, 1 validated, 1 invalidated. Average conviction improved to 0.44."
+    },
+    {
+      "sessionId": "research-hyp003-liquidity-2025-12-09",
+      "agent": "researcher",
+      "timestamp": "2025-12-09T10:15:00.000Z",
+      "responsibility": "research",
+      "taskDescription": "Deep research on Polymarket liquidity rewards program to calculate ROI, spreads, capital requirements, and infrastructure needs for hyp-003",
+      "completed": true,
+      "friction": [
+        "No direct CLOB API access to query current max_incentive_spread values per market - had to rely on documentation and case studies",
+        "Post-election reward reduction not quantified in public sources - only qualitative 'decreased significantly'",
+        "Volume data potentially inflated due to double-counting issue (Paradigm analysis) - affects turnover estimates"
+      ],
+      "mistakes": [
+        "Initially searched for 'max_incentive_spread 3 cents OR 5 cents' - too specific, no results. Should have queried API directly or searched for reward parameters more broadly"
+      ],
+      "rootCauses": [
+        "CLOB API requires authentication setup we haven't done yet - blocked direct market parameter queries",
+        "Polymarket doesn't publish historical reward rate data publicly - limits trend analysis"
+      ],
+      "improvementIdea": null,
+      "learningLogged": true,
+      "notes": "Comprehensive 7-phase research protocol executed successfully. Triangulated 8 major claims across A-tier, B-tier, and C-tier sources. Delivered actionable recommendation (DEFER) with clear conditions for revisiting. Full 11-section analysis document produced. Key finding: MM is genuinely +EV (30-50% APY) but high barrier to entry (4-7 week build, $10k capital). Hypothesis updated, learning logged, ready for user review."
     }
   ],
   "schema": {
@@ -269,9 +292,15 @@
     "responsibility": "string | null - which standing responsibility, if any",
     "taskDescription": "string - what was attempted",
     "completed": "boolean - did we finish what we set out to do?",
-    "friction": ["array of strings - what slowed us down or was hard"],
-    "mistakes": ["array of strings - wrong turns, errors made"],
-    "rootCauses": ["array of strings - why did friction/mistakes happen?"],
+    "friction": [
+      "array of strings - what slowed us down or was hard"
+    ],
+    "mistakes": [
+      "array of strings - wrong turns, errors made"
+    ],
+    "rootCauses": [
+      "array of strings - why did friction/mistakes happen?"
+    ],
     "improvementIdea": "string | null - idea logged to improvements/ideas.json",
     "learningLogged": "boolean - did we add to learnings.json?",
     "notes": "string | null - anything else worth noting"

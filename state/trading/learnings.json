@@ -259,6 +259,38 @@
       "id": "learning-miy6p537-cloe",
       "createdAt": "2025-12-09T06:13:12.835Z",
       "updatedAt": "2025-12-09T06:13:12.835Z"
+    },
+    {
+      "id": "liquidity-rewards-deep-analysis-2025-12-09",
+      "claim": "Polymarket MM is +EV (30-50% APY at $10k+) but requires 4-7 week infrastructure build, WebSocket feeds, sophisticated adverse selection management. DEFER until simpler strategies validated.",
+      "tags": [
+        "market-maker",
+        "liquidity",
+        "rewards",
+        "infrastructure",
+        "adverse-selection",
+        "ROI"
+      ],
+      "category": "strategy",
+      "confidence": 0.75,
+      "sourceType": "research",
+      "title": "Polymarket Market Making: Deep ROI Analysis - 30-50% APY Achievable but High Barrier",
+      "content": "Deep research on Polymarket liquidity rewards for hyp-003. KEY FINDINGS: (1) Genuine +EV opportunity - 30-50% APY with $10k+ capital after adverse selection costs, (2) Daily rewards $2-5 per market, reported $200-800/day at scale (50-100 markets), (3) Adverse selection costs 70-90% of gross spread - biggest expense, (4) Infrastructure barrier: 4-7 week development for competitive bot (WebSocket feeds, automated orders, inventory tracking), (5) Capital requirements: $10k minimum for diversification across 80-100 markets, $1k insufficient, $5k marginal, (6) Competition not saturated - 1-2 bots per market currently but Polymarket building in-house MM team (Dec 2025), (7) Breakeven spread: 0.2-0.5¢ captured on markets with $1k+ daily turnover, (8) Two-sided quotes earn 3x rewards (confirmed), quadratic scoring favors tight spreads, (9) Post-election reward reduction confirmed but not quantified. RECOMMENDATION: DEFER - high infrastructure barrier vs faster-to-test hypotheses (sports, momentum, Fed-CME arbitrage). Revisit after validating 2-3 simpler strategies. Full analysis: /opt/trader/state/trading/hyp-003-liquidity-rewards-analysis.md",
+      "source": "Deep research: 7-phase protocol on Polymarket liquidity rewards (12 web searches, 4 web fetches, source triangulation) for hyp-003 (2025-12-09)",
+      "actionable": true,
+      "appliedTo": [
+        "hyp-003"
+      ],
+      "createdAt": "2025-12-09T10:15:00.000Z",
+      "updatedAt": "2025-12-09T10:15:00.000Z",
+      "references": [
+        "https://docs.polymarket.com/developers/rewards/overview",
+        "https://news.polymarket.com/p/automated-market-making-on-polymarket",
+        "https://mirror.xyz/polymarket.eth/TOHA3ir5R76bO1vjTrKQclS9k8Dygma53OIzHztJSjk",
+        "https://opt-markets.com/docs",
+        "https://github.com/warproxxx/poly-maker",
+        "https://www.coindesk.com/business/2025/12/05/polymarket-hiring-in-house-team-to-trade-against-customers-here-s-why-it-s-a-risk"
+      ]
     }
   ]
 }

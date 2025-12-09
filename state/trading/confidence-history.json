@@ -38,5 +38,13 @@
     "delta": -0.15,
     "reason": "Evidence: Confidence remains very low (20%) without concrete...",
     "timestamp": "2025-12-09T06:45:01.287Z"
+  },
+  {
+    "hypothesisId": "hyp-mixz8efs",
+    "previousConfidence": 0.6,
+    "currentConfidence": 0.7,
+    "delta": 0.09999999999999998,
+    "reason": "Evidence: Comparison scan of other geopolitical breakthrough...",
+    "timestamp": "2025-12-09T10:19:52.191Z"
   }
 ]
