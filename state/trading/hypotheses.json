@@ -400,12 +400,19 @@
       "statement": "Multi-option markets with sum < $1.00 create risk-free arbitrage when buying all outcomes",
       "rationale": "Research shows this is a known arbitrage strategy on Polymarket. If total probability across all options < 100%, buying one share of each guarantees profit. Example: if sum = $0.995, buying all outcomes locks in $0.005 profit (0.5% yield). Top arbitrageurs made $20M+ using this.",
       "testMethod": "1. Scan multi-outcome markets (Super Bowl, Person of Year, etc.) 2. Calculate sum of all option prices 3. When sum < $0.98, buy all outcomes 4. Hold to resolution for guaranteed profit 5. Track: opportunity frequency, execution speed vs competition",
-      "status": "testing",
-      "confidence": 0.7,
-      "evidence": [],
-      "conclusion": null,
+      "status": "invalidated",
+      "confidence": 0.24999999999999994,
+      "evidence": [
+        {
+          "date": "2025-12-09T06:13:12.817Z",
+          "observation": "Hypothesis directly contradicted by learning-arbitrage-reality-check-2025-12-08. Research attempted this exact strategy on AI model markets where mid-prices summed to 97.75%. Reality: ASK prices (what you actually pay) summed to >100%, eliminating the arbitrage. Example: Google mid 79.5% → ask 80.0%, OpenAI mid 12.1% → ask 12.8%, etc. Market makers capture the spread before retail traders can execute. \"Risk-free arbitrage\" does not exist at execution prices.",
+          "supports": false,
+          "confidenceImpact": -0.45
+        }
+      ],
+      "conclusion": "Auto-invalidated: confidence dropped to 25%",
       "createdAt": "2025-12-09T02:40:00Z",
-      "updatedAt": "2025-12-09T02:43:44.097Z",
+      "updatedAt": "2025-12-09T06:13:12.834Z",
       "source": "market-scan",
       "entryRules": "Sum of all outcome prices < $0.98 (2%+ spread). Minimum $50 profit after fees. Can execute all buys within 60 seconds. Market has clear resolution criteria.",
       "exitRules": "Hold to resolution (guaranteed payout). Or exit if sum converges to $1.00 and can close at profit.",
@@ -416,7 +423,8 @@
         "Real-time price monitoring across all outcomes in multi-option markets",
         "Fast execution capability"
       ],
-      "testStartedAt": "2025-12-09T02:43:44.097Z"
+      "testStartedAt": "2025-12-09T02:43:44.097Z",
+      "testEndedAt": "2025-12-09T06:13:12.834Z"
     },
     {
       "id": "hyp-013",
@@ -523,11 +531,19 @@
       "exitRules": "Take profit at market <0.25 (40%+ gain). Stop loss if major ceasefire/peace announcement emerges. Exit by Dec 29 before final 48h volatility.",
       "expectedWinRate": 0.65,
       "minSampleSize": 3,
-      "status": "proposed",
-      "confidence": 0.5,
-      "evidence": [],
+      "status": "testing",
+      "confidence": 0.6,
+      "evidence": [
+        {
+          "date": "2025-12-09T06:13:27.622Z",
+          "observation": "Position opened: Ukraine ceasefire NO @ 60¢ (41 shares, $24.60 cost). Market at 40% YES for ceasefire in remaining 22 days of 2025. Historical precedent: geopolitical conflicts take months/years to resolve, not weeks. Ukraine-Russia war ongoing since Feb 2022. Recent news shows continued fighting, no serious peace talks scheduled. 40% probability for December breakthrough appears optimistic given timeline constraints.",
+          "supports": true,
+          "confidenceImpact": 0.1
+        }
+      ],
       "createdAt": "2025-12-09T02:44:14.489Z",
-      "updatedAt": "2025-12-09T02:44:14.489Z"
+      "updatedAt": "2025-12-09T06:13:27.746Z",
+      "testStartedAt": "2025-12-09T06:13:27.746Z"
     },
     {
       "id": "hyp-mixz9abc",
@@ -557,10 +573,17 @@
       "expectedPayoff": 1.05,
       "minSampleSize": 20,
       "status": "proposed",
-      "confidence": 0.45,
-      "evidence": [],
+      "confidence": 0.2,
+      "evidence": [
+        {
+          "date": "2025-12-09T06:12:49.736Z",
+          "observation": "Hypothesis contradicts learning-arbitrage-reality-check-2025-12-08: When attempting to execute multi-market arbitrage, ASK prices eliminate perceived opportunities. Mid-price calculations show 2.25% spreads that disappear when facing actual execution prices. Market makers already capture these edges. Additionally, the risk/reward is prohibitive: 5% gain if right vs 95% loss if wrong requires 97%+ accuracy - unrealistic for 48h outcome prediction.",
+          "supports": false,
+          "confidenceImpact": -0.25
+        }
+      ],
       "createdAt": "2025-12-09T02:50:00Z",
-      "updatedAt": "2025-12-09T02:50:00Z"
+      "updatedAt": "2025-12-09T06:12:49.736Z"
     },
     {
       "id": "hyp-mixz9ghi",

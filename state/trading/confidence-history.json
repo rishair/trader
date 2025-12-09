@@ -6,5 +6,29 @@
     "delta": 0.04999999999999999,
     "reason": "Evidence: 48h tracking check: Largest Company shows clear mo...",
     "timestamp": "2025-12-09T02:00:51.381Z"
+  },
+  {
+    "hypothesisId": "hyp-mixz9def",
+    "previousConfidence": 0.45,
+    "currentConfidence": 0.2,
+    "delta": -0.25,
+    "reason": "Evidence: Hypothesis contradicts learning-arbitrage-reality-...",
+    "timestamp": "2025-12-09T06:12:49.736Z"
+  },
+  {
+    "hypothesisId": "hyp-012",
+    "previousConfidence": 0.7,
+    "currentConfidence": 0.24999999999999994,
+    "delta": -0.45,
+    "reason": "Evidence: Hypothesis directly contradicted by learning-arbit...",
+    "timestamp": "2025-12-09T06:13:12.817Z"
+  },
+  {
+    "hypothesisId": "hyp-mixz8efs",
+    "previousConfidence": 0.5,
+    "currentConfidence": 0.6,
+    "delta": 0.09999999999999998,
+    "reason": "Evidence: Position opened: Ukraine ceasefire NO @ 60¢ (41 sh...",
+    "timestamp": "2025-12-09T06:13:27.622Z"
   }
 ]

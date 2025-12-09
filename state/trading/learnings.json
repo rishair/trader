@@ -3,7 +3,13 @@
     {
       "id": "polymarket-leaderboard-access-2025-12",
       "claim": "Polymarket has no public leaderboard API; use polymarket-apis Python package or web scraping to access top trader data.",
-      "tags": ["leaderboard", "api", "tooling", "infrastructure", "top-traders"],
+      "tags": [
+        "leaderboard",
+        "api",
+        "tooling",
+        "infrastructure",
+        "top-traders"
+      ],
       "category": "tooling",
       "confidence": 0.95,
       "sourceType": "observation",
@@ -25,7 +31,14 @@
     {
       "id": "polymarket-liquidity-rewards-2025-12",
       "claim": "Polymarket liquidity rewards use quadratic scoring with 3x bonus for two-sided quotes; MM is +EV but NOT risk-free due to adverse selection.",
-      "tags": ["liquidity", "market-maker", "mm", "rewards", "spread", "execution"],
+      "tags": [
+        "liquidity",
+        "market-maker",
+        "mm",
+        "rewards",
+        "spread",
+        "execution"
+      ],
       "category": "strategy",
       "confidence": 0.85,
       "sourceType": "paper",
@@ -33,7 +46,9 @@
       "content": "Comprehensive research into Polymarket's liquidity rewards program for market makers, conducted for hypothesis hyp-003 testing.\n\n## PROGRAM STRUCTURE\n\n**Two Separate Programs**:\n1. **Liquidity Rewards** - For active market making (placing limit orders)\n2. **Holding Rewards** - 4% annualized for holding positions in 13 eligible long-term markets\n\n## LIQUIDITY REWARDS MECHANICS\n\n**Automatic Eligibility**: Market makers automatically qualify by posting resting limit orders\n\n**Reward Formula** (adapted from dYdX):\n- Quadratic scoring: closer to midpoint = exponentially higher rewards\n- Two-sided depth bonus: ~3x rewards for quotes on both sides vs single side\n- Per-market isolation: each market has separate reward pool\n- Daily distribution at midnight UTC\n\n**Key Parameters** (vary by market):\n- `max_incentive_spread`: Max distance from midpoint to qualify (e.g., 3 cents)\n- `min_incentive_size`: Minimum order size to earn rewards\n- Both fetchable via CLOB API and Markets API\n\n**Special Rules**:\n- Markets with midpoint < $0.10: MUST have orders on both sides to qualify\n- Minimum payout threshold: $1 (amounts below not paid)\n- Rewards tracked at polymarket.com/rewards\n\n## PROFITABILITY ANALYSIS\n\n**Income Sources**:\n1. Bid-ask spread capture\n2. Liquidity rewards\n3. Holding rewards (4% APY on position value)\n\n**Typical Bid-Ask Spreads**:\n- Liquid markets (major elections): 0.1 to 3 cents\n- Less liquid markets: 3 to 10+ cents\n- Display threshold: 10 cents (wider = show last trade price)\n\n**Reported Earnings**:\n- Basic market makers: $200-800/day during active periods\n- One case study: Started $10k capital → $200/day → scaled to $700-800/day peak\n- Expected margin: ~0.2% of trading volume\n- Example: $1M monthly volume → ~$2,000 profit from spread alone\n\n**Economics Calculation**:\n- Spread profit + LP rewards + 4% holding yield = combined 10-20%+ returns possible\n- Scalability: Quote dozens of markets simultaneously via bot\n- Competition: \"Not very fierce right now\" - strategy over speed\n\n## RISK FACTORS\n\n**Adverse Selection Risk**:\n- Informed traders can pick off stale quotes\n- Price movement risk during position holding\n- Need sophisticated pricing models\n\n**Capital Requirements**:\n- \"Pretty big bankroll to ride out swings\"\n- Need to manage inventory across multiple markets\n- Risk up to $300k mentioned by one sports MM\n\n**Program Changes**:\n- Post-2024 election: \"Total liquidity rewards decreased significantly\"\n- Reward rates are variable and subject to change\n- Per-market reward pools can be adjusted\n\n## TECHNICAL DETAILS\n\n**Reward Scoring Formula**:\nS(v,s) = ((v-s)/v)² × b\n\nWhere:\n- v = distance parameter\n- s = spread from midpoint\n- b = base size\n\n**Distribution Process**:\n1. Sample order book at intervals during epoch\n2. Calculate quadratic score per sample\n3. Aggregate scores over epoch\n4. Normalize against all participants\n5. Distribute proportional rewards\n\n**API Access**:\n- Fetch market parameters: CLOB API, Markets API\n- Track reward allocations: Markets API (per epoch)\n- No direct rewards API for historical earnings\n\n## HOLDING REWARDS PROGRAM\n\n**Separate 4% APY Program**:\n- 13 eligible markets (2026-2028 political/geopolitical events)\n- Position value = (Yes shares × mid) + (No shares × mid)\n- Hourly sampling, daily distribution\n- Example: $20,400 position → $0.093/hour → ~$2.23/day\n\n## HYP-003 ASSESSMENT\n\n**\"Risk-Free\" Claim Evaluation**:\n- NOT truly risk-free due to adverse selection and price risk\n- CAN be +EV if: rewards > expected adverse selection losses\n- Best opportunities: Low-volatility + high-reward markets\n- Requires: Capital, sophisticated models, speed\n\n**Actionable Strategy**:\n1. Identify markets with high reward/spread ratios\n2. Build automated quoting system\n3. Focus on two-sided liquidity for 3x bonus\n4. Monitor inventory risk across positions\n5. Test with small capital first\n\n**Current Viability** (Dec 2025):\n- Post-election reward reduction noted\n- Competition increasing but not yet fierce\n- Still profitable for sophisticated operators\n- Need to monitor ongoing reward rate changes\n\n## CONCLUSION\n\nLiquidity rewards create genuine +EV opportunities but are NOT risk-free. Success requires:\n- Capital (tens of thousands minimum)\n- Automated execution (bots)\n- Sophisticated pricing models\n- Risk management across positions\n- Continuous monitoring of reward parameters\n\nThe 3x bonus for two-sided quotes and quadratic proximity scoring create structural advantages for tight, balanced market making. Combined with 4% holding rewards, total returns of 10-20%+ are achievable but require professional-grade infrastructure.",
       "source": "Research session 2025-12-08: Web search + official documentation analysis for hyp-003",
       "actionable": true,
-      "appliedTo": ["hyp-003"],
+      "appliedTo": [
+        "hyp-003"
+      ],
       "createdAt": "2025-12-08T18:00:00Z",
       "updatedAt": "2025-12-08T18:00:00Z",
       "references": [
@@ -48,9 +63,15 @@
     {
       "id": "autonomous-agent-self-direction-2025-12",
       "claim": "Effective autonomous agents require hierarchical orchestration, reflexion-style self-improvement, hybrid memory, and risk-based human-in-the-loop gating.",
-      "tags": ["meta", "agents", "orchestration", "self-improvement", "architecture"],
+      "tags": [
+        "meta",
+        "agents",
+        "orchestration",
+        "self-improvement",
+        "architecture"
+      ],
       "category": "meta",
-      "confidence": 0.80,
+      "confidence": 0.8,
       "sourceType": "paper",
       "title": "Autonomous AI Agent Self-Direction: Frameworks, Patterns, and Architectures",
       "content": "# Comprehensive Research on Autonomous AI Agent Self-Direction\n\n## EXECUTIVE SUMMARY\n\nAutonomous AI agent systems that effectively self-direct require: (1) explicit goal management with drift prevention, (2) hierarchical orchestration patterns with clear control flow, (3) self-reflection mechanisms for continuous improvement, (4) robust failure detection and human oversight, and (5) memory architectures for context retention. The field has matured significantly in 2024-2025, with production systems favoring controlled, narrow agents over fully autonomous generalists.\n\n[Content truncated for migration - full content preserved in original]",
@@ -68,15 +89,22 @@
     {
       "id": "strategy-review-week1-2025-12",
       "claim": "Week 1 was research-heavy, execution-light (7 hypotheses, 1 trade); need to increase trade velocity and prioritize actionable hypotheses.",
-      "tags": ["strategy", "execution", "velocity", "meta"],
+      "tags": [
+        "strategy",
+        "execution",
+        "velocity",
+        "meta"
+      ],
       "category": "strategy",
-      "confidence": 0.90,
+      "confidence": 0.9,
       "sourceType": "observation",
       "title": "Week 1 Strategy Review: Research-Heavy, Execution-Light Pattern",
       "content": "## STRATEGY REVIEW - WEEK 1 (2025-12-08)\n\n### Portfolio Status\n- Starting Capital: $10,000\n- Cash: $9,500.05 (95%)\n- Positions: 1 (AAPL in Largest Company 2025)\n- Total Return: -$88.88 (-0.89%)\n- Realized P&L: $0\n- Unrealized P&L: -$94.44\n\n### What's NOT Working\n\n**1. Research-heavy, execution-light**\n- 7 hypotheses generated, only 1 trade executed\n- System spending too much time on research, not enough on testing with actual paper trades\n- At this rate, insufficient data to validate any hypothesis statistically\n\n**2. No formal strategies**\n- Trading directly on hypotheses without formalizing into strategies\n- No clear entry/exit rules codified until this review\n- Created strat-001 to address this\n\n**3. Infrastructure blocking multiple hypotheses**\n- hyp-003 (MM) needs automated quoting\n- hyp-004 (Leaderboard) needs data scraping\n- hyp-006 (Sports) needs cross-platform price comparison\n- These hypotheses stuck in \"proposed\" due to missing tools\n\n**4. Active position underwater**\n- trade-001: AAPL entry at 9¢, now at 7.3¢ (-19%)\n- Hypothesis that close fundamentals = close probabilities appears weak\n- Market efficiently prices momentum/narrative factors we underweighted\n\n### What IS Working\n\n**1. Scientific rigor**\n- Clear hypothesis statements, rationale, test methods\n- Evidence tracking with confidence impacts\n- Proper invalidation of hyp-001 (tail-risk overpricing)\n\n**2. Risk management**\n- Conservative position sizing (5% of capital)\n- Defined stop-loss (4¢)\n- Position still 82% above stop-loss\n\n**3. Learning accumulation**\n- High-quality learnings documented (API access, liquidity rewards, agent patterns)\n- Building knowledge base for future decisions\n\n### Key Insights\n\n1. **Close fundamentals ≠ Close probabilities**: Markets price momentum, narrative, and catalysts - not just current state\n\n2. **Don't bet against momentum without catalyst**: NVDA has strong narrative; AAPL needs specific catalyst to close gap\n\n3. **Trade velocity matters**: Can't validate hypotheses without trades. Paper money is cheap - use it.\n\n4. **Prioritize low-infrastructure hypotheses**: hyp-007 (related market arbitrage) is executable NOW without new tools\n\n### Recommendations\n\n1. **Increase trade velocity**: Execute more paper trades to test hypotheses rather than endlessly researching\n\n2. **Prioritize actionable hypotheses**: Focus on hyp-007 (arbitrage) that doesn't need new infrastructure\n\n3. **Formalize all active hypotheses into strategies**: Clear entry/exit rules before trading\n\n4. **Don't bet against market momentum** without specific catalysts or information edge\n\n5. **Queue infrastructure requests for blocking hypotheses**: Handoff to Agent Engineer for hyp-003, hyp-004, hyp-006 tools",
       "source": "strategy-review responsibility 2025-12-08",
       "actionable": true,
-      "appliedTo": ["strat-001"],
+      "appliedTo": [
+        "strat-001"
+      ],
       "createdAt": "2025-12-08T00:00:00Z",
       "updatedAt": "2025-12-08T00:00:00Z",
       "references": []
@@ -84,15 +112,22 @@
     {
       "id": "momentum-hypothesis-early-observations-2025-12",
       "claim": "Short-term price movements (hours) are noise/mean-reversion; momentum detection requires 7-14 days minimum observation.",
-      "tags": ["momentum", "mean-reversion", "timeframes", "noise"],
+      "tags": [
+        "momentum",
+        "mean-reversion",
+        "timeframes",
+        "noise"
+      ],
       "category": "market",
-      "confidence": 0.70,
+      "confidence": 0.7,
       "sourceType": "observation",
       "title": "Markets Show Mean-Reversion, Not Momentum, in First 24h of Tracking",
       "content": "After ~24 hours of tracking prices on two markets (Time POY 2025 and Largest Company 2025) for the momentum hypothesis (hyp-002), observations suggest mean-reversion rather than momentum:\n\n1. **Intraday noise**: Initial 3-hour check showed all Time POY candidates declining 1-10%. This looked like momentum away from leader. But 3 hours later, prices reverted to baseline.\n\n2. **24-hour stability**: After full 24h, Time POY prices nearly identical to baseline (AI 39%, Jensen 21%, Sam Altman down 1pp from 14% to 13%, Trump +0.1pp). No clear momentum pattern.\n\n3. **AAPL position**: Largest Company market shows AAPL slowly declining (9% → 7.4% over 2 days) while NVDA stable at 91%. This could be momentum toward incumbent OR simply efficient price discovery.\n\n**Key insight**: Short-term price movements (hours) appear to be noise/mean-reversion. Need multi-day or multi-week tracking to detect true momentum. 24h is insufficient sample for momentum hypothesis testing.\n\n**Implications**: Don't trade on intraday momentum signals. Hypothesis testing requires patience - minimum 7-14 days of observation before drawing conclusions.",
       "source": "experiment-progress review 2025-12-09: Analysis of momentum hypothesis tracking data",
       "actionable": true,
-      "appliedTo": ["hyp-002"],
+      "appliedTo": [
+        "hyp-002"
+      ],
       "createdAt": "2025-12-09T01:30:00Z",
       "updatedAt": "2025-12-09T01:30:00Z",
       "references": []
@@ -100,7 +135,12 @@
     {
       "id": "learning-synthesis-week1-2025-12",
       "claim": "System builds infrastructure faster than it uses it; pause new tooling and focus on executing trades with existing capabilities.",
-      "tags": ["meta", "execution", "infrastructure", "velocity"],
+      "tags": [
+        "meta",
+        "execution",
+        "infrastructure",
+        "velocity"
+      ],
       "category": "meta",
       "confidence": 0.85,
       "sourceType": "observation",
@@ -116,7 +156,13 @@
     {
       "id": "arbitrage-reality-check-2025-12-08",
       "claim": "Mid-price arbitrage calculations are misleading; you buy at ask prices where market makers have already captured the spread.",
-      "tags": ["arbitrage", "spread", "market-maker", "execution", "mispricing"],
+      "tags": [
+        "arbitrage",
+        "spread",
+        "market-maker",
+        "execution",
+        "mispricing"
+      ],
       "category": "market",
       "confidence": 0.95,
       "sourceType": "observation",
@@ -124,7 +170,13 @@
       "content": "Critical learning from analyzing AI Model December 31 related markets.\n\n**The Setup:**\nFound 12 markets for 'Will X have top AI model on December 31?' Mid prices summed to only 97.75%, suggesting a 2.25% arbitrage opportunity (buy all 12, guaranteed $1 payout, profit 2.3%).\n\n**The Reality:**\nWhen checking actual ASK prices (what you'd pay to buy):\n- Google: 79.5% mid → 80.0% ask (+0.5%)\n- OpenAI: 12.1% mid → 12.8% ask (+0.7%)\n- xAI: 4.05% mid → 4.2% ask (+0.15%)\n- etc.\n\nActual cost to buy all 12: ~99.7%, leaving only 0.3% profit.\n\n**Why This Happens:**\n- Mid price = (bid + ask) / 2\n- You BUY at ask, SELL at bid\n- Market makers set spreads to capture this gap\n- The 'arbitrage' IS the spread that market makers extract\n\n**Key Insight:**\nMarket makers have already priced in cross-market relationships. The apparent gap IS their profit margin. Any arbitrage detector using mid prices will show false positives.\n\n**Implications:**\n1. Shadow detector needs fix: Use actual ask prices, not mid prices (imp-017)\n2. Reality checker tool needed: Before getting excited about any opportunity, calculate actual execution costs (imp-015)\n3. Study winning bots: They've solved this - learn what opportunities they actually capture (imp-014)\n\n**Formula for Real Arbitrage:**\nReal Profit = Guaranteed Payout - Sum(Ask Prices) - Fees - Slippage\n\nIf this is negative, there's no arbitrage.",
       "source": "Live research session 2025-12-08: Attempted to exploit AI model market discrepancy",
       "actionable": true,
-      "appliedTo": ["hyp-007", "strat-002", "imp-014", "imp-015", "imp-017"],
+      "appliedTo": [
+        "hyp-007",
+        "strat-002",
+        "imp-014",
+        "imp-015",
+        "imp-017"
+      ],
       "createdAt": "2025-12-08T22:45:00Z",
       "updatedAt": "2025-12-08T22:45:00Z",
       "references": []
@@ -132,7 +184,13 @@
     {
       "id": "top-trader-patterns-2025-12-08",
       "claim": "Top Polymarket traders specialize in sports (4/5), trade 20+/day, make concentrated high-conviction bets 5-24x average size, and are most active 6-12 UTC.",
-      "tags": ["leaderboard", "top-traders", "sports", "high-frequency", "patterns"],
+      "tags": [
+        "leaderboard",
+        "top-traders",
+        "sports",
+        "high-frequency",
+        "patterns"
+      ],
       "category": "market",
       "confidence": 0.75,
       "sourceType": "trader-analysis",
@@ -140,7 +198,13 @@
       "content": "Analysis of top 5 weekly performers on Polymarket leaderboard (combined profit: $2.8M this week).\n\n**Key Findings:**\n\n1. **Sports dominance**: 4/5 top traders specialize in sports markets (58-81% of their trades). Only wasianiversonworldchamp2025 focuses on 'other' category.\n\n2. **Very high frequency**: All 5 trade 20+ times/day. This could indicate: more edge opportunities, better risk distribution, or faster reaction to information.\n\n3. **Concentrated conviction bets**: All make occasional bets 5-24x their average trade size. Biggest winner's largest trade was $610K (avg $25K). Suggests edge comes from correctly sizing high-conviction opportunities.\n\n4. **Morning trading (6-12 UTC)**: All 5 most active during this window. This is 2-8am EST / 11pm-5am PST - off-peak for US traders. May indicate timezone advantage or deliberate strategy.\n\n5. **Strong buy bias**: Most top traders heavily favor buying (going long) over selling.\n\n**Top 5 This Week:**\n- wasianiversonworldchamp2025: +$1.56M, 177 markets, avg $25K, largest $610K\n- gmanas: +$449K, 233 markets, avg $7.5K, largest $119K\n- 0x006cc834: +$279K, 110 markets, sports specialist (81%)\n- primm: +$272K, 332 markets, avg $14K, largest $118K\n- piastri: +$242K, 150 markets, avg $10K, largest $244K\n\n**Caveats:**\n- Survivorship bias: Only looking at winners, not losers who may trade similarly\n- One week sample: Patterns may not persist\n- Correlation ≠ causation: High frequency may not CAUSE success\n\n**Generated Hypotheses:**\n- hyp-008: Sports markets offer better edge\n- hyp-009: High-frequency correlates with performance\n- hyp-010: Concentrated bets drive returns\n- hyp-011: Morning trading offers timing advantage",
       "source": "trader-analyzer pipeline 2025-12-08: Analysis of top 5 weekly performers via Polymarket API",
       "actionable": true,
-      "appliedTo": ["hyp-004", "hyp-008", "hyp-009", "hyp-010", "hyp-011"],
+      "appliedTo": [
+        "hyp-004",
+        "hyp-008",
+        "hyp-009",
+        "hyp-010",
+        "hyp-011"
+      ],
       "createdAt": "2025-12-08T20:00:00Z",
       "updatedAt": "2025-12-08T20:00:00Z",
       "references": [
@@ -151,41 +215,50 @@
     {
       "id": "first-loss-aapl-volatility-2025-12-08",
       "claim": "Betting against momentum without a catalyst loses; close fundamentals don't mean close probabilities when one side has narrative advantage.",
-      "tags": ["momentum", "volatility", "contrarian", "catalyst", "mispricing"],
+      "tags": [
+        "momentum",
+        "volatility",
+        "contrarian",
+        "catalyst",
+        "mispricing"
+      ],
       "category": "strategy",
-      "confidence": 0.90,
+      "confidence": 0.9,
       "sourceType": "experiment",
       "title": "First Loss: Volatility Mispricing Hypothesis Failed - Markets Price Momentum, Not Just Fundamentals",
       "content": "**Trade Details:**\n- Position: AAPL YES @ 9¢ (5,555 shares, $500 cost)\n- Exit: 6.6¢ (after price dropped 27% from entry)\n- Loss: -$133.30 (-26.7%)\n- Duration: ~2 days\n\n**Original Thesis (hyp-005):**\nMulti-outcome markets with close competitors misprice volatility. AAPL market cap was only 5-7% behind NVDA, but Polymarket priced AAPL at 9% vs NVDA at 89%. Hypothesis: markets underweight the probability of reversals.\n\n**Why It Failed:**\n\n1. **Momentum matters more than current state**: Market cap closeness (AAPL ~5-7% behind) doesn't translate to probability closeness. NVDA had momentum, narrative (AI leader), and no catalyst for reversal. Markets correctly price these factors.\n\n2. **Gap widened, not narrowed**: Over 2 days, NVDA went from 90% → 92% while AAPL dropped from 9% → 6.5%. The market cap gap actually expanded (NVDA ~$4.5T vs AAPL ~$4.1T = 8-10% gap).\n\n3. **No catalyst**: Betting against a trend requires a specific reason for reversal. 'Volatility could close the gap' is hope, not edge. Without a catalyst (earnings surprise, product announcement, regulatory news), momentum continues.\n\n4. **Markets approaching resolution become MORE efficient**: As the Dec 31 deadline approaches, prices converge toward the likely outcome. Less time = less uncertainty = tighter spreads around the expected winner.\n\n**Key Learnings:**\n\n1. **Close fundamentals ≠ Close probabilities**: Momentum, narrative, and catalysts matter as much as current state.\n\n2. **Don't bet against momentum without edge**: Need specific information advantage or upcoming catalyst to justify contrarian bet.\n\n3. **Exit before stop-loss when thesis invalidates**: Price dropped 27% but was still 65% above 4¢ stop-loss. Exited early because thesis failed, not because of mechanical stop.\n\n4. **Paper trading teaches real lessons**: Even with fake money, the loss highlights a systematic error in reasoning.\n\n**What Would Have Worked Instead:**\n- Bet WITH momentum (NVDA YES at 90-92¢)\n- Wait for specific AAPL catalyst before entering\n- Use options-like structure (smaller position, more leverage on specific event)\n\n**Impact on Future Trading:**\n- Invalidated hyp-005 (volatility mispricing in close races)\n- Added skepticism to contrarian bets without catalysts\n- Reinforced: Markets are more efficient than they appear",
       "source": "Post-mortem analysis of trade-001 exit 2025-12-08",
       "actionable": true,
-      "appliedTo": ["hyp-005", "trade-001"],
+      "appliedTo": [
+        "hyp-005",
+        "trade-001"
+      ],
       "createdAt": "2025-12-08T23:48:00Z",
       "updatedAt": "2025-12-08T23:48:00Z",
       "references": [
         "https://9to5mac.com/2025/11/25/apple-overtake-nvidia-market-cap/",
         "https://polymarket.com/event/largest-company-end-of-2025"
       ]
+    },
+    {
+      "claim": "Multi-option markets with sum < $1.00 create risk-free arbitrage when buying all outcomes - DISPROVEN: Auto-invalidated: confidence dropped to 25%",
+      "content": "## Hypothesis INVALIDATED\n\n**Statement:** Multi-option markets with sum < $1.00 create risk-free arbitrage when buying all outcomes\n\n**Conclusion:** Auto-invalidated: confidence dropped to 25%\n\n**Evidence Summary:**\n- Total observations: 1\n- Supporting: 0\n- Contradicting: 1\n- Final confidence: 25%\n\n\n\n**Key Evidence:**\n- 2025-12-09: Hypothesis directly contradicted by learning-arbitrage-reality-check-2025-12-08. Research attempted this exact strategy on AI model markets where mid-...",
+      "tags": [
+        "hypothesis",
+        "arbitrage"
+      ],
+      "category": "hypothesis",
+      "confidence": 0.24999999999999994,
+      "source": "Hypothesis hyp-012 invalidated",
+      "sourceType": "experiment",
+      "appliedTo": [
+        "hyp-012"
+      ],
+      "title": "❌ hyp-012: Multi-option markets with sum < $1.00 create risk-...",
+      "actionable": false,
+      "id": "learning-miy6p537-cloe",
+      "createdAt": "2025-12-09T06:13:12.835Z",
+      "updatedAt": "2025-12-09T06:13:12.835Z"
     }
-  ],
-  "schema": {
-    "insight": {
-      "id": "string - unique identifier",
-      "claim": "string - dense single-sentence core insight",
-      "tags": "string[] - for retrieval",
-      "category": "strategy | market | meta | tooling | hypothesis",
-      "confidence": "number 0-1 - how confident we are in this claim",
-      "sourceType": "experiment | paper | trader-analysis | observation | ceo-shared",
-      "title": "string - brief description (legacy, use claim)",
-      "content": "string - detailed learning",
-      "source": "string - what led to this insight",
-      "actionable": "boolean - can this be acted on",
-      "appliedTo": ["string - strategy or process IDs where this is used"],
-      "contradicts": "string[] - learning IDs this conflicts with",
-      "updatesStrategy": "string[] - strategy IDs to auto-update",
-      "createdAt": "ISO date",
-      "updatedAt": "ISO date",
-      "references": "string[] - URLs"
-    }
-  }
+  ]
 }
