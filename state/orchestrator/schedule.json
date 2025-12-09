@@ -70,18 +70,6 @@
       }
     },
     {
-      "id": "pipeline-closing-scanner-1765244559821",
-      "type": "pipeline",
-      "description": "Closing-soon scanner: Find markets closing in 72h, check momentum, generate hypotheses",
-      "scheduledFor": "2025-12-09T07:42:39.821Z",
-      "priority": "high",
-      "context": {
-        "pipeline": "closing-scanner",
-        "recurring": true,
-        "frequency": "6h"
-      }
-    },
-    {
       "id": "pipeline-trade-retrospective-1765244559821",
       "type": "pipeline",
       "description": "Trade retrospective: Analyze resolved trades, update confidence, add learnings",
@@ -115,6 +103,18 @@
         "pipeline": "health-check",
         "recurring": true,
         "frequency": "12h"
+      }
+    },
+    {
+      "id": "pipeline-hypothesis-tester-1765266622400",
+      "type": "pipeline",
+      "description": "Hypothesis tester: Monitor entry/exit conditions, execute trades, track results",
+      "scheduledFor": "2025-12-09T11:50:22.400Z",
+      "priority": "high",
+      "context": {
+        "pipeline": "hypothesis-tester",
+        "recurring": true,
+        "frequency": "4h"
       }
     }
   ],
@@ -192,6 +192,22 @@
         "frequency": "4h"
       },
       "completedAt": "2025-12-09T07:49:30.154Z",
+      "result": {
+        "success": true
+      }
+    },
+    {
+      "id": "pipeline-closing-scanner-1765244559821",
+      "type": "pipeline",
+      "description": "Closing-soon scanner: Find markets closing in 72h, check momentum, generate hypotheses",
+      "scheduledFor": "2025-12-09T07:42:39.821Z",
+      "priority": "high",
+      "context": {
+        "pipeline": "closing-scanner",
+        "recurring": true,
+        "frequency": "6h"
+      },
+      "completedAt": "2025-12-09T07:50:30.722Z",
       "result": {
         "success": true
       }
