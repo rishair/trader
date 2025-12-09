@@ -1,4 +1,4 @@
-import { spawn, ChildProcess, execSync } from 'child_process';
+import { execSync, spawn } from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as dotenv from 'dotenv';
@@ -27,6 +27,13 @@ import {
   prepareQuickStatusContext
 } from './lib/context';
 import { exitPosition, loadPortfolio } from './lib/trading';
+import {
+  executeAndWait,
+  executeWithStreaming,
+  executeAgentByRole,
+  collectOutput,
+  AGENTS,
+} from './lib/agent-sdk';
 
 dotenv.config();
 
@@ -256,8 +263,8 @@ async function executePipeline(pipelineName: string): Promise<{ success: boolean
 }
 
 /**
- * Spawn an agent for a responsibility
- * Now uses focused context from lib/context.ts instead of full state files
+ * Spawn an agent for a responsibility using Agent SDK
+ * Uses focused context from lib/context.ts instead of full state files
  */
 async function executeResponsibility(resp: DueResponsibility): Promise<void> {
   log(`Executing responsibility: ${resp.role}/${resp.name}`);
@@ -299,54 +306,47 @@ import { transitionHypothesis, addEvidence, blockHypothesis, createHypothesis } 
 Last run: ${resp.lastRun || 'never'}
 `;
 
-  return new Promise((resolve, reject) => {
-    const claude = spawn('claude', [
-      '-p', prompt,
-      '--output-format', 'text',
-      '--dangerously-skip-permissions'
-    ], {
-      cwd: __dirname,
-      stdio: ['ignore', 'pipe', 'pipe'],
-      env: { ...process.env }
-    });
-
-    let output = '';
-
-    claude.stdout?.on('data', (data: Buffer) => {
-      const text = data.toString();
-      output += text;
-      process.stdout.write(text);
-    });
-
-    claude.stderr?.on('data', (data: Buffer) => {
-      const text = data.toString();
-      output += text;
-      process.stderr.write(text);
-    });
-
-    claude.on('close', async (code: number) => {
-      fs.writeFileSync(sessionLogFile, output);
-      log(`Responsibility ${resp.role}/${resp.name} completed with code ${code}`);
-
-      if (code === 0) {
-        markResponsibilityComplete(resp.role, resp.name);
-        await sendTelegramAlert(`✅ *${resp.role}*\nCompleted: ${resp.name}`);
-        resolve();
-      } else {
-        await sendTelegramAlert(`❌ *${resp.role}*\nFailed: ${resp.name}`);
-        reject(new Error(`Responsibility failed with code ${code}`));
+  let output = '';
+  try {
+    const { result, success, costUsd, durationMs } = await executeWithStreaming(
+      prompt,
+      (message) => {
+        // Stream output to console
+        if (message.type === 'assistant' && message.message?.content) {
+          for (const block of message.message.content) {
+            if ('text' in block && block.text) {
+              process.stdout.write(block.text);
+              output = block.text;
+            }
+          }
+        }
+      },
+      {
+        model: resp.role === 'trade-research'
+          ? 'claude-sonnet-4-5-20250929'
+          : 'claude-sonnet-4-5-20250929',
       }
-    });
+    );
 
-    claude.on('error', (error: Error) => {
-      log(`Error spawning claude for responsibility: ${error.message}`);
-      reject(error);
-    });
-  });
+    fs.writeFileSync(sessionLogFile, output || result);
+    log(`Responsibility ${resp.role}/${resp.name} completed (cost: $${costUsd.toFixed(4)}, time: ${(durationMs / 1000).toFixed(1)}s)`);
+
+    if (success) {
+      markResponsibilityComplete(resp.role, resp.name);
+      await sendTelegramAlert(`✅ *${resp.role}*\nCompleted: ${resp.name}`);
+    } else {
+      await sendTelegramAlert(`❌ *${resp.role}*\nFailed: ${resp.name}`);
+      throw new Error(`Responsibility failed: ${result}`);
+    }
+  } catch (error: any) {
+    log(`Error executing responsibility: ${error.message}`);
+    await sendTelegramAlert(`❌ *${resp.role}*\nFailed: ${resp.name}\n${error.message}`);
+    throw error;
+  }
 }
 
 /**
- * Spawn an agent for a handoff
+ * Spawn an agent for a handoff using Agent SDK
  */
 async function executeHandoff(handoff: Handoff): Promise<void> {
   log(`Executing handoff: ${handoff.id} (${handoff.type}) for ${handoff.to}`);
@@ -374,51 +374,42 @@ Context: ${JSON.stringify(handoff.context, null, 2)}
 The result of this handoff will be recorded for ${handoff.from} to see.
 `;
 
-  return new Promise((resolve, reject) => {
-    const claude = spawn('claude', [
-      '-p', prompt,
-      '--output-format', 'text',
-      '--dangerously-skip-permissions'
-    ], {
-      cwd: __dirname,
-      stdio: ['ignore', 'pipe', 'pipe'],
-      env: { ...process.env }
-    });
-
-    let output = '';
-
-    claude.stdout?.on('data', (data: Buffer) => {
-      const text = data.toString();
-      output += text;
-      process.stdout.write(text);
-    });
-
-    claude.stderr?.on('data', (data: Buffer) => {
-      const text = data.toString();
-      output += text;
-      process.stderr.write(text);
-    });
-
-    claude.on('close', async (code: number) => {
-      fs.writeFileSync(sessionLogFile, output);
-      log(`Handoff ${handoff.id} completed with code ${code}`);
-
-      if (code === 0) {
-        completeHandoff(handoff.id, { success: true, output: output.slice(-500) });
-        await sendTelegramAlert(`✅ *Handoff completed*\n${handoff.id}`);
-        resolve();
-      } else {
-        completeHandoff(handoff.id, { success: false, error: `Exit code ${code}` });
-        await sendTelegramAlert(`❌ *Handoff failed*\n${handoff.id}`);
-        reject(new Error(`Handoff failed with code ${code}`));
+  let output = '';
+  try {
+    const { result, success, costUsd, durationMs } = await executeWithStreaming(
+      prompt,
+      (message) => {
+        if (message.type === 'assistant' && message.message?.content) {
+          for (const block of message.message.content) {
+            if ('text' in block && block.text) {
+              process.stdout.write(block.text);
+              output = block.text;
+            }
+          }
+        }
+      },
+      {
+        model: 'claude-sonnet-4-5-20250929',
       }
-    });
+    );
 
-    claude.on('error', (error: Error) => {
-      log(`Error spawning claude for handoff: ${error.message}`);
-      reject(error);
-    });
-  });
+    fs.writeFileSync(sessionLogFile, output || result);
+    log(`Handoff ${handoff.id} completed (cost: $${costUsd.toFixed(4)}, time: ${(durationMs / 1000).toFixed(1)}s)`);
+
+    if (success) {
+      completeHandoff(handoff.id, { success: true, output: (output || result).slice(-500) });
+      await sendTelegramAlert(`✅ *Handoff completed*\n${handoff.id}`);
+    } else {
+      completeHandoff(handoff.id, { success: false, error: result });
+      await sendTelegramAlert(`❌ *Handoff failed*\n${handoff.id}`);
+      throw new Error(`Handoff failed: ${result}`);
+    }
+  } catch (error: any) {
+    log(`Error executing handoff: ${error.message}`);
+    completeHandoff(handoff.id, { success: false, error: error.message });
+    await sendTelegramAlert(`❌ *Handoff failed*\n${handoff.id}\n${error.message}`);
+    throw error;
+  }
 }
 
 /**
@@ -455,7 +446,7 @@ async function executeCodePriority(priority: Priority): Promise<void> {
 }
 
 /**
- * Execute a focused agent with minimal, task-specific context
+ * Execute a focused agent with minimal, task-specific context using Agent SDK
  * Instead of loading full state files, we give the model exactly what it needs
  */
 async function executeFocusedAgent(priority: Priority): Promise<void> {
@@ -493,49 +484,39 @@ import { transitionHypothesis, addEvidence, blockHypothesis } from './lib/hypoth
 3. Be concise - this is a focused intervention, not a full session
 `;
 
-  return new Promise((resolve, reject) => {
-    const claude = spawn('claude', [
-      '-p', prompt,
-      '--output-format', 'text',
-      '--dangerously-skip-permissions'
-    ], {
-      cwd: __dirname,
-      stdio: ['ignore', 'pipe', 'pipe'],
-      env: { ...process.env }
-    });
-
-    let output = '';
-
-    claude.stdout?.on('data', (data: Buffer) => {
-      const text = data.toString();
-      output += text;
-      process.stdout.write(text);
-    });
-
-    claude.stderr?.on('data', (data: Buffer) => {
-      const text = data.toString();
-      output += text;
-      process.stderr.write(text);
-    });
-
-    claude.on('close', async (code: number) => {
-      fs.writeFileSync(sessionLogFile, output);
-      log(`Focused agent ${priority.action} completed with code ${code}`);
-
-      if (code === 0) {
-        await sendTelegramAlert(`✅ *Focused task completed*\n${priority.action}`);
-        resolve();
-      } else {
-        await sendTelegramAlert(`❌ *Focused task failed*\n${priority.action}`);
-        reject(new Error(`Focused agent failed with code ${code}`));
+  let output = '';
+  try {
+    const { result, success, costUsd, durationMs } = await executeWithStreaming(
+      prompt,
+      (message) => {
+        if (message.type === 'assistant' && message.message?.content) {
+          for (const block of message.message.content) {
+            if ('text' in block && block.text) {
+              process.stdout.write(block.text);
+              output = block.text;
+            }
+          }
+        }
+      },
+      {
+        model: 'claude-sonnet-4-5-20250929',
       }
-    });
+    );
 
-    claude.on('error', (error: Error) => {
-      log(`Error spawning focused agent: ${error.message}`);
-      reject(error);
-    });
-  });
+    fs.writeFileSync(sessionLogFile, output || result);
+    log(`Focused agent ${priority.action} completed (cost: $${costUsd.toFixed(4)}, time: ${(durationMs / 1000).toFixed(1)}s)`);
+
+    if (success) {
+      await sendTelegramAlert(`✅ *Focused task completed*\n${priority.action}`);
+    } else {
+      await sendTelegramAlert(`❌ *Focused task failed*\n${priority.action}`);
+      throw new Error(`Focused agent failed: ${result}`);
+    }
+  } catch (error: any) {
+    log(`Error executing focused agent: ${error.message}`);
+    await sendTelegramAlert(`❌ *Focused task failed*\n${priority.action}\n${error.message}`);
+    throw error;
+  }
 }
 
 function updateEngineStatus(): void {
@@ -684,7 +665,7 @@ async function executeTask(task: ScheduledTask): Promise<void> {
 
   const sessionLogFile = path.join(LOG_DIR, `session-${task.id}-${Date.now()}.log`);
 
-  // Handle autonomous wake tasks - spawn Claude with general autonomous prompt
+  // Handle autonomous wake tasks using Agent SDK
   if (task.type === 'autonomous') {
     log(`Executing autonomous wake task: ${task.id}`);
 
@@ -710,65 +691,56 @@ Every session must produce OUTPUT - a trade, a hypothesis advanced, or infrastru
 Don't just observe - ACT.
 `;
 
-    return new Promise((resolve, reject) => {
-      const claude = spawn('claude', [
-        '-p', autonomousPrompt,
-        '--output-format', 'text',
-        '--dangerously-skip-permissions'
-      ], {
-        cwd: path.join(__dirname),
-        stdio: ['ignore', 'pipe', 'pipe'],
-        env: { ...process.env }
-      });
-
-      let output = '';
-
-      claude.stdout?.on('data', (data: Buffer) => {
-        const text = data.toString();
-        output += text;
-        process.stdout.write(text);
-      });
-
-      claude.stderr?.on('data', (data: Buffer) => {
-        const text = data.toString();
-        output += text;
-        process.stderr.write(text);
-      });
-
-      claude.on('close', async (code: number) => {
-        fs.writeFileSync(sessionLogFile, output);
-        log(`Autonomous task ${task.id} completed with code ${code}`);
-
-        // Reschedule next autonomous wake
-        if (task.context?.recurring && task.context?.frequency) {
-          const schedule = loadSchedule();
-          const frequencyMs = parseFrequency(task.context.frequency as string);
-          const nextRun = new Date(Date.now() + frequencyMs);
-
-          const newTask: ScheduledTask = {
-            ...task,
-            id: `autonomous-wake-${Date.now()}`,
-            scheduledFor: nextRun.toISOString()
-          };
-          schedule.pendingTasks.push(newTask);
-          saveSchedule(schedule);
-          log(`Scheduled next autonomous wake for ${nextRun.toISOString()}`);
+    let output = '';
+    try {
+      const { result, success, costUsd, durationMs } = await executeWithStreaming(
+        autonomousPrompt,
+        (message) => {
+          if (message.type === 'assistant' && message.message?.content) {
+            for (const block of message.message.content) {
+              if ('text' in block && block.text) {
+                process.stdout.write(block.text);
+                output = block.text;
+              }
+            }
+          }
+        },
+        {
+          model: 'claude-sonnet-4-5-20250929',
         }
+      );
 
-        if (code === 0) {
-          await sendTelegramAlert(`✅ *Autonomous wake completed*\n\`${task.id}\``);
-          resolve();
-        } else {
-          await sendTelegramAlert(`❌ *Autonomous wake failed*\n\`${task.id}\`\nExit code: ${code}`);
-          reject(new Error(`Claude exited with code ${code}`));
-        }
-      });
+      fs.writeFileSync(sessionLogFile, output || result);
+      log(`Autonomous task ${task.id} completed (cost: $${costUsd.toFixed(4)}, time: ${(durationMs / 1000).toFixed(1)}s)`);
 
-      claude.on('error', (error: Error) => {
-        log(`Error spawning claude for autonomous task: ${error.message}`);
-        reject(error);
-      });
-    });
+      // Reschedule next autonomous wake
+      if (task.context?.recurring && task.context?.frequency) {
+        const schedule = loadSchedule();
+        const frequencyMs = parseFrequency(task.context.frequency as string);
+        const nextRun = new Date(Date.now() + frequencyMs);
+
+        const newTask: ScheduledTask = {
+          ...task,
+          id: `autonomous-wake-${Date.now()}`,
+          scheduledFor: nextRun.toISOString()
+        };
+        schedule.pendingTasks.push(newTask);
+        saveSchedule(schedule);
+        log(`Scheduled next autonomous wake for ${nextRun.toISOString()}`);
+      }
+
+      if (success) {
+        await sendTelegramAlert(`✅ *Autonomous wake completed*\n\`${task.id}\``);
+      } else {
+        await sendTelegramAlert(`❌ *Autonomous wake failed*\n\`${task.id}\`\n${result}`);
+        throw new Error(`Autonomous task failed: ${result}`);
+      }
+    } catch (error: any) {
+      log(`Error executing autonomous task: ${error.message}`);
+      await sendTelegramAlert(`❌ *Autonomous wake failed*\n\`${task.id}\`\n${error.message}`);
+      throw error;
+    }
+    return;
   }
 
   // Handle pipeline tasks directly without spawning Claude
@@ -827,52 +799,42 @@ Don't just observe - ACT.
     }
   }
 
-  // For non-pipeline tasks, spawn Claude
+  // For non-pipeline tasks, use Agent SDK
   const prompt = buildPrompt(task);
 
-  return new Promise((resolve, reject) => {
-    const claude = spawn('claude', [
-      '-p', prompt,
-      '--output-format', 'text',
-      '--dangerously-skip-permissions'
-    ], {
-      cwd: path.join(__dirname),
-      stdio: ['ignore', 'pipe', 'pipe'],  // ignore stdin to prevent hanging
-      env: { ...process.env }
-    });
-
-    let output = '';
-
-    claude.stdout?.on('data', (data: Buffer) => {
-      const text = data.toString();
-      output += text;
-      process.stdout.write(text);
-    });
-
-    claude.stderr?.on('data', (data: Buffer) => {
-      const text = data.toString();
-      output += text;
-      process.stderr.write(text);
-    });
-
-    claude.on('close', async (code: number) => {
-      fs.writeFileSync(sessionLogFile, output);
-      log(`Task ${task.id} completed with code ${code}`);
-
-      if (code === 0) {
-        await sendTelegramAlert(`✅ *Task completed*\n\`${task.id}\``);
-        resolve();
-      } else {
-        await sendTelegramAlert(`❌ *Task failed*\n\`${task.id}\`\nExit code: ${code}`);
-        reject(new Error(`Claude exited with code ${code}`));
+  let output = '';
+  try {
+    const { result, success, costUsd, durationMs } = await executeWithStreaming(
+      prompt,
+      (message) => {
+        if (message.type === 'assistant' && message.message?.content) {
+          for (const block of message.message.content) {
+            if ('text' in block && block.text) {
+              process.stdout.write(block.text);
+              output = block.text;
+            }
+          }
+        }
+      },
+      {
+        model: 'claude-sonnet-4-5-20250929',
       }
-    });
+    );
 
-    claude.on('error', (error: Error) => {
-      log(`Error spawning claude: ${error.message}`);
-      reject(error);
-    });
-  });
+    fs.writeFileSync(sessionLogFile, output || result);
+    log(`Task ${task.id} completed (cost: $${costUsd.toFixed(4)}, time: ${(durationMs / 1000).toFixed(1)}s)`);
+
+    if (success) {
+      await sendTelegramAlert(`✅ *Task completed*\n\`${task.id}\``);
+    } else {
+      await sendTelegramAlert(`❌ *Task failed*\n\`${task.id}\`\n${result}`);
+      throw new Error(`Task failed: ${result}`);
+    }
+  } catch (error: any) {
+    log(`Error executing task: ${error.message}`);
+    await sendTelegramAlert(`❌ *Task failed*\n\`${task.id}\`\n${error.message}`);
+    throw error;
+  }
 }
 
 function parseFrequency(freq: string): number {
@@ -1090,15 +1052,35 @@ switch (command) {
     break;
 
   case 'query':
-    // Interactive query mode - spawn claude with context
+    // Interactive query mode using Agent SDK
     const queryPrompt = process.argv.slice(3).join(' ') || 'What is your current status?';
-    spawn('claude', [
-      '-p', `You are the trader agent. Read state/status.md and answer this query: ${queryPrompt}`,
-      '--permission-mode', 'bypassPermissions'
-    ], {
-      cwd: __dirname,
-      stdio: 'inherit'
-    });
+    (async () => {
+      try {
+        const { result, success } = await executeWithStreaming(
+          `You are the trader agent. Read state/status.md and answer this query: ${queryPrompt}`,
+          (message) => {
+            if (message.type === 'assistant' && message.message?.content) {
+              for (const block of message.message.content) {
+                if ('text' in block && block.text) {
+                  process.stdout.write(block.text);
+                }
+              }
+            }
+          },
+          {
+            model: 'claude-sonnet-4-5-20250929',
+          }
+        );
+        if (!success) {
+          console.error('\nQuery failed:', result);
+          process.exit(1);
+        }
+        console.log(''); // Add newline after streaming output
+      } catch (error: any) {
+        console.error('Error executing query:', error.message);
+        process.exit(1);
+      }
+    })();
     break;
 
   default:
