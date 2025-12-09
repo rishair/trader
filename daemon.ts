@@ -686,53 +686,133 @@ async function executeTask(task: ScheduledTask): Promise<void> {
 
   const sessionLogFile = path.join(LOG_DIR, `session-${task.id}-${Date.now()}.log`);
 
-  // Handle autonomous wake tasks using Agent SDK
+  // Handle autonomous wake tasks - orchestrator pattern
+  // Phase 1: Read-only orchestrator decides what to do
+  // Phase 2: Spawn the appropriate agent to execute
   if (task.type === 'autonomous') {
     log(`Executing autonomous wake task: ${task.id}`);
 
-    const autonomousPrompt = `You are waking up for autonomous operation.
+    // Phase 1: Orchestrator gathers context and decides
+    const orchestratorPrompt = `You are the Orchestrator deciding what needs attention.
 
-## Your Mission
-Read MISSION.md for your full operating instructions.
+## Your Job
+1. Read state files to understand the current situation
+2. Check for: errors, stuck hypotheses, portfolio risks, system health issues
+3. Decide: Is the highest priority task for Trade Research or Agent Engineer?
+4. Return a JSON decision (do NOT execute the work yourself)
 
-## Current Task
-ID: ${task.id}
-Description: ${task.description}
+## Files to Check
+- state/trading/hypotheses.json - hypothesis health, stuck items
+- state/trading/portfolio.json - positions, P&L, risks
+- state/trading/engine-status.json - overall engine health
+- state/agent-engineering/health.json - system errors, issues
+- state/orchestrator/handoffs.json - pending requests between agents
 
-## Instructions
-1. Read state/status.md, state/hypotheses.json, state/portfolio.json
-2. Identify the highest-priority actionable task
-3. Execute that task - advance a hypothesis, make a trade, fix something
-4. Update state files with results
-5. Log your session summary to state/logs/
-6. Update state/status.md with current status
+## Agent Responsibilities
+- **trade-research**: Hypotheses, strategies, trades, market analysis, portfolio decisions
+- **agent-engineer**: Tools, infrastructure, fixes, system improvements, capabilities
 
-## Key Principle
-Every session must produce OUTPUT - a trade, a hypothesis advanced, or infrastructure fixed.
-Don't just observe - ACT.
+## Output Format (JSON only, no other text)
+{
+  "agent": "trade-research" | "agent-engineer",
+  "task": "specific description of what needs doing",
+  "context": { "key data the agent needs" },
+  "priority": "high" | "medium" | "low",
+  "rationale": "why this is the top priority right now"
+}
+
+You are READ-ONLY. Do not modify any files. Your only job is to decide and delegate.
 `;
 
-    let output = '';
+    let orchestratorOutput = '';
     try {
-      const { result, success, costUsd, durationMs } = await executeWithStreaming(
-        autonomousPrompt,
+      // Phase 1: Get orchestrator decision (read-only, Opus for judgment)
+      log('Phase 1: Orchestrator gathering context and deciding...');
+      const { result: orchestratorResult, success: orchestratorSuccess, costUsd: orchestratorCost } = await executeWithStreaming(
+        orchestratorPrompt,
         (message) => {
           if (message.type === 'assistant' && message.message?.content) {
             for (const block of message.message.content) {
               if ('text' in block && block.text) {
                 process.stdout.write(block.text);
-                output = block.text;
+                orchestratorOutput = block.text;
               }
             }
           }
         },
         {
-          model: 'claude-sonnet-4-5-20250929',
+          model: 'claude-opus-4-20250514',
+          tools: ['Read', 'Glob', 'Grep'], // Read-only tools
         }
       );
 
-      fs.writeFileSync(sessionLogFile, output || result);
-      log(`Autonomous task ${task.id} completed (cost: $${costUsd.toFixed(4)}, time: ${(durationMs / 1000).toFixed(1)}s)`);
+      if (!orchestratorSuccess) {
+        throw new Error(`Orchestrator failed: ${orchestratorResult}`);
+      }
+
+      log(`Orchestrator decision (cost: $${orchestratorCost.toFixed(4)})`);
+
+      // Parse the orchestrator's JSON decision
+      // Extract JSON from the output (may have markdown code blocks)
+      const jsonMatch = orchestratorOutput.match(/\{[\s\S]*\}/);
+      if (!jsonMatch) {
+        throw new Error(`Orchestrator did not return valid JSON: ${orchestratorOutput}`);
+      }
+
+      const decision = JSON.parse(jsonMatch[0]) as {
+        agent: 'trade-research' | 'agent-engineer';
+        task: string;
+        context: Record<string, unknown>;
+        priority: 'high' | 'medium' | 'low';
+        rationale: string;
+      };
+
+      log(`Decision: ${decision.agent} - ${decision.task} (${decision.priority})`);
+      fs.writeFileSync(sessionLogFile, `Orchestrator Decision:\n${JSON.stringify(decision, null, 2)}\n\n`);
+
+      // Phase 2: Spawn the appropriate agent to execute
+      log(`Phase 2: Spawning ${decision.agent} agent...`);
+      await sendTelegramAlert(`🎯 *Orchestrator decided*\nAgent: ${decision.agent}\nTask: ${decision.task}\nPriority: ${decision.priority}`);
+
+      const agentPrompt = `## Task from Orchestrator
+${decision.task}
+
+## Context
+${JSON.stringify(decision.context, null, 2)}
+
+## Priority: ${decision.priority}
+
+## Rationale
+${decision.rationale}
+
+Execute this task. Use the appropriate libraries (lib/trading.ts, lib/hypothesis.ts, etc.) and update state files as needed.`;
+
+      let agentOutput = '';
+      const agentQuery = executeAgentByRole(
+        decision.agent as 'trade-research' | 'agent-engineer',
+        agentPrompt
+      );
+
+      for await (const message of agentQuery) {
+        if (message.type === 'assistant' && message.message?.content) {
+          for (const block of message.message.content) {
+            if ('text' in block && block.text) {
+              process.stdout.write(block.text);
+              agentOutput = block.text;
+            }
+          }
+        }
+        if (message.type === 'result') {
+          if (message.subtype === 'success') {
+            agentOutput = message.result;
+            log(`Agent completed (cost: $${message.total_cost_usd.toFixed(4)}, time: ${(message.duration_ms / 1000).toFixed(1)}s)`);
+          } else {
+            throw new Error(`Agent failed: ${message.errors?.join(', ')}`);
+          }
+        }
+      }
+
+      fs.appendFileSync(sessionLogFile, `\nAgent Output:\n${agentOutput}`);
 
       // Reschedule next autonomous wake
       if (task.context?.recurring && task.context?.frequency) {
@@ -750,12 +830,8 @@ Don't just observe - ACT.
         log(`Scheduled next autonomous wake for ${nextRun.toISOString()}`);
       }
 
-      if (success) {
-        await sendTelegramAlert(`✅ *Autonomous wake completed*\n\`${task.id}\``);
-      } else {
-        await sendTelegramAlert(`❌ *Autonomous wake failed*\n\`${task.id}\`\n${result}`);
-        throw new Error(`Autonomous task failed: ${result}`);
-      }
+      await sendTelegramAlert(`✅ *Autonomous wake completed*\n\`${task.id}\`\nAgent: ${decision.agent}`);
+
     } catch (error: any) {
       log(`Error executing autonomous task: ${error.message}`);
       await sendTelegramAlert(`❌ *Autonomous wake failed*\n\`${task.id}\`\n${error.message}`);
