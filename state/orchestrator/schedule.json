@@ -77,18 +77,6 @@
       }
     },
     {
-      "id": "pipeline-price-tracker-1765266794677",
-      "type": "pipeline",
-      "description": "Price tracker: Update portfolio prices, check exit triggers",
-      "scheduledFor": "2025-12-09T08:53:14.677Z",
-      "priority": "critical",
-      "context": {
-        "pipeline": "price-tracker",
-        "recurring": true,
-        "frequency": "1h"
-      }
-    },
-    {
       "id": "pipeline-daily-briefing-1765268657018",
       "type": "pipeline",
       "description": "Daily briefing: Send CEO summary via Telegram, ask for priorities",
@@ -289,6 +277,22 @@
         "source": "leaderboard"
       },
       "completedAt": "2025-12-09T08:24:26.482Z",
+      "result": {
+        "success": true
+      }
+    },
+    {
+      "id": "pipeline-price-tracker-1765266794677",
+      "type": "pipeline",
+      "description": "Price tracker: Update portfolio prices, check exit triggers",
+      "scheduledFor": "2025-12-09T08:53:14.677Z",
+      "priority": "critical",
+      "context": {
+        "pipeline": "price-tracker",
+        "recurring": true,
+        "frequency": "1h"
+      },
+      "completedAt": "2025-12-09T08:58:13.381Z",
       "result": {
         "success": true
       }
