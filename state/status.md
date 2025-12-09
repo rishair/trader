@@ -1,115 +1,116 @@
 # Agent Status
 
-**Last Updated:** 2025-12-08 15:30 UTC (Autonomous wake session)
+**Last Updated:** 2025-12-09 08:30 UTC (Autonomous wake - stale task cleanup)
 **Phase:** Active Trading - Hypothesis Testing
 
 ## Current Focus
 
-Testing three hypotheses simultaneously:
-1. **hyp-005** (volatility mispricing): Active AAPL position, down 4.4% from entry
-2. **hyp-002** (momentum): Tracking Time POTY market - early data contradicts hypothesis
-3. **hyp-003** (liquidity rewards): Research complete, moved to testing - needs MM infrastructure
+Testing multiple hypotheses with 4 open positions:
+1. **hyp-002** (momentum): 2 positions (Fed YES 95¢, NVDA YES 91¢)
+2. **hyp-006/hyp-mixz8efs** (volume signals + geopolitical optimism): Ukraine NO 60¢
+3. **hyp-010** (conviction betting): Bitcoin $150k NO 85¢
 
 ## Portfolio Status
 
-- **Cash:** $9,500.05
-- **Positions:** 1 active
-- **Total Value:** $9,977.78
-- **P&L:** -$22.22 (-0.22%)
+- **Cash:** $9,758.31 (97.6%)
+- **Positions:** 4/10 active
+- **Total Return:** -$133.32 (-1.33%)
+- **Win Rate:** 0% (0W/1L)
 
-## Active Position Status
+## Active Positions
 
-| Trade ID | Market | Position | Entry | Current | Change | Shares | P&L | Days Left |
-|----------|--------|----------|-------|---------|--------|--------|-----|-----------|
-| trade-001 | Largest Company EOY 2025 | AAPL YES | 9.0¢ | 8.6¢ | -4.4% | 5,555 | -$22.22 | 23 |
+| Trade ID | Market | Position | Entry | Current | P&L | Hypothesis |
+|----------|--------|----------|-------|---------|-----|------------|
+| trade-mixt4w9j | Fed 3 cuts 2025 | YES | 95¢ | 95¢ | $0 | hyp-002 |
+| trade-mixt4w9m | Ukraine ceasefire | NO | 60¢ | 60¢ | $0 | hyp-006, hyp-mixz8efs |
+| trade-mixt4w9n | BTC $150k | NO | 85¢ | 85¢ | $0 | hyp-010 |
+| trade-mixt4w9o | NVDA largest co | YES | 91¢ | 91¢ | $0 | hyp-002 |
 
-**Exit Triggers:**
-- Stop Loss: 4.0¢ (NOT HIT)
-- Take Profit: 20.0¢ (NOT HIT)
-- Time Limit: Dec 31, 2025
+**Exit Status:** No triggers hit on any positions
 
-## Hypotheses Under Test
+## Recent Closed Positions
 
-| ID | Hypothesis | Status | Confidence | Notes |
-|----|----|--------|------------|-------|
-| hyp-001 | Tail-risk markets overpriced | invalidated | 25% | Closed - markets efficient |
-| hyp-002 | Momentum in closing markets | **testing** | 30% | Early data contradicts - prices compressing |
-| hyp-003 | Liquidity rewards +EV | **testing** | 45% | Research done, needs MM bot |
-| hyp-004 | Copy top traders | proposed | 40% | Needs leaderboard scraper |
-| hyp-005 | Multi-outcome volatility mispricing | **testing** | 50% | Active trade |
+| Trade ID | Market | Entry → Exit | P&L | Result | Date |
+|----------|--------|--------------|-----|--------|------|
+| trade-001 | AAPL largest co | 9¢ → 6.6¢ | -$133.32 (-26.7%) | LOSS | 2025-12-08 |
 
-### hyp-002 Momentum Tracking
+**Lesson:** Don't bet against momentum near resolution. Market correctly priced NVDA strength.
 
-**Time Person of Year 2025** (closes Dec 31):
-| Candidate | Baseline (12:00) | Current (15:25) | Change |
-|-----------|------------------|-----------------|--------|
-| AI | 39.0% | 38.5% | -1.3% |
-| Jensen Huang | 21.0% | 19.5% | -7.1% |
-| Sam Altman | 14.0% | 12.5% | -10.7% |
-| Trump | 5.0% | 5.0% | 0% |
+## Hypotheses Status
 
-**Early Finding:** All candidates declining, not momentum toward leader. Contradicts hypothesis.
-
-### hyp-003 Liquidity Rewards Research Summary
-
-**Key Findings:**
-- NOT risk-free, but can be +EV with proper infrastructure
-- Two programs: daily rewards (quadratic scoring, 3x for two-sided) + 4% APY holding
-- Reported earnings: $200-800/day peak, reduced post-election
-- Requirements: automated execution, capital, pricing models
-- Competition "not fierce" - window of opportunity
-
-**Next Steps:**
-1. Query CLOB API for reward parameters per market
-2. Identify low-volatility markets
-3. Build simple two-sided quoting bot
+| ID | Statement | Status | Confidence | Evidence |
+|----|-----------|--------|------------|----------|
+| hyp-001 | Tail-risk overpriced | invalidated | 25% | 3 markets checked - all efficient |
+| hyp-002 | Closing momentum | **testing** | 40% | Mixed signals, 2 active positions |
+| hyp-003 | Liquidity rewards +EV | testing | 45% | Research done, needs bot |
+| hyp-004 | Top trader patterns | testing | 55% | Analysis complete |
+| hyp-005 | Volatility mispricing | **invalidated** | 15% | AAPL loss proved market right |
+| hyp-006 | Volume signals | **testing** | 35% | Ukraine position active |
+| hyp-mixz8efs | Geopolitical optimism bias | **testing** | 60% | Ukraine position active |
+| hyp-010 | Conviction betting | **testing** | 50% | BTC position active |
 
 ## Recent Activity
 
-- **2025-12-08 15:30 UTC (This Session):**
-  - AAPL price update: 8.6¢ (down from 8.7¢), P&L now -$22.22
-  - Time POTY momentum check: ALL candidates down - contradicts hyp-002
-  - hyp-003 research complete: liquidity rewards can be +EV but not risk-free
-  - Moved hyp-003 from "proposed" to "testing"
-  - Confidence updates: hyp-002 reduced to 30%, hyp-003 refined to 45%
+**2025-12-09 08:30 UTC (This Session):**
+- Woke for monitor-003 task (check AAPL position)
+- Discovered task was **stale** - trade-001 already closed Dec 8
+- Cleaned up schedule.json (removed stale monitoring task)
+- Verified current portfolio: 4 positions, all stable, no exit triggers
+- Created session log
 
-- **2025-12-08 Earlier Sessions:**
-  - Built price tracker (imp-003)
-  - Established momentum tracking baselines
-  - Updated AAPL position tracking
+**2025-12-09 Earlier:**
+- Daily briefing sent to CEO via Telegram
+- Leaderboard tracking complete
+- Price tracker running hourly
+- 4 new positions opened testing various hypotheses
 
-## System Capabilities
+**2025-12-08:**
+- Closed AAPL position: -$133.32 loss
+- Invalidated hyp-005 (volatility mispricing)
+- Opened 4 new positions across 3 hypotheses
+- Multiple pipeline runs (closing scanner, hypothesis tester, etc.)
 
-### Operational Tools
-- Price tracker: `npm run prices` (working)
-- Polymarket CLOB API integration (working)
-- Telegram bot (working)
+## System Health
 
-### Pending Infrastructure
-- Leaderboard scraper (for hyp-004)
-- Market making bot (for hyp-003)
+**Operational Pipelines:**
+- ✅ Price tracker (hourly)
+- ✅ Hypothesis tester (4h)
+- ✅ Closing scanner (6h)
+- ✅ Trade retrospective (6h)
+- ✅ Health check (12h)
+- ✅ Daily briefing (24h)
+- ✅ Leaderboard tracker (24h)
+
+**Infrastructure:**
+- Polymarket CLOB API: working
+- Telegram bot: working
+- Price tracking: working
+- Paper trading: working
 
 ## Upcoming Tasks
 
 | Time (UTC) | Task | Priority |
 |------------|------|----------|
-| Dec 8 19:00 | Health check | High |
-| Dec 9 08:00 | AAPL position monitor | High |
-| Dec 9 08:00 | Leaderboard tracker | High |
-| Dec 9 10:00 | Liquidity rewards API exploration | Medium |
-| Dec 14 10:00 | Weekly retrospective | High |
+| Dec 9 08:53 | Price tracker | Critical |
+| Dec 9 10:00 | Liquidity rewards research | Medium |
+| Dec 9 11:50 | Hypothesis tester | High |
+| Dec 9 13:51 | Closing scanner | High |
+| Dec 9 19:19 | Health check | High |
+| Dec 10 08:24 | Daily briefing | High |
 
-## Key Insights This Session
+## Key Insights
 
-1. **Momentum hypothesis weakening:** Early data from Time POTY shows price compression (all candidates down), not momentum toward leader. May indicate market uncertainty rather than pile-in effect.
+1. **Momentum learning:** AAPL loss validated that markets DO price momentum correctly near resolution. Don't fade momentum without strong catalyst.
 
-2. **Liquidity rewards opportunity:** Research confirms +EV potential but requires infrastructure investment. Low competition currently = window of opportunity.
+2. **Position diversification:** Now testing 4 different hypotheses simultaneously rather than single bets. Better risk distribution.
 
-3. **AAPL position:** Small additional decline (8.7¢ → 8.6¢) but well within normal volatility. Thesis unchanged with 23 days remaining.
+3. **Task hygiene:** Need to clean up stale monitoring tasks when positions close. Should automate this.
+
+4. **Pipeline effectiveness:** Automated pipelines (price tracker, hypothesis tester, etc.) are functioning well and handling routine monitoring.
 
 ## Notes for Next Session
 
-1. Continue daily AAPL price monitoring
-2. Track Time POTY for hyp-002 momentum data
-3. Consider starting hyp-003 infrastructure (MM bot)
-4. Prepare for Dec 10 Fed rate market resolution (post-hoc analysis for hyp-002)
+- All positions stable, continue normal monitoring via pipelines
+- Fed decision Dec 10 will resolve trade-mixt4w9j (test of hyp-002)
+- Ukraine ceasefire Dec 31 deadline tests hyp-mixz8efs thesis
+- Watch for new opportunities via closing-scanner pipeline

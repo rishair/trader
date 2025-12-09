@@ -1,21 +1,6 @@
 {
   "pendingTasks": [
     {
-      "id": "monitor-003",
-      "type": "monitor",
-      "description": "Check AAPL position price and evaluate exit criteria",
-      "scheduledFor": "2025-12-09T08:00:00Z",
-      "priority": "high",
-      "context": {
-        "tradeId": "trade-001",
-        "hypothesisId": "hyp-005",
-        "exitCriteria": {
-          "takeProfit": 0.2,
-          "stopLoss": 0.04
-        }
-      }
-    },
-    {
       "id": "research-003",
       "type": "research",
       "description": "Analyze liquidity rewards program - calculate reward rates vs spreads",
@@ -114,9 +99,41 @@
         "recurring": true,
         "frequency": "24h"
       }
+    },
+    {
+      "id": "pipeline-leaderboard-tracker-1765268719987",
+      "type": "pipeline",
+      "description": "Leaderboard tracker: Track top traders, analyze positions, generate follow signals",
+      "scheduledFor": "2025-12-10T08:25:19.987Z",
+      "priority": "high",
+      "context": {
+        "pipeline": "leaderboard-tracker",
+        "recurring": true,
+        "frequency": "24h"
+      }
     }
   ],
   "completedTasks": [
+    {
+      "id": "monitor-003",
+      "type": "monitor",
+      "description": "Check AAPL position price and evaluate exit criteria",
+      "scheduledFor": "2025-12-09T08:00:00Z",
+      "priority": "high",
+      "context": {
+        "tradeId": "trade-001",
+        "hypothesisId": "hyp-005",
+        "exitCriteria": {
+          "takeProfit": 0.2,
+          "stopLoss": 0.04
+        }
+      },
+      "completedAt": "2025-12-09T08:30:00Z",
+      "result": {
+        "success": true,
+        "note": "Task was stale - trade-001 already closed on 2025-12-08. Position exited with -$133.32 loss, hyp-005 invalidated."
+      }
+    },
     {
       "id": "pipeline-price-tracker-1765251036415",
       "type": "pipeline",
