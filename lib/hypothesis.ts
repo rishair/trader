@@ -14,10 +14,10 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { sendMessage } from '../tools/telegram/bot';
+import { librarySearch, libraryAdd, type Learning, type LearningCategory, type LearningSourceType } from './library';
 
 const STATE_DIR = path.join(__dirname, '..', 'state');
 const HYPOTHESES_FILE = path.join(STATE_DIR, 'trading/hypotheses.json');
-const LEARNINGS_FILE = path.join(STATE_DIR, 'trading/learnings.json');
 const HANDOFFS_FILE = path.join(STATE_DIR, 'orchestrator/handoffs.json');
 
 // ============================================================================
@@ -547,13 +547,29 @@ function meetsValidationCriteria(hypothesis: Hypothesis): boolean {
 
 async function logLearning(hypothesis: Hypothesis, conclusion: string): Promise<void> {
   try {
-    const learnings = JSON.parse(fs.readFileSync(LEARNINGS_FILE, 'utf-8'));
+    // Generate dense claim from hypothesis outcome
+    const status = hypothesis.status === 'validated' ? 'validated' : 'invalidated';
+    const claim = hypothesis.status === 'validated'
+      ? `${hypothesis.statement.slice(0, 100)} - CONFIRMED with ${(hypothesis.confidence * 100).toFixed(0)}% confidence.`
+      : `${hypothesis.statement.slice(0, 100)} - DISPROVEN: ${conclusion.slice(0, 100)}`;
 
-    const learning = {
-      id: `learning-${hypothesis.id}-${Date.now().toString(36)}`,
-      category: 'hypothesis',
-      title: `${hypothesis.status === 'validated' ? '✅' : '❌'} ${hypothesis.id}: ${hypothesis.statement.slice(0, 50)}...`,
-      content: `
+    // Extract tags from hypothesis content
+    const hypothesisText = `${hypothesis.statement} ${hypothesis.rationale}`.toLowerCase();
+    const tags: string[] = ['hypothesis'];
+
+    // Common trading keywords to tag
+    const tagKeywords = [
+      'momentum', 'arbitrage', 'spread', 'liquidity', 'volatility',
+      'market-maker', 'sports', 'crypto', 'politics', 'closing',
+      'leaderboard', 'contrarian', 'mispricing'
+    ];
+    for (const tag of tagKeywords) {
+      if (hypothesisText.includes(tag.replace('-', ' ')) || hypothesisText.includes(tag)) {
+        tags.push(tag);
+      }
+    }
+
+    const content = `
 ## Hypothesis ${hypothesis.status.toUpperCase()}
 
 **Statement:** ${hypothesis.statement}
@@ -577,15 +593,21 @@ ${hypothesis.testResults ? `
 ${hypothesis.evidence.slice(-3).map(e =>
   `- ${e.date.split('T')[0]}: ${e.observation.slice(0, 150)}...`
 ).join('\n')}
-      `.trim(),
-      source: `Hypothesis ${hypothesis.id} ${hypothesis.status}`,
-      actionable: hypothesis.status === 'validated',
-      appliedTo: [hypothesis.id],
-      createdAt: new Date().toISOString(),
-    };
+    `.trim();
 
-    learnings.insights.push(learning);
-    fs.writeFileSync(LEARNINGS_FILE, JSON.stringify(learnings, null, 2));
+    // Use libraryAdd from lib/library.ts
+    libraryAdd({
+      claim,
+      content,
+      tags,
+      category: 'hypothesis',
+      confidence: hypothesis.confidence,
+      source: `Hypothesis ${hypothesis.id} ${status}`,
+      sourceType: 'experiment',
+      appliedTo: [hypothesis.id],
+      title: `${hypothesis.status === 'validated' ? '✅' : '❌'} ${hypothesis.id}: ${hypothesis.statement.slice(0, 50)}...`,
+      actionable: hypothesis.status === 'validated',
+    });
   } catch (error) {
     console.error('[Hypothesis] Failed to log learning:', error);
   }
@@ -595,17 +617,8 @@ ${hypothesis.evidence.slice(-3).map(e =>
 // Learning-Informed Confidence
 // ============================================================================
 
-export interface Learning {
-  id: string;
-  category: string;
-  title: string;
-  content: string;
-  source: string;
-  actionable: boolean;
-  appliedTo: string[];
-  createdAt: string;
-  references?: string[];
-}
+// Re-export Learning type from library
+export type { Learning, LearningCategory, LearningSourceType } from './library';
 
 export interface ConfidenceMovement {
   hypothesisId: string;
@@ -619,65 +632,18 @@ export interface ConfidenceMovement {
 // Track confidence movements in state
 const CONFIDENCE_HISTORY_FILE = path.join(STATE_DIR, 'trading/confidence-history.json');
 
-function loadLearnings(): Learning[] {
-  try {
-    const data = JSON.parse(fs.readFileSync(LEARNINGS_FILE, 'utf-8'));
-    return data.insights || [];
-  } catch {
-    return [];
-  }
-}
-
 /**
- * Find learnings related to a hypothesis based on:
- * - Direct appliedTo linkage
- * - Category match (strategy, market, hypothesis)
- * - Content similarity (keyword matching)
+ * Find learnings related to a hypothesis.
+ * Delegates to librarySearch from lib/library.ts
  */
 export function getRelatedLearnings(hypothesis: Hypothesis): Learning[] {
-  const learnings = loadLearnings();
-  const related: Learning[] = [];
+  // Build search query from hypothesis text
+  const hypothesisText = `${hypothesis.statement} ${hypothesis.rationale} ${hypothesis.testMethod || ''}`;
 
-  // Keywords to match from hypothesis statement and rationale
-  const hypothesisText = `${hypothesis.statement} ${hypothesis.rationale} ${hypothesis.testMethod || ''}`.toLowerCase();
-  const keywords = extractKeywords(hypothesisText);
-
-  for (const learning of learnings) {
-    // Direct linkage - highest priority
-    if (learning.appliedTo?.includes(hypothesis.id)) {
-      related.push(learning);
-      continue;
-    }
-
-    // Category matches for hypothesis-related learnings
-    if (['hypothesis', 'strategy', 'market'].includes(learning.category)) {
-      const learningText = `${learning.title} ${learning.content}`.toLowerCase();
-
-      // Check for keyword matches
-      const matchCount = keywords.filter(kw => learningText.includes(kw)).length;
-      if (matchCount >= 2) {
-        related.push(learning);
-      }
-    }
-  }
+  // Search library for relevant learnings
+  const related = librarySearch(hypothesisText);
 
   return related;
-}
-
-/**
- * Extract meaningful keywords for matching
- */
-function extractKeywords(text: string): string[] {
-  // Common trading/market keywords to look for
-  const importantTerms = [
-    'momentum', 'arbitrage', 'spread', 'liquidity', 'volatility',
-    'market maker', 'mm', 'sports', 'crypto', 'politics', 'election',
-    'contrarian', 'mean reversion', 'trend', 'overpriced', 'underpriced',
-    'tail risk', 'edge', 'mispricing', 'polymarket', 'closing',
-    'leaderboard', 'top traders', 'hft', 'high frequency',
-  ];
-
-  return importantTerms.filter(term => text.includes(term));
 }
 
 /**
