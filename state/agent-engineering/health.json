@@ -1,21 +1,25 @@
 {
-  "lastCheck": "2025-12-09T01:40:00Z",
+  "lastCheck": "2025-12-09T01:43:00Z",
   "status": "healthy",
   "services": {
     "telegram-handler": { "status": "running", "lastSeen": "2025-12-09T01:37:00Z", "pid": 25257 },
-    "daemon": { "status": "running", "lastSeen": "2025-12-09T01:37:00Z", "pid": 55911, "restartCount": 12 }
+    "daemon": { "status": "running", "lastSeen": "2025-12-09T01:40:19Z", "pid": 56630, "restartCount": 1 }
   },
   "recentErrors": [],
   "pipelineStatus": {
     "price-drift-detector": {
-      "status": "healthy",
-      "lastRun": "2025-12-09T01:38:32.835Z",
+      "status": "fixed",
+      "lastRun": "2025-12-09T01:41:01.586Z",
       "lastResult": "success",
       "marketsScanned": 50,
-      "driftsDetected": 11,
-      "hypothesesGenerated": 2,
-      "alertsSent": 7,
-      "note": "False alarm - pipeline is working correctly. Last 3 runs all completed successfully."
+      "driftsDetected": 2,
+      "hypothesesGenerated": 0,
+      "alertsSent": 0,
+      "issue": "Pipeline was not scheduled - missing from pendingTasks after daemon restart",
+      "rootCause": "Daemon restarts don't immediately trigger ensurePipelinesScheduled() - there's a race condition where schedule.json can be missing recurring tasks between daemon restart and first tick execution",
+      "fix": "Manually added price-drift-detector, closing-scanner, and trade-retrospective to schedule. All 8 recurring pipelines now scheduled.",
+      "preventiveMeasure": "ensurePipelinesScheduled() should run on daemon startup, not just on tick. Consider adding initialization phase.",
+      "fixedAt": "2025-12-09T01:42:25Z"
     }
   },
   "scheduledTasksStatus": {

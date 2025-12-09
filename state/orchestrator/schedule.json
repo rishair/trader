@@ -106,15 +106,39 @@
       }
     },
     {
-      "id": "pipeline-price-drift-detector-1765242777761",
+      "id": "pipeline-price-drift-detector-1765244545225",
       "type": "pipeline",
       "description": "Price drift detector: Monitor markets for sudden moves, generate follow signals",
-      "scheduledFor": "2025-12-09T02:12:57.761Z",
+      "scheduledFor": "2025-12-09T02:42:25.225Z",
       "priority": "high",
       "context": {
         "pipeline": "price-drift-detector",
         "recurring": true,
         "frequency": "1h"
+      }
+    },
+    {
+      "id": "pipeline-closing-scanner-1765244559821",
+      "type": "pipeline",
+      "description": "Closing-soon scanner: Find markets closing in 72h, check momentum, generate hypotheses",
+      "scheduledFor": "2025-12-09T07:42:39.821Z",
+      "priority": "high",
+      "context": {
+        "pipeline": "closing-scanner",
+        "recurring": true,
+        "frequency": "6h"
+      }
+    },
+    {
+      "id": "pipeline-trade-retrospective-1765244559821",
+      "type": "pipeline",
+      "description": "Trade retrospective: Analyze resolved trades, update confidence, add learnings",
+      "scheduledFor": "2025-12-09T07:42:39.821Z",
+      "priority": "medium",
+      "context": {
+        "pipeline": "trade-retrospective",
+        "recurring": true,
+        "frequency": "6h"
       }
     }
   ],
