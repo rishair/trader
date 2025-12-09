@@ -341,6 +341,19 @@
         "frequency": "4h"
       },
       "completedAt": "2025-12-09T03:29:48.793Z"
+    },
+    {
+      "id": "pipeline-price-tracker-1765251036415",
+      "type": "pipeline",
+      "description": "Price tracker: Update portfolio prices, check exit triggers",
+      "scheduledFor": "2025-12-09T04:30:36.415Z",
+      "priority": "critical",
+      "context": {
+        "pipeline": "price-tracker",
+        "recurring": true,
+        "frequency": "1h"
+      },
+      "completedAt": "2025-12-09T04:30:46.687Z"
     }
   ],
   "schema": {
