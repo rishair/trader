@@ -1,18 +1,6 @@
 {
   "pendingTasks": [
     {
-      "id": "pipeline-briefing-001",
-      "type": "pipeline",
-      "description": "Daily briefing: Send CEO summary via Telegram, ask for priorities",
-      "scheduledFor": "2025-12-09T08:00:00Z",
-      "priority": "high",
-      "context": {
-        "pipeline": "daily-briefing",
-        "recurring": true,
-        "frequency": "24h"
-      }
-    },
-    {
       "id": "pipeline-leaderboard-001",
       "type": "pipeline",
       "description": "Leaderboard tracker: Track top traders, analyze positions, generate follow signals",
@@ -115,6 +103,18 @@
         "pipeline": "trade-retrospective",
         "recurring": true,
         "frequency": "6h"
+      }
+    },
+    {
+      "id": "pipeline-price-tracker-1765266794677",
+      "type": "pipeline",
+      "description": "Price tracker: Update portfolio prices, check exit triggers",
+      "scheduledFor": "2025-12-09T08:53:14.677Z",
+      "priority": "critical",
+      "context": {
+        "pipeline": "price-tracker",
+        "recurring": true,
+        "frequency": "1h"
       }
     }
   ],
@@ -240,6 +240,22 @@
         "frequency": "1h"
       },
       "completedAt": "2025-12-09T07:52:26.446Z",
+      "result": {
+        "success": true
+      }
+    },
+    {
+      "id": "pipeline-briefing-001",
+      "type": "pipeline",
+      "description": "Daily briefing: Send CEO summary via Telegram, ask for priorities",
+      "scheduledFor": "2025-12-09T08:00:00Z",
+      "priority": "high",
+      "context": {
+        "pipeline": "daily-briefing",
+        "recurring": true,
+        "frequency": "24h"
+      },
+      "completedAt": "2025-12-09T08:23:23.202Z",
       "result": {
         "success": true
       }
