@@ -1,15 +1,15 @@
 {
-  "lastEvaluated": "2025-12-09T01:12:57.757Z",
+  "lastEvaluated": "2025-12-09T01:50:01.335Z",
   "hypothesisHealth": {
-    "total": 20,
+    "total": 22,
     "byStatus": {
-      "proposed": 13,
+      "proposed": 15,
       "testing": 4,
       "validated": 1,
       "invalidated": 2
     },
     "avgConviction": 0.44,
-    "testableNow": 16,
+    "testableNow": 18,
     "blockedByCapability": 1,
     "testableIds": [
       "hyp-002",
@@ -27,7 +27,9 @@
       "hyp-drift-1765235704571",
       "hyp-drift-1765242722377",
       "hyp-drift-1765242722378",
-      "hyp-drift-1765242722378"
+      "hyp-drift-1765242722378",
+      "hyp-drift-1765244884765",
+      "hyp-drift-1765244884765"
     ]
   },
   "blockedHypotheses": [
@@ -55,12 +57,12 @@
     "saturated": "Too many untested hypotheses (>10) - focus on testing not generating"
   },
   "metrics": {
-    "hypothesesGeneratedThisWeek": 11,
+    "hypothesesGeneratedThisWeek": 13,
     "hypothesesTestedThisWeek": 3,
     "hypothesesValidatedThisWeek": 1,
     "hypothesesInvalidatedThisWeek": 1,
     "capabilitiesBuiltThisWeek": 0,
-    "driftSignalsToday": 47
+    "driftSignalsToday": 58
   },
   "needsAttention": [],
   "recentActions": [
@@ -78,8 +80,8 @@
   "followSignalsGenerated": 0,
   "lastHealthCheck": "2025-12-08T22:15:00.000Z",
   "daemon": {
-    "version": "02e9e8b",
-    "startedAt": "2025-12-09T01:12:56.467Z",
-    "pid": 53843
+    "version": "1743f4a",
+    "startedAt": "2025-12-09T01:49:19.781Z",
+    "pid": 58858
   }
 }

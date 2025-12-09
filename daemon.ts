@@ -178,7 +178,7 @@ const RECURRING_PIPELINES: RecurringPipeline[] = [
   { name: 'health-check', frequency: '12h', description: 'Health check: Analyze system state, propose actions for user approval', priority: 'high' },
   { name: 'leaderboard-tracker', frequency: '24h', description: 'Leaderboard tracker: Track top traders, analyze positions, generate follow signals', priority: 'high' },
   { name: 'daily-briefing', frequency: '24h', description: 'Daily briefing: Send CEO summary via Telegram, ask for priorities', priority: 'high' },
-  { name: 'price-drift-detector', frequency: '1h', description: 'Price drift detector: Monitor markets for sudden moves, generate follow signals', priority: 'high' },
+  // KILLED 2025-12-09: price-drift-detector - no edge in momentum chasing. Academic research shows noise traders cause reversals, not continuation.
   { name: 'hypothesis-tester', frequency: '4h', description: 'Hypothesis tester: Monitor entry/exit conditions, execute trades, track results', priority: 'high' },
   { name: 'price-tracker', frequency: '1h', description: 'Price tracker: Update portfolio prices, check exit triggers', priority: 'critical' },
   { name: 'trade-retrospective', frequency: '6h', description: 'Trade retrospective: Analyze resolved trades, update confidence, add learnings', priority: 'medium' },
