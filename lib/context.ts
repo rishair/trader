@@ -13,6 +13,7 @@ import * as path from 'path';
 import { loadPortfolio, getPortfolioSummary } from './trading';
 import { loadHypotheses, getHypothesisSummary, Hypothesis, selectNextHypothesis, getWeeklyProgress, calculateLearningsImpact } from './hypothesis';
 import { getExecutionMetrics, getPriorityReport } from './orchestrator';
+import { getHandoffsSummary, getPendingHandoffsFor } from './handoffs';
 
 const STATE_DIR = path.join(__dirname, '..', 'state');
 
@@ -427,6 +428,7 @@ export function prepareCEOBriefingContext(): string {
   const portfolio = loadPortfolio();
   const metrics = getExecutionMetrics();
   const priorities = getPriorityReport();
+  const handoffs = getHandoffsSummary();
 
   return `
 ## Daily CEO Briefing
@@ -439,6 +441,9 @@ export function prepareCEOBriefingContext(): string {
 ### Execution
 - Trades (7d): ${metrics.tradesLast7Days}
 - Velocity: ${metrics.velocityScore}
+
+### Agent Handoffs
+${handoffs}
 
 ### Priorities
 ${priorities}

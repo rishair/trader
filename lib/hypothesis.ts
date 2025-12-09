@@ -334,6 +334,14 @@ export async function addEvidence(
 
   saveHypothesis(hypothesis);
 
+  // Trigger engine status update (event-driven)
+  try {
+    const { updateEngineStatus } = require('../daemon');
+    updateEngineStatus();
+  } catch {
+    // Daemon may not be running (e.g., in tests or CLI)
+  }
+
   // Check for auto-transitions
   if (hypothesis.status === 'testing') {
     if (hypothesis.confidence <= CONFIG.autoInvalidateConfidence) {

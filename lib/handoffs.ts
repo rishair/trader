@@ -188,3 +188,95 @@ export function cleanupHandoffs(): number {
 
   return removed;
 }
+
+// ============================================================================
+// Convenience Functions for Common Handoff Patterns
+// ============================================================================
+
+/**
+ * Request a capability from Agent Engineer.
+ * Use when Trade Research is blocked and needs infrastructure.
+ */
+export function requestCapability(
+  description: string,
+  context: Record<string, unknown> = {},
+  priority: 'low' | 'medium' | 'high' = 'medium'
+): string {
+  return createHandoff(
+    'trade-research',
+    'agent-engineer',
+    'build_capability',
+    { description, ...context },
+    priority
+  );
+}
+
+/**
+ * Request analysis from Trade Research.
+ * Use when Agent Engineer needs trading insight.
+ */
+export function requestAnalysis(
+  question: string,
+  context: Record<string, unknown> = {},
+  priority: 'low' | 'medium' | 'high' = 'medium'
+): string {
+  return createHandoff(
+    'agent-engineer',
+    'trade-research',
+    'analysis_request',
+    { question, ...context },
+    priority
+  );
+}
+
+/**
+ * Report an issue that needs fixing.
+ */
+export function reportIssue(
+  from: Role,
+  description: string,
+  context: Record<string, unknown> = {},
+  priority: 'low' | 'medium' | 'high' | 'critical' = 'medium'
+): string {
+  return createHandoff(
+    from,
+    'agent-engineer',
+    'fix_issue',
+    { description, ...context },
+    priority
+  );
+}
+
+/**
+ * Get a human-readable summary of pending handoffs.
+ */
+export function getHandoffsSummary(): string {
+  const data = loadHandoffs();
+  const pending = data.handoffs.filter(h => h.status === 'pending');
+  const inProgress = data.handoffs.filter(h => h.status === 'in_progress');
+
+  if (pending.length === 0 && inProgress.length === 0) {
+    return 'No pending handoffs.';
+  }
+
+  const lines: string[] = [];
+
+  if (inProgress.length > 0) {
+    lines.push(`**In Progress (${inProgress.length}):**`);
+    for (const h of inProgress) {
+      lines.push(`- [${h.type}] ${h.from} → ${h.to}: ${(h.context.description as string || 'No description').slice(0, 60)}`);
+    }
+  }
+
+  if (pending.length > 0) {
+    lines.push(`**Pending (${pending.length}):**`);
+    for (const h of pending.slice(0, 5)) {
+      lines.push(`- [${h.priority}] ${h.from} → ${h.to}: ${(h.context.description as string || h.context.question as string || 'No description').slice(0, 60)}`);
+    }
+    if (pending.length > 5) {
+      lines.push(`  ...and ${pending.length - 5} more`);
+    }
+  }
+
+  return lines.join('\n');
+}

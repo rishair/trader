@@ -180,7 +180,7 @@ const RECURRING_PIPELINES: RecurringPipeline[] = [
   { name: 'daily-briefing', frequency: '24h', description: 'Daily briefing: Send CEO summary via Telegram, ask for priorities', priority: 'high' },
   { name: 'price-drift-detector', frequency: '1h', description: 'Price drift detector: Monitor markets for sudden moves, generate follow signals', priority: 'high' },
   { name: 'hypothesis-tester', frequency: '4h', description: 'Hypothesis tester: Monitor entry/exit conditions, execute trades, track results', priority: 'high' },
-  { name: 'price-tracker', frequency: '4h', description: 'Price tracker: Update portfolio prices, check exit triggers', priority: 'high' },
+  { name: 'price-tracker', frequency: '1h', description: 'Price tracker: Update portfolio prices, check exit triggers', priority: 'critical' },
   { name: 'trade-retrospective', frequency: '6h', description: 'Trade retrospective: Analyze resolved trades, update confidence, add learnings', priority: 'medium' },
 ];
 
@@ -537,7 +537,10 @@ import { transitionHypothesis, addEvidence, blockHypothesis } from './lib/hypoth
   }
 }
 
-function updateEngineStatus(): void {
+/**
+ * Update engine status - can be called externally for event-driven updates
+ */
+export function updateEngineStatus(): void {
   try {
     const hypotheses = JSON.parse(fs.readFileSync(HYPOTHESES_FILE, 'utf-8'));
     const engineStatus = JSON.parse(fs.readFileSync(ENGINE_STATUS_FILE, 'utf-8'));
@@ -1005,10 +1008,55 @@ async function runDaemon(): Promise<void> {
   // Initial tick
   await tick();
 
-  // Continue checking
+  // Continue checking (main 30-min loop)
   setInterval(tick, checkInterval);
 
-  log('Daemon running (5 min interval). Press Ctrl+C to stop.');
+  // =========================================================================
+  // CRITICAL SIGNAL FAST LOOP - 5 minute interval
+  // =========================================================================
+  // This runs more frequently to catch stop-loss and take-profit triggers
+  // Only executes code priorities (no model spawning) to avoid interference
+  const CRITICAL_INTERVAL = 5 * 60 * 1000; // 5 minutes
+
+  const criticalTick = async () => {
+    try {
+      // Only check for code-executable critical priorities
+      const priorities = detectPriorities();
+
+      const critical = priorities.filter(p =>
+        p.urgency >= 95 && !p.spawnsAgent
+      );
+
+      if (critical.length === 0) {
+        return; // Nothing critical, skip silently
+      }
+
+      log(`[Critical] Found ${critical.length} critical signals`);
+
+      for (const priority of critical) {
+        log(`[Critical] Executing: ${priority.action} (urgency: ${priority.urgency})`);
+        try {
+          await executeCodePriority(priority);
+
+          // Only push if there are actual changes
+          const status = execSync('git status --porcelain', { cwd: __dirname, encoding: 'utf-8' });
+          if (status.trim()) {
+            await gitPush();
+          }
+        } catch (error) {
+          log(`[Critical] Priority failed: ${error}`);
+        }
+      }
+    } catch (error) {
+      log(`[Critical] Fast loop error: ${error}`);
+    }
+  };
+
+  // Start critical signal fast loop
+  setInterval(criticalTick, CRITICAL_INTERVAL);
+  log('Critical signal loop running (5 min interval)');
+
+  log('Daemon running (30 min main loop, 5 min critical loop). Press Ctrl+C to stop.');
 }
 
 // CLI commands

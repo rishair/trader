@@ -37,6 +37,9 @@ import {
   createHypothesis,      // Create new hypothesis
   getHypothesisSummary   // Get formatted summary
 } from './lib/hypothesis';
+
+// Handoffs - request capabilities from Agent Engineer
+import { requestCapability, getHandoffsSummary } from './lib/handoffs';
 \`\`\`
 
 ## Trade Execution
@@ -57,14 +60,31 @@ const result = await executePaperTrade({
 });
 \`\`\`
 
+## When Blocked - Request Capabilities
+
+If you need infrastructure that doesn't exist, create a handoff to Agent Engineer:
+\`\`\`typescript
+import { requestCapability } from './lib/handoffs';
+
+// Request Agent Engineer to build something you need
+requestCapability(
+  'Need backtesting capability for momentum strategies',
+  { hypothesisId: 'hyp-xxx', context: 'additional info' },
+  'high'  // priority: low, medium, high
+);
+\`\`\`
+
+The daemon will process handoffs automatically. You can check status with \`getHandoffsSummary()\`.
+
 ## Key Principles
 
 - **Trade > Research** - One trade teaches more than ten analyses
 - **Wrong fast > Right slow** - Paper money is free, learn quickly
 - **Kill hypotheses ruthlessly** - Don't rationalize poor performance
-- **Link everything** - Every trade needs a hypothesis ID`,
+- **Link everything** - Every trade needs a hypothesis ID
+- **Ask for help** - If blocked, create a handoff instead of staying stuck`,
     tools: ['Read', 'Write', 'Edit', 'Bash', 'Glob', 'Grep', 'WebFetch', 'WebSearch'],
-    model: 'sonnet',
+    model: 'opus',
   },
 
   'agent-engineer': {
@@ -84,7 +104,7 @@ const result = await executePaperTrade({
 - Document what you build
 - Keep code simple and readable`,
     tools: ['Read', 'Write', 'Edit', 'Bash', 'Glob', 'Grep', 'WebFetch'],
-    model: 'sonnet',
+    model: 'opus',
   },
 
   'market-watcher': {
@@ -113,7 +133,7 @@ Flag in state/needs_attention.md if:
 - Market liquidity drops significantly
 - Approaching position limits`,
     tools: ['Read', 'Write', 'WebFetch', 'Bash', 'Grep'],
-    model: 'haiku',
+    model: 'sonnet',
   },
 
   'hypothesis-tester': {
@@ -162,7 +182,7 @@ Save research findings to:
 - state/trading/learnings.json for insights
 - state/trading/hypotheses.json for new hypothesis ideas`,
     tools: ['Read', 'Write', 'WebFetch', 'WebSearch', 'Bash', 'Grep'],
-    model: 'sonnet',
+    model: 'opus',
   },
 
   'strategy-tester': {
@@ -180,7 +200,7 @@ Validate trading strategies before deployment through backtesting and paper trad
 3. Run backtest simulation
 4. Analyze results and report`,
     tools: ['Read', 'Write', 'Bash', 'Grep', 'Glob', 'WebFetch'],
-    model: 'sonnet',
+    model: 'opus',
   },
 
   'resourcer': {
@@ -201,7 +221,7 @@ Before building anything new, find existing solutions:
 2. Evaluate quality and fit
 3. Report findings with recommendations`,
     tools: ['Read', 'Write', 'WebSearch', 'WebFetch', 'Grep', 'Glob', 'Bash'],
-    model: 'haiku',
+    model: 'sonnet',
   },
 
   'tool-builder': {
@@ -219,7 +239,7 @@ Create new tools when existing solutions don't meet needs.
 - Document usage
 - Test before deploying`,
     tools: ['Read', 'Write', 'Edit', 'Bash', 'Grep', 'Glob'],
-    model: 'sonnet',
+    model: 'opus',
   },
 
   'self-improver': {
@@ -237,7 +257,7 @@ Diagnose and fix issues with the trading system infrastructure.
 3. Fix configuration issues
 4. Update agent prompts`,
     tools: ['Read', 'Write', 'Edit', 'Grep', 'Glob', 'Bash'],
-    model: 'sonnet',
+    model: 'opus',
   },
 
   'trade-executor': {

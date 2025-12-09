@@ -11,7 +11,8 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { sendMessage } from '../tools/telegram/bot';
-import { hasTradeValidation } from './hypothesis';
+import { hasTradeValidation, addEvidence, recordTradeResult } from './hypothesis';
+import { requestCapability } from './handoffs';
 
 const STATE_DIR = path.join(__dirname, '..', 'state');
 const PORTFOLIO_FILE = path.join(STATE_DIR, 'trading/portfolio.json');
@@ -204,6 +205,20 @@ export function validateTrade(params: TradeParams, portfolio: Portfolio): Valida
   if (params.amount > CONFIG.autoApproveLimit) {
     const validation = hasTradeValidation(params.hypothesisId);
     if (!validation.validated) {
+      // Create handoff to agent-engineer for capability if validation requires something we don't have
+      if (validation.reason?.includes('backtest') || validation.reason?.includes('validation')) {
+        requestCapability(
+          `Need validation capability for hypothesis ${params.hypothesisId}`,
+          {
+            hypothesisId: params.hypothesisId,
+            market: params.market,
+            tradeAmount: params.amount,
+            validationReason: validation.reason,
+          },
+          'high'
+        );
+        console.log(`[Trading] Created handoff: validation capability needed for ${params.hypothesisId}`);
+      }
       return {
         valid: false,
         error: `Trade >$${CONFIG.autoApproveLimit} requires validation. ${validation.reason}`,
@@ -347,7 +362,20 @@ export async function executePaperTrade(params: TradeParams): Promise<TradeResul
   // Save
   savePortfolio(portfolio);
 
-  // 5. Notify based on tier
+  // 5. Add evidence to hypothesis (feedback loop)
+  try {
+    addEvidence(
+      params.hypothesisId,
+      `Trade executed: ${params.direction} ${shares} shares @ ${(params.price * 100).toFixed(1)}¢. Cost: $${actualCost.toFixed(2)}. Rationale: ${params.rationale.slice(0, 100)}`,
+      null, // neutral - entry doesn't confirm/deny hypothesis yet
+      0     // no confidence change on entry
+    );
+    console.log(`[Trading] Added entry evidence to ${params.hypothesisId}`);
+  } catch (error: any) {
+    console.log(`[Trading] Could not add entry evidence: ${error.message}`);
+  }
+
+  // 6. Notify based on tier
   if (tier === 'notify') {
     await sendMessage(
       `📈 *Trade Executed*\n\n` +
@@ -426,6 +454,34 @@ export async function exitPosition(
   updatePortfolioMetrics(portfolio);
 
   savePortfolio(portfolio);
+
+  // FEEDBACK LOOP: Update hypothesis with trade result
+  if (position.hypothesisId) {
+    try {
+      const won = pnl > 0;
+
+      // Record the trade result (updates testResults on hypothesis)
+      recordTradeResult(position.hypothesisId, won, pnl);
+
+      // Calculate confidence impact based on P&L magnitude
+      const pnlPct = Math.abs(pnl / position.cost);
+      const confidenceImpact = won
+        ? (pnlPct > 0.20 ? 0.08 : 0.04)   // big win vs small win
+        : (pnlPct > 0.20 ? -0.10 : -0.05); // big loss vs small loss
+
+      // Add evidence with result
+      addEvidence(
+        position.hypothesisId,
+        `Trade closed: ${won ? 'WIN' : 'LOSS'} $${pnl.toFixed(2)} (${(pnl / position.cost * 100).toFixed(1)}%). ${reason}`,
+        won,
+        confidenceImpact
+      );
+
+      console.log(`[Trading] Recorded ${won ? 'winning' : 'losing'} trade for ${position.hypothesisId} (confidence ${confidenceImpact >= 0 ? '+' : ''}${(confidenceImpact * 100).toFixed(0)}%)`);
+    } catch (error: any) {
+      console.log(`[Trading] Could not record trade result: ${error.message}`);
+    }
+  }
 
   // Notify
   const pnlSign = pnl >= 0 ? '+' : '';

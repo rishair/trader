@@ -13,6 +13,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { alertExitTrigger, alertPriceMovement } from '../alerts/telegram-alerts';
+import { exitPosition } from '../../lib/trading';
 
 const STATE_DIR = path.join(__dirname, '../../state');
 const PORTFOLIO_FILE = path.join(STATE_DIR, 'portfolio.json');
@@ -324,29 +325,58 @@ async function main() {
       }
     }
 
-    // Check exit triggers
+    // Check exit triggers and AUTO-EXECUTE
     const triggers = checkExitTriggers(portfolio);
 
     if (triggers.length > 0) {
-      console.log('\n⚠️  EXIT TRIGGERS:');
+      console.log('\n⚠️  EXIT TRIGGERS - AUTO-EXECUTING:');
       for (const t of triggers) {
         console.log(`  ${t.position}: ${t.trigger} at ${(t.currentPrice * 100).toFixed(1)}¢ (threshold: ${(t.threshold * 100).toFixed(1)}¢)`);
 
-        // Send exit trigger alert
         const position = portfolio.positions.find((p: Position) => p.id === t.position);
         if (position) {
-          console.log(`  → Sending exit trigger alert for ${t.position}`);
-          await alertExitTrigger(
-            t.trigger,
-            t.position,
-            position.market,
-            position.outcome,
-            t.currentPrice,
-            t.threshold,
-            position.unrealizedPnL
-          );
+          // AUTO-EXECUTE the exit
+          const triggerName = t.trigger === 'take_profit' ? 'Take profit' :
+                              t.trigger === 'stop_loss' ? 'Stop loss' : 'Time limit';
+          const reason = `${triggerName} triggered at ${(t.currentPrice * 100).toFixed(1)}¢`;
+
+          console.log(`  → AUTO-EXECUTING exit for ${t.position}: ${reason}`);
+          try {
+            const result = await exitPosition(t.position, t.currentPrice, reason);
+            if (result.success) {
+              console.log(`  ✅ Exit executed successfully for ${t.position}`);
+            } else {
+              console.error(`  ❌ Exit failed for ${t.position}: ${result.error}`);
+              // Still send alert if auto-exit fails
+              await alertExitTrigger(
+                t.trigger,
+                t.position,
+                position.market,
+                position.outcome,
+                t.currentPrice,
+                t.threshold,
+                position.unrealizedPnL
+              );
+            }
+          } catch (error: any) {
+            console.error(`  ❌ Exit error for ${t.position}: ${error.message}`);
+            // Send alert on error so user is aware
+            await alertExitTrigger(
+              t.trigger,
+              t.position,
+              position.market,
+              position.outcome,
+              t.currentPrice,
+              t.threshold,
+              position.unrealizedPnL
+            );
+          }
         }
       }
+
+      // Reload portfolio after exits
+      const updatedPortfolio = JSON.parse(fs.readFileSync(PORTFOLIO_FILE, 'utf-8'));
+      portfolio = updatedPortfolio;
     }
 
     // Print summary
