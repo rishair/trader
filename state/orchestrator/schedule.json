@@ -70,18 +70,6 @@
       }
     },
     {
-      "id": "pipeline-price-tracker-1765262900655",
-      "type": "pipeline",
-      "description": "Price tracker: Update portfolio prices, check exit triggers",
-      "scheduledFor": "2025-12-09T07:48:20.655Z",
-      "priority": "critical",
-      "context": {
-        "pipeline": "price-tracker",
-        "recurring": true,
-        "frequency": "1h"
-      }
-    },
-    {
       "id": "pipeline-health-check-1765264761171",
       "type": "pipeline",
       "description": "Health check: Analyze system state, propose actions for user approval",
@@ -113,6 +101,18 @@
       "priority": "high",
       "context": {
         "pipeline": "closing-scanner",
+        "recurring": true,
+        "frequency": "6h"
+      }
+    },
+    {
+      "id": "pipeline-trade-retrospective-1765266738920",
+      "type": "pipeline",
+      "description": "Trade retrospective: Analyze resolved trades, update confidence, add learnings",
+      "scheduledFor": "2025-12-09T13:52:18.920Z",
+      "priority": "medium",
+      "context": {
+        "pipeline": "trade-retrospective",
         "recurring": true,
         "frequency": "6h"
       }
@@ -224,6 +224,22 @@
         "frequency": "6h"
       },
       "completedAt": "2025-12-09T07:51:30.953Z",
+      "result": {
+        "success": true
+      }
+    },
+    {
+      "id": "pipeline-price-tracker-1765262900655",
+      "type": "pipeline",
+      "description": "Price tracker: Update portfolio prices, check exit triggers",
+      "scheduledFor": "2025-12-09T07:48:20.655Z",
+      "priority": "critical",
+      "context": {
+        "pipeline": "price-tracker",
+        "recurring": true,
+        "frequency": "1h"
+      },
+      "completedAt": "2025-12-09T07:52:26.446Z",
       "result": {
         "success": true
       }
