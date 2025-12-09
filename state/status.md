@@ -1,14 +1,15 @@
 # Agent Status
 
-**Last Updated:** 2025-12-09 10:05 UTC (Research task: liquidity rewards analysis)
+**Last Updated:** 2025-12-09 10:25 UTC (Completed research-003: liquidity rewards analysis)
 **Phase:** Active Trading - Hypothesis Testing
 
 ## Current Focus
 
-**Completed:** Deep analysis of Polymarket liquidity rewards program (hyp-003)
-- Quantified reward rates vs spreads using live CLOB API data
-- Verdict: +EV opportunity exists but requires $10k+ capital and sophisticated bot
-- **Recommendation: DEFER** - high infrastructure barrier vs other faster-to-test hypotheses
+**Just Completed:** Comprehensive analysis of Polymarket liquidity rewards program (hyp-003)
+- **Finding:** Genuine +EV opportunity - 30-50% APY achievable at scale
+- **Requirements:** $10k+ capital, 4-7 week bot development, WebSocket infrastructure
+- **Verdict: DEFER** - High barrier vs faster-to-test hypotheses (sports, momentum)
+- **Next:** Focus on active positions and simpler hypotheses first
 
 **Active Testing:** 4 open positions across 3 hypotheses:
 1. **hyp-002** (momentum): 2 positions (Fed YES 95¢, NVDA YES 91¢)
@@ -47,7 +48,7 @@
 |----|-----------|--------|------------|----------|
 | hyp-001 | Tail-risk overpriced | invalidated | 25% | 3 markets checked - all efficient |
 | hyp-002 | Closing momentum | **testing** | 40% | Mixed signals, 2 active positions |
-| hyp-003 | Liquidity rewards +EV | testing | 45% | **Deep analysis complete** - DEFER (high capital/infra barrier) |
+| hyp-003 | Liquidity rewards +EV | testing | 55% | **Comprehensive analysis done** - DEFER (needs $10k+, 4-7 wk bot) |
 | hyp-004 | Top trader patterns | testing | 55% | Analysis complete |
 | hyp-005 | Volatility mispricing | **invalidated** | 15% | AAPL loss proved market right |
 | hyp-006 | Volume signals | **testing** | 35% | Ukraine position active |
@@ -56,13 +57,16 @@
 
 ## Recent Activity
 
-**2025-12-09 10:05 UTC (This Session):**
-- **Completed research-003:** Liquidity rewards analysis for hyp-003
-- Analyzed live CLOB API data from 10+ markets
-- Calculated reward/spread ratios: $1-20/day per market, $10k+ capital needed for scale
-- Verdict: 30-50% APY possible but requires sophisticated bot (2-4 week build)
-- Recommendation: DEFER due to high infrastructure barrier
-- Created detailed analysis report: `state/logs/liquidity-rewards-analysis-2025-12-09.md`
+**2025-12-09 10:25 UTC (This Session):**
+- **Completed research-003:** Comprehensive liquidity rewards analysis for hyp-003
+- Spawned researcher agent for deep analysis (7-phase research protocol)
+- Key findings: 30-50% APY achievable, but needs $10k+ capital and 4-7 week development
+- Infrastructure required: WebSocket CLOB, automated order placement, inventory tracking
+- Competition: "1-2 bots per market" currently, Polymarket building in-house MM team
+- Sweet spot: Mid-tier markets ($10k-50k volume) - overlooked by large MMs
+- **Recommendation: DEFER** - Pursue after validating 2-3 simpler strategies
+- Updated hyp-003: confidence 50%→55%, added recommendation and revised nextSteps
+- Created session log: `state/logs/session-2025-12-09-research-003.md`
 
 **2025-12-09 08:30 UTC:**
 - Woke for monitor-003 task (check AAPL position)
@@ -120,6 +124,8 @@
 3. **Task hygiene:** Need to clean up stale monitoring tasks when positions close. Should automate this.
 
 4. **Pipeline effectiveness:** Automated pipelines (price tracker, hypothesis tester, etc.) are functioning well and handling routine monitoring.
+
+5. **Liquidity rewards reality check:** MM opportunity is real (+EV) but infrastructure-heavy. Better to validate simpler strategies first before committing 4-7 weeks to bot development.
 
 ## Notes for Next Session
 

@@ -146,7 +146,7 @@
       "rationale": "Polymarket pays market makers via two programs: daily rewards for limit orders (quadratic scoring, 3x bonus for two-sided quotes) and 4% APY holding rewards on 13 markets. If rewards exceed adverse selection costs, market making is profitable without directional edge.",
       "testMethod": "1. Query CLOB API for max_incentive_spread and min_incentive_size per market. 2. Calculate reward/spread ratios. 3. Build simple MM bot for paper trading in low-volatility markets. 4. Track: spread P&L, rewards earned, adverse selection losses.",
       "status": "testing",
-      "confidence": 0.45,
+      "confidence": 0.55,
       "evidence": [
         {
           "date": "2025-12-08",
@@ -159,11 +159,17 @@
           "observation": "Deep analysis of liquidity rewards program completed. CLOB API analysis shows: daily rates $1-20/market (typical $2-5), spreads 3.5¢ typical, min capital ~$100/market. To achieve reported $200-800/day earnings requires $5k-20k deployed across 50-100 markets. Calculated returns: 30-50% APY possible after adverse selection losses. Two-sided 3x bonus confirmed. Post-election reward reduction noted. Conclusion: +EV opportunity exists but requires: (1) significant capital $10k+, (2) sophisticated automated bot (2-4 week build), (3) active risk management. NOT \"easy money\" or risk-free. Recommendation: DEFER - high infrastructure barrier vs other faster-to-test hypotheses.",
           "supports": true,
           "confidenceImpact": 0
+        },
+        {
+          "date": "2025-12-09T10:13:46.834Z",
+          "observation": "Comprehensive liquidity rewards analysis completed. Key findings: (1) Genuine +EV opportunity exists with 30-50% APY at 0k+ capital, (2) NOT risk-free - adverse selection costs 70-90% of gross spread, (3) Requires 4-7 week development timeline for competitive bot, (4) Infrastructure: WebSocket feeds, automated order placement, inventory tracking, (5) Competition increasing but not saturated - \"1-2 bots per market\" currently, (6) Breakeven spread: 0.2-0.5¢ on markets with k+ daily turnover, (7) Daily rewards: -5 per market typical, (8) Post-election reward reduction confirmed but not quantified. RECOMMENDATION: DEFER - high infrastructure barrier vs faster-to-test hypotheses (sports, momentum, arbitrage). Revisit after validating 2-3 simpler strategies. Full analysis: hyp-003-liquidity-rewards-analysis.md",
+          "supports": true,
+          "confidenceImpact": 0.05
         }
       ],
       "conclusion": null,
       "createdAt": "2025-12-07T00:00:00Z",
-      "updatedAt": "2025-12-09T10:03:38.299Z",
+      "updatedAt": "2025-12-09T10:13:46.834Z",
       "testStartedAt": "2025-12-08T15:30:00Z",
       "infrastructureRequired": [
         "Automated order placement system",
@@ -172,10 +178,12 @@
         "Reward parameter monitoring API integration"
       ],
       "nextSteps": [
-        "Query CLOB API for markets with best reward parameters",
-        "Identify low-volatility markets for initial testing",
-        "Build simple two-sided quoting bot"
-      ]
+        "DEFER until 2-3 simpler strategies validated",
+        "If pursued: Start with 5-10 NBA prop markets (mid-tier volume)",
+        "Build MVP bot using warproxxx/poly-maker as template",
+        "Paper trade for 2 weeks before risking capital"
+      ],
+      "recommendation": "DEFER - Opportunity is genuine (+EV, 30-50% APY possible) but requires: $10k+ capital, 4-7 weeks dev time, WebSocket infrastructure, sophisticated pricing. High barrier vs faster-to-test hypotheses (sports, momentum). Revisit after validating 2-3 simpler strategies."
     },
     {
       "id": "hyp-004",
