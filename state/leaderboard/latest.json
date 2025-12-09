@@ -1,5 +1,5 @@
 {
-  "runAt": "2025-12-08T19:03:47.789Z",
+  "runAt": "2025-12-09T08:24:23.939Z",
   "window": "all-time",
   "topByProfit": [
     {
@@ -24,7 +24,7 @@
       "proxyWallet": "0x78b9ac44a6d7d7a076c14e0ad518b301b63c6b76",
       "name": "Len9311238",
       "pseudonym": "Len9311238",
-      "profit": 8709972.988069998,
+      "profit": 8709972.98807,
       "profitRank": 3,
       "bio": "",
       "profileImage": ""
@@ -42,7 +42,7 @@
       "proxyWallet": "0x863134d00841b2e200492805a01e1e2f5defaa53",
       "name": "RepTrump",
       "pseudonym": "RepTrump",
-      "profit": 7532409.671579,
+      "profit": 7532409.671579001,
       "profitRank": 5,
       "bio": "",
       "profileImage": ""
@@ -69,7 +69,7 @@
       "proxyWallet": "0x885783760858e1bd5dd09a3c3f916cfa251ac270",
       "name": "BetTom42",
       "pseudonym": "BetTom42",
-      "profit": 5642135.735356,
+      "profit": 5642135.735355999,
       "profitRank": 8,
       "bio": "",
       "profileImage": ""
@@ -78,7 +78,7 @@
       "proxyWallet": "0x23786fdad0073692157c6d7dc81f281843a35fcb",
       "name": "mikatrade77",
       "pseudonym": "mikatrade77",
-      "profit": 5147998.544602999,
+      "profit": 5147998.544603,
       "profitRank": 9,
       "bio": "",
       "profileImage": ""
@@ -96,7 +96,7 @@
       "proxyWallet": "0x94a428cfa4f84b264e01f70d93d02bc96cb36356",
       "name": "GCottrell93",
       "pseudonym": "GCottrell93",
-      "profit": 4287627.915169282,
+      "profit": 4287608.59642147,
       "profitRank": 11,
       "bio": "",
       "profileImage": ""
@@ -105,7 +105,7 @@
       "proxyWallet": "0x16f91db2592924cfed6e03b7e5cb5bb1e32299e3",
       "name": "Jenzigo",
       "pseudonym": "Jenzigo",
-      "profit": 4049827.094102999,
+      "profit": 4049827.0941029997,
       "profitRank": 12,
       "bio": "",
       "profileImage": ""
@@ -114,7 +114,7 @@
       "proxyWallet": "0x17db3fcd93ba12d38382a0cade24b200185c5f6d",
       "name": "fengdubiying",
       "pseudonym": "fengdubiying",
-      "profit": 3202672.912872218,
+      "profit": 3202567.9131554384,
       "profitRank": 13,
       "bio": "",
       "profileImage": ""
@@ -132,7 +132,7 @@
       "proxyWallet": "0xed2239a9150c3920000d0094d28fa51c7db03dd0",
       "name": "Michie",
       "pseudonym": "Michie",
-      "profit": 3095007.670859059,
+      "profit": 3095007.6708590584,
       "profitRank": 15,
       "bio": "",
       "profileImage": ""
@@ -141,8 +141,17 @@
       "proxyWallet": "0x14964aefa2cd7caff7878b3820a690a03c5aa429",
       "name": "gmpm",
       "pseudonym": "gmpm",
-      "profit": 2981729.6703997226,
+      "profit": 2871419.744899523,
       "profitRank": 16,
+      "bio": "",
+      "profileImage": ""
+    },
+    {
+      "proxyWallet": "0x6a72f61820b26b1fe4d956e17b6dc2a1ea3033ee",
+      "name": "kch123",
+      "pseudonym": "kch123",
+      "profit": 2743154.7279585176,
+      "profitRank": 17,
       "bio": "",
       "profileImage": ""
     },
@@ -150,19 +159,10 @@
       "proxyWallet": "0xdbade4c82fb72780a0db9a38f821d8671aba9c95",
       "name": "SwissMiss",
       "pseudonym": "SwissMiss",
-      "profit": 2800678.8184887837,
-      "profitRank": 17,
-      "bio": "",
-      "profileImage": "https://polymarket-upload.s3.us-east-2.amazonaws.com/swissmiss_8da75aa4-05e7-444a-b87a-da4d38d2bb08_1741939822531.jpg"
-    },
-    {
-      "proxyWallet": "0x6a72f61820b26b1fe4d956e17b6dc2a1ea3033ee",
-      "name": "kch123",
-      "pseudonym": "kch123",
-      "profit": 2720322.3670626697,
+      "profit": 2706823.2600764055,
       "profitRank": 18,
       "bio": "",
-      "profileImage": ""
+      "profileImage": "https://polymarket-upload.s3.us-east-2.amazonaws.com/swissmiss_8da75aa4-05e7-444a-b87a-da4d38d2bb08_1741939822531.jpg"
     },
     {
       "proxyWallet": "0x343d4466dc323b850e5249394894c7381d91456e",
@@ -177,7 +177,7 @@
       "proxyWallet": "0xd38b71f3e8ed1af71983e5c309eac3dfa9b35029",
       "name": "primm",
       "pseudonym": "primm",
-      "profit": 2577292.9671175526,
+      "profit": 2583287.8970175525,
       "profitRank": 20,
       "bio": "",
       "profileImage": ""
@@ -190,7 +190,7 @@
       "pseudonym": "ImJustKen",
       "profit": 0,
       "profitRank": 0,
-      "volume": 422471605.0101881,
+      "volume": 422830463.491768,
       "volumeRank": 1,
       "bio": "",
       "profileImage": "https://polymarket-upload.s3.us-east-2.amazonaws.com/profile-image-82662-8ddbc8e8-0500-44b7-bb13-c0b32a40a45d.jpg"
@@ -201,7 +201,7 @@
       "pseudonym": "interstellaar",
       "profit": 0,
       "profitRank": 0,
-      "volume": 398054527.7018891,
+      "volume": 398099250.31269175,
       "volumeRank": 2,
       "bio": "",
       "profileImage": ""
@@ -212,7 +212,7 @@
       "pseudonym": "TheGuru",
       "profit": 0,
       "profitRank": 0,
-      "volume": 397496287.9566584,
+      "volume": 397496287.95665914,
       "volumeRank": 3,
       "bio": "",
       "profileImage": "https://polymarket-upload.s3.us-east-2.amazonaws.com/view_ancient_greek_bust_figure_23_2151616992_e46bd428-7fec-4b3b-95b1-210f906105d8_1725465460772.jpg"
@@ -223,7 +223,7 @@
       "pseudonym": "cigarettes",
       "profit": 0,
       "profitRank": 0,
-      "volume": 388005627.89935696,
+      "volume": 388503533.5681386,
       "volumeRank": 4,
       "bio": "",
       "profileImage": ""
@@ -234,7 +234,7 @@
       "pseudonym": "risk-manager",
       "profit": 0,
       "profitRank": 0,
-      "volume": 377818847.02337974,
+      "volume": 378231734.9918966,
       "volumeRank": 5,
       "bio": "",
       "profileImage": "https://polymarket-upload.s3.us-east-2.amazonaws.com/profile-image-910447-e4276f18-6c7b-4e99-8a46-2177423035a0.PNG"
@@ -245,7 +245,7 @@
       "pseudonym": "debased",
       "profit": 0,
       "profitRank": 0,
-      "volume": 336631319.4089717,
+      "volume": 336867167.1286255,
       "volumeRank": 6,
       "bio": "",
       "profileImage": "https://polymarket-upload.s3.us-east-2.amazonaws.com/trump_farmer_b64c6dcd-13e2-4dda-b1c2-0fb46389fb22_1743074825403.png"
@@ -256,7 +256,7 @@
       "pseudonym": "YatSen",
       "profit": 0,
       "profitRank": 0,
-      "volume": 316905802.3851553,
+      "volume": 316907197.96515507,
       "volumeRank": 7,
       "bio": "",
       "profileImage": "https://polymarket-upload.s3.us-east-2.amazonaws.com/profile-image-547319-56f15c24-45ba-4517-9c74-b6d47dc061cb.jpeg"
@@ -267,7 +267,7 @@
       "pseudonym": "InfiniteCrypt0",
       "profit": 0,
       "profitRank": 0,
-      "volume": 310491138.1235348,
+      "volume": 310600101.4466096,
       "volumeRank": 8,
       "bio": "",
       "profileImage": "https://polymarket-upload.s3.us-east-2.amazonaws.com/infinity_symbol_limitless_logo_design_template_vector_13924f96-6905-4638-9316-c88999d36a2f_1742326096240.jpg"
@@ -278,7 +278,7 @@
       "pseudonym": "GMIB",
       "profit": 0,
       "profitRank": 0,
-      "volume": 259428444.00691652,
+      "volume": 259428444.00691688,
       "volumeRank": 9,
       "bio": "",
       "profileImage": ""
@@ -289,7 +289,7 @@
       "pseudonym": "StarryPath",
       "profit": 0,
       "profitRank": 0,
-      "volume": 237412106.06649995,
+      "volume": 237436075.45420194,
       "volumeRank": 10,
       "bio": "",
       "profileImage": ""
@@ -300,7 +300,7 @@
       "pseudonym": "Spon",
       "profit": 0,
       "profitRank": 0,
-      "volume": 234697378.84254813,
+      "volume": 234750757.88997206,
       "volumeRank": 11,
       "bio": "",
       "profileImage": ""
@@ -311,7 +311,7 @@
       "pseudonym": "qrpenc",
       "profit": 0,
       "profitRank": 0,
-      "volume": 225756230.84142137,
+      "volume": 225756230.84142154,
       "volumeRank": 12,
       "bio": "",
       "profileImage": "https://polymarket-upload.s3.us-east-2.amazonaws.com/profile_picture_8f4c1c8a-e267-4b86-ae1c-1a04b7edec09_1727918817361.png"
@@ -322,7 +322,7 @@
       "pseudonym": "x.compolymarketbet",
       "profit": 0,
       "profitRank": 0,
-      "volume": 213968151.29456544,
+      "volume": 215039241.04407424,
       "volumeRank": 13,
       "bio": "",
       "profileImage": "https://polymarket-upload.s3.us-east-2.amazonaws.com/LGBTQ_Connecting_1200x630_1_06d780af-4f21-46e0-99c6-eaf04e30e2fe_1729545451519.png"
@@ -344,7 +344,7 @@
       "pseudonym": "undertaker",
       "profit": 0,
       "profitRank": 0,
-      "volume": 197598890.58012712,
+      "volume": 197598890.58012697,
       "volumeRank": 15,
       "bio": "",
       "profileImage": ""
@@ -355,7 +355,7 @@
       "pseudonym": "kingfisher",
       "profit": 0,
       "profitRank": 0,
-      "volume": 185297744.55911544,
+      "volume": 185297744.55911547,
       "volumeRank": 16,
       "bio": "",
       "profileImage": ""
@@ -366,7 +366,7 @@
       "pseudonym": "TimeQuestion",
       "profit": 0,
       "profitRank": 0,
-      "volume": 177915601.31076214,
+      "volume": 177915601.31076232,
       "volumeRank": 17,
       "bio": "",
       "profileImage": "https://polymarket-upload.s3.us-east-2.amazonaws.com/test_63bb3a31-1c40-48bc-8852-8271d96f27bf_1728370604605.jpg"
@@ -377,7 +377,7 @@
       "pseudonym": "wokerjoesleeper",
       "profit": 0,
       "profitRank": 0,
-      "volume": 174508618.10780287,
+      "volume": 174659491.81020272,
       "volumeRank": 18,
       "bio": "",
       "profileImage": ""
@@ -388,7 +388,7 @@
       "pseudonym": "tripping",
       "profit": 0,
       "profitRank": 0,
-      "volume": 173131077.72071207,
+      "volume": 173248489.15252906,
       "volumeRank": 19,
       "bio": "",
       "profileImage": "https://polymarket-upload.s3.us-east-2.amazonaws.com/profile-image-2136195-6a15a210-77e7-4450-bf86-06670c61864d.jpeg"
@@ -399,7 +399,7 @@
       "pseudonym": "50Whence",
       "profit": 0,
       "profitRank": 0,
-      "volume": 172891375.1733209,
+      "volume": 172891375.17332146,
       "volumeRank": 20,
       "bio": "",
       "profileImage": "https://polymarket-upload.s3.us-east-2.amazonaws.com/50Pence_fdf95e07-b30d-48af-af3a-19df35d66c05_1741996492104.jpg"
