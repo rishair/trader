@@ -40,10 +40,10 @@ import { buildTradeResearchContext, prepareCEOBriefingContext } from './lib/cont
 
 - `MISSION.md` - The agent's constitution and operating principles
 - `state/` - All persistent state (organized by ownership)
-- `lib/` - Core libraries (trading, hypothesis, orchestrator, context)
+- `lib/` - Core libraries (trading, hypothesis, orchestrator, context, agent-sdk)
+- `lib/agent-sdk.ts` - Agent registry with embedded prompts and execution
 - `daemon.ts` - Orchestrator: schedules, event triggers, agent spawning
 - `tools/` - Agent-created tools, pipelines, and MCP servers
-- `.claude/agents/` - Agent prompt definitions (kept minimal)
 
 ## Commands
 
@@ -141,7 +141,7 @@ Any agent can log improvement ideas to `improvements/ideas.json`:
 ```
 
 Agent Engineer reviews and implements improvements, which may include:
-- Updating agent prompts (`.claude/agents/*.md`)
+- Updating agent prompts in `lib/agent-sdk.ts` (AGENTS registry)
 - Creating new tools (`tools/`)
 - Modifying the daemon or handler
 - Updating this documentation

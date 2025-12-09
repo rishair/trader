@@ -11,6 +11,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { sendMessage } from '../tools/telegram/bot';
+import { hasTradeValidation } from './hypothesis';
 
 const STATE_DIR = path.join(__dirname, '..', 'state');
 const PORTFOLIO_FILE = path.join(STATE_DIR, 'trading/portfolio.json');
@@ -197,6 +198,19 @@ export function validateTrade(params: TradeParams, portfolio: Portfolio): Valida
   // Hypothesis check
   if (!params.hypothesisId) {
     return { valid: false, error: 'Trade must be linked to a hypothesis' };
+  }
+
+  // Tiered backtest gate: trades >$50 require validation
+  if (params.amount > CONFIG.autoApproveLimit) {
+    const validation = hasTradeValidation(params.hypothesisId);
+    if (!validation.validated) {
+      return {
+        valid: false,
+        error: `Trade >$${CONFIG.autoApproveLimit} requires validation. ${validation.reason}`,
+      };
+    }
+    // Add validation info to warnings for visibility
+    warnings.push(`Validation: ${validation.reason}`);
   }
 
   return { valid: true, warnings: warnings.length > 0 ? warnings : undefined };

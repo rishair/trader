@@ -162,6 +162,7 @@ const PIPELINES: Record<string, string> = {
   'price-drift-detector': 'tools/pipelines/price-drift-detector.ts',
   'hypothesis-tester': 'tools/pipelines/hypothesis-tester.ts',
   'price-tracker': 'tools/pipelines/price-tracker.ts',
+  'trade-retrospective': 'tools/pipelines/trade-retrospective.ts',
 };
 
 // Recurring pipeline configuration - pipelines that should always have a future task
@@ -180,6 +181,7 @@ const RECURRING_PIPELINES: RecurringPipeline[] = [
   { name: 'price-drift-detector', frequency: '1h', description: 'Price drift detector: Monitor markets for sudden moves, generate follow signals', priority: 'high' },
   { name: 'hypothesis-tester', frequency: '4h', description: 'Hypothesis tester: Monitor entry/exit conditions, execute trades, track results', priority: 'high' },
   { name: 'price-tracker', frequency: '4h', description: 'Price tracker: Update portfolio prices, check exit triggers', priority: 'high' },
+  { name: 'trade-retrospective', frequency: '6h', description: 'Trade retrospective: Analyze resolved trades, update confidence, add learnings', priority: 'medium' },
 ];
 
 /**
@@ -366,10 +368,9 @@ Priority: ${handoff.priority}
 Context: ${JSON.stringify(handoff.context, null, 2)}
 
 ## Instructions
-1. Read your agent definition at .claude/agents/${handoff.to}.md
-2. Complete the handoff request
-3. Update state files as needed
-4. Return a clear result
+1. Complete the handoff request based on your role
+2. Update state files as needed
+3. Return a clear result with what you accomplished
 
 The result of this handoff will be recorded for ${handoff.from} to see.
 `;
@@ -397,17 +398,34 @@ The result of this handoff will be recorded for ${handoff.from} to see.
     log(`Handoff ${handoff.id} completed (cost: $${costUsd.toFixed(4)}, time: ${(durationMs / 1000).toFixed(1)}s)`);
 
     if (success) {
+      const resultSummary = (output || result).slice(-300);
       completeHandoff(handoff.id, { success: true, output: (output || result).slice(-500) });
-      await sendTelegramAlert(`✅ *Handoff completed*\n${handoff.id}`);
+      await sendTelegramAlert(
+        `✅ *Handoff completed*\n\n` +
+        `*Type:* ${handoff.type}\n` +
+        `*From:* ${handoff.from} → ${handoff.to}\n` +
+        `*Context:* ${JSON.stringify(handoff.context).slice(0, 100)}...\n\n` +
+        `*Result:*\n${resultSummary.slice(0, 200)}...`
+      );
     } else {
       completeHandoff(handoff.id, { success: false, error: result });
-      await sendTelegramAlert(`❌ *Handoff failed*\n${handoff.id}`);
+      await sendTelegramAlert(
+        `❌ *Handoff failed*\n\n` +
+        `*Type:* ${handoff.type}\n` +
+        `*From:* ${handoff.from}\n` +
+        `*Error:* ${result.slice(0, 200)}`
+      );
       throw new Error(`Handoff failed: ${result}`);
     }
   } catch (error: any) {
     log(`Error executing handoff: ${error.message}`);
     completeHandoff(handoff.id, { success: false, error: error.message });
-    await sendTelegramAlert(`❌ *Handoff failed*\n${handoff.id}\n${error.message}`);
+    await sendTelegramAlert(
+      `❌ *Handoff failed*\n\n` +
+      `*Type:* ${handoff.type}\n` +
+      `*From:* ${handoff.from}\n` +
+      `*Error:* ${error.message.slice(0, 200)}`
+    );
     throw error;
   }
 }

@@ -88,7 +88,7 @@ SOURCES → GENERATOR → TESTER → RESULTS → PROMOTE/KILL
 
 **You are responsible for fixing your own infrastructure.** When something doesn't work:
 
-1. **Subagent underperforms** → Edit `.claude/agents/{name}.md` to improve its prompt, tools, or guidelines
+1. **Subagent underperforms** → Edit `lib/agent-sdk.ts` (AGENTS registry) to improve its prompt, tools, or guidelines
 2. **Tool fails or is inadequate** → Fix it in `tools/` or rebuild it
 3. **MCP server has issues** → Debug and patch `tools/mcp/{name}/`
 4. **Skill produces bad output** → Revise `.claude/skills/{name}.md`
@@ -238,8 +238,8 @@ Spawn multiple agents simultaneously for efficiency:
 ### Creating New Subagents
 
 If you need a specialized agent that doesn't exist:
-1. Create a new file in `.claude/agents/`
-2. Define its role, tools, and guidelines
+1. Add it to the AGENTS registry in `lib/agent-sdk.ts`
+2. Define its role, tools, prompt, and model in the registry
 3. Document it in this section
 
 ## Tool Creation Guidelines
@@ -247,7 +247,7 @@ If you need a specialized agent that doesn't exist:
 When you need a new capability:
 1. Check if it already exists in your tools/skills
 2. If not, create it in the appropriate location:
-   - Subagents: `.claude/agents/` (for specialized AI work)
+   - Subagents: `lib/agent-sdk.ts` AGENTS registry (for specialized AI work)
    - MCP servers: `tools/mcp/` (for data integrations)
    - Skills: `.claude/skills/` (for prompt templates)
    - Scripts: `tools/scripts/` (for utilities)

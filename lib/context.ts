@@ -11,7 +11,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { loadPortfolio, getPortfolioSummary } from './trading';
-import { loadHypotheses, getHypothesisSummary, Hypothesis } from './hypothesis';
+import { loadHypotheses, getHypothesisSummary, Hypothesis, selectNextHypothesis, getWeeklyProgress, calculateLearningsImpact } from './hypothesis';
 import { getExecutionMetrics, getPriorityReport } from './orchestrator';
 
 const STATE_DIR = path.join(__dirname, '..', 'state');
@@ -19,6 +19,91 @@ const STATE_DIR = path.join(__dirname, '..', 'state');
 // ============================================================================
 // Responsibility Contexts
 // ============================================================================
+
+/**
+ * Context for hypothesis-selection responsibility.
+ * Presents prioritized hypotheses and asks for focus selection.
+ */
+export function prepareHypothesisSelectionContext(): string {
+  const selection = selectNextHypothesis();
+  const progress = getWeeklyProgress();
+
+  if (!selection.hypothesis) {
+    return `
+## Hypothesis Selection
+
+No testable hypotheses found. Either:
+1. All hypotheses are blocked - check blocked hypotheses and resolve blockers
+2. All hypotheses have low confidence (<30%) - consider new research
+
+**Weekly Progress:**
+- Total confidence movement: ${progress.totalMovement.toFixed(2)}
+- Hypotheses advanced: ${progress.hypothesesAdvanced}
+- Threshold crossings: ${progress.thresholdCrossings}
+
+Run a market scan to generate new hypotheses.
+    `.trim();
+  }
+
+  const h = selection.hypothesis;
+  const score = selection.score!;
+  const learningsImpact = calculateLearningsImpact(h);
+
+  return `
+## Hypothesis Selection
+
+### Recommended Focus: ${h.id}
+
+**Statement:** ${h.statement}
+
+**Priority Score:** ${(score.score * 100).toFixed(0)}%
+
+**Score Breakdown:**
+- Confidence: ${(score.breakdown.confidence * 100).toFixed(0)}%
+- Learnings Support: ${(score.breakdown.learningsSupport * 100).toFixed(0)}%${learningsImpact.reasoning !== 'No related learnings found' ? ` (${learningsImpact.reasoning})` : ''}
+- Time Sensitivity: ${(score.breakdown.timeSensitivity * 100).toFixed(0)}%
+- Infrastructure Ready: ${score.breakdown.infrastructureReady ? '✅' : '❌'}
+- Potential Edge: ${(score.breakdown.potentialEdge * 100).toFixed(0)}%
+
+**Current Status:** ${h.status}
+**Confidence:** ${(h.confidence * 100).toFixed(0)}%
+**Evidence:** ${h.evidence.length} observations
+
+${learningsImpact.relatedLearnings.length > 0 ? `
+**Related Learnings:**
+${learningsImpact.relatedLearnings.slice(0, 3).join(', ')}
+` : ''}
+
+### Alternatives
+
+${selection.alternatives.map((alt, i) => `${i + 2}. ${alt.id} (${(alt.score * 100).toFixed(0)}%)`).join('\n') || '(none)'}
+
+### Weekly Progress
+
+- Total confidence movement: ${progress.totalMovement.toFixed(2)}
+- Hypotheses advanced: ${progress.hypothesesAdvanced}
+- Threshold crossings: ${progress.thresholdCrossings}
+
+### Your Task
+
+1. **Confirm focus** - Is ${h.id} the right hypothesis to work on?
+2. **Advance it** - What's the next step to increase confidence?
+   - Add evidence (research, data)
+   - Transition to testing (if proposed)
+   - Execute a trade (if testing and ready)
+3. **Track progress** - Use \`addEvidence()\` with appropriate confidenceImpact
+
+\`\`\`typescript
+import { addEvidence, transitionHypothesis } from './lib/hypothesis';
+
+// Add evidence to move confidence
+await addEvidence('${h.id}', 'Your observation', true, 0.05);
+
+// Or transition to testing
+await transitionHypothesis('${h.id}', 'testing', 'Ready to test because...');
+\`\`\`
+  `.trim();
+}
 
 /**
  * Context for hypothesis-health responsibility.
@@ -438,6 +523,8 @@ function formatPositionForReview(p: any): string {
  */
 export function buildTradeResearchContext(responsibility: string): string {
   switch (responsibility) {
+    case 'hypothesis-selection':
+      return prepareHypothesisSelectionContext();
     case 'hypothesis-health':
       return prepareHypothesisHealthContext();
     case 'portfolio-review':

@@ -16,6 +16,8 @@ import { loadPortfolio } from './trading';
 const STATE_DIR = path.join(__dirname, '..', 'state');
 const HYPOTHESES_FILE = path.join(STATE_DIR, 'trading/hypotheses.json');
 const ENGINE_STATUS_FILE = path.join(STATE_DIR, 'trading/engine-status.json');
+const HEALTH_FILE = path.join(STATE_DIR, 'agent-engineering/health.json');
+const SCHEDULE_FILE = path.join(STATE_DIR, 'orchestrator/schedule.json');
 
 // ============================================================================
 // Types
@@ -27,6 +29,7 @@ export type PriorityType =
   | 'time-sensitive'       // Market closing soon, decision needed
   | 'stuck-hypothesis'     // Hypothesis blocked for too long
   | 'execution-velocity'   // Not enough trades happening
+  | 'system-health'        // Infrastructure issue detected
   | 'scheduled';           // Normal scheduled responsibility
 
 export interface Priority {
@@ -66,6 +69,11 @@ const CONFIG = {
   // Execution velocity
   minTradesPerWeek: 5,            // Target minimum trades
   velocityCriticalDays: 7,        // After 7 days with low velocity, it's critical
+
+  // System health
+  maxPipelineFailures: 3,         // Alert after 3 consecutive failures
+  maxErrorsPerHour: 10,           // Alert if >10 errors in past hour
+  staleHealthCheckHours: 6,       // Alert if health not updated in 6h
 };
 
 // ============================================================================
@@ -89,6 +97,9 @@ export function detectPriorities(): Priority[] {
 
   // 4. Execution velocity
   priorities.push(...detectVelocityIssues());
+
+  // 5. System health issues
+  priorities.push(...detectSystemHealthIssues());
 
   // Sort by urgency (highest first)
   return priorities.sort((a, b) => b.urgency - a.urgency);
@@ -351,6 +362,263 @@ function countTestableHypotheses(): number {
   } catch {
     return 0;
   }
+}
+
+function detectSystemHealthIssues(): Priority[] {
+  const priorities: Priority[] = [];
+
+  try {
+    // Check health.json for issues
+    const healthIssues = checkHealthFile();
+    priorities.push(...healthIssues);
+
+    // Check for pipeline failures
+    const pipelineIssues = checkPipelineHealth();
+    priorities.push(...pipelineIssues);
+
+    // Check for stale data
+    const stalenessIssues = checkDataStaleness();
+    priorities.push(...stalenessIssues);
+
+  } catch (error) {
+    console.error('[Orchestrator] Failed to detect system health issues:', error);
+  }
+
+  return priorities;
+}
+
+function checkHealthFile(): Priority[] {
+  const priorities: Priority[] = [];
+
+  try {
+    if (!fs.existsSync(HEALTH_FILE)) {
+      priorities.push({
+        type: 'system-health',
+        urgency: 60,
+        action: 'create-health-file',
+        context: { issue: 'health.json does not exist' },
+        spawnsAgent: true,
+        agentRole: 'agent-engineer',
+        focusedPrompt: buildSystemHealthPrompt('Health file missing', 'Create state/agent-engineering/health.json with current system status'),
+      });
+      return priorities;
+    }
+
+    const health = JSON.parse(fs.readFileSync(HEALTH_FILE, 'utf-8'));
+
+    // Check for recent errors
+    const recentErrors = (health.recentErrors || []).filter((e: any) => {
+      const errorTime = new Date(e.timestamp).getTime();
+      const oneHourAgo = Date.now() - 60 * 60 * 1000;
+      return errorTime > oneHourAgo;
+    });
+
+    if (recentErrors.length >= CONFIG.maxErrorsPerHour) {
+      priorities.push({
+        type: 'system-health',
+        urgency: 80,
+        action: 'investigate-errors',
+        context: {
+          errorCount: recentErrors.length,
+          threshold: CONFIG.maxErrorsPerHour,
+          recentErrors: recentErrors.slice(-3).map((e: any) => e.message),
+        },
+        spawnsAgent: true,
+        agentRole: 'agent-engineer',
+        focusedPrompt: buildSystemHealthPrompt(
+          `${recentErrors.length} errors in past hour`,
+          `Investigate and fix: ${recentErrors.slice(-3).map((e: any) => e.message).join(', ')}`
+        ),
+      });
+    }
+
+    // Check for stale health check
+    if (health.lastCheck) {
+      const lastCheckTime = new Date(health.lastCheck).getTime();
+      const hoursSinceCheck = (Date.now() - lastCheckTime) / (1000 * 60 * 60);
+
+      if (hoursSinceCheck > CONFIG.staleHealthCheckHours) {
+        priorities.push({
+          type: 'system-health',
+          urgency: 50,
+          action: 'run-health-check',
+          context: {
+            hoursSinceLastCheck: hoursSinceCheck.toFixed(1),
+            threshold: CONFIG.staleHealthCheckHours,
+          },
+          spawnsAgent: false, // Can be handled by pipeline
+        });
+      }
+    }
+
+    // Check service status
+    const services = health.services || {};
+    for (const [name, status] of Object.entries(services)) {
+      if (status === 'error' || status === 'down') {
+        priorities.push({
+          type: 'system-health',
+          urgency: 85,
+          action: 'fix-service',
+          context: { service: name, status },
+          spawnsAgent: true,
+          agentRole: 'agent-engineer',
+          focusedPrompt: buildSystemHealthPrompt(
+            `Service ${name} is ${status}`,
+            `Diagnose and fix the ${name} service`
+          ),
+        });
+      }
+    }
+
+  } catch (error) {
+    // Can't read health file - not critical but worth noting
+    console.error('[Orchestrator] Failed to check health file:', error);
+  }
+
+  return priorities;
+}
+
+function checkPipelineHealth(): Priority[] {
+  const priorities: Priority[] = [];
+
+  try {
+    if (!fs.existsSync(SCHEDULE_FILE)) {
+      return priorities;
+    }
+
+    const schedule = JSON.parse(fs.readFileSync(SCHEDULE_FILE, 'utf-8'));
+    const completedTasks = schedule.completedTasks || [];
+
+    // Group recent tasks by pipeline name
+    const pipelineResults: Record<string, { successes: number; failures: number; lastFailure?: string }> = {};
+
+    // Look at last 24 hours of completed tasks
+    const dayAgo = Date.now() - 24 * 60 * 60 * 1000;
+    const recentTasks = completedTasks.filter((t: any) =>
+      t.type === 'pipeline' && new Date(t.completedAt || t.timestamp).getTime() > dayAgo
+    );
+
+    for (const task of recentTasks) {
+      const name = task.context?.pipeline || 'unknown';
+      if (!pipelineResults[name]) {
+        pipelineResults[name] = { successes: 0, failures: 0 };
+      }
+      if (task.result?.success) {
+        pipelineResults[name].successes++;
+      } else {
+        pipelineResults[name].failures++;
+        pipelineResults[name].lastFailure = task.result?.error || 'Unknown error';
+      }
+    }
+
+    // Alert on pipelines with multiple failures
+    for (const [name, results] of Object.entries(pipelineResults)) {
+      if (results.failures >= CONFIG.maxPipelineFailures) {
+        priorities.push({
+          type: 'system-health',
+          urgency: 75,
+          action: 'fix-failing-pipeline',
+          context: {
+            pipeline: name,
+            failures: results.failures,
+            successes: results.successes,
+            lastError: results.lastFailure,
+          },
+          spawnsAgent: true,
+          agentRole: 'agent-engineer',
+          focusedPrompt: buildSystemHealthPrompt(
+            `Pipeline ${name} failing (${results.failures} failures in 24h)`,
+            `Last error: ${results.lastFailure}. Fix the pipeline.`
+          ),
+        });
+      }
+    }
+
+  } catch (error) {
+    console.error('[Orchestrator] Failed to check pipeline health:', error);
+  }
+
+  return priorities;
+}
+
+function checkDataStaleness(): Priority[] {
+  const priorities: Priority[] = [];
+
+  try {
+    // Check if key state files exist and are recent
+    const criticalFiles = [
+      { path: path.join(STATE_DIR, 'trading/portfolio.json'), name: 'portfolio', maxAgeHours: 24 },
+      { path: path.join(STATE_DIR, 'trading/hypotheses.json'), name: 'hypotheses', maxAgeHours: 48 },
+      { path: SCHEDULE_FILE, name: 'schedule', maxAgeHours: 2 },
+    ];
+
+    for (const file of criticalFiles) {
+      if (!fs.existsSync(file.path)) {
+        priorities.push({
+          type: 'system-health',
+          urgency: 90,
+          action: 'missing-critical-file',
+          context: { file: file.name, path: file.path },
+          spawnsAgent: true,
+          agentRole: 'agent-engineer',
+          focusedPrompt: buildSystemHealthPrompt(
+            `Critical file missing: ${file.name}`,
+            `File ${file.path} does not exist. Create or restore it.`
+          ),
+        });
+        continue;
+      }
+
+      const stats = fs.statSync(file.path);
+      const hoursSinceModified = (Date.now() - stats.mtimeMs) / (1000 * 60 * 60);
+
+      if (hoursSinceModified > file.maxAgeHours) {
+        priorities.push({
+          type: 'system-health',
+          urgency: 55,
+          action: 'stale-data-file',
+          context: {
+            file: file.name,
+            hoursSinceModified: hoursSinceModified.toFixed(1),
+            maxAge: file.maxAgeHours,
+          },
+          spawnsAgent: false, // Informational
+        });
+      }
+    }
+
+  } catch (error) {
+    console.error('[Orchestrator] Failed to check data staleness:', error);
+  }
+
+  return priorities;
+}
+
+function buildSystemHealthPrompt(issue: string, task: string): string {
+  return `
+## 🔧 System Health Issue
+
+### Issue: ${issue}
+
+### Your Task
+${task}
+
+### Guidelines
+1. Diagnose the root cause
+2. Implement a fix
+3. Verify the fix works
+4. Update health.json with the resolution
+
+### Updating Health Status
+After fixing, update state/agent-engineering/health.json:
+\`\`\`json
+{
+  "lastCheck": "ISO timestamp",
+  "services": { "daemon": "ok", "telegram": "ok" },
+  "recentErrors": []
+}
+\`\`\`
+`.trim();
 }
 
 // ============================================================================

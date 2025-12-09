@@ -1,5 +1,10 @@
 {
   "trade-research": {
+    "hypothesis-selection": {
+      "frequency": "4h",
+      "description": "Select next hypothesis to focus on using priority scoring",
+      "lastRun": null
+    },
     "hypothesis-health": {
       "frequency": "4h",
       "lastRun": "2025-12-08T22:11:08.855Z"

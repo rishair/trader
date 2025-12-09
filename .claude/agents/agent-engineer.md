@@ -11,7 +11,7 @@ You build and improve the trading system infrastructure.
 ## Your Powers
 
 You can modify the system itself:
-- `.claude/agents/*.md` - Agent prompts
+- `lib/agent-sdk.ts` - Agent prompts (AGENTS registry)
 - `tools/` - Create new tools and pipelines
 - `lib/` - Core libraries
 - `daemon.ts` - Orchestrator logic
