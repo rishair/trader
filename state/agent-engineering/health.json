@@ -1,11 +1,18 @@
 {
-  "lastCheck": "2025-12-09T01:48:30Z",
+  "lastCheck": "2025-12-09T03:52:00Z",
   "status": "healthy",
   "services": {
     "telegram-handler": { "status": "running", "lastSeen": "2025-12-09T01:37:00Z", "pid": 25257 },
     "daemon": { "status": "running", "lastSeen": "2025-12-09T01:40:19Z", "pid": 56630, "restartCount": 1 }
   },
   "recentErrors": [],
+  "lastSystemHealthFix": {
+    "timestamp": "2025-12-09T03:52:00Z",
+    "issue": "False positive: price-drift-detector flagged as failing",
+    "rootCause": "Orchestrator counted deprecated pipeline tasks as failures",
+    "fix": "Updated lib/orchestrator.ts checkPipelineHealth() to skip deprecated pipelines from health.json",
+    "verification": "TypeScript compiled successfully"
+  },
   "pipelineStatus": {
     "price-drift-detector": {
       "status": "deprecated",

@@ -489,6 +489,24 @@ function checkPipelineHealth(): Priority[] {
     const schedule = JSON.parse(fs.readFileSync(SCHEDULE_FILE, 'utf-8'));
     const completedTasks = schedule.completedTasks || [];
 
+    // Load deprecated pipelines from health.json
+    const deprecatedPipelines = new Set<string>();
+    const HEALTH_FILE = path.join(__dirname, '../state/agent-engineering/health.json');
+    if (fs.existsSync(HEALTH_FILE)) {
+      try {
+        const health = JSON.parse(fs.readFileSync(HEALTH_FILE, 'utf-8'));
+        if (health.pipelineStatus) {
+          for (const [name, status] of Object.entries(health.pipelineStatus)) {
+            if ((status as any).status === 'deprecated') {
+              deprecatedPipelines.add(name);
+            }
+          }
+        }
+      } catch (err) {
+        console.error('[Orchestrator] Failed to load health.json for deprecated pipelines:', err);
+      }
+    }
+
     // Group recent tasks by pipeline name
     const pipelineResults: Record<string, { successes: number; failures: number; lastFailure?: string }> = {};
 
@@ -500,6 +518,12 @@ function checkPipelineHealth(): Priority[] {
 
     for (const task of recentTasks) {
       const name = task.context?.pipeline || 'unknown';
+
+      // Skip deprecated pipelines
+      if (deprecatedPipelines.has(name)) {
+        continue;
+      }
+
       if (!pipelineResults[name]) {
         pipelineResults[name] = { successes: 0, failures: 0 };
       }
