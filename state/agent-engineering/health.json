@@ -1,11 +1,23 @@
 {
-  "lastCheck": "2025-12-08T19:05:00Z",
+  "lastCheck": "2025-12-09T01:40:00Z",
   "status": "healthy",
   "services": {
-    "telegram-handler": { "status": "running", "lastSeen": "2025-12-08T18:47:00Z", "pid": 25257 },
-    "daemon": { "status": "running", "lastSeen": "2025-12-08T18:48:00Z", "pid": 25293, "restartCount": 11 }
+    "telegram-handler": { "status": "running", "lastSeen": "2025-12-09T01:37:00Z", "pid": 25257 },
+    "daemon": { "status": "running", "lastSeen": "2025-12-09T01:37:00Z", "pid": 55911, "restartCount": 12 }
   },
   "recentErrors": [],
+  "pipelineStatus": {
+    "price-drift-detector": {
+      "status": "healthy",
+      "lastRun": "2025-12-09T01:38:32.835Z",
+      "lastResult": "success",
+      "marketsScanned": 50,
+      "driftsDetected": 11,
+      "hypothesesGenerated": 2,
+      "alertsSent": 7,
+      "note": "False alarm - pipeline is working correctly. Last 3 runs all completed successfully."
+    }
+  },
   "scheduledTasksStatus": {
     "totalPending": 8,
     "overdueCount": 0,
