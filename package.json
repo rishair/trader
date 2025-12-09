@@ -25,10 +25,14 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
+    "@anthropic-ai/claude-agent-sdk": "^0.1.61",
+    "@anthropic-ai/sdk": "^0.71.2",
+    "@modelcontextprotocol/sdk": "^1.24.3",
     "axios": "^1.13.2",
     "decimal.js": "^10.6.0",
     "dotenv": "^17.2.3",
     "ethers": "^6.16.0",
-    "ws": "^8.18.3"
+    "ws": "^8.18.3",
+    "zod": "^4.1.13"
   }
 }

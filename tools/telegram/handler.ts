@@ -2,8 +2,13 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as crypto from 'crypto';
 import { execSync } from 'child_process';
-import { spawn } from 'child_process';
 import { sendMessage, editMessage, pollMessages, escapeMarkdown, sendCommitNotification } from './bot';
+import {
+  executeWithStreaming,
+  resumeSession,
+  collectOutput,
+  AGENTS,
+} from '../../lib/agent-sdk';
 
 const STATE_DIR = path.join(__dirname, '../../state');
 const INBOX_FILE = path.join(STATE_DIR, 'inbox.json');
@@ -411,7 +416,7 @@ function detectContentType(text: string): { type: string; title: string } {
   return { type: 'other', title: 'Content' };
 }
 
-// ============ Claude Sessions ============
+// ============ Claude Sessions using Agent SDK ============
 
 const MAX_MSG_LEN = 4000; // Telegram limit is 4096, leave room for formatting
 const STREAM_UPDATE_INTERVAL = 1500; // Update message every 1.5 seconds
@@ -424,8 +429,8 @@ interface ClaudeSessionOptions {
   persistent?: boolean;
   // Custom session ID (for persistent sessions)
   sessionId?: string;
-  // If true, this is the first message in the session (use --session-id to create)
-  // If false, this is a follow-up (use --resume to continue)
+  // If true, this is the first message in the session
+  // If false, this is a follow-up (use resume to continue)
   isFirstMessage?: boolean;
 }
 
@@ -465,204 +470,162 @@ async function spawnClaudeSession(
     fs.mkdirSync(LOG_DIR, { recursive: true });
   }
 
-  // Build Claude CLI arguments
-  const claudeArgs: string[] = [
-    '-p', options.prompt,
-    '--output-format', 'stream-json',
-    '--verbose',
-    '--dangerously-skip-permissions'
-  ];
+  let output = '';
+  let lastUpdateTime = 0;
+  let updatePending = false;
+  let toolsUsed: string[] = [];
 
-  // For persistent sessions:
-  // - First message: use --session-id to create a new session with that ID
-  // - Follow-up messages: use --resume to continue the existing conversation
-  if (options.persistent && options.sessionId) {
-    if (options.isFirstMessage) {
-      claudeArgs.push('--session-id', options.sessionId);
-    } else {
-      claudeArgs.push('--resume', options.sessionId);
+  // Function to update the Telegram message with current output
+  const updateMessage = async (final = false) => {
+    if (!messageId) return;
+
+    const now = Date.now();
+    if (!final && now - lastUpdateTime < STREAM_UPDATE_INTERVAL) {
+      // Schedule an update if one isn't pending
+      if (!updatePending) {
+        updatePending = true;
+        setTimeout(() => {
+          updatePending = false;
+          updateMessage();
+        }, STREAM_UPDATE_INTERVAL);
+      }
+      return;
     }
-  }
 
-  return new Promise((resolve) => {
-    const claude = spawn('claude', claudeArgs, {
-      cwd: PROJECT_ROOT,
-      stdio: ['ignore', 'pipe', 'pipe'],
-      env: { ...process.env }
-    });
+    lastUpdateTime = now;
 
-    let output = '';
-    let lastUpdateTime = 0;
-    let updatePending = false;
-    let toolsUsed: string[] = [];
+    const status = final ? '✅' : '⏳';
+    const trimmedOutput = output.trim();
 
-    // Function to update the Telegram message with current output
-    const updateMessage = async (final = false) => {
-      if (!messageId) return;
+    // Truncate for display (show last part if too long)
+    let displayOutput = trimmedOutput;
+    if (displayOutput.length > MAX_MSG_LEN - 200) {
+      displayOutput = '...' + displayOutput.slice(-(MAX_MSG_LEN - 200));
+    }
 
-      const now = Date.now();
-      if (!final && now - lastUpdateTime < STREAM_UPDATE_INTERVAL) {
-        // Schedule an update if one isn't pending
-        if (!updatePending) {
-          updatePending = true;
-          setTimeout(() => {
-            updatePending = false;
-            updateMessage();
-          }, STREAM_UPDATE_INTERVAL);
-        }
-        return;
-      }
-
-      lastUpdateTime = now;
-
-      const status = final ? '✅' : '⏳';
-      const trimmedOutput = output.trim();
-
-      // Truncate for display (show last part if too long)
-      let displayOutput = trimmedOutput;
-      if (displayOutput.length > MAX_MSG_LEN - 200) {
-        displayOutput = '...' + displayOutput.slice(-(MAX_MSG_LEN - 200));
-      }
-
-      // Show tools being used
-      const toolsInfo = toolsUsed.length > 0 ? `\n🔧 _${toolsUsed.slice(-3).join(' → ')}_\n` : '';
-
-      const header = final ? `${status} *${escapeMarkdown(options.sessionName)}* \\- Done` : `${status} *${escapeMarkdown(options.sessionName)}* \\- Running\\.\\.\\.`;
-      const safeOutput = escapeMarkdown(displayOutput || 'waiting for output...');
-      const safeToolsInfo = toolsUsed.length > 0 ? `\n🔧 _${escapeMarkdown(toolsUsed.slice(-3).join(' → '))}_\n` : '';
+    const header = final ? `${status} *${escapeMarkdown(options.sessionName)}* \\- Done` : `${status} *${escapeMarkdown(options.sessionName)}* \\- Running\\.\\.\\.`;
+    const safeOutput = escapeMarkdown(displayOutput || 'waiting for output...');
+    const safeToolsInfo = toolsUsed.length > 0 ? `\n🔧 _${escapeMarkdown(toolsUsed.slice(-3).join(' → '))}_\n` : '';
+    try {
       await editMessage(messageId, `${header}${safeToolsInfo}\n${safeOutput}`, options.chatId);
+    } catch (e) {
+      // Ignore edit errors (message might be unchanged)
+    }
+  };
+
+  try {
+    // Use SDK's executeWithStreaming for streaming output
+    const sdkOptions: any = {
+      model: 'claude-sonnet-4-5-20250929',
+      includePartialMessages: true,
     };
 
-    claude.stdout?.on('data', (data: Buffer) => {
-      const lines = data.toString().split('\n').filter(l => l.trim());
+    // Handle session persistence - use resume for follow-up messages
+    if (options.persistent && options.sessionId && !options.isFirstMessage) {
+      sdkOptions.resume = options.sessionId;
+    }
 
-      for (const line of lines) {
-        try {
-          const event = JSON.parse(line);
-
-          // Extract text content from assistant messages
-          if (event.type === 'assistant' && event.message?.content) {
-            for (const block of event.message.content) {
-              if (block.type === 'text' && block.text) {
-                output = block.text;
-                updateMessage();
-              } else if (block.type === 'tool_use') {
-                toolsUsed.push(block.name);
-                updateMessage();
-              }
+    const { result, success, costUsd, durationMs } = await executeWithStreaming(
+      options.prompt,
+      (message) => {
+        // Handle different message types from SDK
+        if (message.type === 'assistant' && message.message?.content) {
+          for (const block of message.message.content as any[]) {
+            if (block.type === 'text' && block.text) {
+              output = block.text;
+              updateMessage();
+            } else if (block.type === 'tool_use') {
+              toolsUsed.push(block.name);
+              updateMessage();
             }
           }
+        }
+        // Handle partial streaming messages
+        if (message.type === 'stream_event' && (message as any).event?.delta?.text) {
+          output += (message as any).event.delta.text;
+          updateMessage();
+        }
+      },
+      sdkOptions
+    );
 
-          // Handle content block deltas for streaming text
-          if (event.type === 'content_block_delta' && event.delta?.text) {
-            output += event.delta.text;
-            updateMessage();
-          }
+    claudeSessionActive = false;
+    fs.writeFileSync(sessionLogFile, output || result);
 
-          // Handle result messages - this is the final output
-          if (event.type === 'result' && event.result) {
-            output = event.result;
-            updateMessage();
-          }
-        } catch {
-          // Not JSON, might be plain text output
-          if (line && !line.startsWith('{')) {
-            output += line + '\n';
-            updateMessage();
-          }
+    if (success) {
+      // Mark persistent session as successfully started
+      if (options.persistent && options.sessionId) {
+        markSessionStarted();
+      }
+
+      // Final update to the streaming message
+      await updateMessage(true);
+
+      // If output is longer than what we showed, send additional messages with full content
+      const fullMessage = (output || result).trim();
+      if (fullMessage.length > MAX_MSG_LEN - 100) {
+        // Split into chunks and send as new messages
+        const escapedFull = escapeMarkdown(fullMessage);
+        const chunks: string[] = [];
+        let remaining = escapedFull;
+        while (remaining.length > 0) {
+          chunks.push(remaining.slice(0, MAX_MSG_LEN));
+          remaining = remaining.slice(MAX_MSG_LEN);
+        }
+
+        // Send full output as separate messages
+        await sendMessage(`📄 *Full output \\(${chunks.length} parts\\):*`, options.chatId);
+        for (let i = 0; i < chunks.length; i++) {
+          await sendMessage(`\\(${i + 1}/${chunks.length}\\)\n${chunks[i]}`, options.chatId);
         }
       }
-    });
 
-    claude.stderr?.on('data', (data: Buffer) => {
-      // stderr might have progress info
-      const text = data.toString();
-      if (!text.includes('dotenv')) { // filter out dotenv noise
-        output += text;
-        updateMessage();
+      return output || result;
+    } else {
+      // Check if this was a failed resume attempt (session not found)
+      const errorOutput = result || output;
+      const isSessionNotFound = errorOutput.includes('No conversation found with session ID') ||
+                                 (errorOutput.includes('session ID') && errorOutput.includes('not found'));
+
+      if (isSessionNotFound && options.persistent && options.sessionId && !options.isFirstMessage) {
+        // Reset session and retry as new session
+        await editMessage(messageId!, `🔄 *${escapeMarkdown(options.sessionName)}* \\- Session expired, restarting\\.\\.\\.`, options.chatId);
+
+        // Reset the session state to force creation of new session
+        const session = loadSession();
+        if (session) {
+          session.claudeSessionStarted = false;
+          saveSession(session);
+        }
+
+        return 'SESSION_EXPIRED';
       }
-    });
 
-    claude.on('close', async (code: number) => {
-      claudeSessionActive = false;
-      fs.writeFileSync(sessionLogFile, output);
+      // Check if session ID is already in use (collision or stale state)
+      const isSessionAlreadyInUse = errorOutput.includes('already in use');
 
-      if (code === 0) {
-        // Mark persistent session as successfully started
-        if (options.persistent && options.sessionId) {
-          markSessionStarted();
-        }
+      if (isSessionAlreadyInUse && options.persistent && options.sessionId) {
+        // Generate a completely new session ID and retry
+        await editMessage(messageId!, `🔄 *${escapeMarkdown(options.sessionName)}* \\- Session conflict, creating fresh session\\.\\.\\.`, options.chatId);
 
-        // Final update to the streaming message
-        await updateMessage(true);
+        // Create a brand new session with a fresh UUID
+        createNewSession();
 
-        // If output is longer than what we showed, send additional messages with full content
-        const fullMessage = output.trim();
-        if (fullMessage.length > MAX_MSG_LEN - 100) {
-          // Split into chunks and send as new messages
-          const escapedFull = escapeMarkdown(fullMessage);
-          const chunks: string[] = [];
-          let remaining = escapedFull;
-          while (remaining.length > 0) {
-            chunks.push(remaining.slice(0, MAX_MSG_LEN));
-            remaining = remaining.slice(MAX_MSG_LEN);
-          }
-
-          // Send full output as separate messages
-          await sendMessage(`📄 *Full output \\(${chunks.length} parts\\):*`, options.chatId);
-          for (let i = 0; i < chunks.length; i++) {
-            await sendMessage(`\\(${i + 1}/${chunks.length}\\)\n${chunks[i]}`, options.chatId);
-          }
-        }
-      } else {
-        // Check if this was a failed resume attempt (session not found)
-        const isSessionNotFound = output.includes('No conversation found with session ID') ||
-                                   output.includes('session ID') && output.includes('not found');
-
-        if (isSessionNotFound && options.persistent && options.sessionId && !options.isFirstMessage) {
-          // Reset session and retry with --session-id instead of --resume
-          await editMessage(messageId!, `🔄 *${escapeMarkdown(options.sessionName)}* \\- Session expired, restarting\\.\\.\\.`, options.chatId);
-
-          // Reset the session state to force creation of new session
-          const session = loadSession();
-          if (session) {
-            session.claudeSessionStarted = false;
-            saveSession(session);
-          }
-
-          // The next message will use --session-id to create a new session
-          resolve('SESSION_EXPIRED');
-          return;
-        }
-
-        // Check if session ID is already in use (collision or stale state)
-        const isSessionAlreadyInUse = output.includes('already in use');
-
-        if (isSessionAlreadyInUse && options.persistent && options.sessionId) {
-          // Generate a completely new session ID and retry
-          await editMessage(messageId!, `🔄 *${escapeMarkdown(options.sessionName)}* \\- Session conflict, creating fresh session\\.\\.\\.`, options.chatId);
-
-          // Create a brand new session with a fresh UUID
-          const newSession = createNewSession();
-
-          // Return special marker to trigger retry with new session
-          resolve('SESSION_CONFLICT');
-          return;
-        }
-
-        await editMessage(messageId!, `❌ *${escapeMarkdown(options.sessionName)}* \\- Failed \\(code ${code}\\)\n\n${escapeMarkdown(output.slice(-500) || 'No output')}`, options.chatId);
+        return 'SESSION_CONFLICT';
       }
-      resolve(output);
-    });
 
-    claude.on('error', async (error: Error) => {
-      claudeSessionActive = false;
-      if (messageId) {
-        await editMessage(messageId, `❌ *${escapeMarkdown(options.sessionName)}* \\- Error: ${escapeMarkdown(error.message)}`, options.chatId);
-      }
-      resolve('');
-    });
-  });
+      await editMessage(messageId!, `❌ *${escapeMarkdown(options.sessionName)}* \\- Failed\n\n${escapeMarkdown(errorOutput.slice(-500) || 'No output')}`, options.chatId);
+      return errorOutput;
+    }
+  } catch (error: any) {
+    claudeSessionActive = false;
+    fs.writeFileSync(sessionLogFile, `Error: ${error.message}\n${output}`);
+
+    if (messageId) {
+      await editMessage(messageId, `❌ *${escapeMarkdown(options.sessionName)}* \\- Error: ${escapeMarkdown(error.message)}`, options.chatId);
+    }
+    return '';
+  }
 }
 
 // ============ Message Handler ============
