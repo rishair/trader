@@ -1,16 +1,6 @@
 {
   "pendingTasks": [
     {
-      "id": "research-003",
-      "type": "research",
-      "description": "Analyze liquidity rewards program - calculate reward rates vs spreads",
-      "scheduledFor": "2025-12-09T10:00:00Z",
-      "priority": "medium",
-      "context": {
-        "hypothesisId": "hyp-003"
-      }
-    },
-    {
       "id": "review-001",
       "type": "review",
       "description": "Weekly retrospective - system improvements, trading performance, highest-leverage next steps",
@@ -323,6 +313,21 @@
       "completedAt": "2025-12-09T09:59:17.198Z",
       "result": {
         "success": true
+      }
+    },
+    {
+      "id": "research-003",
+      "type": "research",
+      "description": "Analyze liquidity rewards program - calculate reward rates vs spreads",
+      "scheduledFor": "2025-12-09T10:00:00Z",
+      "priority": "medium",
+      "context": {
+        "hypothesisId": "hyp-003"
+      },
+      "completedAt": "2025-12-09T10:30:00Z",
+      "result": {
+        "success": true,
+        "note": "Research completed earlier in day. CRITICAL FINDING: Liquidity rewards program is INACTIVE (0/1000 markets have reward parameters). Hypothesis invalidated - MM is NOT +EV without active rewards. Comprehensive analysis shows theoretical 30-50% APY IF rewards were active, but current state makes pursuit not viable. Recommendation: DEFER until program reactivates."
       }
     }
   ],

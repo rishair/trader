@@ -1,12 +1,12 @@
 {
-  "lastEvaluated": "2025-12-09T10:28:27.003Z",
+  "lastEvaluated": "2025-12-09T10:32:01.042Z",
   "hypothesisHealth": {
     "total": 25,
     "byStatus": {
       "proposed": 15,
-      "testing": 5,
+      "testing": 4,
       "validated": 1,
-      "invalidated": 4
+      "invalidated": 5
     },
     "avgConviction": 0.44,
     "testableNow": 18,
@@ -66,12 +66,6 @@
   },
   "needsAttention": [
     {
-      "hypothesisId": "hyp-003",
-      "issue": "low_confidence",
-      "detail": "Confidence 25% - consider invalidating or gathering more evidence",
-      "suggestedAction": "invalidate"
-    },
-    {
       "hypothesisId": "hyp-mixz9def",
       "issue": "low_confidence",
       "detail": "Confidence 5% - consider invalidating or gathering more evidence",
@@ -93,8 +87,8 @@
   "followSignalsGenerated": 0,
   "lastHealthCheck": "2025-12-08T22:15:00.000Z",
   "daemon": {
-    "version": "5b8ac29",
-    "startedAt": "2025-12-09T10:26:25.581Z",
-    "pid": 85119
+    "version": "3167450",
+    "startedAt": "2025-12-09T10:31:59.790Z",
+    "pid": 85724
   }
 }
