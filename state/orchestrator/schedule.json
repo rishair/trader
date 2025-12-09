@@ -70,18 +70,6 @@
       }
     },
     {
-      "id": "pipeline-trade-retrospective-1765244559821",
-      "type": "pipeline",
-      "description": "Trade retrospective: Analyze resolved trades, update confidence, add learnings",
-      "scheduledFor": "2025-12-09T07:42:39.821Z",
-      "priority": "medium",
-      "context": {
-        "pipeline": "trade-retrospective",
-        "recurring": true,
-        "frequency": "6h"
-      }
-    },
-    {
       "id": "pipeline-price-tracker-1765262900655",
       "type": "pipeline",
       "description": "Price tracker: Update portfolio prices, check exit triggers",
@@ -115,6 +103,18 @@
         "pipeline": "hypothesis-tester",
         "recurring": true,
         "frequency": "4h"
+      }
+    },
+    {
+      "id": "pipeline-closing-scanner-1765266683017",
+      "type": "pipeline",
+      "description": "Closing-soon scanner: Find markets closing in 72h, check momentum, generate hypotheses",
+      "scheduledFor": "2025-12-09T13:51:23.017Z",
+      "priority": "high",
+      "context": {
+        "pipeline": "closing-scanner",
+        "recurring": true,
+        "frequency": "6h"
       }
     }
   ],
@@ -208,6 +208,22 @@
         "frequency": "6h"
       },
       "completedAt": "2025-12-09T07:50:30.722Z",
+      "result": {
+        "success": true
+      }
+    },
+    {
+      "id": "pipeline-trade-retrospective-1765244559821",
+      "type": "pipeline",
+      "description": "Trade retrospective: Analyze resolved trades, update confidence, add learnings",
+      "scheduledFor": "2025-12-09T07:42:39.821Z",
+      "priority": "medium",
+      "context": {
+        "pipeline": "trade-retrospective",
+        "recurring": true,
+        "frequency": "6h"
+      },
+      "completedAt": "2025-12-09T07:51:30.953Z",
       "result": {
         "success": true
       }
