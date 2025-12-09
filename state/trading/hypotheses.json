@@ -577,6 +577,21 @@
       "evidence": [],
       "createdAt": "2025-12-09T02:50:00Z",
       "updatedAt": "2025-12-09T02:50:00Z"
+    },
+    {
+      "id": "hyp-mixzhj47",
+      "statement": "Super Bowl playoff teams show exploitable pricing inefficiency when comparing Polymarket odds to Vegas consensus lines",
+      "rationale": "Super Bowl market has $64.5M volume - highest on platform. Chiefs 21%, Lions 19%, Bills 14%, Eagles 13%. Vegas sportsbooks have deeper liquidity and sharper pricing. When Polymarket diverges >5% from Vegas consensus, arbitrage or value opportunity exists. Top traders (4/5) focus on sports markets suggesting edge exists.",
+      "testMethod": "1. Compare Polymarket Super Bowl odds to Vegas consensus (FanDuel, DraftKings, Caesars average). 2. Identify teams with >5% divergence. 3. Enter positions when Polymarket overprices vs Vegas (sell) or underprices (buy). 4. Track convergence as playoffs progress.",
+      "entryRules": "Polymarket price diverges >5% from Vegas consensus. Team has played at least 14 games (sufficient sample). Minimum $5M market volume for liquidity. Can deploy $50-150 per position.",
+      "exitRules": "Exit when odds converge to <2% spread OR team is eliminated from playoffs OR Super Bowl resolves. Take profit at +20%, stop loss at -25%.",
+      "expectedWinRate": 0.62,
+      "minSampleSize": 8,
+      "status": "proposed",
+      "confidence": 0.5,
+      "evidence": [],
+      "createdAt": "2025-12-09T02:51:20.455Z",
+      "updatedAt": "2025-12-09T02:51:20.455Z"
     }
   ],
   "schema": {
