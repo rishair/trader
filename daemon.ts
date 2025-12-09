@@ -957,14 +957,15 @@ function parseFrequency(freq: string): number {
   }
 }
 
-function markTaskComplete(schedule: Schedule, taskId: string): void {
+function markTaskComplete(schedule: Schedule, taskId: string, success: boolean = true, error?: string): void {
   const taskIndex = schedule.pendingTasks.findIndex(t => t.id === taskId);
   if (taskIndex !== -1) {
     const task = schedule.pendingTasks.splice(taskIndex, 1)[0];
     schedule.completedTasks.push({
       ...task,
-      completedAt: new Date().toISOString()
-    } as ScheduledTask & { completedAt: string });
+      completedAt: new Date().toISOString(),
+      result: { success, error }
+    } as ScheduledTask & { completedAt: string; result: { success: boolean; error?: string } });
   }
 }
 
@@ -1073,11 +1074,13 @@ async function runDaemon(): Promise<void> {
     if (task) {
       try {
         await executeTask(task);
-        markTaskComplete(schedule, task.id);
+        markTaskComplete(schedule, task.id, true);
         saveSchedule(schedule);
         await gitPush();
-      } catch (error) {
+      } catch (error: any) {
         log(`Task ${task.id} failed: ${error}`);
+        markTaskComplete(schedule, task.id, false, error?.message || String(error));
+        saveSchedule(schedule);
         await gitPush();
       }
     }
@@ -1171,13 +1174,15 @@ switch (command) {
     if (nextTask) {
       executeTask(nextTask)
         .then(async () => {
-          markTaskComplete(sched, nextTask.id);
+          markTaskComplete(sched, nextTask.id, true);
           saveSchedule(sched);
           await gitPush(); // Push changes after completion
           console.log('Task completed');
         })
         .catch(async (err) => {
           console.error(err);
+          markTaskComplete(sched, nextTask.id, false, err?.message || String(err));
+          saveSchedule(sched);
           await gitPush(); // Still push any partial changes
         });
     } else {
@@ -1186,13 +1191,15 @@ switch (command) {
         const task = sched.pendingTasks[0];
         executeTask(task)
           .then(async () => {
-            markTaskComplete(sched, task.id);
+            markTaskComplete(sched, task.id, true);
             saveSchedule(sched);
             await gitPush(); // Push changes after completion
             console.log('Task completed');
           })
           .catch(async (err) => {
             console.error(err);
+            markTaskComplete(sched, task.id, false, err?.message || String(err));
+            saveSchedule(sched);
             await gitPush(); // Still push any partial changes
           });
       } else {

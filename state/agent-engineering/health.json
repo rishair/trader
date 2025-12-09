@@ -1,5 +1,5 @@
 {
-  "lastCheck": "2025-12-09T03:52:00Z",
+  "lastCheck": "2025-12-09T05:35:00Z",
   "status": "healthy",
   "services": {
     "telegram-handler": { "status": "running", "lastSeen": "2025-12-09T01:37:00Z", "pid": 25257 },
@@ -7,11 +7,11 @@
   },
   "recentErrors": [],
   "lastSystemHealthFix": {
-    "timestamp": "2025-12-09T03:52:00Z",
-    "issue": "False positive: price-drift-detector flagged as failing",
-    "rootCause": "Orchestrator counted deprecated pipeline tasks as failures",
-    "fix": "Updated lib/orchestrator.ts checkPipelineHealth() to skip deprecated pipelines from health.json",
-    "verification": "TypeScript compiled successfully"
+    "timestamp": "2025-12-09T05:35:00Z",
+    "issue": "False positive: price-tracker flagged as failing (3 failures in 24h)",
+    "rootCause": "daemon.ts markTaskComplete() didn't record success/failure status - all completed tasks had result: null, counted as failures by orchestrator",
+    "fix": "Updated daemon.ts markTaskComplete() to accept and store success/error status. Updated all callers to pass true on success, false + error message on failure.",
+    "verification": "Fix deployed - future task completions will have result.success recorded properly"
   },
   "pipelineStatus": {
     "price-drift-detector": {
