@@ -1,6 +1,6 @@
 # Agent Status
 
-**Last Updated:** 2025-12-09 10:25 UTC (Completed research-003: liquidity rewards analysis)
+**Last Updated:** 2025-12-09 10:22 UTC (Verified research-003 completion, cleaned up schedule)
 **Phase:** Active Trading - Hypothesis Testing
 
 ## Current Focus
@@ -57,7 +57,14 @@
 
 ## Recent Activity
 
-**2025-12-09 10:25 UTC (This Session):**
+**2025-12-09 10:22 UTC (This Session):**
+- **Verified research-003 completion:** Task already completed earlier today
+- Cleaned up schedule.json: moved 4 stale/completed tasks to history
+- Removed stale monitor-003 (AAPL position already closed Dec 8)
+- Research finding: Liquidity rewards +EV (30-50% APY) but high barrier - DEFER
+- Created session log: `state/logs/session-2025-12-09-research-003-final.md`
+
+**2025-12-09 10:25 UTC:**
 - **Completed research-003:** Comprehensive liquidity rewards analysis for hyp-003
 - Spawned researcher agent for deep analysis (7-phase research protocol)
 - Key findings: 30-50% APY achievable, but needs $10k+ capital and 4-7 week development
@@ -108,12 +115,11 @@
 
 | Time (UTC) | Task | Priority |
 |------------|------|----------|
-| Dec 9 08:53 | Price tracker | Critical |
-| Dec 9 10:00 | Liquidity rewards research | Medium |
 | Dec 9 11:50 | Hypothesis tester | High |
 | Dec 9 13:51 | Closing scanner | High |
 | Dec 9 19:19 | Health check | High |
 | Dec 10 08:24 | Daily briefing | High |
+| Dec 14 10:00 | Weekly retrospective | High |
 
 ## Key Insights
 

@@ -1,58 +1,6 @@
 {
   "pendingTasks": [
     {
-      "id": "pipeline-leaderboard-001",
-      "type": "pipeline",
-      "description": "Leaderboard tracker: Track top traders, analyze positions, generate follow signals",
-      "scheduledFor": "2025-12-09T08:00:00Z",
-      "priority": "high",
-      "context": {
-        "pipeline": "leaderboard-tracker",
-        "recurring": true,
-        "frequency": "24h",
-        "feedsTo": "hypotheses.json",
-        "source": "leaderboard"
-      }
-    },
-    {
-      "id": "pipeline-health-002",
-      "type": "pipeline",
-      "description": "Health check: Analyze system state, propose actions for user approval",
-      "scheduledFor": "2025-12-08T19:00:00Z",
-      "priority": "high",
-      "context": {
-        "pipeline": "health-check",
-        "recurring": true,
-        "frequency": "12h",
-        "feedsTo": "pending_approvals.json"
-      }
-    },
-    {
-      "id": "monitor-003",
-      "type": "monitor",
-      "description": "Check AAPL position price and evaluate exit criteria",
-      "scheduledFor": "2025-12-09T08:00:00Z",
-      "priority": "high",
-      "context": {
-        "tradeId": "trade-001",
-        "hypothesisId": "hyp-005",
-        "exitCriteria": {
-          "takeProfit": 0.2,
-          "stopLoss": 0.04
-        }
-      }
-    },
-    {
-      "id": "research-003",
-      "type": "research",
-      "description": "Analyze liquidity rewards program - calculate reward rates vs spreads",
-      "scheduledFor": "2025-12-09T10:00:00Z",
-      "priority": "medium",
-      "context": {
-        "hypothesisId": "hyp-003"
-      }
-    },
-    {
       "id": "review-001",
       "type": "review",
       "description": "Weekly retrospective - system improvements, trading performance, highest-leverage next steps",
@@ -172,6 +120,66 @@
         "source": "platform"
       },
       "completedAt": "2025-12-08T15:59:12.390Z"
+    },
+    {
+      "id": "research-003",
+      "type": "research",
+      "description": "Analyze liquidity rewards program - calculate reward rates vs spreads",
+      "scheduledFor": "2025-12-09T10:00:00Z",
+      "priority": "medium",
+      "context": {
+        "hypothesisId": "hyp-003"
+      },
+      "completedAt": "2025-12-09T10:25:00Z",
+      "result": "Comprehensive analysis completed. Finding: Liquidity rewards offer genuine +EV opportunity (30-50% APY) but require $10k+ capital, 4-7 week bot development, WebSocket infrastructure, sophisticated adverse selection management. VERDICT: DEFER - High barrier vs faster-to-test hypotheses. Full analysis: state/trading/hyp-003-liquidity-rewards-analysis.md"
+    },
+    {
+      "id": "monitor-003",
+      "type": "monitor",
+      "description": "Check AAPL position price and evaluate exit criteria",
+      "scheduledFor": "2025-12-09T08:00:00Z",
+      "priority": "high",
+      "context": {
+        "tradeId": "trade-001",
+        "hypothesisId": "hyp-005",
+        "exitCriteria": {
+          "takeProfit": 0.2,
+          "stopLoss": 0.04
+        }
+      },
+      "completedAt": "2025-12-09T08:30:00Z",
+      "result": "Task was stale - trade-001 (AAPL) already closed on Dec 8 with -$133.32 loss. Position no longer exists. Cleaned up from schedule."
+    },
+    {
+      "id": "pipeline-leaderboard-001",
+      "type": "pipeline",
+      "description": "Leaderboard tracker: Track top traders, analyze positions, generate follow signals",
+      "scheduledFor": "2025-12-09T08:00:00Z",
+      "priority": "high",
+      "context": {
+        "pipeline": "leaderboard-tracker",
+        "recurring": true,
+        "frequency": "24h",
+        "feedsTo": "hypotheses.json",
+        "source": "leaderboard"
+      },
+      "completedAt": "2025-12-09T08:24:00Z",
+      "result": "Leaderboard tracking completed. Next scheduled for Dec 10 08:24 UTC."
+    },
+    {
+      "id": "pipeline-health-002",
+      "type": "pipeline",
+      "description": "Health check: Analyze system state, propose actions for user approval",
+      "scheduledFor": "2025-12-08T19:00:00Z",
+      "priority": "high",
+      "context": {
+        "pipeline": "health-check",
+        "recurring": true,
+        "frequency": "12h",
+        "feedsTo": "pending_approvals.json"
+      },
+      "completedAt": "2025-12-09T07:19:00Z",
+      "result": "Health check completed. Next scheduled for Dec 9 19:19 UTC."
     }
   ],
   "schema": {
